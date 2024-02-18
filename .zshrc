@@ -4,7 +4,7 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-syntax-highlighting zsh-autosuggestions
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions
 	 sudo history jsontools ssh-agent
          copypath copyfile copybuffer dirhistory 
          history jsontools)
@@ -154,6 +154,9 @@ alias l.='exa -a | egrep "^\."'
 
 # Kubectl
 alias kubepodmax='kubectl get pods -n max-power-dev -l app=max-power-backend'
+alias kube-local-logs='source ~/scripts/helm/logs.sh'
+alias kube-local-describe='source ~/scripts/helm/describe-pod.sh'
+alias kube-local-exec='source ~/scripts/helm/exec-pod.sh'
 
 # Flag
 alias df='df -h'
@@ -170,7 +173,7 @@ alias mixxx="pasuspender mixxx"
 # others
 alias mouse="keep-presence"
 alias screens="tmux"
-
+alias cat="bat"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -179,3 +182,4 @@ PATH="$HOME/.local/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+eval "$(zoxide init zsh)"
