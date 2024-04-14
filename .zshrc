@@ -170,10 +170,18 @@ alias ytd=". scripts/download_video.sh"
 # mixxx
 alias mixxx="pasuspender mixxx"
 
+# nvim as vi
+alias vi="nvim"
+
 # others
 alias mouse="keep-presence"
 alias screens="tmux"
 alias cat="bat"
+alias db="dbeaver-ce"
+# bkw
+HIVE_PI_USER=hive-reader
+HIVE_PI_PASSWORD=zxxQ3gEZYsc9P7AyXw
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
