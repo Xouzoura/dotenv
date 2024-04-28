@@ -45,8 +45,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
+# function set_terminal_title() {
+#   echo -en "\033]0;${PWD/#$HOME/~}\007"
+# }
+precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
@@ -117,7 +121,6 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
 # Scripts
-alias bkw-max-power='. scripts/maxpower.sh'
 alias vpnc='. vpn/conn.sh'
 alias vpnd='. vpn/disc.sh'
 
@@ -153,10 +156,10 @@ alias lt='exa -aT --level=2 --color=always --group-directories-first'
 alias l.='exa -a | egrep "^\."'
 
 # Kubectl
-alias kubepodmax='kubectl get pods -n max-power-dev -l app=max-power-backend'
-alias kube-local-logs='source ~/scripts/helm/logs.sh'
-alias kube-local-describe='source ~/scripts/helm/describe-pod.sh'
-alias kube-local-exec='source ~/scripts/helm/exec-pod.sh'
+# alias kubepodmax='kubectl get pods -n max-power-dev -l app=max-power-backend'
+# alias kube-local-logs='source ~/scripts/helm/logs.sh'
+# alias kube-local-describe='source ~/scripts/helm/describe-pod.sh'
+# alias kube-local-exec='source ~/scripts/helm/exec-pod.sh'
 
 # Flag
 alias df='df -h'
@@ -172,16 +175,16 @@ alias mixxx="pasuspender mixxx"
 
 # nvim as vi
 alias vi="nvim"
+alias vo="nvim -c 'Telescope oldfiles'"
+alias fzn='nvim $(fzf)'
 
 # others
 alias mouse="keep-presence"
-alias screens="tmux"
-alias cat="bat"
+#alias cat="bat"
 alias db="dbeaver-ce"
-# bkw
-HIVE_PI_USER=hive-reader
-HIVE_PI_PASSWORD=zxxQ3gEZYsc9P7AyXw
 
+# bkw
+source .zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -191,3 +194,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(zoxide init zsh)"
+bindkey '^ ' autosuggest-accept
+bindkey '^]' autosuggest-execute
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
