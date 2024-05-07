@@ -184,7 +184,7 @@ alias mouse="keep-presence"
 alias db="dbeaver-ce"
 
 # bkw
-source .zshrc_secrets
+source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
