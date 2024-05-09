@@ -81,10 +81,10 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions
-	 sudo history jsontools ssh-agent
-         copypath copyfile copybuffer dirhistory 
-         history jsontools)
+plugins=(
+    git zsh-syntax-highlighting zsh-autosuggestions
+	sudo history jsontools ssh-agent fzf vi-mode
+    copypath copyfile copybuffer dirhistory)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -176,14 +176,16 @@ alias mixxx="pasuspender mixxx"
 # nvim as vi
 alias vi="nvim"
 alias vo="nvim -c 'Telescope oldfiles'"
-alias fzn='nvim $(fzf)'
 
 # others
 alias mouse="keep-presence"
 #alias cat="bat"
 alias db="dbeaver-ce"
 
-# bkw
+# Find and activate virtualenv
+alias venv="source ~/scripts/venv.sh"
+
+# bkw (all my secrets)
 source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -196,4 +198,16 @@ export NVM_DIR="$HOME/.nvm"
 eval "$(zoxide init zsh)"
 bindkey '^ ' autosuggest-accept
 bindkey '^]' autosuggest-execute
+
+# git stuff
+source ~/scripts/fzf-git.sh/fzf-git.sh 
+# The hotkeys for git stuff
+# 
+    # CTRL-G - CTRL-F for Files
+    # CTRL-G - CTRL-B for Branches
+    # CTRL-G - CTRL-T for Tags
+    # CTRL-G - CTRL-R for Remotes
+    # CTRL-G - CTRL-G for Commits
+
+# Always keep at the end
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
