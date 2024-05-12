@@ -1,18 +1,11 @@
--- Set laststatus to 2 to always display the statusline
+-- Settings 
 vim.opt.laststatus = 2
--- Set statusline to display the filename
 vim.opt.statusline = "%t"
--- Example: Set tab width to 4 spaces
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
--- vim.opt.expandtab = true
 
--- Example: Enable line numbers and relative line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
-
--- Make yank one that ignored the delete
-vim.api.nvim_set_keymap('n', '<Leader>P', '"0p', { noremap = true, silent = true })
 
 -- nvim-ufo
 vim.o.foldcolumn = '1' -- '0' is not bad
@@ -20,11 +13,24 @@ vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decr
 vim.o.foldlevelstart = 10
 vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
--- vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
--- vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
+
+-- KEY BINDINGS ---
+
+
+-- GENERAL
+vim.keymap.set("i", "jj", "<ESC>", { silent = true })
+vim.api.nvim_set_keymap("n", "QQ", ":q!<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "QA", ":qall<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "QW", ":w!<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "E", "$", {noremap=false})
+vim.api.nvim_set_keymap("n", "B", "^", {noremap=false})
+vim.api.nvim_set_keymap("n", "<C-W>,", ":vertical resize -10<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<C-W>.", ":vertical resize +10<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<leader>nn", ":Noice dismiss<CR>", {noremap=true})
+vim.api.nvim_set_keymap('n', '<Leader>P', '"0p', { noremap = true, silent = true })
+--
 -- Copilot
--- vim.g.copilot_no_tab_map = true
 vim.api.nvim_set_keymap("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 -- Lua

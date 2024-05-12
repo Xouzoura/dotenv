@@ -185,6 +185,9 @@ alias db="dbeaver-ce"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
 
+# Show characteristics of laptop
+alias mypc="neofetch"
+
 # bkw (all my secrets)
 source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

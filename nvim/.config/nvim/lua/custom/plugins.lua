@@ -8,6 +8,7 @@ local plugins = {
     },
     {
         -- Toggle with <space>pr to show what is the best combination to reach X
+        -- Tutorial for noobs essentiall
         'tris203/precognition.nvim',
         lazy=false,
     },
@@ -40,15 +41,7 @@ local plugins = {
         vim.keymap.set("n", "<leader>a", "<cmd>Outline<CR>",
           { desc = "Toggle Outline" })
 
-        require("outline").setup {
-          -- Your setup opts here (leave empty to use defaults)
-            -- outline_window = {    -- 
-            --     position='left',
-            -- },
-            symbols={
-                -- filter={"String", "Constant", "Variable", exclude=true}
-            }
-        }
+        require("outline").setup {}
       end,
     },
     {
@@ -153,76 +146,76 @@ local plugins = {
             require('modes').setup()
         end
     },
-    -- {
-    --     -- Popup of cmd in the middle of the screen + Notifications on the side
-    --   "folke/noice.nvim",
-    --   event = "VeryLazy",
-    --   -- lazy=false,
-    --   opts = {
-    --     -- add any options here
-    --   },
-    --   dependencies = {
-    --     "MunifTanjim/nui.nvim",
-    --     "rcarriga/nvim-notify",
-    --     },
-    --     setup = function()
-    --         require("noice").setup({
-    --           lsp = {
-    --             override = {
-    --               ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-    --               ["vim.lsp.util.stylize_markdown"] = true,
-    --               ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-    --               -- ["config.lsp.hover.enabled"] = false,
-    --               -- ["config.lsp.signature.enabled"] = false,
-    --             },
-    --           },
-    --           -- you can enable a preset for easier configuration
-    --           presets = {
-    --             bottom_search = true, -- use a classic bottom cmdline for search
-    --             command_palette = true, -- position the cmdline and popupmenu together
-    --             long_message_to_split = true, -- long messages will be sent to a split
-    --             inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    --             lsp_doc_border = false, -- add a border to hover docs and signature help
-    --           },
-    --             views = {
-    --               cmdline_popup = {
-    --                 position = {
-    --                   row = 5,
-    --                   col = "50%",
-    --                 },
-    --                 size = {
-    --                   width = 60,
-    --                   height = "auto",
-    --                 },
-    --               },
-    --               popupmenu = {
-    --                 relative = "editor",
-    --                 position = {
-    --                   row = 8,
-    --                   col = "50%",
-    --                 },
-    --                 size = {
-    --                   width = 60,
-    --                   height = 10,
-    --                 },
-    --                 border = {
-    --                   style = "rounded",
-    --                   padding = { 0, 1 },
-    --                 },
-    --                 win_options = {
-    --                   winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-    --                 },
-    --               },
-    --             },
-    --             routes = {
-    --               {
-    --                 view = "cmdline",
-    --                 filter = { event = "msg_showmode" },
-    --               },
-    --             },
-    --         })
-    --     end
-    -- },
+    {
+        -- Popup of cmd in the middle of the screen + Notifications on the side
+      "folke/noice.nvim",
+      event = "VeryLazy",
+      -- lazy=false,
+      opts = {
+        -- add any options here
+      },
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+        "rcarriga/nvim-notify",
+        },
+        setup = function()
+            require("noice").setup({
+              lsp = {
+                override = {
+                  ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                  ["vim.lsp.util.stylize_markdown"] = true,
+                  ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                  -- ["config.lsp.hover.enabled"] = false,
+                  -- ["config.lsp.signature.enabled"] = false,
+                },
+              },
+              -- you can enable a preset for easier configuration
+              presets = {
+                bottom_search = true, -- use a classic bottom cmdline for search
+                command_palette = true, -- position the cmdline and popupmenu together
+                long_message_to_split = true, -- long messages will be sent to a split
+                inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = false, -- add a border to hover docs and signature help
+              },
+                views = {
+                  cmdline_popup = {
+                    position = {
+                      row = 5,
+                      col = "50%",
+                    },
+                    size = {
+                      width = 60,
+                      height = "auto",
+                    },
+                  },
+                  popupmenu = {
+                    relative = "editor",
+                    position = {
+                      row = 8,
+                      col = "50%",
+                    },
+                    size = {
+                      width = 60,
+                      height = 10,
+                    },
+                    border = {
+                      style = "rounded",
+                      padding = { 0, 1 },
+                    },
+                    win_options = {
+                      winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+                    },
+                  },
+                },
+                routes = {
+                  {
+                    view = "cmdline",
+                    filter = { event = "msg_showmode" },
+                  },
+                },
+            })
+        end
+    },
     {
         -- Show a scrollbar at the right side of the screen
         "petertriho/nvim-scrollbar",
@@ -495,52 +488,58 @@ local plugins = {
 
     -- DAP Plugins
 
-    -- {
-    --     "rcarriga/nvim-dap-ui",
-    --     dependencies = {
-    --         "mfussenegger/nvim-dap",
-    --         "nvim-neotest/nvim-nio",
-    --         },
-    --     config = function()
-    --         local dap = require("dap")
-    --         local dapui = require("dapui")
-    --         dapui.setup()
-    --         dap.listeners.after.event_initialized["dapui_config"] = function()
-    --             dapui.open()
-    --         end
-    --         dap.listeners.before.event_terminated["dapui_config"] = function()
-    --             dapui.close()
-    --         end
-    --         dap.listeners.before.event_exited["dapui_config"] = function()
-    --             dapui.close()
-    --         end
-    --     end
-    -- },
-    -- {
-    --     "mfussenegger/nvim-dap",
-    --     config = function(_, opts)
-    --         require ("core.utils").load_mappings("dap")
-    --     end
-    -- },
-    -- {
-    --     'theHamsta/nvim-dap-virtual-text',
-    --     config = function()
-    --         require('dap-virtual-text').setup()
-    --     end
-    -- },
-    -- {
-    --     "mfussenegger/nvim-dap-python",
-    --     ft="python",
-    --     dependencies= {
-    --         "mfussenegger/nvim-dap",
-    --         "rcarriga/nvim-dap-ui",
-    --     },
-    --     config = function(_, opts)
-    --         local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
-    --         require("dap-python").setup(path)
-    --         require("core.utils").load_mappings("dap_python")
-    --     end,
-    -- },
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "nvim-neotest/nvim-nio",
+            },
+        config = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+            dapui.setup()
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+        end
+    },
+    {
+        "mfussenegger/nvim-dap",
+        config = function(_, opts)
+            require ("core.utils").load_mappings("dap")
+        end
+    },
+    {
+        'theHamsta/nvim-dap-virtual-text',
+        lazy=false,
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+        config = function()
+            require('nvim-dap-virtual-text').setup({
+                -- virt_text_pos='inline',
+            })
+        end
+    },
+    {
+        "mfussenegger/nvim-dap-python",
+        ft="python",
+        dependencies= {
+            "mfussenegger/nvim-dap",
+            "rcarriga/nvim-dap-ui",
+        },
+        config = function(_, opts)
+            local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+            require("dap-python").setup(path)
+            require("core.utils").load_mappings("dap_python")
+        end,
+    },
 
     -- LSP and installation plugins
     --
