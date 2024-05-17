@@ -1,16 +1,25 @@
 local plugins = {
+     {
+        -- chatgpt in the nvim config
+        "robitx/gp.nvim",
+        lazy=false,
+        config = function()
+            local config = require("custom.configs.gp-config")
+            require("gp").setup(config)
+            -- require("gp").setup({
+                -- openai_api_endpoint = "https://endaprime-ai-ch.openai.azure.com/openai/deployments/HiveGPT4/chat/completions?api-version=2023-03-15-preview",
+                -- openai_api_endpoint = "https://endaprime-ai-ch.openai.azure.com/openai/deployments/ChatGPT/chat/completions?api-version=2023-03-15-preview",
+            --     openai_api_endpoint = "https://endaprime-ai-ch.openai.azure.com/openai/deployments/{{model}}/chat/completions?api-version=2023-03-15-preview",
+            --     openai_api_key=os.getenv("OPENAI_API_KEY")
+            -- })
+        end,
+    },
     {
         -- Plugin that creates directories etc
          'stevearc/oil.nvim',
          lazy=false,
          opts = {},
          dependencies = { "nvim-tree/nvim-web-devicons" },
-    },
-    {
-        -- Toggle with <space>pr to show what is the best combination to reach X
-        -- Tutorial for noobs essentiall
-        'tris203/precognition.nvim',
-        lazy=false,
     },
     {
         -- Tmux to work together with nvim
@@ -479,6 +488,23 @@ local plugins = {
         'github/copilot.vim',
         lazy=false
     },
+    -- {
+    --   "supermaven-inc/supermaven-nvim",
+    --   lazy=false,
+    --   config = function()
+    --     require("supermaven-nvim").setup({
+    --         keymaps = {
+    --         -- accept_suggestion = "<Tab>",
+    --         accept_suggestion = "<C-]>",
+    --       },
+    --       ignore_filetypes = { cpp = true },
+    --       color = {
+    --         suggestion_color = "#ffffff",
+    --         cterm = 244,
+    --       }
+    --     })
+    --   end,
+    -- },
     {
         -- git
         "sindrets/diffview.nvim",

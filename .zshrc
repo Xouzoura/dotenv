@@ -184,7 +184,6 @@ alias db="dbeaver-ce"
 
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
-
 # Show characteristics of laptop
 alias mypc="neofetch"
 

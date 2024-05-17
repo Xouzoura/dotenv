@@ -19,7 +19,12 @@ vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 
 -- GENERAL
+-- Insert mode
 vim.keymap.set("i", "jj", "<ESC>", { silent = true })
+vim.keymap.set("i", "<C-d>", "<C-o>dw", { silent = true })
+-- vim.keymap.set("i", "<C-f>", "<C-o>b", { silent = true })
+-- vim.keymap.set("i", "<C-g>", "<C-o>e", {noremap = true, silent=true })
+-- Normal mode
 vim.api.nvim_set_keymap("n", "QQ", ":q!<enter>", {noremap=false})
 vim.api.nvim_set_keymap("n", "QA", ":qall<enter>", {noremap=false})
 vim.api.nvim_set_keymap("n", "QW", ":w!<enter>", {noremap=false})
@@ -32,6 +37,7 @@ vim.api.nvim_set_keymap('n', '<Leader>P', '"0p', { noremap = true, silent = true
 --
 -- Copilot
 vim.api.nvim_set_keymap("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+-- Supermaven
 
 -- Lua
 -- Trouble
@@ -93,7 +99,30 @@ vim.api.nvim_set_keymap("n", "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<
 vim.api.nvim_set_keymap("n", "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>to", "<CMD>TSJToggle<CR>", opts)
+-- ChatGPT
+local function keymapOptions(desc)
+    return {
+        noremap = true,
+        silent = true,
+        nowait = true,
+        desc = "GPT prompt " .. desc,
+    }
+end
+
+-- Chat commands
+vim.keymap.set({"n", "i"}, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions("New Chat"))
+vim.keymap.set({"n", "i"}, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions("Toggle Chat"))
+vim.keymap.set({"n", "i"}, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions("Chat Finder"))
+
+vim.keymap.set("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions("Visual Chat New"))
+vim.keymap.set("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions("Visual Chat Paste"))
+vim.keymap.set("v", "<C-g>t", ":<C-u>'<,'>GpChatToggle<cr>", keymapOptions("Visual Toggle Chat"))
+vim.keymap.set({"n", "i"}, "<C-g>gp", "<cmd>GpPopup<cr>", keymapOptions("Popup"))
+vim.keymap.set({"n", "i", "v", "x"}, "<C-g>s", "<cmd>GpStop<cr>", keymapOptions("Stop"))
+vim.keymap.set({"n", "i", "v", "x"}, "<C-g>n", "<cmd>GpNextAgent<cr>", keymapOptions("Next Agent"))
+-- End of commands
 vim.o.inccommand = "split"
+
 -- Close the inactive tabs
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false
