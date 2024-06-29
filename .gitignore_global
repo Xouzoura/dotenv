@@ -1,0 +1,11 @@
+# Direnv files
+.direnv
+.envrc
+
+# Env/venv
+.env
+venv
+
+# Editor specific files and folders
+.idea
+.vscode
