@@ -39,7 +39,8 @@ map("n", "<leader>O", "printf('m`%sO<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line above",
 })
-map('n', '<leader>cl', '<cmd>@:<cr>', {desc = "Clear highlights"})
+map('n', '<leader>cl', '<cmd>@:<cr>', {desc = "Repeat Last Command"})
+map('n', '<leader>cm', '<cmd>messages<cr>', {desc = "View all printed messages"})
 -- Resizing of windows
 -- Full focus on the current window
 map("n", "-", "<C-w>_<C-w>|")
@@ -54,7 +55,7 @@ map("n", "g\\", "<C-w>v", {noremap=false})
 -- Create a new window vertically and return to original
 map("n", "g|", "<C-w>v<C-w>h", {noremap=false})
 -- Select the whole buffer
-map("n", "<leader>A", "ggVG")
+map("n", "<leader>A", "ggVG", {desc="Select all buffer", noremap = true, silent = true })
 -- Resize windows vertically
 map("n", "<C-W>,", ":vertical resize -10<CR>", {noremap=true})
 map("n", "<C-W>.", ":vertical resize +10<CR>", {noremap=true})

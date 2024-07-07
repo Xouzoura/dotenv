@@ -12,12 +12,14 @@ return {
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
             end
-            dap.listeners.before.event_terminated["dapui_config"] = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited["dapui_config"] = function()
-                dapui.close()
-            end
+            -- Currently dont want to close the UI if errors
+            -- dap.listeners.before.event_terminated["dapui_config"] = function()
+            --     print("Closing DAP UI")
+            --     dapui.close()
+            -- end
+            -- dap.listeners.before.event_exited["dapui_config"] = function()
+            --     dapui.close()
+            -- end
         end
     },
     {
@@ -87,6 +89,7 @@ return {
         keys = {
             { "<leader>dui", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "Toggle DAP UI" } ,
             { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "Reset DAP UI" } ,
+            { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "Toggle DAP UI" } ,
         }, 
     },
     {
