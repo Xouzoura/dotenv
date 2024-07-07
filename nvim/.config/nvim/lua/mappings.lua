@@ -17,9 +17,6 @@ map("i", "<C-u>", "<C-BS>", {desc = "Control-u operates as backspace"})
 map("i", "jj", "<ESC>", { silent = true })
 map("i", "kj", "<ESC>", { silent = true })
 map("i", "<C-d>", "<C-o>dw", { silent = true })
--- accept copilot with c] and cy
-map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
-map("i", "<C-f>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
 
 -- <--- ## VISUAL mode stuff ###--->
 -- Moving lines up and down in visual mode
@@ -130,6 +127,9 @@ map("n", "<leader>cuc", "<CMD>CurlClose<CR>", {desc="Close curl", noremap = true
 -- Copilot
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", {desc="Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", {desc="Enable copilot", noremap = true, silent = true })
+-- accept copilot with c] and cy
+map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
+map("i", "<C-f>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
 -- Replace
 map("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", opts)
 map("v", "<C-s>", "<CMD>SearchReplaceWithinVisualSelection<CR>", opts)

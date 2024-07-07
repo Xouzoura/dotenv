@@ -11,7 +11,7 @@ M.ui = {
         CursorLineNr = { fg = "yellow" },
     },
     -- statusline = {
-        -- order = { "mode", "git", "cwd"},
+    --     order = { "mode", "git", "cwd"},
     -- },
     tabufline = {
         enable = false,
