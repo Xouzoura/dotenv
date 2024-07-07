@@ -11,10 +11,8 @@ vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 vim.o.inccommand = "split"
 vim.o.updatetime = 250
---
 -- opts
 vim.opt.laststatus = 2
-vim.opt.statusline = "%t"
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.ignorecase = true -- search case insensitive

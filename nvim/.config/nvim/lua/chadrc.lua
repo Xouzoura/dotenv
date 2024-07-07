@@ -10,9 +10,33 @@ M.ui = {
     hl_override = {
         CursorLineNr = { fg = "yellow" },
     },
-    -- statusline = {
-    --     order = { "mode", "git", "cwd"},
-    -- },
+    statusline = {
+      -- order = { "mode", "git", "cursor"},
+      order = { "mode", "file", "git", "lsp_msg", "%=", "diagnostics", "cursor" },
+      modules = {
+        cursor = function()
+            local function get_python_path()
+            local venv_path = vim.fn.getcwd() .. '/.venv/bin/python'
+            local venv_path2 = vim.fn.getcwd() .. '/venv/bin/python'
+
+            if vim.fn.filereadable(venv_path) == 1 then
+                return ".venv"
+            elseif vim.fn.filereadable(venv_path2) == 1 then
+                return "venv"
+            else
+                return ""
+            end
+            end
+
+            if vim.bo.filetype == "python" then
+                val = get_python_path()
+            else
+                val = ""
+            end
+            return "%#BruhHl#" .. val
+        end,
+      },
+    },
     tabufline = {
         enable = false,
     },
