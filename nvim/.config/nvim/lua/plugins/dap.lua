@@ -39,7 +39,9 @@ return {
             vim.keymap.set('n', '<F10>', function() require('dap').step_over() end, {desc="Step Over"})
             vim.keymap.set('n', '<F11>', function() require('dap').step_into() end, {desc="Step Into"})
             vim.keymap.set('n', '<F12>', function() require('dap').step_out() end, {desc="Step Out"})
-            vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, {desc="Toggle Breakpoint"})
+            -- Commented-out since I see the persistent db
+            -- vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, {desc="Toggle Breakpoint"})
+            vim.keymap.set('n', '<Leader>dn', function() require('dap').toggle_breakpoint() end, {desc="Toggle Breakpoint (Normal)"})
             vim.keymap.set('n', '<Leader>dB', function() require('dap').set_breakpoint() end, {desc="Set Breakpoint"})
             vim.keymap.set('n', '<Leader>dd', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, {desc="Log Point"})
         end
@@ -86,5 +88,26 @@ return {
             { "<leader>dui", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "Toggle DAP UI" } ,
             { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "Reset DAP UI" } ,
         }, 
-    }
+    },
+    {
+        "Weissle/persistent-breakpoints.nvim",
+        config = function()
+          require("persistent-breakpoints").setup {
+            load_breakpoints_event = { "BufReadPost" },
+            -- You can add other options here as needed
+          }
+        end,
+        -- Specify dependencies if any
+        dependencies = {
+          "mfussenegger/nvim-dap",
+        },
+        -- Specify when to load the plugin
+        event = "VeryLazy", -- or you could use "BufReadPre" if you want it loaded earlier
+        keys = {
+          -- Define keymaps for the plugin
+          { "<leader>db", function() require("persistent-breakpoints.api").toggle_breakpoint() end, desc = "Toggle Breakpoint (Persistent)" },
+          { "<leader>dc", function() require("persistent-breakpoints.api").clear_all_breakpoints() end, desc = "Clear All Breakpoints" },
+        },
+    },
+
 }

@@ -42,6 +42,7 @@ map("n", "<leader>O", "printf('m`%sO<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line above",
 })
+map('n', '<leader>cl', '<cmd>@:<cr>', {desc = "Clear highlights"})
 -- Resizing of windows
 -- Full focus on the current window
 map("n", "-", "<C-w>_<C-w>|")
