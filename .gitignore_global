@@ -5,6 +5,8 @@
 # Env/venv
 .env
 venv
+.venv
+.vevn3.11
 
 # Editor specific files and folders
 .idea

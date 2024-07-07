@@ -15,9 +15,9 @@ return {
       desc = "Buffer Diagnostics (Trouble)",
     },
     {
-      "<leader>xe",
+      "<leader>df", -- Might need something else since <leader>d(~) is used by debug
       "<cmd>lua vim.diagnostic.open_float()<cr>",
-      desc = "Current Float Open",
+      desc = "Diagnostic error float open",
     },
     -- Currently dont need them 
     -- {

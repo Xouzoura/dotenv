@@ -1,10 +1,11 @@
 require "nvchad.mappings"
--- Start the mapping
-local map = vim.keymap.set
 
 -- unmaps
 vim.api.nvim_del_keymap('i', '<C-u>')  
 vim.api.nvim_del_keymap('n', '<leader>x')  
+
+-- Start the mapping
+local map = vim.keymap.set
 -- Disable arrow keys
 map("", "<up>", "<nop>")
 map("", "<right>", "<nop>")
@@ -120,8 +121,14 @@ map('n', '<leader>gb', '<cmd>lua require("gitsigns").toggle_current_line_blame()
 })
 local opts = {}
 -- To do 
-map("n", "<leader>TDL", "<CMD>TodoLocList<CR>", opts)
-map("n", "<leader>TDT", "<CMD>TodoTelescope<CR>", opts)
+map("n", "<leader>tdl", "<CMD>TodoLocList<CR>", {desc="Todo list as list", noremap = true, silent = true })
+map("n", "<leader>tdt", "<CMD>TodoTelescope<CR>", {desc="Todo list as telescope", noremap = true, silent = true })
+-- curl
+map("n", "<leader>cuo", "<CMD>CurlOpen<CR>", {desc="Open curl", noremap = true, silent = true })
+map("n", "<leader>cuc", "<CMD>CurlClose<CR>", {desc="Close curl", noremap = true, silent = true })
+-- Copilot
+map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", {desc="Disable copilot", noremap = true, silent = true })
+map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", {desc="Enable copilot", noremap = true, silent = true })
 -- Replace
 map("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", opts)
 map("v", "<C-s>", "<CMD>SearchReplaceWithinVisualSelection<CR>", opts)
@@ -181,5 +188,3 @@ local function black_hole_register()
     vim.fn.feedkeys('"_', 'n')
 end
 
--- Map Ctrl+` to enter the black hole register
-vim.api.nvim_set_keymap('n', '<C-`>', ':lua black_hole_register()<CR>', { noremap = true, silent = true })
