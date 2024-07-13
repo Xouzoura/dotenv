@@ -109,7 +109,6 @@ end, { noremap = true, silent = true, desc = "Smart open of telescope files" })
 map("n", "<leader><leader>", function()
   require("telescope").extensions.smart_open.smart_open { cwd_only = true }
 end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
--- map("n", "<leader>to", "<CMD>Hardtime toggle<CR>", opts)
 -- git commands that are useful
 map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
   desc = "Search git bcommits on current <f>ile",
@@ -122,8 +121,8 @@ map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()
 })
 local opts = {}
 -- To do
-map("n", "<leader>tdl", "<CMD>TodoLocList<CR>", { desc = "Todo list as list", noremap = true, silent = true })
-map("n", "<leader>tdt", "<CMD>TodoTelescope<CR>", { desc = "Todo list as telescope", noremap = true, silent = true })
+map("n", "<leader>TDL", "<CMD>TodoLocList<CR>", { desc = "Todo list as list", noremap = true, silent = true })
+map("n", "<leader>TDT", "<CMD>TodoTelescope<CR>", { desc = "Todo list as telescope", noremap = true, silent = true })
 -- curl
 map("n", "<leader>cuo", "<CMD>CurlOpen<CR>", { desc = "Open curl", noremap = true, silent = true })
 map("n", "<leader>cuc", "<CMD>CurlClose<CR>", { desc = "Close curl", noremap = true, silent = true })
