@@ -1,6 +1,6 @@
 return {
-    'github/copilot.vim',
-    lazy=false
+  "github/copilot.vim",
+  lazy = false,
 }
 -- Path: codeium.lua does not work at the moment
 -- return {

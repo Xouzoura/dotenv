@@ -3,8 +3,8 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
-  lazy=false,
+  lazy = false,
   config = function()
-    require("curl").setup({})
-  end
+    require("curl").setup {}
+  end,
 }

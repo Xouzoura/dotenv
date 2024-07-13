@@ -1,6 +1,5 @@
-
 return {
-    -- git
-    "sindrets/diffview.nvim",
-    lazy=false,
+  -- git
+  "sindrets/diffview.nvim",
+  lazy = false,
 }

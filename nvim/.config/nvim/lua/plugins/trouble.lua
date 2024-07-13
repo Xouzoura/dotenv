@@ -1,6 +1,5 @@
-
 return {
- "folke/trouble.nvim",
+  "folke/trouble.nvim",
   opts = {}, -- for default options, refer to the configuration section for custom setup.
   cmd = "Trouble",
   keys = {
@@ -19,7 +18,7 @@ return {
       "<cmd>lua vim.diagnostic.open_float()<cr>",
       desc = "Diagnostic error float open",
     },
-    -- Currently dont need them 
+    -- Currently dont need them
     -- {
     --   "<leader>xl",
     --   "<cmd>Trouble loclist toggle<cr>",
