@@ -24,17 +24,10 @@ return {
       require "configs.lspconfig"
     end,
   },
-  -- {
-  --     "jose-elias-alvarez/null-ls.nvim",
-  --     ft = {"python"},
-  --     opts = function()
-  --         return require "configs.null-ls"
-  --     end,
-  -- },
   {
-    -- Default conform setup for lua, python, javascript, c
+    -- Default conform setup for saving files
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
+    event = "BufWritePre",
     config = function()
       require "configs.conform"
     end,

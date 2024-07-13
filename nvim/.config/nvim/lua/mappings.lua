@@ -69,6 +69,7 @@ map("n", "<leader>cb", function()
   vim.cmd "wincmd h"
 end, { silent = true, desc = "Close all buffers" })
 -- close inactive buffers
+map("n", "<leader>ci", ":%bd|e#|bd#<CR>", { silent = true, desc = "Close inactive buffers" })
 map("n", "<leader>ct", function()
   vim.t.bufs = vim.tbl_filter(function(bufnr)
     return vim.api.nvim_buf_get_option(bufnr, "modified")
