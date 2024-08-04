@@ -9,6 +9,7 @@ return {
       ensure_installed = {
         "python",
         "bash",
+        "hurl",
       },
 
       highlight = { enable = true },

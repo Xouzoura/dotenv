@@ -182,6 +182,7 @@ alias venv="source ~/scripts/venv.sh"
 # Show characteristics of laptop
 alias mypc="neofetch"
 alias ta="source ~/scripts/tmux-anything.sh"
+alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
 
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"

@@ -18,16 +18,44 @@ return {
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "tpope/vim-dotenv",
+    -- "ellisonleao/dotenv.nvim",
   },
   lazy = false,
   cmd = "Neotest",
   config = function()
     local neotest = require "neotest"
+    -- Function to load environment variables from a .env file
+    local function load_env(file)
+      local env_vars = {}
+      local file = io.open(file, "r")
+
+      if file then
+        for line in file:lines() do
+          line = line:match "^%s*(.-)%s*$"
+          if not line:match "^#" and line ~= "" then
+            local key, value = line:match "^([%w_]+)=(.*)$"
+            if key and value then
+              env_vars[key] = value
+            end
+          end
+        end
+        file:close()
+      end
+
+      return env_vars
+    end
+
+    local env_vars = load_env ".env"
+
+    for k, v in pairs(env_vars) do
+      vim.fn.setenv(k, v)
+    end
     neotest.setup {
       adapters = {
         require "neotest-python" {
           dap = { justMyCode = false },
-
+          runner = "pytest",
           python = function()
             local poetry_venv = vim.fn.getcwd() .. "/.venv/bin/python"
             if vim.fn.filereadable(poetry_venv) == 1 then
