@@ -5,7 +5,9 @@ return {
     opts = function()
       custom = require "nvchad.configs.nvimtree"
       custom.filters.dotfiles = false
+      custom.git = custom.git or {}
       custom.git.ignore = false
+
       -- Add custom highlighting configuration
       custom.renderer = custom.renderer or {}
       custom.renderer.highlight_opened_files = "all"

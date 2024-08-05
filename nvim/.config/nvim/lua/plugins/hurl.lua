@@ -1,4 +1,5 @@
 return {
+  -- curl alternative using the .hurl file extension, expecting secrets in the vars.env file.
   "jellydn/hurl.nvim",
   dependencies = {
     "MunifTanjim/nui.nvim",
