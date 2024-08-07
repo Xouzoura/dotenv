@@ -3,7 +3,6 @@ return {
   "folke/noice.nvim",
   event = "VeryLazy",
   enabled = false, -- Not enabled because of fucking issue in python that is never resolved.
-  -- lazy=false,
   opts = {
     -- add any options here
   },
