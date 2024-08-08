@@ -1,15 +1,3 @@
--- {
---   "nvim-neotest/neotest",
---   dependencies = {
---     "nvim-neotest/nvim-nio",
---     "nvim-lua/plenary.nvim",
---     "antoinemadec/FixCursorHold.nvim",
---     "nvim-treesitter/nvim-treesitter"
---     },
---   function()
---     require()
---   end
--- }
 return {
   "nvim-neotest/neotest",
   dependencies = {

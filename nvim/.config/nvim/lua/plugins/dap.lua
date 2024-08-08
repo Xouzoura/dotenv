@@ -12,14 +12,6 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
-      -- Currently dont want to close the UI if errors
-      -- dap.listeners.before.event_terminated["dapui_config"] = function()
-      --     print("Closing DAP UI")
-      --     dapui.close()
-      -- end
-      -- dap.listeners.before.event_exited["dapui_config"] = function()
-      --     dapui.close()
-      -- end
     end,
   },
   {
@@ -130,14 +122,11 @@ return {
         -- You can add other options here as needed
       }
     end,
-    -- Specify dependencies if any
     dependencies = {
       "mfussenegger/nvim-dap",
     },
-    -- Specify when to load the plugin
     event = "VeryLazy", -- or you could use "BufReadPre" if you want it loaded earlier
     keys = {
-      -- Define keymaps for the plugin
       {
         "<leader>db",
         function()

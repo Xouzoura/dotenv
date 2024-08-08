@@ -82,33 +82,12 @@ map("n", "QA", ":qall<enter>", { noremap = false })
 map("n", "QW", ":w!<enter>", { noremap = false })
 map("n", "E", "$", { noremap = false })
 map("n", "B", "^", { noremap = false })
-map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
 -- Paste from system clipboard
 map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
 -- Keymaps view on telescope
 map("n", "<leader>tk", function()
   require("telescope.builtin").keymaps()
 end, { desc = "Keymaps on telescope" })
--- Spectre
-map("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = "Toggle Spectre",
-})
-map("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = "Search current word",
-})
-map("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = "Search current word",
-})
-map("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = "Search on current file",
-})
--- Telescope the most important files on the project as determined by telescope
-map("n", "<leader>fc", function()
-  require("telescope").extensions.smart_open.smart_open()
-end, { noremap = true, silent = true, desc = "Smart open of telescope files" })
-map("n", "<leader><leader>", function()
-  require("telescope").extensions.smart_open.smart_open { cwd_only = true }
-end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
 -- git commands that are useful
 map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
   desc = "Search git bcommits on current <f>ile",
@@ -119,60 +98,6 @@ map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
 map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
   desc = "Git toggle <b>lame by line",
 })
-local opts = {}
--- To do
-map("n", "<leader>TDL", "<CMD>TodoLocList<CR>", { desc = "Todo list as list", noremap = true, silent = true })
-map("n", "<leader>TDT", "<CMD>TodoTelescope<CR>", { desc = "Todo list as telescope", noremap = true, silent = true })
--- curl
-map("n", "<leader>cuo", "<CMD>CurlOpen<CR>", { desc = "Open curl", noremap = true, silent = true })
-map("n", "<leader>cuc", "<CMD>CurlClose<CR>", { desc = "Close curl", noremap = true, silent = true })
--- Copilot
-map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
-map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
--- accept copilot with c] and cy
-map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
-map("i", "<C-f>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
--- Replace
-map("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", opts)
-map("v", "<C-s>", "<CMD>SearchReplaceWithinVisualSelection<CR>", opts)
-map("v", "<C-b>", "<CMD>SearchReplaceWithinVisualSelectionCWord<CR>", opts)
-
-map("n", "<leader>rs", "<CMD>SearchReplaceSingleBufferSelections<CR>", opts)
-map("n", "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", opts)
-map("n", "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", opts)
-map("n", "<leader>rW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", opts)
-map("n", "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>", opts)
-map("n", "<leader>rf", "<CMD>SearchReplaceSingleBufferCFile<CR>", opts)
-
-map("n", "<leader>rbs", "<CMD>SearchReplaceMultiBufferSelections<CR>", opts)
-map("n", "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", opts)
-map("n", "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", opts)
-map("n", "<leader>rbW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", opts)
-map("n", "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>", opts)
-map("n", "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", opts)
-
--- ChatGPT
-local function keymapOptions(desc)
-  return {
-    noremap = true,
-    silent = true,
-    nowait = true,
-    desc = "GPT prompt " .. desc,
-  }
-end
-
--- Chat ai commands
-map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
-map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
-map({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions "Chat Finder")
-
-map("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions "Visual Chat New")
-map("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions "Visual Chat Paste")
-map("v", "<C-g>t", ":<C-u>'<,'>GpChatToggle<cr>", keymapOptions "Visual Toggle Chat")
-map({ "n", "i" }, "<C-g>gp", "<cmd>GpPopup<cr>", keymapOptions "Popup")
-map({ "n", "i", "v", "x" }, "<C-g>s", "<cmd>GpStop<cr>", keymapOptions "Stop")
-map({ "n", "i", "v", "x" }, "<C-g>n", "<cmd>GpNextAgent<cr>", keymapOptions "Next Agent")
-
 -- Mouse enable/disable
 -- Function to toggle mouse support
 function ToggleMouse()
@@ -190,3 +115,16 @@ local function black_hole_register()
   -- vim.api.nvim_feedkeys('"_', 'n', true)
   vim.fn.feedkeys('"_', "n")
 end
+---
+-------------------------
+-- PLUGINS --------------
+-------------------------
+---
+map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
+-- To do
+map("n", "<leader>TDL", "<CMD>TodoLocList<CR>", { desc = "Todo list as list", noremap = true, silent = true })
+map("n", "<leader>TDT", "<CMD>TodoTelescope<CR>", { desc = "Todo list as telescope", noremap = true, silent = true })
+-- Copilot
+map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
+map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
+map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot

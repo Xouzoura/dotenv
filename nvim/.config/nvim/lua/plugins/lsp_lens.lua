@@ -1,4 +1,5 @@
 return {
+  -- plugin to show how can times a symbol is referenced
   "VidocqH/lsp-lens.nvim",
   lazy = false,
   config = function()
