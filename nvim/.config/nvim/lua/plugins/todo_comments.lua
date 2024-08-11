@@ -9,5 +9,9 @@ return {
   "folke/todo-comments.nvim",
   lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
+  keys = {
+    { "<leader>TDL", "<cmd>TodoLocList<cr>", desc = "To Do List" },
+    { "<leader>TDT", "<cmd>TodoTelescope<cr>", desc = "To Do Telescope" },
+  },
   opts = {},
 }

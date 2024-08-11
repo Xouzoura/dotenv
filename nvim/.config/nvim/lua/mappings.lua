@@ -120,11 +120,10 @@ end
 -- PLUGINS --------------
 -------------------------
 ---
-map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
--- To do
-map("n", "<leader>TDL", "<CMD>TodoLocList<CR>", { desc = "Todo list as list", noremap = true, silent = true })
-map("n", "<leader>TDT", "<CMD>TodoTelescope<CR>", { desc = "Todo list as telescope", noremap = true, silent = true })
--- Copilot
+-- map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
+-- Oil
+map("n", "g:", "<CMD>Oil<CR>", { desc = "Open oil.nvim" })
+-- Copilot (enable/disable, but enabled by default)
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
 map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
