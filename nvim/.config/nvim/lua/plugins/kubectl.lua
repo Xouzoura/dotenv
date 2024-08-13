@@ -4,7 +4,7 @@ return {
   lazy = false,
   keys = {
     {
-      "<leader>k",
+      "<leader>kb",
       function()
         require("kubectl").open()
       end,

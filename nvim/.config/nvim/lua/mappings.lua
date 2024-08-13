@@ -27,10 +27,26 @@ map("v", "<", "<gv", { silent = true })
 map("v", ">", ">gv", { silent = true })
 
 -- <--- ## NORMAL mode stuff ###--->
--- Center C-u and C-d
+-- Center C-u and C-d, and when searching with n/N
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-d>", "<C-d>zz")
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map({ "n", "v" }, "<leader>kd", [["_d]])
+map({ "n", "v" }, "<leader>kD", [["_D]])
+-- Yank to system clipboard
+map({ "n", "v" }, "<leader>sy", [["+y]])
+map("n", "<leader>sY", [["+Y]])
+-- Paste from system clipboard
+map({ "n", "v" }, "<leader>sp", [["+p]])
+map("n", "<leader>sP", [["+P]])
+-- Run file with python
+map("n", "<leader>xp", function()
+  vim.cmd "!python %"
+end, { desc = "Python Run of File" })
+-- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
+-- Add a newline and return to normal mode
 map("n", "<leader>o", "printf('m`%so<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line below",
@@ -39,6 +55,7 @@ map("n", "<leader>O", "printf('m`%sO<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line above",
 })
+-- show messages
 map("n", "<leader>cl", "<cmd>@:<cr>", { desc = "Repeat Last Command" })
 map("n", "<leader>cm", "<cmd>messages<cr>", { desc = "View all printed messages" })
 -- Resizing of windows
@@ -127,3 +144,7 @@ map("n", "g:", "<CMD>Oil<CR>", { desc = "Open oil.nvim" })
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
 map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
+-- Smart open
+map("n", "<leader><leader>", function()
+  require("telescope").extensions.smart_open.smart_open { cwd_only = true }
+end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
