@@ -1,0 +1,25 @@
+local ls = require "luasnip"
+local s = ls.snippet
+local f = ls.function_node
+
+-- Snippet for Unix datetime
+ls.add_snippets("all", {
+  s(
+    "unix",
+    f(function()
+      return tostring(os.time())
+    end)
+  ),
+  s(
+    "``",
+    f(function()
+      return "- [ ] "
+    end)
+  ),
+  s(
+    "today",
+    f(function()
+      return os.date "%Y-%m-%d"
+    end)
+  ),
+})
