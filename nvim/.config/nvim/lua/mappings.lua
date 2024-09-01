@@ -43,7 +43,10 @@ map("n", "<leader>sP", [["+P]])
 -- Run file with python
 map("n", "<leader>xp", function()
   vim.cmd "!python %"
-end, { desc = "Python Run of File" })
+end, { desc = "(python) Run of File" })
+map("n", "<leader>xg", function()
+  vim.cmd "!go run %"
+end, { desc = "(golang) Run of File" })
 -- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
 -- Add a newline and return to normal mode

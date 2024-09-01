@@ -7,7 +7,7 @@ local options = {
   },
   formatters = {
     black = {
-      prepended_args = { "--line-length", "120" },
+      prepended_args = { "--line-length", "88" },
       command = "black",
     },
   },

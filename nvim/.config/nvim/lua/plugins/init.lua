@@ -14,6 +14,8 @@ return {
         -- "tsserver",
         "clangd",
         "eslint-lsp",
+        -- go
+        "gopls",
       },
     },
   },

@@ -59,7 +59,6 @@ return {
               return string.format("%x", v)
             end)
           end
-          print(uuid)
           return uuid()
         end,
       },

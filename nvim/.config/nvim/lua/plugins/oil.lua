@@ -8,6 +8,7 @@ return {
       ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
       ["<C-u>"] = { "actions.preview_scroll_up", desc = "Preview scroll up" },
       ["<C-d>"] = { "actions.preview_scroll_down", desc = "Preview scroll down" },
+      ["<C-x>"] = { "actions.open_terminal", desc = "Open terminal as a buffer" },
     },
     view_options = {
       show_hidden = true,
