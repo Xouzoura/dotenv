@@ -151,3 +151,16 @@ map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replac
 map("n", "<leader><leader>", function()
   require("telescope").extensions.smart_open.smart_open { cwd_only = true }
 end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
+-- git signs
+map("n", "<leader>gdd", "<cmd>DiffviewOpen<CR>", {
+  desc = "(gitsigns) Diff with HEAD",
+})
+map("n", "<leader>gdm", "<cmd>DiffviewOpen develop..HEAD <CR>", {
+  desc = "(gitsigns) Diff with dev",
+})
+map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
+  desc = "(gitsigns) Diff file",
+})
+map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
+  desc = "(gitsigns) Close",
+})
