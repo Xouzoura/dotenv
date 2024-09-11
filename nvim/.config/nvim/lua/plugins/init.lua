@@ -2,21 +2,22 @@
 return {
   {
     "williamboman/mason.nvim",
+    -- No need to add this with new nvchad.
     opts = {
-      ensure_installed = {
-        "lua-language-server",
-        "black",
-        "debugpy",
-        "pyright",
-        "mypy",
-        -- "ruff",
-        "isort",
-        -- "tsserver",
-        "clangd",
-        "eslint-lsp",
-        -- go
-        "gopls",
-      },
+      -- ensure_installed = {
+      --   "lua-language-server",
+      --   "black",
+      --   "debugpy",
+      --   "pyright",
+      --   "mypy",
+      --   -- "ruff",
+      --   "isort",
+      --   -- "tsserver",
+      --   "clangd",
+      --   "eslint-lsp",
+      --   -- go
+      --   "gopls",
+      -- },
     },
   },
   {

@@ -1,10 +1,10 @@
 require "nvchad.options"
 
--- Settings 
+-- Settings
 -- global
 vim.o.mouse = "a"
 vim.o.breakindent = true
-vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldcolumn = "1" -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 10
 vim.o.foldenable = true
@@ -25,47 +25,54 @@ vim.opt.numberwidth = 4
 vim.opt.wrap = true
 vim.opt.showbreak = [[↪ ]]
 vim.opt.breakindent = true
-vim.wo.signcolumn = 'yes'
+-- sync buffers automatically
+vim.opt.autoread = true
+-- disable neovim generating a swapfile and showing a warning
+vim.opt.swapfile = false
+vim.wo.signcolumn = "yes"
 
 local id = vim.api.nvim_create_augroup("startup", {
-  clear = false
+  clear = false,
 })
 
 local persistbuffer = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  vim.fn.setbufvar(bufnr, 'bufpersist', 1)
+  vim.fn.setbufvar(bufnr, "bufpersist", 1)
 end
 
-vim.api.nvim_create_autocmd({"BufRead"}, {
+vim.api.nvim_create_autocmd({ "BufRead" }, {
   group = id,
-  pattern = {"*"},
+  pattern = { "*" },
   callback = function()
-    vim.api.nvim_create_autocmd({"InsertEnter","BufModifiedSet"}, {
+    vim.api.nvim_create_autocmd({ "InsertEnter", "BufModifiedSet" }, {
       buffer = 0,
       once = true,
       callback = function()
         persistbuffer()
-      end
+      end,
     })
-  end
+  end,
 })
 
 -- Highlight the active window
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   autocmd WinEnter,CursorMoved * setlocal winhighlight=Normal:ActiveWindow
   autocmd WinLeave * setlocal winhighlight=Normal:InactiveWindow
-]], false)
+]],
+  false
+)
 
 -- Define the highlight groups for active window/inactive window
-vim.cmd('highlight ActiveWindow guibg=None guifg=None')
-vim.cmd('highlight InactiveWindow guibg=#2c2f34')
+vim.cmd "highlight ActiveWindow guibg=None guifg=None"
+vim.cmd "highlight InactiveWindow guibg=#2c2f34"
 
 -- highlight on yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank({ timeout=300 })
-    end,
-    group = highlight_group,
-    pattern = "*",
+  callback = function()
+    vim.highlight.on_yank { timeout = 300 }
+  end,
+  group = highlight_group,
+  pattern = "*",
 })
