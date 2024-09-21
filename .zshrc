@@ -150,11 +150,11 @@ alias aptp='sudo nala purge -y'
 alias btail='multitail'
 
 # Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first --icons'
-alias la='exa -a --color=always --group-directories-first'
-alias ll='exa -l --color=always --group-directories-first'
-alias lt='exa -aT --level=2 --color=always --group-directories-first'
-alias l.='exa -a | egrep "^\."'
+alias ls='eza -al --color=always --group-directories-first --icons'
+alias la='eza -a --color=always --group-directories-first'
+alias ll='eza -l --color=always --group-directories-first'
+alias lt='eza -aT --level=2 --color=always --group-directories-first'
+alias l.='eza -a | egrep "^\."'
 
 # Flag
 alias df='df -h'
