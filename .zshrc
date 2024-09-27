@@ -185,7 +185,7 @@ alias ta="source ~/scripts/tmux-anything.sh"
 alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
 alias notes="vi ~/vaults/notes"
 alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
-
+alias xopen="xdg-open ."
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"

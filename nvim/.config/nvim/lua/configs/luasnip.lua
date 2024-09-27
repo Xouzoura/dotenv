@@ -22,4 +22,10 @@ ls.add_snippets("all", {
       return os.date "%Y-%m-%d"
     end)
   ),
+  s(
+    "ignore",
+    f(function()
+      return "type: ignore[]"
+    end)
+  ),
 })

@@ -132,12 +132,6 @@ function ToggleMouse()
   end
 end
 map("n", "<leader>mm", ":lua ToggleMouse()<CR>", { desc = "disable/enable mouse", noremap = true, silent = true })
--- Function to enter the black hole register
-local function black_hole_register()
-  -- vim.api.nvim_feedkeys('"_', 'n', true)
-  vim.fn.feedkeys('"_', "n")
-end
----
 -------------------------
 -- PLUGINS --------------
 -------------------------
