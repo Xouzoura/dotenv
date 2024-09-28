@@ -73,7 +73,9 @@ return {
     { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
     -- Run Hurl request in visual mode
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
-    { "<leader>ce", ":edit vars.env<CR>", desc = "Open vars.env file" },
+    -- General mappings
+    { "<leader>cE", ":edit vars.env<CR>", desc = "Open vars.env file" },
+    { "<leader>ce", ":edit .env<CR>", desc = "Open .env file" },
     { "<leader>cf", ":edit vars.hurl<CR>", desc = "Open vars.hurl file" },
   },
 }

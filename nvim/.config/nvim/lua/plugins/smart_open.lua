@@ -11,12 +11,6 @@ return {
   },
   config = function()
     require("telescope").load_extension "smart_open"
-    -- local map = vim.keymap.set
-    -- map("n", "<leader>fc", function()
-    --   require("telescope").extensions.smart_open.smart_open()
-    -- end, { noremap = true, silent = true, desc = "Smart open of telescope files" })
-    -- map("n", "<leader><leader>", function()
-    --   require("telescope").extensions.smart_open.smart_open { cwd_only = true }
-    -- end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
+    require("telescope").load_extension "fzf"
   end,
 }

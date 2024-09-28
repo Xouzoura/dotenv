@@ -30,7 +30,6 @@ vim.opt.autoread = true
 -- disable neovim generating a swapfile and showing a warning
 vim.opt.swapfile = false
 vim.wo.signcolumn = "yes"
--- vim.opt.hidden = true
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false,
 })
@@ -76,49 +75,51 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = highlight_group,
   pattern = "*",
 })
--- new
--- Function to find UUIDs and temporarily highlight them with unique letter hints
-function FindAndSelectUUID()
+
+-- Highlight useful patterns for easy copy paste
+function FindAndSelectPattern()
+  -- does not work perfectly, but it's a start
+  local patterns = {
+    url_https = "(https?://[%w%.%-/:#%?%&_=]+)",
+    url_http = "(http?://[%w%.%-/:#%?%&_=]+)",
+    -- file_path = "([%w%p]+/[.%w%p]+)",
+    uuid = "%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x",
+    -- sha_pattern_7 = "%x%x%x%x%x%x%x%x",
+    -- sha_pattern = "[0-9a-fA-F]{7,40}",
+    ip = "%d%d?%d?%.%d%d?%d?%.%d%d?%d?%.%d%d?%d?",
+    address = "0x[0-9a-fA-F]+",
+    token_pattern = "eyJ[%w%p]+",
+  }
   local api = vim.api
-  local hint_chars = "abcdefghijklmnopqrstuvwxyz"
+  local hint_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
   local ns_id = api.nvim_create_namespace "uuid_highlight"
 
   local bufnr = api.nvim_get_current_buf()
   local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
-  local uuid_pattern = "%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x"
   local hints = {}
   local hint_idx = 1
 
-  -- Clear previous highlights and temp hints
   api.nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)
-
-  -- Search for UUIDs and highlight them without modifying buffer content
   for i, line in ipairs(lines) do
-    for start_pos, uuid in line:gmatch("()(" .. uuid_pattern .. ")") do
-      if hint_idx <= #hint_chars then
-        local hint_char = hint_chars:sub(hint_idx, hint_idx)
-        table.insert(hints, { char = hint_char, uuid = uuid, line = i, start_pos = start_pos })
+    for pattern_name, pattern in pairs(patterns) do
+      for start_pos, match in line:gmatch("()(" .. pattern .. ")") do
+        if hint_idx <= #hint_chars then
+          local hint_char = hint_chars:sub(hint_idx, hint_idx)
+          table.insert(hints, { char = hint_char, match = match, line = i, start_pos = start_pos })
+          api.nvim_buf_add_highlight(bufnr, ns_id, "IncSearch", i - 1, start_pos - 1, start_pos + #match - 1)
+          api.nvim_buf_set_extmark(bufnr, ns_id, i - 1, start_pos - 1, {
+            virt_text = { { hint_char, "Error" } },
+            virt_text_pos = "overlay",
+          })
 
-        -- Highlight the entire UUID
-        api.nvim_buf_add_highlight(bufnr, ns_id, "IncSearch", i - 1, start_pos - 1, start_pos + #uuid - 1)
-
-        -- Show the hint character (virtual text) next to the UUID without modifying buffer text
-        api.nvim_buf_set_extmark(bufnr, ns_id, i - 1, start_pos - 1, {
-          virt_text = { { hint_char, "Error" } }, -- Use virtual text to show hint character
-          virt_text_pos = "overlay", -- Position it over the UUID
-        })
-
-        hint_idx = hint_idx + 1
+          hint_idx = hint_idx + 1
+        end
       end
     end
   end
-  -- Force a screen redraw
-  vim.cmd "redraw"
-  -- Function to listen for user input and copy selected UUID
   local function select_hint()
     local char = vim.fn.getcharstr()
 
-    -- Clear the highlights and virtual text if the user presses Escape
     if char == "\27" then -- Escape key
       api.nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)
       return
@@ -126,15 +127,17 @@ function FindAndSelectUUID()
 
     for _, hint in ipairs(hints) do
       if hint.char == char then
-        -- Copy the selected UUID to the clipboard
-        vim.fn.setreg("+", hint.uuid)
+        vim.fn.setreg("+", hint.match)
 
-        -- Clear the highlights and virtual text after selection
         api.nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)
+        print("Copied ", hint.match)
         return
       end
     end
   end
+
+  -- Force a screen redraw
+  vim.cmd "redraw"
 
   if #hints > 0 then
     select_hint()
@@ -142,4 +145,4 @@ function FindAndSelectUUID()
 end
 
 -- Map the function to a keybinding, e.g., <leader>cu
-vim.api.nvim_set_keymap("n", "<leader>cu", ":lua FindAndSelectUUID()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cu", ":lua FindAndSelectPattern()<CR>", { noremap = true, silent = true })
