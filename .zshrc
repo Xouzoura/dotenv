@@ -186,6 +186,8 @@ alias azdb='az account get-access-token --resource-type oss-rdbms --query "[acce
 alias notes="vi ~/vaults/notes"
 alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
 alias xopen="xdg-open ."
+alias k8s='nvim +"lua require(\"kubectl\").open()"'
+# Yazi
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"

@@ -1,6 +1,8 @@
 return {
   -- curl alternative using the .hurl file extension, expecting secrets in the vars.env file.
   "jellydn/hurl.nvim",
+  -- "Xouzoura/hurl.nvim",
+  -- branch = "feat/add-file-root-as-default-path",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
@@ -74,8 +76,8 @@ return {
     -- Run Hurl request in visual mode
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
     -- General mappings
-    { "<leader>cE", ":edit vars.env<CR>", desc = "Open vars.env file" },
-    { "<leader>ce", ":edit .env<CR>", desc = "Open .env file" },
-    { "<leader>cf", ":edit vars.hurl<CR>", desc = "Open vars.hurl file" },
+    { "<leader>ce", ":edit vars.env<CR>", desc = "Open vars.env file" },
+    { "<leader>E", ":edit .env<CR>", desc = "Open .env file" },
+    { "<leader>cj", ":edit vars.hurl<CR>", desc = "Open vars.hurl file" },
   },
 }
