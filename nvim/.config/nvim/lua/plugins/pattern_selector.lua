@@ -9,7 +9,7 @@ return {
       "n",
       "<leader>cu",
       ":lua require('pattern_selector').FindAndSelectPattern()<CR>",
-      { noremap = true, silent = true }
+      { noremap = true, silent = true, desc = "Find and select pattern" }
     )
     -- Set a keymap to call the replace with function
 
@@ -17,7 +17,7 @@ return {
       "n",
       "<leader>cr",
       ":lua require('pattern_selector').ReplaceWithClipboard()<CR>",
-      { noremap = true, silent = true }
+      { noremap = true, silent = true, desc = "Replace with clipboard" }
     )
   end,
 }

@@ -73,11 +73,12 @@ return {
     { "<leader>te", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
     { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
     { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
+    { "<leader>co", "<cmd>HurlShowLastResponse<CR>", desc = "(Hurl) Show last response" },
     -- Run Hurl request in visual mode
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
     -- General mappings
-    { "<leader>ce", ":edit vars.env<CR>", desc = "Open vars.env file" },
+    { "<leader>ce", ":edit vars.env<CR>", desc = "(Hurl) Open vars.env file" },
+    { "<leader>cj", ":edit vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
     { "<leader>E", ":edit .env<CR>", desc = "Open .env file" },
-    { "<leader>cj", ":edit vars.hurl<CR>", desc = "Open vars.hurl file" },
   },
 }

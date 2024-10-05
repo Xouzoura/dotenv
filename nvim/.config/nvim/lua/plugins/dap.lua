@@ -94,12 +94,9 @@ return {
       local function get_python_path()
         -- Use the currently active virtual environment's Python binary
         local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
-        local venv_path2 = vim.fn.getcwd() .. "/venv/bin/python"
 
         if vim.fn.filereadable(venv_path) == 1 then
           return venv_path
-        elseif vim.fn.filereadable(venv_path2) == 1 then
-          return venv_path2
         else
           return vim.fn.expand "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
         end

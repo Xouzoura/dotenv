@@ -184,6 +184,7 @@ alias mypc="neofetch"
 alias ta="source ~/scripts/tmux-anything.sh"
 alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
 alias notes="vi ~/vaults/notes"
+alias notesw="vi ~/vaults/notes/2024-08-24_weekend-goals.md"
 alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
 alias xopen="xdg-open ."
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
