@@ -107,7 +107,7 @@ map("n", "B", "^", { noremap = false })
 -- Paste from system clipboard
 map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
 -- Keymaps view on telescope
-map("n", "<leader>tk", function()
+map("n", "<leader>kk", function()
   require("telescope.builtin").keymaps()
 end, { desc = "Keymaps on telescope" })
 -- git commands that are useful

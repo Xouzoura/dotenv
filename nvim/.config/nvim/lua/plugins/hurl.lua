@@ -1,8 +1,8 @@
 return {
   -- curl alternative using the .hurl file extension, expecting secrets in the vars.env file.
-  "jellydn/hurl.nvim",
-  -- "Xouzoura/hurl.nvim",
-  -- branch = "feat/add-file-root-as-default-path",
+  -- "jellydn/hurl.nvim",
+  "Xouzoura/hurl.nvim",
+  branch = "feature/url-show-and-repeat-history",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
@@ -16,6 +16,10 @@ return {
     show_notification = false,
     -- Show response in popup or split
     mode = "split",
+    url = {
+      show = true,
+      format_without_params = true,
+    },
     -- Default formatter
     formatters = {
       json = { "jq" }, -- Make sure you have install jq in your system, e.g: brew install jq
@@ -70,10 +74,11 @@ return {
     -- Run API request
     { "<leader>cA", "<cmd>HurlRunner<CR>", desc = "(Hurl) Run All requests" },
     { "<leader>ca", "<cmd>HurlRunnerAt<CR>", desc = "(Hurl) Run Api request" },
-    { "<leader>te", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
+    { "<leader>cz", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
     { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
     { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
-    { "<leader>co", "<cmd>HurlShowLastResponse<CR>", desc = "(Hurl) Show last response" },
+    { "<leader>c[", "<cmd>HurlShowLastResponse<CR>", desc = "(Hurl) Show last response" },
+    { "<leader>ck", "<cmd>HurlRerun<CR>", desc = "(Hurl) Rerun last command" },
     -- Run Hurl request in visual mode
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
     -- General mappings

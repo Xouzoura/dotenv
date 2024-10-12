@@ -188,6 +188,7 @@ alias notesw="vi ~/vaults/notes/2024-08-24_weekend-goals.md"
 alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
 alias xopen="xdg-open ."
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
+alias fm='nautilus .'
 # Yazi
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"

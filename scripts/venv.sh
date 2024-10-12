@@ -7,25 +7,15 @@ cd ..
 if [ -d "venv3.11" ]; then
     echo "Activating the venv3.11"
     source venv3.11/bin/activate
-elif [ -d "venv" ]; then
-    echo "Activating the venv"
-    source venv/bin/activate
 elif [ -d ".venv" ]; then
     echo "Activating the venv"
     source .venv/bin/activate
 elif [ -d "../venv3.11" ]; then
     echo "Activating the ../venv3.11"
     source ../venv3.11/bin/activate
-elif [ -d "../venv" ]; then
-    echo "Activating the ../venv"
-    source ../venv/bin/activate
-# Check in the parent of the parent directory
-elif [ -d "../../venv3.11" ]; then
-    echo "Activating the ../../venv3.11"
-    source ../../venv3.11/bin/activate
-elif [ -d "../../venv" ]; then
-    echo "Activating the ../../venv"
-    source ../../venv/bin/activate
+elif [ -d "../.venv" ]; then
+    echo "Activating the ../.venv"
+    source ../.venv/bin/activate
 elif [ "$1" = "0" ]; then
     # Create virtual environment if 0 is provided as input
     virtualenv venv

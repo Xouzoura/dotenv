@@ -23,12 +23,20 @@ local config = {
   },
 
   agents = {
+    -- {
+    --   name = "gpt4o",
+    --   provider = "azure",
+    --   chat = true,
+    --   command = false,
+    --   model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
+    --   system_prompt = SYSTEM_PROMPT,
+    -- },
     {
-      name = "gpt4o",
+      name = "o1-preview",
       provider = "azure",
       chat = true,
       command = false,
-      model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
+      model = { model = "o1-preview", temperature = 1.1, top_p = 1 },
       system_prompt = SYSTEM_PROMPT,
     },
   },
