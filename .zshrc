@@ -181,14 +181,24 @@ alias db="dbeaver-ce"
 alias venv="source ~/scripts/venv.sh"
 # Show characteristics of laptop
 alias mypc="neofetch"
+# Tmux
 alias ta="source ~/scripts/tmux-anything.sh"
-alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
+
+# Notes
 alias notes="vi ~/vaults/notes"
 alias notesw="vi ~/vaults/notes/2024-08-24_weekend-goals.md"
+# Qbittorrent
 alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
-alias xopen="xdg-open ."
+# k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
+# File manager
 alias fm='nautilus .'
+# Wezterm
+alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
+
+# Work 
+# alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
+
 # Yazi
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
