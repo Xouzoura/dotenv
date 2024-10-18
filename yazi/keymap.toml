@@ -142,11 +142,16 @@ keymap = [
 	{ on = [ "w" ], run = "tasks_show", desc = "Show the tasks manager" },
 
 	# Goto
-	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go to the home directory" },
-	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go to the config directory" },
-	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go to the downloads directory" },
-	{ on = [ "g", "." ],       run = "cd ~/dotenv",      desc = "Go to the dotenv directory" },
-	{ on = [ "g", "t" ],       run = "cd /tmp",          desc = "Go to the temporary directory" },
+	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go ~" },
+	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go ~/.config " },
+	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go Downloads" },
+	{ on = [ "g", "." ],       run = "cd ~/dotenv",      desc = "Go ~/dotenv/" },
+	{ on = [ "g", "s" ],       run = "cd /.local/share",          desc = "Go to the .local/share directory" },
+    # Local only for my projects
+	{ on = [ "g", "e" ],       run = "cd ~/Documents/eth/eth-cas/",      desc = "Go CAS-ETH" },
+	{ on = [ "g", "b", "b" ],  run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/",      desc = "Go backend (BKW)" },
+	{ on = [ "g", "b", "t" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/bkw.gpt4km.backend/src/tests/remote/",      desc = "Go backend (test)" },
+	{ on = [ "g", "b", "a" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/ai-tools/inputs/personal/",      desc = "Go ai-tools (test)" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Go to a directory interactively" },
 
 	# Help

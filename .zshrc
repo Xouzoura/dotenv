@@ -191,6 +191,7 @@ alias notesw="vi ~/vaults/notes/2024-08-24_weekend-goals.md"
 alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
 # k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
+alias oil='nvim +"Oil"'
 # File manager
 alias fm='nautilus .'
 # Wezterm

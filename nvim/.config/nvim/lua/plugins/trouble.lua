@@ -6,12 +6,12 @@ return {
     {
       "<leader>xxd",
       "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "(Trouble) Buffer Diagnostics All [D]",
+      desc = "(Trouble) Buffer Diagnostics All Down side",
     },
     {
       "<leader>xxr",
       "<cmd>Trouble diagnostics toggle win.type = split win.position=right<cr>",
-      desc = "(Trouble) Buffer Diagnostics All [R]",
+      desc = "(Trouble) Buffer Diagnostics All Right side",
     },
     {
       "<leader>xbd",
