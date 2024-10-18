@@ -27,9 +27,13 @@ map("v", "<", "<gv", { silent = true })
 map("v", ">", ">gv", { silent = true })
 
 -- <--- ## NORMAL mode stuff ###--->
+-- help is <F3>
+map("n", "<F3>", "K", { noremap = true, silent = true })
 -- Center C-u and C-d, and when searching with n/N
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-d>", "<C-d>zz")
+map("n", "J", "5j")
+map("n", "K", "5k")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 map({ "n", "v" }, "<leader>kd", [["_d]])
@@ -47,6 +51,9 @@ end, { desc = "(python) Run of File" })
 map("n", "<leader>xg", function()
   vim.cmd "!go run %"
 end, { desc = "(golang) Run of File" })
+map("n", "<leader>xb", function()
+  vim.cmd "!source %"
+end, { desc = "(bash) Run of File" })
 -- Search first occurrence of item
 map("n", "g*", "*ggn")
 -- close terminal
@@ -138,7 +145,15 @@ map("n", "<leader>mm", ":lua ToggleMouse()<CR>", { desc = "disable/enable mouse"
 ---
 -- map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
 -- Oil
-map("n", "g:", "<CMD>Oil<CR>", { desc = "Open oil.nvim" })
+-- map("n", "g:", "<CMD>Oil<CR>", { desc = "Open oil.nvim" })
+vim.keymap.set("n", "g:", function()
+  local oil = require "oil"
+  require("oil").open()
+
+  require("oil.util").run_after_load(0, function()
+    oil.open_preview()
+  end)
+end)
 -- Copilot (enable/disable, but enabled by default)
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
