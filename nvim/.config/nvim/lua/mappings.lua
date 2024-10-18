@@ -105,6 +105,8 @@ map("n", "<leader>ct", function()
   end, vim.t.bufs)
 end, { silent = true, desc = "Close unused buffers" })
 
+-- format json file
+map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true })
 -- close buffer, nvim, and save
 map("n", "QQ", ":q!<enter>", { noremap = false })
 map("n", "QA", ":qall<enter>", { noremap = false })

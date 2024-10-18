@@ -209,6 +209,16 @@ function yy() {
 	fi
 	rm -f -- "$tmp"
 }
+## Autofold
+fold_md() {
+  local file="$1"
+  if [ -f "$file" ]; then
+    fold -s -w 80 "$file" > temp.md && mv temp.md "$file"
+    echo "Formatted $file with a width of 80 characters."
+  else
+    echo "Error: $file not found."
+  fi
+}
 # All secrets that I want my shell to have access to
 source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

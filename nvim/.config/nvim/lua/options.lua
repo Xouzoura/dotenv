@@ -102,8 +102,8 @@ autocmd({ "FileType" }, {
   pattern = "bigfile",
   callback = function(ev)
     vim.cmd "syntax off"
-    vim.cmd "UfoDetach"
-    vim.cmd "Gitsigns detach"
+    -- vim.cmd "UfoDetach"
+    -- vim.cmd "Gitsigns detach"
     vim.opt_local.foldmethod = "manual"
     vim.opt_local.spell = false
     vim.schedule(function()
