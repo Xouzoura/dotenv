@@ -119,9 +119,9 @@ end, { silent = true, desc = "Close unused buffers" })
 -- format json file
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true })
 -- close buffer, nvim, and save
-map("n", "QQ", ":q!<enter>", { noremap = false })
-map("n", "QA", ":qall<enter>", { noremap = false })
-map("n", "QW", ":w!<enter>", { noremap = false })
+map("n", "Q", ":q!<enter>", { noremap = false })
+map("n", "QQ", ":qall<enter>", { noremap = false })
+-- map("n", "QW", ":w!<enter>", { noremap = false })
 map("n", "E", "$", { noremap = false })
 map("n", "B", "^", { noremap = false })
 -- Paste from system clipboard

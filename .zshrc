@@ -197,6 +197,8 @@ alias fm='nautilus .'
 # Wezterm
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 
+alias backup-rsync= 'rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
+
 # Work 
 # alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
 
