@@ -12,6 +12,7 @@ vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
 vim.o.inccommand = "split"
 vim.o.updatetime = 250
+vim.o.cursorline = true
 -- opts
 vim.opt.laststatus = 2
 vim.opt.tabstop = 4
@@ -33,7 +34,7 @@ vim.wo.signcolumn = "yes"
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false,
 })
-
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#282C34", fg = "#F8F8F2" })
 local persistbuffer = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
   vim.fn.setbufvar(bufnr, "bufpersist", 1)
@@ -111,3 +112,18 @@ autocmd({ "FileType" }, {
     end)
   end,
 })
+
+-- Define a function to set highlights for search
+function set_highlights()
+  -- vim.api.nvim_set_hl(0, "CurrentSearch", { bg = "#C70039", fg = "#000000" }) -- Default search highlight (yellow background)
+  vim.api.nvim_set_hl(0, "Search", { bg = "#8B8000", fg = "#000000" }) -- Orange background for current match
+end
+
+-- Create an augroup for highlights
+vim.cmd [[
+  augroup SetSearchHighlights
+    autocmd!
+    autocmd VimEnter,BufWinEnter,BufRead,BufNewFile * lua set_highlights()
+  augroup END
+]]
+set_highlights()

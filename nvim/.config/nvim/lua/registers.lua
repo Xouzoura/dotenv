@@ -2,3 +2,4 @@
 --
 -- @d: In an env file, delete the current line to the zero register. => F=l"_D
 -- @p: In an env file, replace the current value with the copy resister. => F=l"_Dp , so like the one above just with paste
+-- @f: Swap the Bearer token with the next occurrence: => /Bearer<CR> /lln /:w<CR>

@@ -44,18 +44,29 @@ map("n", "<leader>sY", [["+Y]])
 -- Paste from system clipboard
 map({ "n", "v" }, "<leader>sp", [["+p]])
 map("n", "<leader>sP", [["+P]])
--- Run file with python
-map("n", "<leader>xp", function()
-  vim.cmd "!python %"
-end, { desc = "(python) Run of File" })
-map("n", "<leader>xg", function()
-  vim.cmd "!go run %"
-end, { desc = "(golang) Run of File" })
-map("n", "<leader>xb", function()
-  vim.cmd "!source %"
-end, { desc = "(bash) Run of File" })
--- Search first occurrence of item
-map("n", "g*", "*ggn")
+-- RUN files
+local function run_file()
+  local filepath = vim.fn.expand "%:p"
+  local extension = vim.fn.fnamemodify(filepath, ":e")
+
+  if extension == "py" then
+    -- Check for pyproject.toml to use poetry
+    if vim.fn.filereadable(vim.fn.expand "pyproject.toml") == 1 then
+      vim.cmd("!poetry run python " .. filepath)
+    else
+      vim.cmd("!python " .. filepath)
+    end
+  elseif extension == "go" then
+    vim.cmd("!go run " .. filepath)
+  elseif extension == "sh" then
+    vim.cmd("!source " .. filepath)
+  else
+    print("Unsupported file type: " .. extension)
+  end
+end
+map("n", "<leader>xf", run_file, { desc = "E<x>exute <f>ile" })
+map("n", "g*", "*gg0nzzzv") -- Decide which i like more
+map("n", "g0", "*GNzzzv")
 -- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
 -- Add a newline and return to normal mode
