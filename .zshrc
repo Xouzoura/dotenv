@@ -192,11 +192,13 @@ alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
 # k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
+alias ggr='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
 # File manager
 alias fm='nautilus .'
 # Wezterm
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
-
+alias lg='lazygit'
+alias g-='git checkout -'
 alias backup-rsync= 'rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
 
 # Work 

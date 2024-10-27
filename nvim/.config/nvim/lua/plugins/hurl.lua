@@ -86,6 +86,6 @@ return {
     { "<leader>ce", ":edit vars.env<CR>", desc = "(Hurl) Open vars.env file" },
     { "<leader>cj", ":edit vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
     { "<leader>E", ":edit .env<CR>", desc = "Open .env file" },
-    { "<leader>cs", ":edit pyproject.toml<CR>", desc = "Open pyproject.toml file" },
+    { "<leader>R", ":edit pyproject.toml<CR>", desc = "Open pyproject.toml file" },
   },
 }
