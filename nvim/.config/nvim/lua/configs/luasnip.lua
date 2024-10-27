@@ -5,7 +5,7 @@ local f = ls.function_node
 -- Snippet for Unix datetime
 ls.add_snippets("all", {
   s(
-    "unix",
+    "ts",
     f(function()
       return tostring(os.time())
     end)
@@ -25,7 +25,7 @@ ls.add_snippets("all", {
   s(
     "ignore",
     f(function()
-      return "type: ignore[]"
+      return "#type: ignore[]"
     end)
   ),
 })

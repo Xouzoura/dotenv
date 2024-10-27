@@ -2,7 +2,8 @@ return {
   -- curl alternative using the .hurl file extension, expecting secrets in the vars.env file.
   -- "jellydn/hurl.nvim",
   "Xouzoura/hurl.nvim",
-  branch = "feature/url-show-and-repeat-history",
+  -- branch = "feature/url-show-and-repeat-history",
+  branch = "feature/url-show",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
@@ -74,9 +75,9 @@ return {
     -- Run API request
     { "<leader>cA", "<cmd>HurlRunner<CR>", desc = "(Hurl) Run All requests" },
     { "<leader>ca", "<cmd>HurlRunnerAt<CR>", desc = "(Hurl) Run Api request" },
-    { "<leader>cz", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
-    { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
-    { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
+    -- { "<leader>cz", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
+    -- { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
+    -- { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
     { "<leader>c[", "<cmd>HurlShowLastResponse<CR>", desc = "(Hurl) Show last response" },
     { "<leader>ck", "<cmd>HurlRerun<CR>", desc = "(Hurl) Rerun last command" },
     -- Run Hurl request in visual mode
@@ -85,5 +86,6 @@ return {
     { "<leader>ce", ":edit vars.env<CR>", desc = "(Hurl) Open vars.env file" },
     { "<leader>cj", ":edit vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
     { "<leader>E", ":edit .env<CR>", desc = "Open .env file" },
+    { "<leader>cs", ":edit pyproject.toml<CR>", desc = "Open pyproject.toml file" },
   },
 }
