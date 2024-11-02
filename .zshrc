@@ -130,6 +130,8 @@ alias glog='git log --graph --oneline --all --decorate'
 alias gst='git status'
 alias gca='git commit -am'
 alias gbv='git branch -vv'
+alias g-='git checkout -'
+alias gdev='git checkout develop'
 
 # Ip
 alias myip='curl ipinfo.io/ip'
@@ -198,13 +200,10 @@ alias fm='nautilus .'
 # Wezterm
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
-alias g-='git checkout -'
 alias backup-rsync= 'rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
 
-# Work 
-# alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
 
-# Yazi
+# Yazi (yy)
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
@@ -213,7 +212,7 @@ function yy() {
 	fi
 	rm -f -- "$tmp"
 }
-## Autofold
+## Autofold (fold_md)
 fold_md() {
   local file="$1"
   if [ -f "$file" ]; then

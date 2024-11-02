@@ -167,15 +167,18 @@ vim.keymap.set("n", "g:", function()
     oil.open_preview()
   end)
 end)
--- Copilot (enable/disable, but enabled by default)
+-- Debug prints (plugins/debug.lua)
+map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
+map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
+-- Copilot (enable/disable, but enabled by default) (plugins/copilot.lua)
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
 map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
--- Smart open
+-- Smart open (plugins/smart_open.lua)
 map("n", "<leader><leader>", function()
   require("telescope").extensions.smart_open.smart_open { cwd_only = true }
 end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
--- git signs
+-- git signs (part of default config from nvchad)
 map("n", "<leader>gdd", "<cmd>DiffviewOpen<CR>", {
   desc = "(gitsigns) Diff with HEAD",
 })

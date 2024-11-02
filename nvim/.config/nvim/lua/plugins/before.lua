@@ -6,8 +6,8 @@ return {
     local before = require "before"
     before.setup()
 
-    vim.keymap.set("n", "<M-q>", before.jump_to_last_edit, {})
-    vim.keymap.set("n", "<M-e>", before.jump_to_next_edit, {})
+    vim.keymap.set("n", "<M-p>", before.jump_to_last_edit, {})
+    vim.keymap.set("n", "<M-n>", before.jump_to_next_edit, {})
     --
     -- -- Look for previous edits in quickfix list
     -- vim.keymap.set("n", "<leader>oq", before.show_edits_in_quickfix, {})

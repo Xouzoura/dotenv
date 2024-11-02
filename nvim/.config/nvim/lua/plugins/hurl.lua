@@ -3,7 +3,7 @@ return {
   -- "jellydn/hurl.nvim",
   "Xouzoura/hurl.nvim",
   -- branch = "feature/url-show-and-repeat-history",
-  branch = "feature/url-show",
+  -- branch = "feature/url-show",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
