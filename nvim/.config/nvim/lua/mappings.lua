@@ -155,14 +155,12 @@ map("n", "<leader>mm", ":lua ToggleMouse()<CR>", { desc = "disable/enable mouse"
 -------------------------
 -- PLUGINS --------------
 -------------------------
----
+-- Noice
 -- map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
 -- Oil
--- map("n", "g:", "<CMD>Oil<CR>", { desc = "Open oil.nvim" })
 vim.keymap.set("n", "g:", function()
   local oil = require "oil"
   require("oil").open()
-
   require("oil.util").run_after_load(0, function()
     oil.open_preview()
   end)
@@ -191,3 +189,11 @@ map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
 map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
+
+-- Telescope copy paste
+map(
+  "n",
+  "<S-h>",
+  "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<cr>",
+  { desc = "[P]Open telescope buffers" }
+)

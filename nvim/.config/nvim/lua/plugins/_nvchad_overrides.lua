@@ -28,10 +28,21 @@ return {
 
       -- Add custom highlighting colors
       vim.cmd [[
-      highlight NvimTreeOpenedFile guifg=#8e7cc3
-      highlight NvimTreeCursorLine guibg=#b4a7d6
+          highlight NvimTreeOpenedFile guifg=#8e7cc3
+          highlight NvimTreeCursorLine guibg=#b4a7d6
     ]]
 
+      return custom
+    end,
+  },
+  {
+    -- Plugin: nvim-telescope/telescope.nvim
+    "nvim-telescope/telescope.nvim",
+    opts = function()
+      local custom = require "nvchad.configs.telescope"
+      custom.defaults.mappings = {
+        n = { ["q"] = require("telescope.actions").close, ["d"] = require("telescope.actions").delete_buffer },
+      }
       return custom
     end,
   },

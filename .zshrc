@@ -200,7 +200,8 @@ alias fm='nautilus .'
 # Wezterm
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
-alias backup-rsync= 'rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
+alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
+alias pnew='poetry run pytest -s -m new'
 
 
 # Yazi (yy)
