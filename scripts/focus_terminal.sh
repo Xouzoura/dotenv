@@ -9,4 +9,6 @@ then
     de.lucaswerkmeister.ActivateWindowByTitle \
     activateByWmClass \
     s 'gnome-terminal-server'
+else
+    gnome-terminal &
 fi

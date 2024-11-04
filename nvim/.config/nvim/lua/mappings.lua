@@ -3,7 +3,7 @@ require "nvchad.mappings"
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
 vim.api.nvim_del_keymap("n", "<leader>x")
-
+vim.keymap.set("n", "<C-o>", "<Nop>")
 -- Start the mapping
 local map = vim.keymap.set
 -- Disable arrow keys
@@ -197,3 +197,4 @@ map(
   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<cr>",
   { desc = "[P]Open telescope buffers" }
 )
+map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
