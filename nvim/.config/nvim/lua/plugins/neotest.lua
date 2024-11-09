@@ -73,26 +73,26 @@ return {
     -- Keymaps (will all start from <leader>t)
     vim.keymap.set("n", "<leader>tt", function()
       neotest.run.run()
-    end, { desc = "Run nearest test" })
+    end, { desc = "[t]Run nearest test" })
 
     vim.keymap.set("n", "<leader>tf", function()
       neotest.run.run(vim.fn.expand "%")
-    end, { desc = "Run current file" })
+    end, { desc = "[t]Run current file" })
 
     vim.keymap.set("n", "<leader>td", function()
       neotest.run.run { strategy = "dap" }
-    end, { desc = "Debug" })
+    end, { desc = "[t]Debug" })
 
-    vim.keymap.set("n", "<leader>ta", run_all_tests, { desc = "Run all tests" })
+    vim.keymap.set("n", "<leader>ta", run_all_tests, { desc = "[t]Run all tests" })
 
-    vim.keymap.set("n", "<leader>tc", run_custom_tests, { desc = "Run tests with custom args" })
+    vim.keymap.set("n", "<leader>tc", run_custom_tests, { desc = "[t]Run tests with custom args" })
 
     vim.keymap.set("n", "<leader>ts", function()
       neotest.summary.toggle()
-    end, { desc = "Toggle test summary" })
+    end, { desc = "[t]Toggle test summary" })
 
     vim.keymap.set("n", "<leader>to", function()
       neotest.output.open { enter = true }
-    end, { desc = "Open test output" })
+    end, { desc = "[t]Open test output" })
   end,
 }

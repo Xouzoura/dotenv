@@ -1,0 +1,8 @@
+[keybindings]
+"Shift+q" = "quit"
+"Shift+l" = "next"
+"Shift+h" = "previous"
+"Space" = "playpause"
+"Shift+x" = "share_clipboard selected"
+"x" = "stop"
+"q" = "back"

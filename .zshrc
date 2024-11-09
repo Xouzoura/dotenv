@@ -178,6 +178,7 @@ alias vo="nvim -c 'Telescope oldfiles'"
 alias mouse="keep-presence"
 #alias cat="bat"
 alias db="dbeaver-ce"
+alias music="ncspot"
 
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
@@ -190,7 +191,7 @@ alias ta="source ~/scripts/tmux-anything.sh"
 alias notes="vi ~/vaults/notes"
 alias notesw="vi ~/vaults/notes/2024-08-24_weekend-goals.md"
 # Qbittorrent
-alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
+alias qbt="z ~/Downloads/torrents/ && ./qbittorrent-4.6.6_x86_64_1.AppImage"
 # k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
