@@ -1,8 +1,49 @@
+library_tabs=["tracks","albums","artists","playlists","browse"]
+statusbar_format="%artists - %title - (%album)"
+notify=true
+
 [keybindings]
 "Shift+q" = "quit"
 "Shift+l" = "next"
 "Shift+h" = "previous"
+"s" = "playpause"
 "Space" = "playpause"
-"Shift+x" = "share_clipboard selected"
-"x" = "stop"
+# "v" = "share_clipboard"
+# "Shift+v" = "share_clipboard selected"
+"v" = "stop"
 "q" = "back"
+"Ctrl+t" = "queue"
+"Ctrl+d" = "move down 5"
+"Ctrl+u" = "move up 5"
+# Adds the current track to the queue
+"w" = "add current"
+"Shift+w" = "add"
+"g" = "move up 1000"
+"Shift+g" = "move down 1000"
+"Shift+]" = "newplaylist"
+"Esc" = "back"
+
+[theme]
+background = "#181818"
+primary = "#F1F1F1"
+secondary = "#DCDCDC"
+title = "#1ED760"
+playing = "#1ED760"
+playing_selected = "#1ED760"
+playing_bg = "#181818"
+highlight = "#1DB954"
+highlight_bg = "#000000"
+error = "#FFE4E4"
+error_bg = "#A50000"
+statusbar = "#000000"
+statusbar_progress = "#00AC4C"
+statusbar_bg = "#00AC4C"
+cmdline = "#CBFFDE"
+cmdline_bg = "#444444"
+
+statusbar_format = "%artists - %title"
+
+[track_format]
+left = "%artists - %title"
+center = "%album"
+right = "%saved %duration"

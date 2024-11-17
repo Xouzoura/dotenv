@@ -202,8 +202,13 @@ alias fm='nautilus .'
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
 alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
+# alias mysudo='sudo -E env "PATH=$PATH"'
+# Python aliases for my code 
 alias pnew='poetry run pytest -s -m new'
-
+alias plf='poetry run pytest -s --lf'
+alias pdb='poetry run pytest -s --pdb'
+alias pca="pre-commit run --all-files"
+alias jp="python -m jupyter notebook"
 
 # Yazi (yy)
 function yy() {

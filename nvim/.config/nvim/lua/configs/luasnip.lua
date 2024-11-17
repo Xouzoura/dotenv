@@ -28,4 +28,10 @@ ls.add_snippets("all", {
       return "#type: ignore[]"
     end)
   ),
+  s(
+    "pn",
+    f(function()
+      return "@pytest.mark.new"
+    end)
+  ),
 })

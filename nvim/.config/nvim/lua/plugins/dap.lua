@@ -96,7 +96,7 @@ return {
     keys = {
       { "<leader>dui", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },
       { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "[d]Reset DAP UI" },
-      { "<leader>duz", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
+      { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
     },
   },
   {

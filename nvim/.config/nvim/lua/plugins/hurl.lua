@@ -1,9 +1,122 @@
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local previewers = require "telescope.previewers"
+local conf = require("telescope.config").values
+local action_state = require "telescope.actions.state"
+local actions = require "telescope.actions"
+
+local function parse_hurl_file(filepath)
+  local requests = {}
+  local current_request = {}
+  local line_number = 0
+  for line in io.lines(filepath) do
+    line_number = line_number + 1
+    line = line:gsub("^%s*(.-)%s*$", "%1")
+    line = line:gsub("%s+", " ")
+    local non_comment = string.find(line, "^[^#]")
+    local matchcase = string.find(line, "^GET ")
+      or string.find(line, "^POST ")
+      or string.find(line, "^PUT ")
+      or string.find(line, "^DELETE ")
+      or string.find(line, "^PATCH ")
+    if matchcase and non_comment then
+      if #current_request > 0 then
+        table.insert(requests, { content = table.concat(current_request, "\n"), line = current_request.line })
+        current_request = {}
+      end
+      current_request.line = line_number
+    end
+    table.insert(current_request, line)
+  end
+  if #current_request > 0 then
+    table.insert(requests, { content = table.concat(current_request, "\n"), line = current_request.line })
+  end
+  return requests
+end
+
+local function hurl_picker()
+  local filepath = vim.fn.expand "%:p"
+  if filepath == "" then
+    print "Error: No file is currently open."
+    return
+  end
+
+  local requests = parse_hurl_file(filepath)
+  if #requests == 0 then
+    print "Error: No valid HTTP requests found in the file."
+    return
+  end
+
+  pickers
+    .new({}, {
+      prompt_title = "Hurl File Requests",
+      finder = finders.new_table {
+        results = requests,
+        entry_maker = (function()
+          local counter = 0
+          return function(entry)
+            counter = counter + 1
+            local label = counter <= 96 and tostring(counter)
+            local display = "[" .. label .. "] " .. (entry.content:match "^%u+ [^%s]+" or entry.content:sub(1, 50))
+            local method = entry.content:match "^%u+" -- Extract the HTTP method
+            -- local method, path = entry.content:match "^(%u+)%s+([^%s]+)"
+            -- local display = string.format("[%s] %s %s", label, method, path)
+            return {
+              value = entry,
+              display = display,
+              ordinal = entry.content,
+              line = entry.line,
+              method = method,
+              label = label,
+            }
+          end
+        end)(),
+      },
+
+      sorter = conf.generic_sorter {
+        discard_state = true,
+        case_mode = "respect_case", -- Case-sensitive match
+      },
+      previewer = previewers.new_buffer_previewer {
+        define_preview = function(self, entry, status)
+          vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, vim.split(entry.value.content, "\n"))
+        end,
+      },
+      attach_mappings = function(prompt_bufnr, map)
+        map("i", "<CR>", function()
+          actions.close(prompt_bufnr)
+          local selected_entry = action_state.get_selected_entry().value
+          -- Ensure selected_entry.line is a valid number
+          local line_number = tonumber(selected_entry.line) or 1
+          vim.api.nvim_win_set_cursor(0, { line_number, 0 })
+        end)
+
+        -- Use normal mode mappings for direct label jumps to avoid interference with insert mode filtering
+        for i, request in ipairs(requests) do
+          local label = i <= 96 and tostring(i)
+          map("n", label, function()
+            actions.close(prompt_bufnr)
+            local line_number = tonumber(request.line) or 1
+            vim.api.nvim_win_set_cursor(0, { line_number, 0 })
+          end)
+        end
+
+        return true
+      end,
+    })
+    :find()
+end
+
+vim.api.nvim_create_user_command("HurlPickerTs", function()
+  hurl_picker()
+end, {})
+
+-- Telescope key mapping
+vim.api.nvim_set_keymap("n", "<leader>cs", ":HurlPickerTs<CR>", { noremap = true, silent = true })
+
 return {
-  -- curl alternative using the .hurl file extension, expecting secrets in the vars.env file.
   -- "jellydn/hurl.nvim",
   "Xouzoura/hurl.nvim",
-  -- branch = "feature/url-show-and-repeat-history",
-  -- branch = "feature/url-show",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",

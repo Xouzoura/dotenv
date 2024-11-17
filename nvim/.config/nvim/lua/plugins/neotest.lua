@@ -2,9 +2,9 @@ return {
   "nvim-neotest/neotest",
   dependencies = {
     "nvim-neotest/neotest-python",
-    "nvim-neotest/nvim-nio",
+    -- "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
-    "antoinemadec/FixCursorHold.nvim",
+    -- "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
     "tpope/vim-dotenv",
     -- "ellisonleao/dotenv.nvim",
@@ -13,7 +13,6 @@ return {
   cmd = "Neotest",
   config = function()
     local neotest = require "neotest"
-    -- Function to load environment variables from a .env file
     local function load_env(file)
       local env_vars = {}
       local file = io.open(file, "r")
@@ -44,13 +43,7 @@ return {
         require "neotest-python" {
           dap = { justMyCode = false },
           runner = "pytest",
-          python = function()
-            local poetry_venv = vim.fn.getcwd() .. "/.venv/bin/python"
-            if vim.fn.filereadable(poetry_venv) == 1 then
-              return poetry_venv
-            end
-            raise "No virtualenv found"
-          end,
+          python = ".venv/bin/python",
         },
       },
     }
@@ -93,6 +86,6 @@ return {
 
     vim.keymap.set("n", "<leader>to", function()
       neotest.output.open { enter = true }
-    end, { desc = "[t]Open test output" })
+    end, { desc = "Open test output" })
   end,
 }

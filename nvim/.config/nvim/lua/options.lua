@@ -103,8 +103,6 @@ autocmd({ "FileType" }, {
   pattern = "bigfile",
   callback = function(ev)
     vim.cmd "syntax off"
-    -- vim.cmd "UfoDetach"
-    -- vim.cmd "Gitsigns detach"
     vim.opt_local.foldmethod = "manual"
     vim.opt_local.spell = false
     vim.schedule(function()
@@ -127,3 +125,31 @@ vim.cmd [[
   augroup END
 ]]
 set_highlights()
+
+-- local max_buffers = 1 -- Set your maximum number of buffers
+--
+-- local function close_least_recently_used_buffer()
+--   local buffers = vim.fn.getbufinfo { buflisted = true }
+--   print("buffer", buffers[1].bufnr)
+--
+--   if #buffers > max_buffers then
+--     print("more buffers", #buffers)
+--     table.sort(buffers, function(a, b)
+--       return a.lastused > b.lastused
+--     end)
+--
+--     -- Use tabufline's close_buffer to close the least recently used buffer
+--     local lru_buffer = buffers[1].bufnr
+--     if lru_buffer ~= vim.api.nvim_get_current_buf() then
+--       print("delete", lru_buffer)
+--       require("nvchad.tabufline.init").close_buffer(lru_buffer)
+--     end
+--   end
+-- end
+--
+-- -- Create an autocmd to trigger the cleanup on buffer enter
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   callback = function()
+--     close_least_recently_used_buffer()
+--   end,
+-- })

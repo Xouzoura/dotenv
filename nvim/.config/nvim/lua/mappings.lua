@@ -152,6 +152,8 @@ function ToggleMouse()
   end
 end
 map("n", "<leader>mm", ":lua ToggleMouse()<CR>", { desc = "disable/enable mouse", noremap = true, silent = true })
+map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests", noremap = true, silent = true })
+
 -------------------------
 -- PLUGINS --------------
 -------------------------
@@ -189,8 +191,7 @@ map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
 map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
-
--- Telescope copy paste
+map("n", "<leader>-", "<cmd>terminal<CR>", { desc = "Open terminal" })
 map(
   "n",
   "<S-h>",
@@ -198,3 +199,7 @@ map(
   { desc = "[P]Open telescope buffers" }
 )
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
+map("n", "<leader>f.", function()
+  local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
+  require("telescope.builtin").live_grep { search_dirs = { file_dir } }
+end, { desc = "Search grep in current file's directory" })
