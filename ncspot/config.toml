@@ -1,6 +1,6 @@
 library_tabs=["tracks","albums","artists","playlists","browse"]
-statusbar_format="%artists - %title - (%album)"
-notify=true
+statusbar_format="%artists - %title -- [ %album ]"
+# notify=true
 
 [keybindings]
 "Shift+q" = "quit"
@@ -13,8 +13,10 @@ notify=true
 "v" = "stop"
 "q" = "back"
 "Ctrl+t" = "queue"
-"Ctrl+d" = "move down 5"
-"Ctrl+u" = "move up 5"
+"Shift+j" = "move down 5"
+"Shift+k" = "move up 5"
+"Ctrl+d" = "move down 10"
+"Ctrl+u" = "move up 10"
 # Adds the current track to the queue
 "w" = "add current"
 "Shift+w" = "add"

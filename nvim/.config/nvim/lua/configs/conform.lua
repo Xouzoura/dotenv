@@ -16,7 +16,8 @@ local options = {
         "$FILENAME",
         "-",
         "--line-length", -- This is because of stupid local forces.
-        "120", -- This is because of stupid local forces. WILL REMOVE WHEN OUT.
+        -- "120", -- This is because of stupid local forces. WILL REMOVE WHEN OUT.
+        "88", --
       },
     },
   },

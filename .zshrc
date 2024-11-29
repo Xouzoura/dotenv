@@ -122,8 +122,10 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
 # Scripts
-alias vpnc='. vpn/conn.sh'
-alias vpnd='. vpn/disc.sh'
+# alias vpnc='. vpn/conn.sh'
+# alias vpnd='. vpn/disc.sh'
+alias vpnc='sudo tailscale set --exit-node=remote-laptop.tailfa8e1.ts.net.'
+alias vpnd='sudo tailscale up --exit-node='
 
 # Git
 alias glog='git log --graph --oneline --all --decorate'
@@ -178,8 +180,8 @@ alias vo="nvim -c 'Telescope oldfiles'"
 alias mouse="keep-presence"
 #alias cat="bat"
 alias db="dbeaver-ce"
-alias music="ncspot"
-
+alias ncspot="flatpak run io.github.hrkfdn.ncspot"
+# alias music="ncspot"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
 # Show characteristics of laptop

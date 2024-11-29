@@ -203,3 +203,29 @@ map("n", "<leader>f.", function()
   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
 end, { desc = "Search grep in current file's directory" })
+
+map("n", "g>", ":normal ]m<CR>", { noremap = true, silent = true })
+map("n", "g<", ":normal [m<CR>", { noremap = true, silent = true })
+-- Reload .env
+function reload_env()
+  local env_file = vim.fn.getcwd() .. "/.env"
+  if vim.fn.filereadable(env_file) == 1 then
+    local file = io.open(env_file, "r")
+    for line in file:lines() do
+      -- Skip comments and empty lines
+      if not line:match "^%s*$" and not line:match "^#" then
+        local key, value = line:match "([^=]+)=(.+)"
+        if key and value then
+          -- Set the environment variable in Neovim
+          vim.fn.setenv(key, value)
+        end
+      end
+    end
+    file:close()
+    print "Reloaded .env file"
+  else
+    print "No .env file found"
+  end
+end
+
+map("n", "<leader>rr", ":lua reload_env()<CR>", { noremap = true, silent = true })

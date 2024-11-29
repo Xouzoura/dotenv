@@ -12,6 +12,9 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
+      -- new?
+      dap.listeners.before.event_terminated.dapui_config = dapui.close
+      dap.listeners.before.event_exited.dapui_config = dapui.close
     end,
   },
   {
@@ -84,6 +87,10 @@ return {
         local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
 
         if vim.fn.filereadable(venv_path) == 1 then
+          -- debugpy_exists = venv_path .. " -m debugpy"
+          -- if vim.fn.system(debugpy_exists) == 0 then
+          --   print "debugpy found in venv"
+          -- end
           return venv_path
         else
           return vim.fn.expand "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
@@ -91,7 +98,9 @@ return {
       end
 
       local python_path = get_python_path()
-      require("dap-python").setup(python_path)
+      local dap_python = require "dap-python"
+      dap_python.setup(python_path)
+      dap_python.default_port = 38000
     end,
     keys = {
       { "<leader>dui", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },

@@ -1,5 +1,5 @@
 return {
-  -- Default folder with zA to fold current function
+  -- Default fold
   "kevinhwang91/nvim-ufo",
   event = "BufEnter",
   dependencies = {
@@ -23,10 +23,6 @@ return {
 
   config = function()
     require("ufo").setup {
-      -- zA to fold ``
-      provider_selector = function(_bufnr, _filetype, _buftype)
-        return { "treesitter", "indent" }
-      end,
       close_fold_kinds_for_ft = {
         default = { "imports", "comment" },
         json = { "array" },
@@ -44,11 +40,40 @@ return {
         return start_text .. " ⋯ " .. final_text .. (" 󰁂 %d "):format(end_lnum - lnum)
       end,
     }
-    vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-    vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-    vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-    vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-    vim.keymap.set("n", "zk", function()
+    -- Mapping
+    -- 0
+    vim.keymap.set("n", "z0", function()
+      vim.wo.foldlevel = 0
+      print "Fold level: 0" -- Display the new fold level
+    end, { desc = "Set fold to 0" })
+
+    -- 1
+    vim.keymap.set("n", "z1", function()
+      vim.wo.foldlevel = 1
+      print "Fold level: 1" -- Display the new fold level
+    end, { desc = "Set fold to 1" })
+
+    -- max
+    vim.keymap.set("n", "z=", function()
+      vim.wo.foldlevel = 20
+      print "Fold level: 20" -- Display the new fold level
+    end, { desc = "Set fold to max" })
+    -- decrease
+    vim.keymap.set("n", "z-", function()
+      local current_level = vim.wo.foldlevel
+      vim.wo.foldlevel = math.max(current_level - 1, 0) -- Ensure it doesn't go below 0
+      print("Fold level: " .. vim.wo.foldlevel) -- Display the new fold level
+    end, { desc = "Decrease fold level" })
+
+    -- increase
+    vim.keymap.set("n", "z+", function()
+      local current_level = vim.wo.foldlevel
+      vim.wo.foldlevel = current_level + 1
+      print("Fold level: " .. vim.wo.foldlevel) -- Display the new fold level
+    end, { desc = "Increase fold level" })
+
+    -- Hover and sneak-peek
+    vim.keymap.set("n", "zp", function()
       local winid = require("ufo").peekFoldedLinesUnderCursor()
       if not winid then
         -- choose one of coc.nvim and nvim lsp
