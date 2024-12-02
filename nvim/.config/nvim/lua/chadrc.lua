@@ -28,7 +28,7 @@ local M = {
       },
     },
     tabufline = {
-      enable = false,
+      enabled = false,
     },
   },
   term = {},

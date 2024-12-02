@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 require "nvchad.options"
 
 -- Settings
@@ -31,6 +32,9 @@ vim.opt.autoread = true
 -- disable neovim generating a swapfile and showing a warning
 vim.opt.swapfile = false
 vim.wo.signcolumn = "yes"
+-- Already defined at diagnostics.lua
+-- vim.diagnostic.config { virtual_text = true, severity_sort = true, signs = true }
+
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false,
 })
@@ -113,8 +117,7 @@ autocmd({ "FileType" }, {
 
 -- Define a function to set highlights for search
 function set_highlights()
-  -- vim.api.nvim_set_hl(0, "CurrentSearch", { bg = "#C70039", fg = "#000000" }) -- Default search highlight (yellow background)
-  vim.api.nvim_set_hl(0, "Search", { bg = "#8B8000", fg = "#000000" }) -- Orange background for current match
+  vim.api.nvim_set_hl(0, "Search", { bg = "#8B8000", fg = "#000000" })
 end
 
 -- Create an augroup for highlights
@@ -125,31 +128,3 @@ vim.cmd [[
   augroup END
 ]]
 set_highlights()
-
--- local max_buffers = 1 -- Set your maximum number of buffers
---
--- local function close_least_recently_used_buffer()
---   local buffers = vim.fn.getbufinfo { buflisted = true }
---   print("buffer", buffers[1].bufnr)
---
---   if #buffers > max_buffers then
---     print("more buffers", #buffers)
---     table.sort(buffers, function(a, b)
---       return a.lastused > b.lastused
---     end)
---
---     -- Use tabufline's close_buffer to close the least recently used buffer
---     local lru_buffer = buffers[1].bufnr
---     if lru_buffer ~= vim.api.nvim_get_current_buf() then
---       print("delete", lru_buffer)
---       require("nvchad.tabufline.init").close_buffer(lru_buffer)
---     end
---   end
--- end
---
--- -- Create an autocmd to trigger the cleanup on buffer enter
--- vim.api.nvim_create_autocmd("BufEnter", {
---   callback = function()
---     close_least_recently_used_buffer()
---   end,
--- })

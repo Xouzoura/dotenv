@@ -1,8 +1,14 @@
--- BEFORE
-local on_attach = require("nvchad.configs.lspconfig").on_attach
+local on_attach = function(client, bufnr)
+  -- Override nvchad to disable the signature help
+  local _nvchad_on_attach = require("nvchad.configs.lspconfig").on_attach
+  if _nvchad_on_attach then
+    _nvchad_on_attach(client, bufnr)
+  end
+  client.server_capabilities.signatureHelpProvider = false
+end
+-- local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
-
 local lspconfig = require "lspconfig"
 local servers = { "html", "cssls", "clangd", "lua_ls" }
 -- lsps with default config
@@ -28,7 +34,7 @@ lspconfig.pyright.setup {
         useLibraryCodeForTypes = true,
         diagnosticMode = "workspace",
         typeCheckingMode = "basic",
-        excludePaths = { "**/venv/**", "**/.venv/**" }, -- Add this line to exclude venv and .venv
+        excludePaths = { "**/.venv/**" },
       },
     },
   },

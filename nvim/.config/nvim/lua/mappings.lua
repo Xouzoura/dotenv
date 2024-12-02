@@ -1,4 +1,7 @@
+---@diagnostic disable: undefined-global
+---
 require "nvchad.mappings"
+local extras = require "extras"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
@@ -45,26 +48,7 @@ map("n", "<leader>sY", [["+Y]])
 map({ "n", "v" }, "<leader>sp", [["+p]])
 map("n", "<leader>sP", [["+P]])
 -- RUN files
-local function run_file()
-  local filepath = vim.fn.expand "%:p"
-  local extension = vim.fn.fnamemodify(filepath, ":e")
-
-  if extension == "py" then
-    -- Check for pyproject.toml to use poetry
-    if vim.fn.filereadable(vim.fn.expand "pyproject.toml") == 1 then
-      vim.cmd("!poetry run python " .. filepath)
-    else
-      vim.cmd("!python " .. filepath)
-    end
-  elseif extension == "go" then
-    vim.cmd("!go run " .. filepath)
-  elseif extension == "sh" then
-    vim.cmd("!source " .. filepath)
-  else
-    print("Unsupported file type: " .. extension)
-  end
-end
-map("n", "<leader>xf", run_file, { desc = "E<x>exute <f>ile" })
+map("n", "<leader>xf", extras.run_file, { desc = "E<x>exute <f>ile" })
 map("n", "g*", "*gg0nzzzv") -- Decide which i like more
 map("n", "g0", "*GNzzzv")
 -- close terminal
@@ -109,7 +93,7 @@ map("n", "<leader>cb", function()
   vim.cmd "wincmd h"
 end, { silent = true, desc = "Close all buffers" })
 -- close inactive buffers
--- map("n", "<leader>ci", ":%bd|e#|bd#<CR>", { silent = true, desc = "Close inactive buffers" })
+
 map("n", "<leader>ct", function()
   vim.t.bufs = vim.tbl_filter(function(bufnr)
     return vim.api.nvim_buf_get_option(bufnr, "modified")
@@ -140,18 +124,8 @@ map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
 map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
   desc = "Git toggle <b>lame by line",
 })
--- Mouse enable/disable
--- Function to toggle mouse support
-function ToggleMouse()
-  if vim.o.mouse == "a" then
-    vim.o.mouse = ""
-    print "Mouse disabled"
-  else
-    vim.o.mouse = "a"
-    print "Mouse enabled"
-  end
-end
-map("n", "<leader>mm", ":lua ToggleMouse()<CR>", { desc = "disable/enable mouse", noremap = true, silent = true })
+
+map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
 map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests", noremap = true, silent = true })
 
 -------------------------
@@ -160,7 +134,8 @@ map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests",
 -- Noice
 -- map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
 -- Oil
-vim.keymap.set("n", "g:", function()
+map("n", "g;", ":Oil<CR>", { noremap = true, silent = true, desc = "Open oil" })
+map("n", "g:", function()
   local oil = require "oil"
   require("oil").open()
   require("oil.util").run_after_load(0, function()
@@ -192,40 +167,23 @@ map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
 map("n", "<leader>-", "<cmd>terminal<CR>", { desc = "Open terminal" })
-map(
-  "n",
-  "<S-h>",
-  "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<cr>",
-  { desc = "[P]Open telescope buffers" }
-)
+-- map(
+--   "n",
+--   "<S-h>",
+--   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<cr>",
+--   { desc = "[P]Open telescope buffers" }
+-- )
+map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
+
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
 map("n", "<leader>f.", function()
   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
-end, { desc = "Search grep in current file's directory" })
+end, { desc = "[P]Search grep in current file's directory" })
 
 map("n", "g>", ":normal ]m<CR>", { noremap = true, silent = true })
 map("n", "g<", ":normal [m<CR>", { noremap = true, silent = true })
--- Reload .env
-function reload_env()
-  local env_file = vim.fn.getcwd() .. "/.env"
-  if vim.fn.filereadable(env_file) == 1 then
-    local file = io.open(env_file, "r")
-    for line in file:lines() do
-      -- Skip comments and empty lines
-      if not line:match "^%s*$" and not line:match "^#" then
-        local key, value = line:match "([^=]+)=(.+)"
-        if key and value then
-          -- Set the environment variable in Neovim
-          vim.fn.setenv(key, value)
-        end
-      end
-    end
-    file:close()
-    print "Reloaded .env file"
-  else
-    print "No .env file found"
-  end
-end
 
-map("n", "<leader>rr", ":lua reload_env()<CR>", { noremap = true, silent = true })
+map("n", "<leader>rr", extras.reload_env, { noremap = true, silent = true })
+map("n", "<leader>yp", extras.cwd, { desc = "Copy path to clipboard" })
+map("n", "<leader>yf", extras.file_wd, { desc = "Copy file path to clipboard" })
