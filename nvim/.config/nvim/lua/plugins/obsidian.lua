@@ -79,6 +79,20 @@ return {
       end,
       desc = "(Obsidian) Find buffer links",
     },
+    {
+      "<leader>ms",
+      function()
+        vim.cmd "e ~/vaults/notes/"
+      end,
+      desc = "(Obsidian) Open workspace files",
+    },
+    {
+      "<leader>mww",
+      function()
+        vim.cmd "e ~/vaults/notes/2024-10-22_work.md"
+      end,
+      desc = "(Obsidian) Open work",
+    },
   },
   opts = {
 

@@ -88,9 +88,16 @@ map("n", "U", "<C-r>", { silent = true })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
 -- close all buffers
+-- map("n", "<leader>cb", function()
+--   -- only works with tabufline
+--   require("nvchad.tabufline").closeAllBufs()
+--   vim.cmd "wincmd h"
+-- end, { silent = true, desc = "Close all buffers" })
 map("n", "<leader>cb", function()
-  require("nvchad.tabufline").closeAllBufs()
-  vim.cmd "wincmd h"
+  vim.cmd [[
+          let current = bufnr('%')
+          bufdo if bufnr('%') != current | bdelete | endif
+    ]]
 end, { silent = true, desc = "Close all buffers" })
 -- close inactive buffers
 

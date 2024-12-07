@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local M = {}
 --
 function M.run_file()
@@ -71,9 +72,9 @@ function M.open_buffers()
     sort_lastused = true,
     initial_mode = "normal",
     path_display = function(opts, path)
-      local filename = vim.fn.fnamemodify(path, ":t") -- Get the file name
-      local directory = vim.fn.fnamemodify(path, ":h") -- Get the directory
-      return string.format(("%s (%s)"):format(), filename, directory)
+      local filename = vim.fn.fnamemodify(path, ":t")
+      local directory = vim.fn.fnamemodify(path, ":h")
+      return string.format("%s (%s)", filename, directory)
     end,
   }
 end
