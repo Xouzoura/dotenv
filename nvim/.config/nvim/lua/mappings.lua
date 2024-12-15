@@ -87,18 +87,30 @@ map("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
 map("n", "U", "<C-r>", { silent = true })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
--- close all buffers
+-- -- 1) close all buffers (tabufline)
 -- map("n", "<leader>cb", function()
 --   -- only works with tabufline
 --   require("nvchad.tabufline").closeAllBufs()
 --   vim.cmd "wincmd h"
 -- end, { silent = true, desc = "Close all buffers" })
+-- -- 2) close all buffers except the current one
+-- map("n", "<leader>cb", function()
+--   vim.cmd [[
+--           let current = bufnr('%')
+--           bufdo if bufnr('%') != current | bdelete | endif
+--     ]]
+-- end, { silent = true, desc = "Close all buffers" })
+-- -- 3) close all buffers except the current one, considering modified
 map("n", "<leader>cb", function()
-  vim.cmd [[
-          let current = bufnr('%')
-          bufdo if bufnr('%') != current | bdelete | endif
-    ]]
-end, { silent = true, desc = "Close all buffers" })
+  local current = vim.fn.bufnr "%"
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= current and vim.api.nvim_buf_is_loaded(bufnr) then
+      if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+        vim.cmd("bdelete " .. bufnr)
+      end
+    end
+  end
+end, { silent = true, desc = "Close all buffers except the current and unsaved ones" })
 -- close inactive buffers
 
 map("n", "<leader>ct", function()
