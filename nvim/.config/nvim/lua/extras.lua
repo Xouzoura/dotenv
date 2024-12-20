@@ -78,5 +78,22 @@ function M.open_buffers()
     end,
   }
 end
+
+function M.go_to_terminal_buffer()
+  -- Check if a terminal buffer is already open, otherwise open
+  local buffers = vim.api.nvim_list_bufs()
+  for _, bufid in pairs(buffers) do
+    local bufname = vim.api.nvim_buf_get_name(bufid)
+    if string.find(bufname, "term://") ~= nil then
+      vim.cmd("buffer " .. bufid)
+      return
+    end
+  end
+
+  -- Create a new terminal buffer if not found
+  print "No terminal buffer found, creating a new one..."
+  vim.cmd "terminal"
+end
+
 -- Done
 return M
