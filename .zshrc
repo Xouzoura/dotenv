@@ -197,6 +197,7 @@ alias qbt="z ~/Downloads/torrents/ && ./qbittorrent-4.6.6_x86_64_1.AppImage"
 # k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
+alias dbui='nvim +"DBUIToggle"'
 alias ggr='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
 # File manager
 alias fm='nautilus .'
