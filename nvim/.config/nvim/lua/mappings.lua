@@ -15,6 +15,9 @@ map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
 
+-- Terminal
+map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
+map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
 -- <--- ## INSERT mode stuff ###--->
 map("i", "<C-u>", "<C-BS>", { desc = "Control-u operates as backspace" })
 map("i", "jj", "<ESC>", { silent = true })
@@ -150,16 +153,16 @@ map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests",
 -------------------------
 -- PLUGINS --------------
 -------------------------
--- Noice
--- map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
 -- Oil
 map("n", "g;", ":Oil<CR>", { noremap = true, silent = true, desc = "Open oil" })
 map("n", "g:", function()
-  local oil = require "oil"
-  require("oil").open()
-  require("oil.util").run_after_load(0, function()
-    oil.open_preview()
-  end)
+  local proj_pwd = vim.fn.getcwd()
+  require("oil").open(proj_pwd)
+  -- Below is if you want to open the preview window by default
+  -- local oil = require "oil"
+  -- require("oil.util").run_after_load(0, function()
+  --   oil.open_preview()
+  -- end)
 end)
 -- Debug prints (plugins/debug.lua)
 map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
@@ -186,12 +189,6 @@ map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
 map("n", "<leader>-", "<cmd>terminal<CR>", { desc = "Open terminal" })
--- map(
---   "n",
---   "<S-h>",
---   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<cr>",
---   { desc = "[P]Open telescope buffers" }
--- )
 map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
 
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
@@ -207,4 +204,3 @@ map("n", "<leader>rr", extras.reload_env, { noremap = true, silent = true })
 map("n", "<leader>yp", extras.cwd, { desc = "Copy path to clipboard" })
 map("n", "<leader>yf", extras.file_wd, { desc = "Copy file path to clipboard" })
 map("n", "<M-;>", extras.go_to_terminal_buffer, { desc = "Go to terminal buffer" })
-map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })

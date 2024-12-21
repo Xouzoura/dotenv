@@ -66,7 +66,16 @@ function M.ToggleMouse()
     print "Mouse enabled"
   end
 end
+
 function M.open_buffers()
+  -- Alternative
+  -- map(
+  --   "n",
+  --   "<S-h>",
+  --   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal<cr>",
+  --   { desc = "[P]Open telescope buffers" }
+  -- )
+
   require("telescope.builtin").buffers {
     sort_mru = true,
     sort_lastused = true,
