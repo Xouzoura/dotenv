@@ -197,10 +197,11 @@ map("n", "<leader>f.", function()
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
 end, { desc = "[P]Search grep in current file's directory" })
 
-map("n", "g>", ":normal ]m<CR>", { noremap = true, silent = true })
-map("n", "g<", ":normal [m<CR>", { noremap = true, silent = true })
-
+-- map("n", "g>", ":normal ]m<CR>", { noremap = true, silent = true })
+-- map("n", "g<", ":normal [m<CR>", { noremap = true, silent = true })
+--
 map("n", "<leader>rr", extras.reload_env, { noremap = true, silent = true })
 map("n", "<leader>yp", extras.cwd, { desc = "Copy path to clipboard" })
 map("n", "<leader>yf", extras.file_wd, { desc = "Copy file path to clipboard" })
-map("n", "<M-;>", extras.go_to_terminal_buffer, { desc = "Go to terminal buffer" })
+-- map({ "n", "t" }, "<M-;>", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
+map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })

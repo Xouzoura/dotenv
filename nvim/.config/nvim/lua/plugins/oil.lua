@@ -17,6 +17,7 @@ return {
       ["<C-h>"] = { "actions.parent", desc = "Go to left" },
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = "actions.close",
+      ["q"] = "actions.close",
       ["<C-r>"] = "actions.refresh",
       ["_"] = "actions.open_cwd",
       ["`"] = "actions.cd",
