@@ -90,44 +90,18 @@ map("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
 map("n", "U", "<C-r>", { silent = true })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
--- -- 1) close all buffers (tabufline)
--- map("n", "<leader>cb", function()
---   -- only works with tabufline
---   require("nvchad.tabufline").closeAllBufs()
---   vim.cmd "wincmd h"
--- end, { silent = true, desc = "Close all buffers" })
--- -- 2) close all buffers except the current one
--- map("n", "<leader>cb", function()
---   vim.cmd [[
---           let current = bufnr('%')
---           bufdo if bufnr('%') != current | bdelete | endif
---     ]]
--- end, { silent = true, desc = "Close all buffers" })
--- -- 3) close all buffers except the current one, considering modified
-map("n", "<leader>cb", function()
-  local current = vim.fn.bufnr "%"
-  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    if bufnr ~= current and vim.api.nvim_buf_is_loaded(bufnr) then
-      if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-        vim.cmd("bdelete " .. bufnr)
-      end
-    end
-  end
-end, { silent = true, desc = "Close all buffers except the current and unsaved ones" })
--- close inactive buffers
-
-map("n", "<leader>ct", function()
-  vim.t.bufs = vim.tbl_filter(function(bufnr)
-    return vim.api.nvim_buf_get_option(bufnr, "modified")
-  end, vim.t.bufs)
-end, { silent = true, desc = "Close unused buffers" })
+map(
+  "n",
+  "<leader>cb",
+  extras.close_inactive_buffers,
+  { silent = true, desc = "Close all buffers except the current and unsaved ones" }
+)
 
 -- format json file
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true })
 -- close buffer, nvim, and save
 map("n", "Q", ":q!<enter>", { noremap = false })
 map("n", "QQ", ":qall<enter>", { noremap = false })
--- map("n", "QW", ":w!<enter>", { noremap = false })
 map("n", "E", "$", { noremap = false })
 map("n", "B", "^", { noremap = false })
 -- Paste from system clipboard
@@ -170,11 +144,7 @@ map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off deb
 -- Copilot (enable/disable, but enabled by default) (plugins/copilot.lua)
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
-map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
--- Smart open (plugins/smart_open.lua)
-map("n", "<leader><leader>", function()
-  require("telescope").extensions.smart_open.smart_open { cwd_only = true }
-end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
+map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
 -- git signs (part of default config from nvchad)
 map("n", "<leader>gdd", "<cmd>DiffviewOpen<CR>", {
   desc = "(gitsigns) Diff with HEAD",
@@ -188,20 +158,18 @@ map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
 map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
-map("n", "<leader>-", "<cmd>terminal<CR>", { desc = "Open terminal" })
+-- terminal of open buffers
+map("n", "<leader><leader>", function()
+  require("telescope").extensions.smart_open.smart_open { cwd_only = true }
+end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
 map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
-
+-- telescope
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
 map("n", "<leader>f.", function()
   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
 end, { desc = "[P]Search grep in current file's directory" })
-
--- map("n", "g>", ":normal ]m<CR>", { noremap = true, silent = true })
--- map("n", "g<", ":normal [m<CR>", { noremap = true, silent = true })
---
 map("n", "<leader>rr", extras.reload_env, { noremap = true, silent = true })
 map("n", "<leader>yp", extras.cwd, { desc = "Copy path to clipboard" })
 map("n", "<leader>yf", extras.file_wd, { desc = "Copy file path to clipboard" })
--- map({ "n", "t" }, "<M-;>", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })

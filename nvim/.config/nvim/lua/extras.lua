@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 local M = {}
---
+
 function M.run_file()
   local filepath = vim.fn.expand "%:p"
   local extension = vim.fn.fnamemodify(filepath, ":e")
@@ -20,7 +20,7 @@ function M.run_file()
     print("Unsupported file type: " .. extension)
   end
 end
---
+
 function M.reload_env()
   local env_file = vim.fn.getcwd() .. "/.env"
   if vim.fn.filereadable(env_file) == 1 then
@@ -41,7 +41,7 @@ function M.reload_env()
     print "No .env file found"
   end
 end
---
+
 function M.cwd()
   -- Function to copy the absolute path to the clipboard
   local cwd = vim.fn.getcwd()
@@ -49,14 +49,14 @@ function M.cwd()
   vim.fn.setreg("+", cwd) -- Copy to clipboard (system register '+')
   print("Copied absolute path: " .. cwd)
 end
---
+
 function M.file_wd()
   -- Function to copy the relative path to the clipboard
   local file_path = vim.fn.expand "%" -- Get relative file path
   vim.fn.setreg("+", file_path) -- Copy to clipboard (system register '+')
   print("Copied relative path: " .. file_path)
 end
---
+
 function M.ToggleMouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
@@ -96,8 +96,8 @@ function M.switch_terminal_buffer()
   else
     local buffers = vim.api.nvim_list_bufs()
     for _, bufid in pairs(buffers) do
-      local bufname = vim.api.nvim_buf_get_name(bufid)
-      if string.find(bufname, "term://") ~= nil then
+      local bufname2 = vim.api.nvim_buf_get_name(bufid)
+      if string.find(bufname2, "term://") ~= nil then
         vim.cmd("buffer " .. bufid)
         return
       end
@@ -106,6 +106,17 @@ function M.switch_terminal_buffer()
     -- Create a new terminal buffer if not found
     print "No terminal buffer found, creating a new one..."
     vim.cmd "terminal"
+  end
+end
+
+function M.close_inactive_buffers()
+  local current = vim.fn.bufnr "%"
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= current and vim.api.nvim_buf_is_loaded(bufnr) then
+      if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+        vim.cmd("bdelete " .. bufnr)
+      end
+    end
   end
 end
 
