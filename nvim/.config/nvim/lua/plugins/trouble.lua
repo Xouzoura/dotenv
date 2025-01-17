@@ -14,6 +14,11 @@ return {
       desc = "(Trouble) Buffer Diagnostics All Right side",
     },
     {
+      "<leader>x;",
+      "<cmd>Trouble diagnostics toggle win.type = split win.position=right<cr>",
+      desc = "(Trouble) Buffer Diagnostics All Right side",
+    },
+    {
       "<leader>xbd",
       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
       desc = "(Trouble) Buffer Diagnostics Buffer [D]",

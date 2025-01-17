@@ -2,6 +2,7 @@
 local M = {}
 
 function M.run_file()
+  -- support for python, go and shell scripts
   local filepath = vim.fn.expand "%:p"
   local extension = vim.fn.fnamemodify(filepath, ":e")
 

@@ -188,30 +188,32 @@ alias venv="source ~/scripts/venv.sh"
 alias mypc="neofetch"
 # Tmux
 alias ta="source ~/scripts/tmux-anything.sh"
-
-# Notes
-alias notes="vi ~/vaults/notes"
-alias notesw="vi ~/vaults/notes/2024-08-24_weekend-goals.md"
 # Qbittorrent
 alias qbt="z ~/Downloads/torrents/ && ./qbittorrent-4.6.6_x86_64_1.AppImage"
-# k8s 
-alias k8s='nvim +"lua require(\"kubectl\").open()"'
-alias oil='nvim +"Oil"'
-alias dbui='nvim +"DBUIToggle"'
-alias ggr='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
 # File manager
 alias fm='nautilus .'
 # Wezterm
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
 alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
-# alias mysudo='sudo -E env "PATH=$PATH"'
+# NVIM-BASED
+# Notes 
+alias notes="vi ~/vaults/notes"
+alias notesw="vi ~/vaults/notes/_weekend-goals.md"
+alias notesq="vi ~/vaults/notes/_work.md"
+# k8s 
+alias k8s='nvim +"lua require(\"kubectl\").open()"'
+alias oil='nvim +"Oil"'
+alias dbui='nvim +"DBUIToggle"'
+alias gitgraph='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
+#
+# PYTHON
 # Python aliases for my code 
 alias pnew='poetry run pytest -s -m new'
 alias plf='poetry run pytest -s --lf'
 alias pdb='poetry run pytest -s --pdb'
-alias pca="pre-commit run --all-files"
-alias jp="python -m jupyter notebook"
+alias pca='pre-commit run --all-files'
+alias jp='python -m jupyter notebook'
 
 # Yazi (yy)
 function yy() {

@@ -6,7 +6,7 @@ local extras = require "extras"
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
 vim.api.nvim_del_keymap("n", "<leader>x")
-vim.keymap.set("n", "<C-o>", "<Nop>")
+vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
 local map = vim.keymap.set
 -- Disable arrow keys
@@ -15,7 +15,7 @@ map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
 
--- Terminal
+-- Terminal exits
 map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
 map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
 -- <--- ## INSERT mode stuff ###--->
@@ -170,6 +170,6 @@ map("n", "<leader>f.", function()
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
 end, { desc = "[P]Search grep in current file's directory" })
 map("n", "<leader>rr", extras.reload_env, { noremap = true, silent = true })
-map("n", "<leader>yp", extras.cwd, { desc = "Copy path to clipboard" })
-map("n", "<leader>yf", extras.file_wd, { desc = "Copy file path to clipboard" })
+map("n", "<leader>yp", extras.cwd, { desc = "Copy current working path" })
+map("n", "<leader>yf", extras.file_wd, { desc = "Copy current file path" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
