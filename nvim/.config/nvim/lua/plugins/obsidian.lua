@@ -80,6 +80,13 @@ return {
       desc = "(Obsidian) Find buffer links",
     },
     {
+      "<leader>mg",
+      function()
+        vim.cmd "e ~/vaults/notes/_daily.md"
+      end,
+      desc = "(Obsidian) Open daily notes (global)",
+    },
+    {
       "<leader>ms",
       function()
         vim.cmd "e ~/vaults/notes/"
@@ -89,7 +96,7 @@ return {
     {
       "<leader>mww",
       function()
-        vim.cmd "e ~/vaults/notes/2024-10-22_work.md"
+        vim.cmd "e ~/vaults/notes/_work.md"
       end,
       desc = "(Obsidian) Open work",
     },

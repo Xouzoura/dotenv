@@ -201,6 +201,7 @@ alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xou
 alias notes="vi ~/vaults/notes"
 alias notesw="vi ~/vaults/notes/_weekend-goals.md"
 alias notesq="vi ~/vaults/notes/_work.md"
+alias notesd="vi ~/vaults/notes/_daily.md"
 # k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'

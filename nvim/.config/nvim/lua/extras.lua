@@ -111,9 +111,11 @@ function M.switch_terminal_buffer()
 end
 
 function M.close_inactive_buffers()
+  local nvimTree = "NvimTree_1" -- don't want to close nvimtree
   local current = vim.fn.bufnr "%"
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    if bufnr ~= current and vim.api.nvim_buf_is_loaded(bufnr) then
+    local bufname = vim.api.nvim_buf_get_name(bufnr)
+    if bufnr ~= current and vim.api.nvim_buf_is_loaded(bufnr) and not bufname:match(nvimTree) then
       if not vim.api.nvim_buf_get_option(bufnr, "modified") then
         vim.cmd("bdelete " .. bufnr)
       end

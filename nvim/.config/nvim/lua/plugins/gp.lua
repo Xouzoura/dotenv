@@ -3,7 +3,6 @@ return {
   "robitx/gp.nvim",
   lazy = false,
   config = function()
-    local config = require "configs.gp-config"
     local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation.\n\n"
       .. "The user provided the additional info about how they would like you to respond:\n\n"
       .. "- If you're unsure don't guess and say you don't know instead.\n"
@@ -15,8 +14,6 @@ return {
       .. "- Use Socratic method to improve your thinking and coding skills.\n"
       .. "- Don't elide any code from your output if the answer requires coding.\n"
       .. "- Take a deep breath; You've got this!\n"
-    -- SYSTEM_PROMPT = config["SYSTEM_PROMPT"]
-    -- print(SYSTEM_PROMPT)
     local config = {
 
       cmd_prefix = "Gp",
@@ -79,10 +76,15 @@ return {
         desc = "GPT prompt " .. desc,
       }
     end
+    local function goToNextQuestion()
+      -- Search for the next "💬:" symbol
+      vim.fn.search("💬:", "W") -- 'W' ensures it wraps around to the start of the file
+    end
     local map = vim.keymap.set
     map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
     map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
     map({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions "Chat Finder")
+    map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
 
     map("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions "Visual Chat New")
     map("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions "Visual Chat Paste")
