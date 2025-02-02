@@ -9,7 +9,8 @@ return {
     "tpope/vim-dotenv",
     -- "ellisonleao/dotenv.nvim",
   },
-  lazy = false,
+  lazy = true,
+  enabled = false,
   cmd = "Neotest",
   config = function()
     local neotest = require "neotest"

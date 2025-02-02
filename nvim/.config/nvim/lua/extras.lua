@@ -2,7 +2,7 @@
 local M = {}
 
 function M.run_file()
-  -- support for python, go and shell scripts
+  -- support for [lua, python, rust, go, bash]
   local filepath = vim.fn.expand "%:p"
   local extension = vim.fn.fnamemodify(filepath, ":e")
 
@@ -13,6 +13,11 @@ function M.run_file()
     else
       vim.cmd("!python " .. filepath)
     end
+  elseif extension == "lua" then
+    vim.cmd("!lua " .. filepath)
+  elseif extension == "rs" then
+    -- Asume that the project is a cargo project
+    vim.cmd "!cargo run"
   elseif extension == "go" then
     vim.cmd("!go run " .. filepath)
   elseif extension == "sh" then

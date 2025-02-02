@@ -1,3 +1,7 @@
+-- Print easily some debug messages (like print in python, console.log in JS, etc.)
+-- to the file with easy to use keymaps and commands.
+-- Add <leader>dp to print the variable under the cursor below the current line.
+--
 return {
   "andrewferrier/debugprint.nvim",
   lazy = false,

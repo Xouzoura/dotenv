@@ -51,7 +51,7 @@ map("n", "<leader>sY", [["+Y]])
 map({ "n", "v" }, "<leader>sp", [["+p]])
 map("n", "<leader>sP", [["+P]])
 -- RUN files
-map("n", "<leader>xf", extras.run_file, { desc = "E<x>exute <f>ile" })
+map("n", "<leader>F", extras.run_file, { desc = "Exexute <F>ile" })
 map("n", "g*", "*gg0nzzzv") -- Decide which i like more
 map("n", "g0", "*GNzzzv")
 -- close terminal

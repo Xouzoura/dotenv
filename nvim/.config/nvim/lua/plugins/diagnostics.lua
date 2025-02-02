@@ -1,8 +1,9 @@
+-- DISABLED since it causes LOTS of issues at the moment in oil and other plugins.
 return {
   "rachartier/tiny-inline-diagnostic.nvim",
   event = "VeryLazy", -- Or `LspAttach`
   priority = 1000, -- needs to be loaded in first
-  enabled = false, -- disabled since it causes LOTS of issues at the moment in oil and other plugins.
+  enabled = false,
   config = function()
     vim.diagnostic.config { virtual_text = false, severity_sort = true, signs = true }
 

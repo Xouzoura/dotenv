@@ -1,5 +1,5 @@
 return {
-  -- db-ui within neovim
+  -- db-ui within neovim with the usage of <leader>d;
   "kristijanhusak/vim-dadbod-ui",
   dependencies = {
     { "tpope/vim-dadbod", lazy = true },

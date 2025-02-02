@@ -1,5 +1,5 @@
 return {
-  -- Way to jump between the edits that I have made (ctrl+q, ctrl+e, leader+oq, leader+oe)
+  -- Way to jump between the edits that I have made (alt+p, alt+n)
   "bloznelis/before.nvim",
   lazy = false,
   config = function()
