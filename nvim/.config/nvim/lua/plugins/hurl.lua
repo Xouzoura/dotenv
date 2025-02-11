@@ -117,6 +117,8 @@ vim.api.nvim_set_keymap("n", "<leader>cs", ":HurlPickerTs<CR>", { noremap = true
 return {
   -- "jellydn/hurl.nvim",
   "Xouzoura/hurl.nvim",
+  branch = "feature/show-body-query-params",
+  -- dir = "/home/xouzoura/python/me/openai/hurl.nvim",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
@@ -124,16 +126,16 @@ return {
   },
   ft = "hurl",
   opts = {
-    -- Show debugging info
     debug = false,
-    -- Show notification on run
     show_notification = false,
-    -- Show response in popup or split
     mode = "split",
     url = {
       show = true,
       format_without_params = true,
+      show_body_and_query = true,
     },
+    -- header options from { "content-length", "content-type", "date", "server", "status" },
+    headers = { "status" },
     -- Default formatter
     formatters = {
       json = { "jq" }, -- Make sure you have install jq in your system, e.g: brew install jq

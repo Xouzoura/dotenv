@@ -3,17 +3,18 @@ return {
   "robitx/gp.nvim",
   lazy = false,
   config = function()
-    local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation.\n\n"
-      .. "The user provided the additional info about how they would like you to respond:\n\n"
+    local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation. Be as precise as possible, avoid repeating, structuring the reply or repeating code you have received, When asked to explain, be brief, when asked to code, be brief providing only code.\n\n"
+      .. "- Please provide a brief, concise answer using as few words as possible.\n"
+      .. "- The user provided the additional info about how they would like you to respond:\n"
       .. "- If you're unsure don't guess and say you don't know instead.\n"
       .. "- Focus on code first. Try to limit the explanation to the code, and the words to a minimum. Answer strictly the question\n"
       .. "- Only reply with as concise information as possible so if not requested do not provide lots of information.\n"
       .. "- Ask question if you need clarification to provide better answer.\n"
-      .. "- Think deeply and carefully from first principles step by step.\n"
-      .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-      .. "- Use Socratic method to improve your thinking and coding skills.\n"
-      .. "- Don't elide any code from your output if the answer requires coding.\n"
-      .. "- Take a deep breath; You've got this!\n"
+    -- .. "- Think deeply and carefully from first principles step by step.\n"
+    -- .. "- Zoom out first to see the big picture and then zoom in to details.\n"
+    -- .. "- Use Socratic method to improve your thinking and coding skills.\n"
+    -- .. "- Don't elide any code from your output if the answer requires coding.\n"
+    -- .. "- Take a deep breath; You've got this!\n"
     local config = {
 
       cmd_prefix = "Gp",
@@ -36,7 +37,7 @@ return {
           -- string with model name or table with model name and parameters
           model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
           -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = require("gp.defaults").chat_system_prompt,
+          system_prompt = SYSTEM_PROMPT,
         },
         {
           provider = "openai",
@@ -47,7 +48,7 @@ return {
           -- string with model name or table with model name and parameters
           model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
           -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = require("gp.defaults").chat_system_prompt,
+          system_prompt = SYSTEM_PROMPT,
         },
         {
           name = "gpt4o",
@@ -80,11 +81,26 @@ return {
       -- Search for the next "💬:" symbol
       vim.fn.search("💬:", "W") -- 'W' ensures it wraps around to the start of the file
     end
+    local function goToPreviousQuestion()
+      -- Search for the next "💬:" symbol
+      vim.fn.search("💬:", "bW") -- 'W' ensures it wraps around to the start of the file
+    end
+    local function goToNextAnswer()
+      -- Search for the next "💬:" symbol
+      vim.fn.search("🤖", "W") -- 'W' ensures it wraps around to the start of the file
+    end
+    local function goToPreviousAnswer()
+      -- Search for the next "💬:" symbol
+      vim.fn.search("🤖:", "bW") -- 'W' ensures it wraps around to the start of the file
+    end
     local map = vim.keymap.set
     map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
     map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
     map({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions "Chat Finder")
     map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
+    map({ "n" }, "<C-g>[", goToPreviousQuestion, keymapOptions "Go to previous question")
+    map({ "n" }, "<C-g>}", goToNextAnswer, keymapOptions "Go to next answer")
+    map({ "n" }, "<C-g>{", goToPreviousAnswer, keymapOptions "Go to previous answer")
 
     map("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions "Visual Chat New")
     map("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions "Visual Chat Paste")
