@@ -17,11 +17,9 @@ local M = {
               return ""
             end
           end
-
+          local val = ""
           if vim.bo.filetype == "python" then
             val = get_python_path()
-          else
-            val = ""
           end
           return "%#BruhHl#" .. val
         end,

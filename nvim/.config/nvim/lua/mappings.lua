@@ -6,6 +6,8 @@ local extras = require "extras"
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
 vim.api.nvim_del_keymap("n", "<leader>x")
+-- vim.api.nvim_del_keymap("n", "L")
+vim.api.nvim_del_keymap("n", "<leader>e")
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
 local map = vim.keymap.set
@@ -18,10 +20,10 @@ map("", "<left>", "<nop>")
 -- Terminal exits
 map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
 map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
--- <--- ## INSERT mode stuff ###--->
-map("i", "<C-u>", "<C-BS>", { desc = "Control-u operates as backspace" })
 map("i", "jj", "<ESC>", { silent = true })
 map("i", "kj", "<ESC>", { silent = true })
+-- <--- ## INSERT mode stuff ###--->
+map("i", "<C-u>", "<C-BS>", { desc = "Control-u operates as backspace" })
 map("i", "<C-d>", "<C-o>dw", { silent = true })
 
 -- <--- ## VISUAL mode stuff ###--->
@@ -42,18 +44,25 @@ map("n", "J", "5j")
 map("n", "K", "5k")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
-map({ "n", "v" }, "<leader>kd", [["_d]])
-map({ "n", "v" }, "<leader>kD", [["_D]])
--- Yank to system clipboard
-map({ "n", "v" }, "<leader>sy", [["+y]])
-map("n", "<leader>sY", [["+Y]])
--- Paste from system clipboard
-map({ "n", "v" }, "<leader>sp", [["+p]])
-map("n", "<leader>sP", [["+P]])
+-- close buffer, nvim, and save
+map("n", "Q", ":q!<enter>", { noremap = false })
+map("n", "QQ", ":qall<enter>", { noremap = false })
+map("n", "E", "$", { noremap = false })
+map("n", "B", "^", { noremap = false })
+-- yank-delete-paste
+map({ "n", "v" }, "<leader>0d", [["_d]])
+map({ "n", "v" }, "<leader>0D", [["_D]])
+map("x", "<leader>p", [["_dP]])
+map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
+-- will i ever use these?
+-- map({ "n", "v" }, "<leader>y", [["+y]])
+-- map("n", "<leader>Y", [["+Y]])
+
+-- Stop
 -- RUN files
 map("n", "<leader>F", extras.run_file, { desc = "Exexute <F>ile" })
-map("n", "g*", "*gg0nzzzv") -- Decide which i like more
-map("n", "g0", "*GNzzzv")
+map("n", "g*", "*gg0nzzzv")
+map("n", "g0", "*G0Nzzzv")
 -- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
 -- Add a newline and return to normal mode
@@ -84,10 +93,11 @@ map("n", "g|", "<C-w>v<C-w>h", { noremap = false })
 -- Select the whole buffer
 map("n", "<leader>A", "ggVG", { desc = "Select all buffer", noremap = true, silent = true })
 -- Resize windows vertically
-map("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true })
-map("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
+map("n", "<C-W><", ":vertical resize -10<CR>", { noremap = true })
+map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
 -- Undo with U instead of only C-r
 map("n", "U", "<C-r>", { silent = true })
+vim.api.nvim_del_keymap("n", "<C-r>")
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
 map(
@@ -98,18 +108,8 @@ map(
 )
 
 -- format json file
-map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true })
--- close buffer, nvim, and save
-map("n", "Q", ":q!<enter>", { noremap = false })
-map("n", "QQ", ":qall<enter>", { noremap = false })
-map("n", "E", "$", { noremap = false })
-map("n", "B", "^", { noremap = false })
--- Paste from system clipboard
-map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
--- Keymaps view on telescope
-map("n", "<leader>kk", function()
-  require("telescope.builtin").keymaps()
-end, { desc = "Keymaps on telescope" })
+map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
+map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })
 -- git commands that are useful
 map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
   desc = "Search git bcommits on current <f>ile",
@@ -127,16 +127,13 @@ map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests",
 -------------------------
 -- PLUGINS --------------
 -------------------------
+-- puppetter
+map("n", "<leader>tp", "<cmd>PuppeteerToggle<cr>", { desc = "<fstring> toggle" })
 -- Oil
 map("n", "g;", ":Oil<CR>", { noremap = true, silent = true, desc = "Open oil" })
 map("n", "g:", function()
   local proj_pwd = vim.fn.getcwd()
   require("oil").open(proj_pwd)
-  -- Below is if you want to open the preview window by default
-  -- local oil = require "oil"
-  -- require("oil.util").run_after_load(0, function()
-  --   oil.open_preview()
-  -- end)
 end)
 -- Debug prints (plugins/debug.lua)
 map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
@@ -169,7 +166,7 @@ map("n", "<leader>f.", function()
   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
 end, { desc = "[P]Search grep in current file's directory" })
-map("n", "<leader>rr", extras.reload_env, { noremap = true, silent = true })
-map("n", "<leader>yp", extras.cwd, { desc = "Copy current working path" })
-map("n", "<leader>yf", extras.file_wd, { desc = "Copy current file path" })
+map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
+map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
+map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })

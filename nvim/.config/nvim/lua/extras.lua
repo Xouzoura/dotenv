@@ -86,6 +86,10 @@ function M.open_buffers()
     sort_mru = true,
     sort_lastused = true,
     initial_mode = "normal",
+    layout_config = {
+      width = 0.8,
+      preview_width = 0.5,
+    },
     path_display = function(opts, path)
       local filename = vim.fn.fnamemodify(path, ":t")
       local directory = vim.fn.fnamemodify(path, ":h")

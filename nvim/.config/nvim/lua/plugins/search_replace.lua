@@ -10,24 +10,36 @@ return {
       default_replace_multi_buffer_options = "egcI",
     }
     local map = vim.keymap.set
-    local opts = {}
     -- Replace
-    map("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", opts)
-    map("v", "<C-s>", "<CMD>SearchReplaceWithinVisualSelection<CR>", opts)
-    map("v", "<C-b>", "<CMD>SearchReplaceWithinVisualSelectionCWord<CR>", opts)
-
-    map("n", "<leader>rs", "<CMD>SearchReplaceSingleBufferSelections<CR>", opts)
-    map("n", "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>", opts)
-    map("n", "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>", opts)
-    map("n", "<leader>rW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", opts)
-    map("n", "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>", opts)
-    map("n", "<leader>rf", "<CMD>SearchReplaceSingleBufferCFile<CR>", opts)
-
-    map("n", "<leader>rbs", "<CMD>SearchReplaceMultiBufferSelections<CR>", opts)
-    map("n", "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>", opts)
-    map("n", "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>", opts)
-    map("n", "<leader>rbW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", opts)
-    map("n", "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>", opts)
-    map("n", "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>", opts)
+    map(
+      "v",
+      "<leader>rw",
+      "<CMD>SearchReplaceSingleBufferVisualSelection<CR>",
+      { desc = "<Replace>Word", noremap = true, silent = true }
+    )
+    map(
+      "n",
+      "<leader>rx",
+      "<CMD>SearchReplaceSingleBufferOpen<CR>",
+      { desc = "<Replace>Formula", noremap = true, silent = true }
+    )
+    map(
+      "n",
+      "<leader>rw",
+      "<CMD>SearchReplaceSingleBufferCWord<CR>",
+      { desc = "<Replace>word", noremap = true, silent = true }
+    )
+    map(
+      "n",
+      "<leader>rW",
+      "<CMD>SearchReplaceSingleBufferCWORD<CR>",
+      { desc = "<Replace>[W]ord", noremap = true, silent = true }
+    )
+    map(
+      "n",
+      "<leader>rE",
+      "<CMD>SearchReplaceSingleBufferCExpr<CR>",
+      { desc = "<Replace>Expression", noremap = true, silent = true }
+    )
   end,
 }
