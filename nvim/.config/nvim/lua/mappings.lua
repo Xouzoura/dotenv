@@ -6,7 +6,7 @@ local extras = require "extras"
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
 vim.api.nvim_del_keymap("n", "<leader>x")
--- vim.api.nvim_del_keymap("n", "L")
+vim.api.nvim_del_keymap("n", "<C-n>")
 vim.api.nvim_del_keymap("n", "<leader>e")
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
@@ -58,7 +58,8 @@ map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
 -- map({ "n", "v" }, "<leader>y", [["+y]])
 -- map("n", "<leader>Y", [["+Y]])
 
--- Stop
+-- remap nvim tree open with control-b
+map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 -- RUN files
 map("n", "<leader>F", extras.run_file, { desc = "Exexute <F>ile" })
 map("n", "g*", "*gg0nzzzv")

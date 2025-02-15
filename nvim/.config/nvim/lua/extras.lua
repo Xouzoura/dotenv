@@ -132,5 +132,51 @@ function M.close_inactive_buffers()
   end
 end
 
+-- autoclose buffers unused
+function M.auto_manage_buffers(max_buffers)
+  max_buffers = max_buffers or 7 -- Default to 7 buffers
+  local nvimTree = "NvimTree_1"
+  local current = vim.fn.bufnr "%"
+
+  -- Get all buffers and their last used time
+  local buffers = {}
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local bufname = vim.api.nvim_buf_get_name(bufnr)
+    local buftype = vim.api.nvim_buf_get_option(bufnr, "buftype")
+    -- Filter conditions
+    local is_real_buffer = vim.api.nvim_buf_is_loaded(bufnr) -- Buffer is loaded
+      and buftype == "" -- Normal buffer (not special)
+      and not bufname:match(nvimTree) -- Not NvimTree
+      and bufnr ~= current -- Not current buffer
+      and bufname ~= "" -- Not empty buffer
+      and vim.api.nvim_buf_is_valid(bufnr) -- Valid buffer
+    if is_real_buffer then
+      table.insert(buffers, {
+        bufnr = bufnr,
+        last_used = vim.fn.getbufinfo(bufnr)[1].lastused,
+        modified = vim.api.nvim_buf_get_option(bufnr, "modified"),
+      })
+    end
+  end
+
+  -- Sort buffers by last used time (oldest first)
+  table.sort(buffers, function(a, b)
+    return a.last_used < b.last_used
+  end)
+
+  -- Close oldest buffers if we exceed max_buffers
+  local loaded_buffers = #buffers + 1 -- +1 for current buffer
+  if loaded_buffers > max_buffers then
+    for _, buf in ipairs(buffers) do
+      if loaded_buffers <= max_buffers then
+        break
+      end
+      if not buf.modified then
+        vim.cmd("silent! bdelete " .. buf.bufnr)
+        loaded_buffers = loaded_buffers - 1
+      end
+    end
+  end
+end
 -- Done
 return M

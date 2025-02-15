@@ -5,23 +5,12 @@
 local M = {
   ui = {
     statusline = {
-      order = { "mode", "file", "git", "lsp_msg", "%=", "diagnostics", "cursor" },
+      order = { "mode", "path", "file", "%=", "git", "lsp_msg" },
       modules = {
-        cursor = function()
-          local function get_python_path()
-            local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
-
-            if vim.fn.filereadable(venv_path) == 1 then
-              return ".venv"
-            else
-              return ""
-            end
-          end
-          local val = ""
-          if vim.bo.filetype == "python" then
-            val = get_python_path()
-          end
-          return "%#BruhHl#" .. val
+        path = function()
+          local relative_path = vim.fn.expand "%:.:h"
+          local icon = "󰉋"
+          return string.format("%%#StatusLinePath#%s  ~/%s  %%#StatusLine#", icon, relative_path)
         end,
       },
     },

@@ -4,6 +4,8 @@ return {
     "nvim-tree/nvim-tree.lua",
     opts = function()
       local custom = require "nvchad.configs.nvimtree"
+      -- Remove default keymaps and add new ones
+
       custom.filters.dotfiles = false
       custom.git = custom.git or {}
       custom.git.ignore = false
@@ -18,7 +20,12 @@ return {
         folder_arrow = true,
         git = true,
       }
-
+      -- Add actions configuration to disable window picker (A or B), I just want to open.
+      custom.actions = custom.actions or {}
+      custom.actions.open_file = custom.actions.open_file or {}
+      custom.actions.open_file.window_picker = {
+        enable = false,
+      }
       -- Configure to update focus when entering a buffer
       custom.update_focused_file = {
         enable = true,
@@ -30,7 +37,7 @@ return {
       vim.cmd [[
           highlight NvimTreeOpenedFile guifg=#8e7cc3
           highlight NvimTreeCursorLine guibg=#b4a7d6
-    ]]
+      ]]
 
       return custom
     end,

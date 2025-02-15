@@ -128,3 +128,11 @@ vim.cmd [[
   augroup END
 ]]
 set_highlights()
+
+-- Decide if I want it
+-- local extras = require "extras"
+-- vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter" }, {
+--   callback = function()
+--     extras.auto_manage_buffers(7)
+--   end,
+-- })
