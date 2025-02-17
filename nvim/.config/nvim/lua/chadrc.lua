@@ -8,9 +8,27 @@ local M = {
       order = { "mode", "path", "file", "%=", "git", "lsp_msg" },
       modules = {
         path = function()
+          local max_length = 40
           local relative_path = vim.fn.expand "%:.:h"
           local icon = "󰉋"
-          return string.format("%%#StatusLinePath#%s  ~/%s  %%#StatusLine#", icon, relative_path)
+          -- format if it's a home path to show it, instead of relative path.
+          local formatted_path = relative_path:match "^/home" and relative_path or "~/" .. relative_path
+          --
+          -- Truncate long paths
+          if #formatted_path > max_length then
+            local parts = vim.split(formatted_path, "/")
+            if #parts > 5 then
+              formatted_path = table.concat({
+                parts[1], -- usually empty.
+                parts[2],
+                parts[3],
+                "...",
+                parts[#parts - 1],
+                parts[#parts],
+              }, "/")
+            end
+          end
+          return string.format("%%#StatusLinePath#%s  %s  %%#StatusLine#", icon, formatted_path)
         end,
       },
     },

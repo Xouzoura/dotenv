@@ -18,8 +18,9 @@ map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
 
 -- Terminal exits
-map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
-map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
+-- They fuck up yazi.nvim, so see what makes sense.
+-- map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
+-- map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
 map("i", "jj", "<ESC>", { silent = true })
 map("i", "kj", "<ESC>", { silent = true })
 -- <--- ## INSERT mode stuff ###--->

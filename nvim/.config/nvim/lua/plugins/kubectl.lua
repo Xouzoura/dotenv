@@ -1,7 +1,7 @@
 return {
   -- kubectl bindings, to be able to use kubectl from nvim. Still under work.
   "ramilito/kubectl.nvim",
-  lazy = false,
+  -- lazy = false,
   keys = {
     {
       "<leader>kb",
