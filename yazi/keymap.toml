@@ -312,3 +312,17 @@ keymap = [
 	# Filtering
 	{ on = [ "/" ], run = "filter", desc = "Apply a filter for the help items" },
 ]
+
+[[manager.prepend_keymap]]
+on   = [ "c", "m" ]
+run  = "plugin chmod"
+desc = "Chmod on selected files"
+
+[[manager.prepend_keymap]]
+on   = "F"
+run  = "plugin smart-filter"
+desc = "Smart filter"
+
+[[manager.prepend_keymap]]
+on  = "M"
+run = "plugin mount"

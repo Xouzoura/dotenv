@@ -172,3 +172,4 @@ map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc 
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
+map("n", "<leader>ec", extras.copy_env_values_clean, { desc = "Copy env values clean" })

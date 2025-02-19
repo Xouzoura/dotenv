@@ -85,7 +85,7 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 plugins=(
     git zsh-syntax-highlighting zsh-autosuggestions
 	sudo history jsontools ssh-agent fzf vi-mode
-    copypath copyfile copybuffer dirhistory)
+    copypath copyfile copybuffer dirhistory fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -241,7 +241,7 @@ source ~/.zshrc_secrets
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 PATH="$HOME/.local/bin:$PATH"
-
+# export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

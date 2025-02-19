@@ -178,5 +178,26 @@ function M.auto_manage_buffers(max_buffers)
     end
   end
 end
+
+-- copy .env
+function M.copy_env_values_clean()
+  local env_lines = {}
+  -- Read current buffer lines
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Filter lines
+  for _, line in ipairs(lines) do
+    -- Check if line is not empty and doesn't start with #
+    if line:match "^[^#].*=.*" and line:match "%S" then
+      table.insert(env_lines, line)
+    end
+  end
+
+  -- Join filtered lines and copy to clipboard
+  local content = table.concat(env_lines, "\n")
+  vim.fn.setreg("+", content)
+  print("Copied " .. #env_lines .. " environment variables to clipboard")
+end
+
 -- Done
 return M
