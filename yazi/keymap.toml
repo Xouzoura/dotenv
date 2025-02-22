@@ -51,7 +51,7 @@ keymap = [
 	{ on = [ "G" ],      run = "arrow bot",  desc = "Move cursor to the bottom" },
 
 	# Selection
-    { on = "<Space>",     run = [ "toggle", "arrow 1" ], desc = "Toggle the current selection state" },
+    { on = "<Space>",     run = [ "toggle", "arrow 0" ],              desc = "Toggle the current selection state" },
 	{ on = [ "v" ],       run = "visual_mode",                        desc = "Enter visual mode (selection mode)" },
 	{ on = [ "V" ],       run = "visual_mode --unset",                desc = "Enter visual mode (unset mode)" },
 	{ on = [ "<C-a>" ],   run = "select_all --state=true",            desc = "Select all files" },
@@ -105,18 +105,18 @@ keymap = [
 	{ on = [ "N" ], run = "find_arrow --previous",   desc = "Go to previous found file" },
 
 	# Sorting
-	{ on = [ ",", "m" ], run = "sort modified --dir-first",               desc = "Sort by modified time" },
-	{ on = [ ",", "M" ], run = "sort modified --reverse --dir-first",     desc = "Sort by modified time (reverse)" },
-	{ on = [ ",", "c" ], run = "sort created --dir-first",                desc = "Sort by created time" },
-	{ on = [ ",", "C" ], run = "sort created --reverse --dir-first",      desc = "Sort by created time (reverse)" },
-	{ on = [ ",", "e" ], run = "sort extension --dir-first",         	    desc = "Sort by extension" },
-	{ on = [ ",", "E" ], run = "sort extension --reverse --dir-first",    desc = "Sort by extension (reverse)" },
-	{ on = [ ",", "a" ], run = "sort alphabetical --dir-first",           desc = "Sort alphabetically" },
-	{ on = [ ",", "A" ], run = "sort alphabetical --reverse --dir-first", desc = "Sort alphabetically (reverse)" },
-	{ on = [ ",", "n" ], run = "sort natural --dir-first",                desc = "Sort naturally" },
-	{ on = [ ",", "N" ], run = "sort natural --reverse --dir-first",      desc = "Sort naturally (reverse)" },
-	{ on = [ ",", "s" ], run = "sort size --dir-first",                   desc = "Sort by size" },
-	{ on = [ ",", "S" ], run = "sort size --reverse --dir-first",         desc = "Sort by size (reverse)" },
+	{ on = [ ",", "m" ], run = [ "sort mtime --reverse=no", "linemode mtime" ], desc = "Sort by modified time" },
+	{ on = [ ",", "M" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
+	{ on = [ ",", "c" ], run = [ "sort btime --reverse=no", "linemode btime" ], desc = "Sort by birth time" },
+	{ on = [ ",", "C" ], run = [ "sort btime --reverse", "linemode btime" ],    desc = "Sort by birth time (reverse)" },
+	{ on = [ ",", "e" ], run = "sort extension --reverse=no",                   desc = "Sort by extension" },
+	{ on = [ ",", "E" ], run = "sort extension --reverse",                      desc = "Sort by extension (reverse)" },
+	{ on = [ ",", "a" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
+	{ on = [ ",", "A" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
+	{ on = [ ",", "n" ], run = "sort natural --reverse=no",                     desc = "Sort naturally" },
+	{ on = [ ",", "N" ], run = "sort natural --reverse",                        desc = "Sort naturally (reverse)" },
+	{ on = [ ",", "s" ], run = [ "sort size --reverse=no", "linemode size" ],   desc = "Sort by size" },
+	{ on = [ ",", "S" ], run = [ "sort size --reverse", "linemode size" ],      desc = "Sort by size (reverse)" },
 
 	# Tabs
 	{ on = [ "<C-t>" ], run = "tab_create --current", desc = "Create a new tab using the current path" },
@@ -149,6 +149,7 @@ keymap = [
     # Local only for my projects
 	{ on = [ "g", "e" ],       run = "cd ~/Documents/eth/eth-cas/",      desc = "Go CAS-ETH" },
 	{ on = [ "g", "b", "b" ],  run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/",      desc = "Go backend (BKW)" },
+	{ on = [ "g", "b", "l" ],  run = "cd ~/python/openai/",      desc = "Go to study libraries" },
 	{ on = [ "g", "b", "t" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/bkw.gpt4km.backend/src/tests/remote/",      desc = "Go backend (test)" },
 	{ on = [ "g", "b", "a" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/ai-tools/inputs/personal/",      desc = "Go ai-tools (test)" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Go to a directory interactively" },

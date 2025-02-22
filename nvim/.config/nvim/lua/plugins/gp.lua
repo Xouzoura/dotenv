@@ -25,6 +25,9 @@ return {
 
       cmd_prefix = "Gp",
       curl_params = {},
+      ---@type "popup" | "split" | "vsplit" | "tabnew"
+      toggle_target = "popup",
+      chat_confirm_delete = false,
       state_dir = vim.fn.stdpath("data"):gsub("/$", "") .. "/gp/persisted",
       providers = {
         azure = {
@@ -134,7 +137,8 @@ return {
     end
     local map = vim.keymap.set
     map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
-    map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
+    -- map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
+    map({ "n", "i" }, "<C-g>;", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
     map({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions "Chat Finder")
     map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
     map({ "n" }, "<C-g>[", goToPreviousQuestion, keymapOptions "Go to previous question")
