@@ -5,7 +5,7 @@
 local M = {
   ui = {
     statusline = {
-      order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "%=", "lsp_load", "cursor" },
+      order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "lsp_load", "cursor" },
       modules = {
 
         lsp_load = function()

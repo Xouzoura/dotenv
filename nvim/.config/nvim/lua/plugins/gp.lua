@@ -47,15 +47,6 @@ return {
           system_prompt = SYSTEM_PROMPT,
         },
         {
-          provider = "azure",
-          name = "gpt4o",
-          chat = true,
-          command = false,
-          model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-        },
-
-        {
           -- Works only with the bypass that is the dispatcher.prepare_payload
           -- doing.
           provider = "azure",
@@ -74,6 +65,15 @@ return {
           model = { model = "o1-mini", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
           disable = true, -- DOES NOT WORK
+        },
+        -- Last one is the default always
+        {
+          provider = "azure",
+          name = "gpt4o",
+          chat = true,
+          command = false,
+          model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
         },
       },
     }
