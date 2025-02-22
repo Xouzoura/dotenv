@@ -1,4 +1,3 @@
--- DISABLED since it causes LOTS of issues at the moment in oil and other plugins.
 return {
   "rachartier/tiny-inline-diagnostic.nvim",
   event = "VeryLazy", -- Or `LspAttach`

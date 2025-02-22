@@ -1,6 +1,9 @@
 return {
   -- plugin to show how can times a symbol is referenced
-  "VidocqH/lsp-lens.nvim",
+  -- "VidocqH/lsp-lens.nvim",
+  "Xouzoura/lsp-lens.nvim",
+  branch = "feature/add-methods-of-class",
+  -- dir = "/home/xouzoura/python/me/openai/lua/lsp-lens.nvim",
   lazy = false,
   config = function()
     local SymbolKind = vim.lsp.protocol.SymbolKind

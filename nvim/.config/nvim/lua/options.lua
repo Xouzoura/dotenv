@@ -129,10 +129,19 @@ vim.cmd [[
 ]]
 set_highlights()
 
--- Decide if I want it
+-- Decide if I want it to keep max buffers
 -- local extras = require "extras"
 -- vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter" }, {
 --   callback = function()
 --     extras.auto_manage_buffers(7)
 --   end,
 -- })
+--
+-- USEFUL FOR FINDING WHICH LIBRARY IS CAUSING A PROBLEM
+-- local old_notify = vim.notify
+-- vim.notify = function(msg, ...)
+--   if msg:match "position_encoding" then
+--     print(debug.traceback())
+--   end
+--   old_notify(msg, ...)
+-- end

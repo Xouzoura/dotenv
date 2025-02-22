@@ -5,8 +5,20 @@
 local M = {
   ui = {
     statusline = {
-      order = { "mode", "path", "file", "%=", "git", "lsp_msg" },
+      order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "%=", "lsp_load", "cursor" },
       modules = {
+
+        lsp_load = function()
+          local loaded = #vim.lsp.get_clients { bufnr = 0 } > 0
+          if not loaded then
+            return " LSP ✗ | "
+          end
+          local status = vim.lsp.status()
+          if status ~= "" then
+            return " LSP ✗ | "
+          end
+          return " LSP ✓ | "
+        end,
         path = function()
           local max_length = 40
           local relative_path = vim.fn.expand "%:.:h"

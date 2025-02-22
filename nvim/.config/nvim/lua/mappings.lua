@@ -168,6 +168,10 @@ map("n", "<leader>f.", function()
   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
 end, { desc = "[P]Search grep in current file's directory" })
+map("n", "<leader>fc", function()
+  local current_file = vim.fn.expand "%:p" -- Get full path of current file
+  require("telescope.builtin").live_grep { search_dirs = { current_file } }
+end, { desc = "Search grep in current file" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })

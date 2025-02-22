@@ -3,7 +3,6 @@ return {
   lazy = false,
   config = function()
     require("namu").setup {
-      -- Enable the modules you want
       namu_symbols = {
         enable = true,
         options = {
