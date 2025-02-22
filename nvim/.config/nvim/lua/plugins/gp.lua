@@ -19,7 +19,7 @@ return {
       providers = {
         azure = {
           disable = false,
-          endpoint = "https://endaprime-ai-sw.openai.azure.com/openai/deployments/{{model}}/chat/completions?api-version=2023-03-15-preview",
+          endpoint = "https://endaprime-ai-sw.openai.azure.com/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview",
           secret = os.getenv "AZURE_OPENAI_KEY",
         },
       },
@@ -47,24 +47,57 @@ return {
           system_prompt = SYSTEM_PROMPT,
         },
         {
-          name = "gpt4o",
           provider = "azure",
+          name = "gpt4o",
           chat = true,
           command = false,
           model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
         },
-        -- {
-        --   name = "o1-preview",
-        --   provider = "azure",
-        --   chat = true,
-        --   command = false,
-        --   model = { model = "o1-preview", temperature = 1.1, top_p = 1 },
-        --   -- system_prompt = SYSTEM_PROMPT,
-        -- },
+
+        {
+          -- Works only with the bypass that is the dispatcher.prepare_payload
+          -- doing.
+          provider = "azure",
+          name = "o3-mini",
+          chat = true,
+          command = false,
+          model = { model = "o3-mini", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+          -- disable = true,
+        },
+        {
+          provider = "azure",
+          name = "o1-mini",
+          chat = true,
+          command = false,
+          model = { model = "o1-mini", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+          disable = true, -- DOES NOT WORK
+        },
       },
     }
     require("gp").setup(config)
+    -- https://github.com/Robitx/gp.nvim/issues/245 solution from the issue
+    -- related to https://github.com/Robitx/gp.nvim/pull/246
+    -- Monkey patch the dispatcher after setup
+    local dispatcher = require "gp.dispatcher"
+    local original_prepare_payload = dispatcher.prepare_payload
+    dispatcher.prepare_payload = function(messages, model, provider)
+      local output = original_prepare_payload(messages, model, provider)
+      if provider == "azure" and (model.model:sub(1, 2) == "o3") then
+        for i = #messages, 1, -1 do
+          if messages[i].role == "system" then
+            table.remove(messages, i)
+          end
+        end
+        output.max_tokens = nil
+        output.temperature = nil
+        output.top_p = nil
+        output.stream = true
+      end
+      return output
+    end
     local function keymapOptions(desc)
       return {
         noremap = true,
