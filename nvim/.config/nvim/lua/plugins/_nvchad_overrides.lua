@@ -54,4 +54,9 @@ return {
     end,
   },
   -- More plugins
+  {
+    -- because nvchad doesn't load this plugin by default, so i don't need to press space two times
+    "folke/which-key.nvim",
+    lazy = false,
+  },
 }
