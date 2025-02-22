@@ -11,6 +11,16 @@ return {
       .. "- Only reply with as concise information as possible so if not requested do not provide lots of information.\n"
       .. "- Ask question if you need clarification to provide better answer.\n"
       .. "- Zoom out first to see the big picture and then zoom in to details.\n"
+    local endpoint
+    if os.getenv "AZURE_OPENAI_ENDPOINT" == nil then
+      endpoint =
+        -- does not work
+        "https://<...>/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
+    else
+      -- Assuming AZURE_OPENAI_ENDPOINT is as https://___.openai.azure.com
+      endpoint = os.getenv "AZURE_OPENAI_ENDPOINT"
+        .. "/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
+    end
     local config = {
 
       cmd_prefix = "Gp",
@@ -19,8 +29,8 @@ return {
       providers = {
         azure = {
           disable = false,
-          endpoint = "https://endaprime-ai-sw.openai.azure.com/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview",
-          secret = os.getenv "AZURE_OPENAI_KEY",
+          endpoint = endpoint,
+          secret = os.getenv "AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
         },
       },
 
