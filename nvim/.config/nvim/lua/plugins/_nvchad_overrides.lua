@@ -45,11 +45,48 @@ return {
   {
     -- Plugin: nvim-telescope/telescope.nvim
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim",
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = "^1.0.0",
+      },
+    },
     opts = function()
       local custom = require "nvchad.configs.telescope"
+      local telescope = require "telescope"
+      telescope.load_extension "live_grep_args"
+      local lga_actions = require "telescope-live-grep-args.actions"
+      local live_grep_args_shortcuts = require "telescope-live-grep-args.shortcuts"
       custom.defaults.mappings = {
         n = { ["q"] = require("telescope.actions").close, ["d"] = require("telescope.actions").delete_buffer },
       }
+      -- Extend the custom configuration
+      custom.extensions = custom.extensions or {}
+      custom.extensions.live_grep_args = {
+        auto_quoting = true,
+        mappings = {
+          i = {
+            ["<C-k>"] = lga_actions.quote_prompt(),
+            ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+            ["<C-space>"] = require("telescope.actions").to_fuzzy_refine,
+          },
+        },
+      }
+      vim.keymap.set(
+        "n",
+        "<leader>fg",
+        ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+        { noremap = true, silent = true, desc = "Telescope Live Grep Args" }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>fj",
+        live_grep_args_shortcuts.grep_word_under_cursor,
+        { noremap = true, silent = true, desc = "Telescope Live Grep Args (current word)" }
+      )
+
       return custom
     end,
   },
