@@ -64,7 +64,7 @@ return {
   },
   {
     "theHamsta/nvim-dap-virtual-text",
-    lazy = false,
+    lazy = true,
     dependencies = {
       "mfussenegger/nvim-dap",
     },
