@@ -59,8 +59,8 @@ map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
 -- map({ "n", "v" }, "<leader>y", [["+y]])
 -- map("n", "<leader>Y", [["+Y]])
 
--- remap nvim tree open with control-b
-map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+-- remap nvim tree open with control-b (removing this for now to use something else)
+-- map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 -- RUN files
 map("n", "<leader>F", extras.run_file, { desc = "Exexute <F>ile" })
 map("n", "g*", "*gg0nzzzv")

@@ -10,6 +10,7 @@ return {
         "python",
         "bash",
         "hurl",
+        "rust",
       },
 
       highlight = { enable = true },

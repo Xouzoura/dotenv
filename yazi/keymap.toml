@@ -145,9 +145,11 @@ keymap = [
 	{ on = [ "g", "c", "o" ],       run = "cd ~/.config",     desc = "Go ~/.config " },
 	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go Downloads" },
 	{ on = [ "g", "." ],       run = "cd ~/dotenv",      desc = "Go ~/dotenv/" },
+	{ on = [ "g", "n" ],       run = "cd ~/.config/nvim/",      desc = "Go ~/.config/nvim/" },
 	{ on = [ "g", "s", "h" ],       run = "cd ~/.local/share",          desc = "Go to the .local/share directory" },
 	{ on = [ "g", "s", "t" ],       run = "cd ~/.local/state",          desc = "Go to the .local/state directory" },
 	{ on = [ "g", "l"],       run = "cd ~/.local",          desc = "Go to the .local directory" },
+	{ on = [ "g", "y"],       run = "cd ~/.config/yazi",          desc = "Go to the yazi directory" },
 	{ on = [ "g", "c", "a"],       run = "cd ~/.cache",          desc = "Go to the .cache directory" },
     # Local only for my projects
 	{ on = [ "g", "e" ],       run = "cd ~/Documents/eth/eth-cas/",      desc = "Go CAS-ETH" },
@@ -267,17 +269,46 @@ keymap = [
 
 	# Undo/Redo
 	{ on = [ "u" ],     run = "undo", desc = "Undo the last operation" },
-	{ on = [ "<C-r>" ], run = "redo", desc = "Redo the last operation" },
+	{ on = [ "U" ], run = "redo", desc = "Redo the last operation" },
+
+    # Spot 
+    { on = ";", run = "spot", desc = "Spot hovered file" },
 
 	# Help
 	{ on = [ "~" ], run = "help", desc = "Open help" }
+]
+
+[spot]
+
+keymap = [
+	{ on = "<Esc>", run = "close", desc = "Close the spot" },
+	{ on = "<C-[>", run = "close", desc = "Close the spot" },
+	{ on = "<C-c>", run = "close", desc = "Close the spot" },
+	{ on = "<Tab>", run = "close", desc = "Close the spot" },
+
+	{ on = "k", run = "arrow -1", desc = "Move cursor up" },
+	{ on = "j", run = "arrow 1",  desc = "Move cursor down" },
+	{ on = "h", run = "swipe -1", desc = "Swipe to the previous file" },
+	{ on = "l", run = "swipe 1",  desc = "Swipe to the next file" },
+
+	{ on = "<Up>",    run = "arrow -1", desc = "Move cursor up" },
+	{ on = "<Down>",  run = "arrow 1",  desc = "Move cursor down" },
+	{ on = "<Left>",  run = "swipe -1", desc = "Swipe to the next file" },
+	{ on = "<Right>", run = "swipe 1",  desc = "Swipe to the previous file" },
+
+	# Copy
+	{ on = [ "c", "c" ], run = "copy cell", desc = "Copy selected cell" },
+
+	# Help
+	{ on = "~",    run = "help", desc = "Open help" },
+	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [completion]
 
 keymap = [
 	{ on = [ "<C-q>" ],   run = "close",                                      desc = "Cancel completion" },
-	{ on = [ "<Tab>" ],   run = "close --submit",                             desc = "Submit the completion" },
+	# { on = [ "<Tab>" ],   run = "close --submit",                             desc = "Submit the completion" },
 	{ on = [ "<Enter>" ], run = [ "close --submit", "close_input --submit" ], desc = "Submit the completion and input" },
 
 	{ on = [ "<A-k>" ], run = "arrow -1", desc = "Move cursor up" },

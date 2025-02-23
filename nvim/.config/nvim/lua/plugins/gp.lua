@@ -26,7 +26,8 @@ return {
       cmd_prefix = "Gp",
       curl_params = {},
       ---@type "popup" | "split" | "vsplit" | "tabnew"
-      toggle_target = "popup",
+      toggle_target = "vsplit", -- decide which one i like more
+      -- toggle_target = "popup",
       chat_confirm_delete = false,
       state_dir = vim.fn.stdpath("data"):gsub("/$", "") .. "/gp/persisted",
       providers = {
