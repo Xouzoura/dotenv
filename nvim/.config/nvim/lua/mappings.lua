@@ -37,7 +37,7 @@ map("v", ">", ">gv", { silent = true })
 
 -- <--- ## NORMAL mode stuff ###--->
 -- help is <F3>
-map("n", "<F3>", "K", { noremap = true, silent = true })
+-- map("n", "<F3>", "K", { noremap = true, silent = true })
 -- Center C-u and C-d, and when searching with n/N
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-d>", "<C-d>zz")
@@ -55,6 +55,7 @@ map({ "n", "v" }, "<leader>0d", [["_d]])
 map({ "n", "v" }, "<leader>0D", [["_D]])
 map("x", "<leader>p", [["_dP]])
 map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
+map("n", "gV", "`[v`]", { noremap = true, silent = true })
 -- will i ever use these?
 -- map({ "n", "v" }, "<leader>y", [["+y]])
 -- map("n", "<leader>Y", [["+Y]])
@@ -119,9 +120,9 @@ map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
 map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
   desc = "Search git commits on <a>ll files",
 })
-map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
-  desc = "Git toggle <b>lame by line",
-})
+-- map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
+--   desc = "Git toggle <b>lame by line",
+-- })
 
 map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
 map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests", noremap = true, silent = true })
@@ -158,9 +159,6 @@ map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
 -- terminal of open buffers
-map("n", "<leader><leader>", function()
-  require("telescope").extensions.smart_open.smart_open { cwd_only = true }
-end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
 map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
 -- telescope
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })

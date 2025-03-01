@@ -42,10 +42,10 @@ return {
         require("dap").terminate()
       end, { desc = "Terminate" })
       -- Continue
-      vim.keymap.set("n", "<F10>", function()
+      vim.keymap.set("n", "<F4>", function()
         require("dap").step_over()
       end, { desc = "Step Over" })
-      vim.keymap.set("n", "<F11>", function()
+      vim.keymap.set("n", "<F3>", function()
         require("dap").step_into()
       end, { desc = "Step Into" })
       vim.keymap.set("n", "<F12>", function()
@@ -64,7 +64,7 @@ return {
   },
   {
     "theHamsta/nvim-dap-virtual-text",
-    lazy = true,
+    lazy = false,
     dependencies = {
       "mfussenegger/nvim-dap",
     },
@@ -78,6 +78,7 @@ return {
   {
     "mfussenegger/nvim-dap-python",
     ft = "python",
+    lazy = false,
     dependencies = {
       "mfussenegger/nvim-dap",
       "rcarriga/nvim-dap-ui",
@@ -88,10 +89,6 @@ return {
         local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
 
         if vim.fn.filereadable(venv_path) == 1 then
-          -- debugpy_exists = venv_path .. " -m debugpy"
-          -- if vim.fn.system(debugpy_exists) == 0 then
-          --   print "debugpy found in venv"
-          -- end
           return venv_path
         else
           return vim.fn.expand "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"

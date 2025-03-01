@@ -76,7 +76,7 @@ return {
       }
       vim.keymap.set(
         "n",
-        "<leader>fg",
+        "<leader>fk",
         ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
         { noremap = true, silent = true, desc = "Telescope Live Grep Args" }
       )

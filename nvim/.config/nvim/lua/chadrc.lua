@@ -5,7 +5,8 @@
 local M = {
   ui = {
     statusline = {
-      order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "lsp_load", "cursor" },
+      order = { "mode", "path", "file", "diagnostics", "%=", "lsp_load", "cursor" },
+      -- order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "lsp_load", "cursor" },
       modules = {
 
         lsp_load = function()
@@ -20,6 +21,10 @@ local M = {
           return " LSP ✓ | "
         end,
         path = function()
+          local file = vim.fn.expand "%:t"
+          if file == "" or file == nil then
+            return nil
+          end
           local max_length = 40
           local relative_path = vim.fn.expand "%:.:h"
           local icon = "󰉋"
