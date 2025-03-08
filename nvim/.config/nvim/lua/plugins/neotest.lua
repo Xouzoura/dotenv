@@ -10,7 +10,7 @@ return {
     -- "ellisonleao/dotenv.nvim",
   },
   lazy = true,
-  enabled = false,
+  -- enabled = false,
   cmd = "Neotest",
   config = function()
     local neotest = require "neotest"
@@ -64,6 +64,6 @@ return {
 
     vim.keymap.set("n", "<leader>to", function()
       neotest.output.open { enter = true }
-    end, { desc = "Open test output" })
+    end, { desc = "[t]Open test output" })
   end,
 }

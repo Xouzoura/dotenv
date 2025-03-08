@@ -179,8 +179,13 @@ function M.auto_manage_buffers(max_buffers)
   end
 end
 
--- copy .env
+-- copy valid .env values easily.
 function M.copy_env_values_clean()
+  -- verify that this is the .env file.
+  if vim.fn.expand "%:t" ~= ".env" then
+    print "This is not a .env file"
+    return
+  end
   local env_lines = {}
   -- Read current buffer lines
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
@@ -200,9 +205,10 @@ function M.copy_env_values_clean()
 end
 
 function M.add_env_values_to_buffer()
-  local function load_env(file)
+  -- in case i want to load the .env file to the current process (neotest, dap)
+  local function load_env(file_name)
     local env_vars = {}
-    local file = io.open(file, "r")
+    local file = io.open(file_name, "r")
 
     if file then
       for line in file:lines() do

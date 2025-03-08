@@ -125,7 +125,7 @@ map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
 -- })
 
 map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
-map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove new tests", noremap = true, silent = true })
+map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove 'new' marks", noremap = true, silent = true })
 
 -------------------------
 -- PLUGINS --------------
@@ -174,7 +174,7 @@ map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc 
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
-map("n", "<leader>ec", extras.copy_env_values_clean, { desc = "Copy env values clean" })
+map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
 
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })

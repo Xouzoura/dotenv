@@ -22,7 +22,7 @@ local M = {
         end,
         path = function()
           local file = vim.fn.expand "%:t"
-          if file == "" or file == nil then
+          if file == "" or file == nil or not file:match "%." then
             return nil
           end
           local max_length = 40
