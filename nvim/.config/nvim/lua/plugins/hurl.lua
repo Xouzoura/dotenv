@@ -1,6 +1,27 @@
+--- Hurl.nvim configuration
+local builtin = require "telescope.builtin"
+
+vim.keymap.set("n", "<leader>cf", function()
+  builtin.find_files {
+    prompt_title = "Find Hurl Files",
+    cwd = vim.loop.cwd(), -- Use the current working directory
+    find_command = { "rg", "--files", "--glob", "*.hurl" },
+  }
+end, { desc = "(hurl) Find .hurl files in project" })
+vim.keymap.set("n", "<leader>cw", function()
+  require("telescope.builtin").live_grep {
+    prompt_title = "Grep Hurl Files",
+    cwd = vim.loop.cwd(), -- Use the current working directory
+    additional_args = function()
+      return { "--glob", "*.hurl" }
+    end,
+  }
+end, { desc = "(hurl) Live Grep in .hurl files" })
 return {
-  -- curl alternative using the .hurl file extension, expecting secrets in the vars.env file.
-  "jellydn/hurl.nvim",
+  -- "jellydn/hurl.nvim",
+  "Xouzoura/hurl.nvim",
+  branch = "feature/show-body-query-params",
+  -- dir = "/home/xouzoura/python/me/openai/hurl.nvim",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
@@ -8,12 +29,16 @@ return {
   },
   ft = "hurl",
   opts = {
-    -- Show debugging info
     debug = false,
-    -- Show notification on run
     show_notification = false,
-    -- Show response in popup or split
     mode = "split",
+    url = {
+      show = true,
+      format_without_params = true,
+      show_body_and_query = true,
+    },
+    -- header options from { "content-length", "content-type", "date", "server", "status" },
+    headers = { "status" },
     -- Default formatter
     formatters = {
       json = { "jq" }, -- Make sure you have install jq in your system, e.g: brew install jq
@@ -68,10 +93,15 @@ return {
     -- Run API request
     { "<leader>cA", "<cmd>HurlRunner<CR>", desc = "(Hurl) Run All requests" },
     { "<leader>ca", "<cmd>HurlRunnerAt<CR>", desc = "(Hurl) Run Api request" },
-    { "<leader>te", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
-    { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
-    { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
+    -- { "<leader>cz", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
+    -- { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
+    -- { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
+    { "<leader>c[", "<cmd>HurlShowLastResponse<CR>", desc = "(Hurl) Show last response" },
+    { "<leader>ck", "<cmd>HurlRerun<CR>", desc = "(Hurl) Rerun last command" },
     -- Run Hurl request in visual mode
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
+    -- General mappings
+    { "<leader>ce", ":edit vars.env<CR>", desc = "(Hurl) Open vars.env file" },
+    { "<leader>cj", ":edit hurls/vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
   },
 }

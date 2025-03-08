@@ -1,4 +1,5 @@
 return {
+  -- Move with s and S around
   "folke/flash.nvim",
   event = "VeryLazy",
   ---@type Flash.Config

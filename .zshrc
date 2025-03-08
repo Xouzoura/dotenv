@@ -85,7 +85,7 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 plugins=(
     git zsh-syntax-highlighting zsh-autosuggestions
 	sudo history jsontools ssh-agent fzf vi-mode
-    copypath copyfile copybuffer dirhistory)
+    copypath copyfile copybuffer dirhistory fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -122,14 +122,18 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
 # Scripts
-alias vpnc='. vpn/conn.sh'
-alias vpnd='. vpn/disc.sh'
+# alias vpnc='. vpn/conn.sh'
+# alias vpnd='. vpn/disc.sh'
+alias vpnc='sudo tailscale set --exit-node=remote-laptop.tailfa8e1.ts.net.'
+alias vpnd='sudo tailscale up --exit-node='
 
 # Git
 alias glog='git log --graph --oneline --all --decorate'
 alias gst='git status'
 alias gca='git commit -am'
 alias gbv='git branch -vv'
+alias g-='git checkout -'
+alias gdev='git checkout develop'
 
 # Ip
 alias myip='curl ipinfo.io/ip'
@@ -150,11 +154,11 @@ alias aptp='sudo nala purge -y'
 alias btail='multitail'
 
 # Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first --icons'
-alias la='exa -a --color=always --group-directories-first'
-alias ll='exa -l --color=always --group-directories-first'
-alias lt='exa -aT --level=2 --color=always --group-directories-first'
-alias l.='exa -a | egrep "^\."'
+alias ls='eza -al --color=always --group-directories-first --icons'
+alias la='eza -a --color=always --group-directories-first'
+alias ll='eza -l --color=always --group-directories-first'
+alias lt='eza -aT --level=2 --color=always --group-directories-first'
+alias l.='eza -a | egrep "^\."'
 
 # Flag
 alias df='df -h'
@@ -176,16 +180,43 @@ alias vo="nvim -c 'Telescope oldfiles'"
 alias mouse="keep-presence"
 #alias cat="bat"
 alias db="dbeaver-ce"
-
+alias ncspot="flatpak run io.github.hrkfdn.ncspot"
+# alias music="ncspot"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
 # Show characteristics of laptop
 alias mypc="neofetch"
+# Tmux
 alias ta="source ~/scripts/tmux-anything.sh"
-alias azdb='az account get-access-token --resource-type oss-rdbms --query "[accessToken]" -o tsv | xclip -selection clipboard'
+# Qbittorrent
+alias qbt="z ~/Downloads/torrents/ && ./qbittorrent-4.6.6_x86_64_1.AppImage"
+# File manager
+alias fm='nautilus .'
+# Wezterm
+alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
+alias lg='lazygit'
+alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
+# NVIM-BASED
+# Notes 
 alias notes="vi ~/vaults/notes"
-alias qbt="z Downloads && ./qbittorrent-4.6.6_x86_64.AppImage"
+alias notesw="vi ~/vaults/notes/_weekend-goals.md"
+alias notesq="vi ~/vaults/notes/_work.md"
+alias notesd="vi ~/vaults/notes/_daily.md"
+# k8s 
+alias k8s='nvim +"lua require(\"kubectl\").open()"'
+alias oil='nvim +"Oil"'
+alias dbui='nvim +"DBUIToggle"'
+alias gitgraph='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
+#
+# PYTHON
+# Python aliases for my code 
+alias pnew='poetry run pytest -s -m new'
+alias plf='poetry run pytest -s --lf'
+alias pdb='poetry run pytest -s --pdb'
+alias pca='pre-commit run --all-files'
+alias jp='python -m jupyter notebook'
 
+# Yazi (yy)
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
@@ -194,13 +225,23 @@ function yy() {
 	fi
 	rm -f -- "$tmp"
 }
+## Autofold (fold_md)
+fold_md() {
+  local file="$1"
+  if [ -f "$file" ]; then
+    fold -s -w 80 "$file" > temp.md && mv temp.md "$file"
+    echo "Formatted $file with a width of 80 characters."
+  else
+    echo "Error: $file not found."
+  fi
+}
 # All secrets that I want my shell to have access to
 source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 PATH="$HOME/.local/bin:$PATH"
-
+# export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

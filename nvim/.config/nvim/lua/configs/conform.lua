@@ -1,18 +1,27 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    python = { "black" },
+    -- python = { "black" },
+    python = { "ruff_format" },
     javascript = { "prettier" },
     c = { "clang-format" },
   },
   formatters = {
-    black = {
-      prepended_args = { "--line-length", "88" },
-      command = "black",
+    ruff_format = {
+      command = "ruff",
+      args = {
+        "format",
+        "--force-exclude",
+        "--stdin-filename",
+        "$FILENAME",
+        "-",
+        "--line-length", -- This is because of stupid local forces.
+        -- "120", -- This is because of stupid local forces. WILL REMOVE WHEN OUT.
+        "88", --
+      },
     },
   },
   format_on_save = {
-    -- These options will be passed to conform.format()
     timeout_ms = 500,
     lsp_fallback = true,
   },

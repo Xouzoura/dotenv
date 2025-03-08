@@ -1,9 +1,14 @@
+---@diagnostic disable: undefined-global
+---
 require "nvchad.mappings"
+local extras = require "extras"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
 vim.api.nvim_del_keymap("n", "<leader>x")
-
+vim.api.nvim_del_keymap("n", "<C-n>")
+vim.api.nvim_del_keymap("n", "<leader>e")
+vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
 local map = vim.keymap.set
 -- Disable arrow keys
@@ -12,10 +17,14 @@ map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
 
--- <--- ## INSERT mode stuff ###--->
-map("i", "<C-u>", "<C-BS>", { desc = "Control-u operates as backspace" })
+-- Terminal exits
+-- They fuck up yazi.nvim, so see what makes sense.
+-- map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
+-- map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
 map("i", "jj", "<ESC>", { silent = true })
 map("i", "kj", "<ESC>", { silent = true })
+-- <--- ## INSERT mode stuff ###--->
+map("i", "<C-u>", "<C-BS>", { desc = "Control-u operates as backspace" })
 map("i", "<C-d>", "<C-o>dw", { silent = true })
 
 -- <--- ## VISUAL mode stuff ###--->
@@ -27,28 +36,36 @@ map("v", "<", "<gv", { silent = true })
 map("v", ">", ">gv", { silent = true })
 
 -- <--- ## NORMAL mode stuff ###--->
+-- help is <F3>
+-- map("n", "<F3>", "K", { noremap = true, silent = true })
 -- Center C-u and C-d, and when searching with n/N
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-d>", "<C-d>zz")
+map("n", "J", "5j")
+map("n", "K", "5k")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
-map({ "n", "v" }, "<leader>kd", [["_d]])
-map({ "n", "v" }, "<leader>kD", [["_D]])
--- Yank to system clipboard
-map({ "n", "v" }, "<leader>sy", [["+y]])
-map("n", "<leader>sY", [["+Y]])
--- Paste from system clipboard
-map({ "n", "v" }, "<leader>sp", [["+p]])
-map("n", "<leader>sP", [["+P]])
--- Run file with python
-map("n", "<leader>xp", function()
-  vim.cmd "!python %"
-end, { desc = "(python) Run of File" })
-map("n", "<leader>xg", function()
-  vim.cmd "!go run %"
-end, { desc = "(golang) Run of File" })
--- Search first occurrence of item
-map("n", "g*", "*ggn")
+-- close buffer, nvim, and save
+map("n", "Q", ":q!<enter>", { noremap = false })
+map("n", "QQ", ":qall<enter>", { noremap = false })
+map("n", "E", "$", { noremap = false })
+map("n", "B", "^", { noremap = false })
+-- yank-delete-paste
+map({ "n", "v" }, "<leader>0d", [["_d]])
+map({ "n", "v" }, "<leader>0D", [["_D]])
+map("x", "<leader>p", [["_dP]])
+map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
+map("n", "gV", "`[v`]", { noremap = true, silent = true })
+-- will i ever use these?
+-- map({ "n", "v" }, "<leader>y", [["+y]])
+-- map("n", "<leader>Y", [["+Y]])
+
+-- remap nvim tree open with control-b (removing this for now to use something else)
+-- map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+-- RUN files
+map("n", "<leader>F", extras.run_file, { desc = "Exexute <F>ile" })
+map("n", "g*", "*gg0nzzzv")
+map("n", "g0", "*G0Nzzzv")
 -- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
 -- Add a newline and return to normal mode
@@ -79,37 +96,23 @@ map("n", "g|", "<C-w>v<C-w>h", { noremap = false })
 -- Select the whole buffer
 map("n", "<leader>A", "ggVG", { desc = "Select all buffer", noremap = true, silent = true })
 -- Resize windows vertically
-map("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true })
-map("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
+map("n", "<C-W><", ":vertical resize -10<CR>", { noremap = true })
+map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
 -- Undo with U instead of only C-r
 map("n", "U", "<C-r>", { silent = true })
+vim.api.nvim_del_keymap("n", "<C-r>")
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
--- close all buffers
-map("n", "<leader>cb", function()
-  require("nvchad.tabufline").closeAllBufs()
-  vim.cmd "wincmd h"
-end, { silent = true, desc = "Close all buffers" })
--- close inactive buffers
-map("n", "<leader>ci", ":%bd|e#|bd#<CR>", { silent = true, desc = "Close inactive buffers" })
-map("n", "<leader>ct", function()
-  vim.t.bufs = vim.tbl_filter(function(bufnr)
-    return vim.api.nvim_buf_get_option(bufnr, "modified")
-  end, vim.t.bufs)
-end, { silent = true, desc = "Close unused buffers" })
+map(
+  "n",
+  "<leader>cb",
+  extras.close_inactive_buffers,
+  { silent = true, desc = "Close all buffers except the current and unsaved ones" }
+)
 
--- close buffer, nvim, and save
-map("n", "QQ", ":q!<enter>", { noremap = false })
-map("n", "QA", ":qall<enter>", { noremap = false })
-map("n", "QW", ":w!<enter>", { noremap = false })
-map("n", "E", "$", { noremap = false })
-map("n", "B", "^", { noremap = false })
--- Paste from system clipboard
-map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
--- Keymaps view on telescope
-map("n", "<leader>tk", function()
-  require("telescope.builtin").keymaps()
-end, { desc = "Keymaps on telescope" })
+-- format json file
+map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
+map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })
 -- git commands that are useful
 map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
   desc = "Search git bcommits on current <f>ile",
@@ -117,43 +120,32 @@ map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
 map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
   desc = "Search git commits on <a>ll files",
 })
-map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
-  desc = "Git toggle <b>lame by line",
-})
--- Mouse enable/disable
--- Function to toggle mouse support
-function ToggleMouse()
-  if vim.o.mouse == "a" then
-    vim.o.mouse = ""
-    print "Mouse disabled"
-  else
-    vim.o.mouse = "a"
-    print "Mouse enabled"
-  end
-end
-map("n", "<leader>mm", ":lua ToggleMouse()<CR>", { desc = "disable/enable mouse", noremap = true, silent = true })
--- Function to enter the black hole register
-local function black_hole_register()
-  -- vim.api.nvim_feedkeys('"_', 'n', true)
-  vim.fn.feedkeys('"_', "n")
-end
----
+-- map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
+--   desc = "Git toggle <b>lame by line",
+-- })
+
+map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
+map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove 'new' marks", noremap = true, silent = true })
+
 -------------------------
 -- PLUGINS --------------
 -------------------------
----
--- map("n", "<leader>nn", ":Noice dismiss<CR>", { noremap = true })
+-- puppetter
+map("n", "<leader>tp", "<cmd>PuppeteerToggle<cr>", { desc = "<fstring> toggle" })
 -- Oil
-map("n", "g:", "<CMD>Oil<CR>", { desc = "Open oil.nvim" })
--- Copilot (enable/disable, but enabled by default)
+map("n", "g;", ":Oil<CR>", { noremap = true, silent = true, desc = "Open oil" })
+map("n", "g:", function()
+  local proj_pwd = vim.fn.getcwd()
+  require("oil").open(proj_pwd)
+end)
+-- Debug prints (plugins/debug.lua)
+map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
+map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
+-- Copilot (enable/disable, but enabled by default) (plugins/copilot.lua)
 map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
-map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false }) -- Copilot
--- Smart open
-map("n", "<leader><leader>", function()
-  require("telescope").extensions.smart_open.smart_open { cwd_only = true }
-end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
--- git signs
+map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
+-- git signs (part of default config from nvchad)
 map("n", "<leader>gdd", "<cmd>DiffviewOpen<CR>", {
   desc = "(gitsigns) Diff with HEAD",
 })
@@ -166,3 +158,24 @@ map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
 map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
   desc = "(gitsigns) Close",
 })
+-- terminal of open buffers
+map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
+-- telescope
+map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
+map("n", "<leader>f.", function()
+  local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
+  require("telescope.builtin").live_grep { search_dirs = { file_dir } }
+end, { desc = "[P]Search grep in current file's directory" })
+map("n", "<leader>fc", function()
+  local current_file = vim.fn.expand "%:p" -- Get full path of current file
+  require("telescope.builtin").live_grep { search_dirs = { current_file } }
+end, { desc = "Search grep in current file" })
+map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
+map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
+map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
+map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
+map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
+
+-- General
+map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
+map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open .env file" })

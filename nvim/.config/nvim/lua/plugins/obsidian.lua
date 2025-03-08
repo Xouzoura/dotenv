@@ -1,8 +1,8 @@
 return {
   "epwalsh/obsidian.nvim",
   version = "*",
-  lazy = false,
-  -- lazy = true,
+  -- lazy = false,
+  lazy = true,
   event = {
     "BufReadPre ~/vaults/personal/*.md",
     "BufNewFile ~/vaults/personal/*.md",
@@ -78,6 +78,27 @@ return {
         vim.cmd "ObsidianLinks"
       end,
       desc = "(Obsidian) Find buffer links",
+    },
+    {
+      "<leader>mg",
+      function()
+        vim.cmd "e ~/vaults/notes/_daily.md"
+      end,
+      desc = "(Obsidian) Open daily notes (global)",
+    },
+    {
+      "<leader>ms",
+      function()
+        vim.cmd "e ~/vaults/notes/"
+      end,
+      desc = "(Obsidian) Open workspace files",
+    },
+    {
+      "<leader>mww",
+      function()
+        vim.cmd "e ~/vaults/notes/_work.md"
+      end,
+      desc = "(Obsidian) Open work",
     },
   },
   opts = {

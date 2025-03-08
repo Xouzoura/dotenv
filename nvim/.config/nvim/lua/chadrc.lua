@@ -2,44 +2,64 @@
 -- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvconfig.lua
 
 ---@type ChadrcConfig
-local M = {}
+local M = {
+  ui = {
+    statusline = {
+      order = { "mode", "path", "file", "diagnostics", "%=", "lsp_load", "cursor" },
+      -- order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "lsp_load", "cursor" },
+      modules = {
 
-M.ui = {
-  -- nightfox theme is the best for me probably
-  theme = "nightfox",
-  hl_override = {
-    CursorLineNr = { fg = "yellow" },
-  },
-  -- lsp = { signature = false },
-  statusline = {
-    -- order = { "mode", "git", "cursor"},
-    order = { "mode", "file", "git", "lsp_msg", "%=", "diagnostics", "cursor" },
-    modules = {
-      cursor = function()
-        local function get_python_path()
-          local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
-          local venv_path2 = vim.fn.getcwd() .. "/venv/bin/python"
-
-          if vim.fn.filereadable(venv_path) == 1 then
-            return ".venv"
-          elseif vim.fn.filereadable(venv_path2) == 1 then
-            return "venv"
-          else
-            return ""
+        lsp_load = function()
+          local loaded = #vim.lsp.get_clients { bufnr = 0 } > 0
+          if not loaded then
+            return " LSP ✗ | "
           end
-        end
-
-        if vim.bo.filetype == "python" then
-          val = get_python_path()
-        else
-          val = ""
-        end
-        return "%#BruhHl#" .. val
-      end,
+          local status = vim.lsp.status()
+          if status ~= "" then
+            return " LSP ✗ | "
+          end
+          return " LSP ✓ | "
+        end,
+        path = function()
+          local file = vim.fn.expand "%:t"
+          if file == "" or file == nil or not file:match "%." then
+            return nil
+          end
+          local max_length = 40
+          local relative_path = vim.fn.expand "%:.:h"
+          local icon = "󰉋"
+          -- format if it's a home path to show it, instead of relative path.
+          local formatted_path = relative_path:match "^/home" and relative_path or "~/" .. relative_path
+          --
+          -- Truncate long paths
+          if #formatted_path > max_length then
+            local parts = vim.split(formatted_path, "/")
+            if #parts > 5 then
+              formatted_path = table.concat({
+                parts[1], -- usually empty.
+                parts[2],
+                parts[3],
+                "...",
+                parts[#parts - 1],
+                parts[#parts],
+              }, "/")
+            end
+          end
+          return string.format("%%#StatusLinePath#%s  %s  %%#StatusLine#", icon, formatted_path)
+        end,
+      },
+    },
+    tabufline = {
+      enabled = false,
     },
   },
-  tabufline = {
-    enable = false,
+  term = {},
+  base46 = {
+    -- [nightfox] theme is the best for me probably
+    theme = "nightfox",
+    hl_override = {
+      CursorLineNr = { fg = "yellow" },
+    },
   },
 }
 

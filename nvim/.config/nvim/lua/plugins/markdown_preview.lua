@@ -1,9 +1,10 @@
 return {
-  -- Preview of any Markdown with :MarkdownPreview
+  -- Install markdown preview, use npx if available.
   "iamcco/markdown-preview.nvim",
   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  ft = { "markdown" },
   build = function()
     vim.fn["mkdp#util#install"]()
   end,
+  -- build = "cd app && npm install",
+  ft = { "markdown" },
 }

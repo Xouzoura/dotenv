@@ -5,7 +5,7 @@ local f = ls.function_node
 -- Snippet for Unix datetime
 ls.add_snippets("all", {
   s(
-    "unix",
+    "ts",
     f(function()
       return tostring(os.time())
     end)
@@ -20,6 +20,18 @@ ls.add_snippets("all", {
     "today",
     f(function()
       return os.date "%Y-%m-%d"
+    end)
+  ),
+  s(
+    "ignore",
+    f(function()
+      return "#type: ignore[]"
+    end)
+  ),
+  s(
+    "pn",
+    f(function()
+      return "@pytest.mark.new"
     end)
   ),
 })

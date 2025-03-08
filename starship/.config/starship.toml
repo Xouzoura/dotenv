@@ -59,7 +59,7 @@ disabled = false
 disabled = true
 
 [python]
-format = "[$symbol$version]($style) "
+format = "[$symbol$version](bold green) ([${virtualenv}](dimmed))"
 style = "bold green"
 
 [rust]

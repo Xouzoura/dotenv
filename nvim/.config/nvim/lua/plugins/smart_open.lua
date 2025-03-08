@@ -2,6 +2,7 @@ return {
   -- <space><space> that mixes the last opened files, buffers etc
   "danielfalk/smart-open.nvim",
   branch = "0.2.x",
+  lazy = false,
   dependencies = {
     "kkharji/sqlite.lua",
     -- Only required if using match_algorithm fzf
@@ -11,12 +12,9 @@ return {
   },
   config = function()
     require("telescope").load_extension "smart_open"
-    -- local map = vim.keymap.set
-    -- map("n", "<leader>fc", function()
-    --   require("telescope").extensions.smart_open.smart_open()
-    -- end, { noremap = true, silent = true, desc = "Smart open of telescope files" })
-    -- map("n", "<leader><leader>", function()
-    --   require("telescope").extensions.smart_open.smart_open { cwd_only = true }
-    -- end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
+    require("telescope").load_extension "fzf"
+    vim.keymap.set("n", "<leader><leader>", function()
+      require("telescope").extensions.smart_open.smart_open { cwd_only = true }
+    end, { noremap = true, silent = true, desc = "Smart open of telescope files (within directory)" })
   end,
 }

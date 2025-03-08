@@ -1,3 +1,4 @@
+-- Debug
 return {
   {
     "rcarriga/nvim-dap-ui",
@@ -12,6 +13,8 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
+      dap.listeners.before.event_terminated.dapui_config = dapui.close
+      dap.listeners.before.event_exited.dapui_config = dapui.close
     end,
   },
   {
@@ -22,36 +25,26 @@ return {
         { text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
       )
 
-      vim.keymap.set("n", "<leader>dr", function()
-        require("dap").continue()
-      end, { desc = "Continue" })
-      vim.keymap.set("n", "<leader>dl", function()
-        require("dap").run_last()
-      end, { desc = "Run Last" })
-      vim.keymap.set("n", "<leader>dw", function()
-        require("dap").restart()
-      end, { desc = "Restart" })
-      vim.keymap.set("n", "<leader>dt", function()
-        require("dap").terminate()
-      end, { desc = "Terminate" })
-      -- Redone with the F keys
       vim.keymap.set("n", "<F5>", function()
         require("dap").continue()
-      end, { desc = "Continue" })
+      end, { desc = "[d]Continue" })
       vim.keymap.set("n", "<F6>", function()
         require("dap").run_last()
-      end, { desc = "Run Last" })
+      end, { desc = "[d]Run Last" })
       vim.keymap.set("n", "<F9>", function()
         require("dap").restart()
-      end, { desc = "Restart" })
+      end, { desc = "[d]Restart" })
+      vim.keymap.set("n", "<leader>dz", function()
+        require("dap").close()
+      end, { desc = "[d]Close/Stop" })
       vim.keymap.set("n", "<F2>", function()
         require("dap").terminate()
       end, { desc = "Terminate" })
       -- Continue
-      vim.keymap.set("n", "<F10>", function()
+      vim.keymap.set("n", "<F4>", function()
         require("dap").step_over()
       end, { desc = "Step Over" })
-      vim.keymap.set("n", "<F11>", function()
+      vim.keymap.set("n", "<F3>", function()
         require("dap").step_into()
       end, { desc = "Step Into" })
       vim.keymap.set("n", "<F12>", function()
@@ -59,15 +52,13 @@ return {
       end, { desc = "Step Out" })
       -- Commented-out since I see the persistent db
       -- vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, {desc="Toggle Breakpoint"})
-      vim.keymap.set("n", "<Leader>dn", function()
-        require("dap").toggle_breakpoint()
-      end, { desc = "Toggle Breakpoint (Normal)" })
-      vim.keymap.set("n", "<Leader>dB", function()
+      vim.keymap.set("n", "<leader>dB", function()
         require("dap").set_breakpoint()
-      end, { desc = "Set Breakpoint" })
-      vim.keymap.set("n", "<Leader>dd", function()
-        require("dap").set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
-      end, { desc = "Log Point" })
+      end, { desc = "[d]Set (non-persistent) Breakpoint" })
+      -- vim.keymap.set("n", "<leader>dd", function()
+      --   require("dap").set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
+      -- end, { desc = "[d]Log Point" })
+      vim.keymap.set("n", "<leader>dR", ":edit .vscode/launch.json<CR>", { desc = "Step Over" })
     end,
   },
   {
@@ -80,12 +71,13 @@ return {
       require("nvim-dap-virtual-text").setup {
         virt_text_pos = "eol",
       }
-      vim.keymap.set("n", "<leader>dv", "<cmd>DapVirtualTextToggle<CR>", { desc = "Toggle Virtual Text" })
+      vim.keymap.set("n", "<leader>duv", "<cmd>DapVirtualTextToggle<CR>", { desc = "[d]Toggle Virtual Text" })
     end,
   },
   {
     "mfussenegger/nvim-dap-python",
     ft = "python",
+    lazy = false,
     dependencies = {
       "mfussenegger/nvim-dap",
       "rcarriga/nvim-dap-ui",
@@ -94,24 +86,25 @@ return {
       local function get_python_path()
         -- Use the currently active virtual environment's Python binary
         local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
-        local venv_path2 = vim.fn.getcwd() .. "/venv/bin/python"
 
         if vim.fn.filereadable(venv_path) == 1 then
           return venv_path
-        elseif vim.fn.filereadable(venv_path2) == 1 then
-          return venv_path2
         else
           return vim.fn.expand "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
         end
       end
 
       local python_path = get_python_path()
-      require("dap-python").setup(python_path)
+      local dap_python = require "dap-python"
+      local extras = require "extras"
+      extras.add_env_values_to_buffer()
+      dap_python.setup(python_path)
+      dap_python.default_port = 38000
     end,
     keys = {
-      { "<leader>dui", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "Toggle DAP UI" },
-      { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "Reset DAP UI" },
-      { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "Toggle DAP UI" },
+      { "<leader>d;", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },
+      { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "[d]Reset DAP UI" },
+      -- { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
     },
   },
   {
@@ -132,14 +125,14 @@ return {
         function()
           require("persistent-breakpoints.api").toggle_breakpoint()
         end,
-        desc = "Toggle Breakpoint (Persistent)",
+        desc = "[d]Toggle Breakpoint (Persistent)",
       },
       {
         "<leader>dc",
         function()
           require("persistent-breakpoints.api").clear_all_breakpoints()
         end,
-        desc = "Clear All Breakpoints",
+        desc = "[d]Clear All Breakpoints",
       },
     },
   },

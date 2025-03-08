@@ -1,7 +1,31 @@
+-- <------------ Copilot
+--
 return {
   "github/copilot.vim",
   lazy = false,
 }
+--
+--
+-- <------------ Supermaven
+-- return {
+--   "supermaven-inc/supermaven-nvim",
+--   lazy = false,
+--   config = function()
+--     require("supermaven-nvim").setup {
+--       keymaps = {
+--         accept_suggestion = "<C-]>",
+--         clear_suggestion = "<C-[>",
+--       },
+--       -- your configuration comes here
+--       -- or leave it empty to use the default settings
+--       -- refer to the configuration section below
+--     }
+--   end,
+-- }
+--
+--
+-- <------------ Codeium
+--
 -- Path: codeium.lua does not work at the moment
 -- return {
 --     "Exafunction/codeium.nvim",
@@ -14,4 +38,11 @@ return {
 --         require("codeium").setup({
 --         })
 --     end
+-- }
+-- <------------ Sourcegraph
+-- return {
+--
+--   "sourcegraph/sg.nvim",
+--   lazy = false,
+--   dependencies = { "nvim-lua/plenary.nvim" },
 -- }

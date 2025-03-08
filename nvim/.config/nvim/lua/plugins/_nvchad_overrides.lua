@@ -3,7 +3,9 @@ return {
     -- Plugin: nvim-tree.lua
     "nvim-tree/nvim-tree.lua",
     opts = function()
-      custom = require "nvchad.configs.nvimtree"
+      local custom = require "nvchad.configs.nvimtree"
+      -- Remove default keymaps and add new ones
+
       custom.filters.dotfiles = false
       custom.git = custom.git or {}
       custom.git.ignore = false
@@ -18,7 +20,12 @@ return {
         folder_arrow = true,
         git = true,
       }
-
+      -- Add actions configuration to disable window picker (A or B), I just want to open.
+      custom.actions = custom.actions or {}
+      custom.actions.open_file = custom.actions.open_file or {}
+      custom.actions.open_file.window_picker = {
+        enable = false,
+      }
       -- Configure to update focus when entering a buffer
       custom.update_focused_file = {
         enable = true,
@@ -28,32 +35,65 @@ return {
 
       -- Add custom highlighting colors
       vim.cmd [[
-      highlight NvimTreeOpenedFile guifg=#8e7cc3
-      highlight NvimTreeCursorLine guibg=#b4a7d6
-    ]]
+          highlight NvimTreeOpenedFile guifg=#8e7cc3
+          highlight NvimTreeCursorLine guibg=#b4a7d6
+      ]]
 
       return custom
     end,
   },
   {
+    -- Plugin: nvim-telescope/telescope.nvim
     "nvim-telescope/telescope.nvim",
-    config = function()
-      require("telescope").setup {
-        defaults = {
-          file_ignore_patterns = { ".git/.*", "node_modules/.*", ".cache/.*" },
-        },
-        extensions = {
-          fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
+    dependencies = {
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim",
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = "^1.0.0",
+      },
+    },
+    opts = function()
+      local custom = require "nvchad.configs.telescope"
+      local telescope = require "telescope"
+      telescope.load_extension "live_grep_args"
+      local lga_actions = require "telescope-live-grep-args.actions"
+      local live_grep_args_shortcuts = require "telescope-live-grep-args.shortcuts"
+      custom.defaults.mappings = {
+        n = { ["q"] = require("telescope.actions").close, ["d"] = require("telescope.actions").delete_buffer },
+      }
+      -- Extend the custom configuration
+      custom.extensions = custom.extensions or {}
+      custom.extensions.live_grep_args = {
+        auto_quoting = true,
+        mappings = {
+          i = {
+            ["<C-k>"] = lga_actions.quote_prompt(),
+            ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+            ["<C-space>"] = require("telescope.actions").to_fuzzy_refine,
           },
         },
       }
-      require("telescope").load_extension "fzf"
+      vim.keymap.set(
+        "n",
+        "<leader>fk",
+        ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+        { noremap = true, silent = true, desc = "Telescope Live Grep Args" }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>fj",
+        live_grep_args_shortcuts.grep_word_under_cursor,
+        { noremap = true, silent = true, desc = "Telescope Live Grep Args (current word)" }
+      )
+
+      return custom
     end,
   },
   -- More plugins
+  {
+    -- because nvchad doesn't load this plugin by default, so i don't need to press space two times
+    "folke/which-key.nvim",
+    lazy = false,
+  },
 }

@@ -4,14 +4,29 @@ return {
   cmd = "Trouble",
   keys = {
     {
-      "<leader>xx",
-      "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
+      "<leader>x;",
+      "<cmd>Trouble diagnostics toggle focus=true win.type = split win.position=right<cr>",
+      desc = "(Trouble) All Buffer Diagnostics All Right side",
     },
     {
-      "<leader>xb",
+      "<leader>x:",
+      "<cmd>Trouble diagnostics toggle filter.buf=0 win.type = split win.position=right<cr>",
+      desc = "(Trouble) Current Buffer Diagnostics All Right side",
+    },
+    {
+      "<leader>xxd",
+      "<cmd>Trouble diagnostics toggle<cr>",
+      desc = "(Trouble) Buffer Diagnostics All Down side",
+    },
+    {
+      "<leader>xbd",
       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      desc = "Buffer Diagnostics (Trouble)",
+      desc = "(Trouble) Buffer Diagnostics Buffer [D]",
+    },
+    {
+      "<leader>xbr",
+      "<cmd>Trouble diagnostics toggle filter.buf=0 win.type = split win.position=right<cr>",
+      desc = "(Trouble) Buffer Diagnostics Buffer [R]",
     },
     {
       "<leader>df", -- Might need something else since <leader>d(~) is used by debug
@@ -34,10 +49,10 @@ return {
     --   "<cmd>Trouble symbols toggle focus=false<cr>",
     --   desc = "Symbols (Trouble)",
     -- },
-    {
-      "<leader>xd",
-      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      desc = "LSP Definitions / references / ... (Trouble)",
-    },
+    -- {
+    --   "<leader>xd",
+    --   "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+    --   desc = "LSP Definitions / references / ... (Trouble)",
+    -- },
   },
 }
