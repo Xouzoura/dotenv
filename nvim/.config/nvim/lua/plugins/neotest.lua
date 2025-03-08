@@ -14,31 +14,8 @@ return {
   cmd = "Neotest",
   config = function()
     local neotest = require "neotest"
-    local function load_env(file)
-      local env_vars = {}
-      local file = io.open(file, "r")
-
-      if file then
-        for line in file:lines() do
-          line = line:match "^%s*(.-)%s*$"
-          if not line:match "^#" and line ~= "" then
-            local key, value = line:match "^([%w_]+)=(.*)$"
-            if key and value then
-              env_vars[key] = value
-            end
-          end
-        end
-        file:close()
-      end
-
-      return env_vars
-    end
-
-    local env_vars = load_env ".env"
-
-    for k, v in pairs(env_vars) do
-      vim.fn.setenv(k, v)
-    end
+    local extras = require "extras"
+    extras.add_env_values_to_buffer()
     neotest.setup {
       adapters = {
         require "neotest-python" {

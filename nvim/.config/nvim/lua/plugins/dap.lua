@@ -13,7 +13,6 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
-      -- new?
       dap.listeners.before.event_terminated.dapui_config = dapui.close
       dap.listeners.before.event_exited.dapui_config = dapui.close
     end,
@@ -55,11 +54,11 @@ return {
       -- vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, {desc="Toggle Breakpoint"})
       vim.keymap.set("n", "<leader>dB", function()
         require("dap").set_breakpoint()
-      end, { desc = "[d]Set Breakpoint" })
-      vim.keymap.set("n", "<leader>dd", function()
-        require("dap").set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
-      end, { desc = "[d]Log Point" })
-      vim.keymap.set("n", "<leader>de", ":edit .vscode/launch.json<CR>", { desc = "Step Over" })
+      end, { desc = "[d]Set (non-persistent) Breakpoint" })
+      -- vim.keymap.set("n", "<leader>dd", function()
+      --   require("dap").set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
+      -- end, { desc = "[d]Log Point" })
+      vim.keymap.set("n", "<leader>dR", ":edit .vscode/launch.json<CR>", { desc = "Step Over" })
     end,
   },
   {
@@ -97,13 +96,15 @@ return {
 
       local python_path = get_python_path()
       local dap_python = require "dap-python"
+      local extras = require "extras"
+      extras.add_env_values_to_buffer()
       dap_python.setup(python_path)
       dap_python.default_port = 38000
     end,
     keys = {
-      { "<leader>dui", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },
+      { "<leader>d;", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },
       { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "[d]Reset DAP UI" },
-      { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
+      -- { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
     },
   },
   {

@@ -199,5 +199,33 @@ function M.copy_env_values_clean()
   print("Copied " .. #env_lines .. " environment variables to clipboard")
 end
 
+function M.add_env_values_to_buffer()
+  local function load_env(file)
+    local env_vars = {}
+    local file = io.open(file, "r")
+
+    if file then
+      for line in file:lines() do
+        line = line:match "^%s*(.-)%s*$"
+        if not line:match "^#" and line ~= "" then
+          local key, value = line:match "^([%w_]+)=(.*)$"
+          if key and value then
+            env_vars[key] = value
+          end
+        end
+      end
+      file:close()
+    end
+
+    return env_vars
+  end
+
+  local env_vars = load_env ".env"
+
+  for k, v in pairs(env_vars) do
+    vim.fn.setenv(k, v)
+  end
+end
+
 -- Done
 return M
