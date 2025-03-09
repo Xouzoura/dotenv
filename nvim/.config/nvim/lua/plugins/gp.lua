@@ -90,6 +90,8 @@ return {
           system_prompt = SYSTEM_PROMPT,
         },
       },
+      chat_user_prefix = "---------------------------- NEW 💬 ----------------------------",
+      chat_assistant_prefix = { ">>> 🤖 : ", "[{{agent}}]", " <<<" },
     }
     require("gp").setup(config)
     -- https://github.com/Robitx/gp.nvim/issues/245 solution from the issue
@@ -140,6 +142,7 @@ return {
     map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
     -- map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
     map({ "n", "i" }, "<C-g>;", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
+    map({ "n", "i" }, "<C-g>o", "<cmd>GpChatToggle popup<cr>", keymapOptions "Toggle Chat Popup")
     map({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions "Chat Finder")
     map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
     map({ "n" }, "<C-g>[", goToPreviousQuestion, keymapOptions "Go to previous question")
@@ -149,7 +152,7 @@ return {
     map("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions "Visual Chat New")
     map("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions "Visual Chat Paste")
     map("v", "<C-g>t", ":<C-u>'<,'>GpChatToggle<cr>", keymapOptions "Visual Toggle Chat")
-    map({ "n", "i" }, "<C-g>gp", "<cmd>GpPopup<cr>", keymapOptions "Popup")
+    -- map({ "n", "i" }, "<C-g>gp", "<cmd>GpPopup<cr>", keymapOptions "Popup")
     map({ "n", "i", "v", "x" }, "<C-g>s", "<cmd>GpStop<cr>", keymapOptions "Stop")
     map({ "n", "i", "v", "x" }, "<C-g>n", "<cmd>GpNextAgent<cr>", keymapOptions "Next Agent")
   end,

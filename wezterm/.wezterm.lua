@@ -13,6 +13,7 @@ return {
 	-- window_decorations = "NONE",
 	window_decorations = "RESIZE",
 	hide_tab_bar_if_only_one_tab = false,
+	warn_about_missing_glyphs = false,
 	use_resize_increments = false,
 	adjust_window_size_when_changing_font_size = false,
 	window_padding = {

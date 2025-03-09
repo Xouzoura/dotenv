@@ -220,6 +220,18 @@ alias jp='python -m jupyter notebook'
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
+
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+# adding a second one because of the stupid issue with wayland on preview.
+function yyf() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+
+    # Workaround to view images.
+    env -u WAYLAND_DISPLAY wezterm start -- yazi "$@" --cwd-file="$tmp"
 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		cd -- "$cwd"
 	fi
