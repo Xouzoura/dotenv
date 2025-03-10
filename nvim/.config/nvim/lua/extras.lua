@@ -119,6 +119,45 @@ function M.switch_terminal_buffer()
   end
 end
 
+function M.switch_terminal_buffer_file_wd()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if string.find(bufname, "term://") then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
+    vim.cmd "b#"
+  else
+    local buffers = vim.api.nvim_list_bufs()
+    for _, bufid in pairs(buffers) do
+      local bufname2 = vim.api.nvim_buf_get_name(bufid)
+      if string.find(bufname2, "term://") ~= nil then
+        vim.cmd("buffer " .. bufid)
+        return
+      end
+    end
+    -- Get the directory of the current file, fallback to working directory
+    local file_dir = vim.fn.expand "%:p:h" -- Get the directory of the current file
+    if file_dir == "" then
+      file_dir = vim.loop.cwd() -- Fallback to current working directory
+    end
+
+    -- Create a new terminal in the file's directory
+    print("No terminal buffer found, opening a new one in: " .. file_dir)
+    vim.cmd("lcd " .. vim.fn.fnameescape(file_dir)) -- Change local directory for this buffer
+    vim.cmd "terminal" -- Open terminal
+  end
+end
+
+function M.change_wd()
+  -- Get the directory of the current file, fallback to working directory
+  local file_dir = vim.fn.expand "%:p:h" -- Get the directory of the current file
+  if file_dir == "" then
+    file_dir = vim.loop.cwd() -- Fallback to current working directory
+  end
+
+  -- Create a new terminal in the file's directory
+  print("No terminal buffer found, opening a new one in: " .. file_dir)
+  vim.cmd("lcd " .. vim.fn.fnameescape(file_dir)) -- Change local directory for this buffer
+end
+
 function M.close_inactive_buffers()
   local nvimTree = "NvimTree_1" -- don't want to close nvimtree
   local current = vim.fn.bufnr "%"

@@ -174,6 +174,8 @@ map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc 
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
+map({ "n", "t" }, "g,", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
+map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
 map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
 
 -- General
