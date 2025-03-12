@@ -53,6 +53,10 @@ return {
       print "Fold level: 1" -- Display the new fold level
     end, { desc = "Set fold to 1" })
 
+    vim.keymap.set("n", "z2", function()
+      vim.wo.foldlevel = 2
+      print "Fold level: 2" -- Display the new fold level
+    end, { desc = "Set fold to 2" })
     -- max
     vim.keymap.set("n", "z=", function()
       vim.wo.foldlevel = 20

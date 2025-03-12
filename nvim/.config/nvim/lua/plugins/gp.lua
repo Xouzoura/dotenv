@@ -3,22 +3,22 @@ return {
   "robitx/gp.nvim",
   lazy = false,
   config = function()
-    local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation. Be as precise as possible, avoid repeating, structuring the reply or repeating code you have received, When asked to explain, be brief, when asked to code, be brief providing only code.\n\n"
-      .. "- Please provide a brief, concise answer using as few words as possible.\n"
+    local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation, unless specifically requested. Be precise, concise, avoid repeating what I have asked, repeating code. When asked to explain, be explain what you are asked only, when asked to code, be brief providing only code.\n\n"
+      .. "- When asked to explain, only explain what you are asked without repeating information and giving too much information.\n"
       .. "- Focus on code first. Try to limit the explanation to the code, and the words to a minimum. Answer strictly the question\n"
       .. "- The user provided the additional info about how they would like you to respond:\n"
       .. "- If you're unsure don't guess and say you don't know instead.\n"
-      .. "- Only reply with as concise information as possible so if not requested do not provide lots of information.\n"
       .. "- Ask question if you need clarification to provide better answer.\n"
       .. "- Zoom out first to see the big picture and then zoom in to details.\n"
     local endpoint
-    if os.getenv "AZURE_OPENAI_ENDPOINT" == nil then
+    -- using _AZURE_OPENAI_ENDPOINT as a system environment variable with _AZURE_OPENAI_KEY to not have an issue in projects with AI that might have these keys.
+    if os.getenv "_AZURE_OPENAI_ENDPOINT" == nil then
       endpoint =
         -- does not work
         "https://<...>/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
     else
-      -- Assuming AZURE_OPENAI_ENDPOINT is as https://___.openai.azure.com
-      endpoint = os.getenv "AZURE_OPENAI_ENDPOINT"
+      -- Assuming _AZURE_OPENAI_ENDPOINT is as https://___.openai.azure.com
+      endpoint = os.getenv "_AZURE_OPENAI_ENDPOINT"
         .. "/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
     end
     local config = {
@@ -34,7 +34,7 @@ return {
         azure = {
           disable = false,
           endpoint = endpoint,
-          secret = os.getenv "AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
+          secret = os.getenv "_AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
         },
       },
 

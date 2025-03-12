@@ -94,11 +94,25 @@ return {
       desc = "(Obsidian) Open workspace files",
     },
     {
-      "<leader>mww",
+      "<leader>mwj",
       function()
         vim.cmd "e ~/vaults/notes/_work.md"
       end,
       desc = "(Obsidian) Open work",
+    },
+    {
+      "<leader>mwd",
+      function()
+        vim.cmd "e ~/vaults/notes/_daily.md"
+      end,
+      desc = "(Obsidian) Open daily",
+    },
+    {
+      "<leader>mww",
+      function()
+        vim.cmd "e ~/vaults/notes/_weekend-goals.md"
+      end,
+      desc = "(Obsidian) Open weekend",
     },
   },
   opts = {
