@@ -181,3 +181,17 @@ map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values c
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
 map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open .env file" })
+
+-- Garbage collection
+vim.keymap.set(
+  "n",
+  "<leader>Gs",
+  '<cmd>lua require("garbage-day.utils").start_lsp()<CR>',
+  { noremap = true, silent = true, desc = "Start LSP" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>Gx",
+  '<cmd>lua require("garbage-day.utils").stop_lsp()<CR>',
+  { noremap = true, silent = true, desc = "Stop LSP" }
+)

@@ -252,7 +252,7 @@ source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH" # <-- maybe re-add?
 # export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -260,6 +260,8 @@ export NVM_DIR="$HOME/.nvm"
 eval "$(zoxide init zsh)"
 bindkey '^ ' autosuggest-accept
 bindkey '^]' autosuggest-execute
+bindkey '^[p' history-beginning-search-backward
+bindkey '^[n' history-beginning-search-forward
 # Exit with jj and kj 
 bindkey -M viins 'jj' vi-cmd-mode 
 bindkey -M viins 'kj' vi-cmd-mode 
