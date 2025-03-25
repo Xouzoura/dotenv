@@ -6,7 +6,7 @@ return {
     { "nvim-telescope/telescope.nvim" }, -- optional: if you want to pick scratch file by telescope
   },
   config = function()
-    vim.keymap.set("n", "<leader>sc>", "<cmd>Scratch<cr>")
+    vim.keymap.set("n", "<leader>sc", "<cmd>Scratch<cr>")
     vim.keymap.set("n", "<leader>so", "<cmd>ScratchOpen<cr>")
   end,
 }
