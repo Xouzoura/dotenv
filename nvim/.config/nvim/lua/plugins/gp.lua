@@ -11,7 +11,7 @@ return {
       .. "- Ask question if you need clarification to provide better answer.\n"
       .. "- Zoom out first to see the big picture and then zoom in to details.\n"
     local endpoint
-    -- using _AZURE_OPENAI_ENDPOINT as a system environment variable with _AZURE_OPENAI_KEY to not have an issue in projects with AI that might have these keys.
+    -- using _AZURE_OPENAI_ENDPOINT as a system environment variable
     if os.getenv "_AZURE_OPENAI_ENDPOINT" == nil then
       endpoint =
         -- does not work
@@ -122,32 +122,34 @@ return {
         desc = "GPT prompt " .. desc,
       }
     end
-    local function goToNextQuestion()
-      -- Search for the next "💬:" symbol
-      vim.fn.search("💬:", "W") -- 'W' ensures it wraps around to the start of the file
-    end
-    local function goToPreviousQuestion()
-      -- Search for the next "💬:" symbol
-      vim.fn.search("💬:", "bW") -- 'W' ensures it wraps around to the start of the file
-    end
-    local function goToNextAnswer()
-      -- Search for the next "💬:" symbol
-      vim.fn.search("🤖", "W") -- 'W' ensures it wraps around to the start of the file
-    end
-    local function goToPreviousAnswer()
-      -- Search for the next "💬:" symbol
-      vim.fn.search("🤖:", "bW") -- 'W' ensures it wraps around to the start of the file
+    local q_symbol = config.chat_user_prefix
+    local a_symbol = config.chat_assistant_prefix[1]
+    local function goToPlace(symbol, direction)
+      -- Search for the next "question"/"answer" symbol
+      -- forward (W) or backward (bW)
+      vim.fn.search(symbol, direction) -- 'W' ensures it wraps around to the start of the file
     end
     local map = vim.keymap.set
     map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
-    -- map({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
     map({ "n", "i" }, "<C-g>;", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
     map({ "n", "i" }, "<C-g>o", "<cmd>GpChatToggle popup<cr>", keymapOptions "Toggle Chat Popup")
     map({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions "Chat Finder")
-    map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
-    map({ "n" }, "<C-g>[", goToPreviousQuestion, keymapOptions "Go to previous question")
-    map({ "n" }, "<C-g>}", goToNextAnswer, keymapOptions "Go to next answer")
-    map({ "n" }, "<C-g>{", goToPreviousAnswer, keymapOptions "Go to previous answer")
+    map({ "n" }, "[<C-g>", function()
+      goToPlace(q_symbol, "bW")
+    end, keymapOptions "Go to prev question")
+    map({ "n" }, "]<C-g>", function()
+      goToPlace(q_symbol, "W")
+    end, keymapOptions "Go to next question")
+    map({ "n" }, "[g", function()
+      goToPlace(a_symbol, "bW")
+    end, keymapOptions "Go to previous answer")
+    map({ "n" }, "]g", function()
+      goToPlace(a_symbol, "W")
+    end, keymapOptions "Go to next answer")
+    -- map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
+    -- map({ "n" }, "<C-g>[", goToPreviousQuestion, keymapOptions "Go to previous question")
+    -- map({ "n" }, "<C-g>}", goToNextAnswer, keymapOptions "Go to next answer")
+    -- map({ "n" }, "<C-g>{", goToPreviousAnswer, keymapOptions "Go to previous answer")
 
     map("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions "Visual Chat New")
     map("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions "Visual Chat Paste")

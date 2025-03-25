@@ -146,20 +146,22 @@ map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", 
 map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
 map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
 -- git signs (part of default config from nvchad)
-map("n", "<leader>gdd", "<cmd>DiffviewOpen<CR>", {
-  desc = "(gitsigns) Diff with HEAD",
+map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", {
+  desc = "(diffview) Diff with HEAD",
 })
-map("n", "<leader>gdm", "<cmd>DiffviewOpen develop..HEAD <CR>", {
-  desc = "(gitsigns) Diff with dev",
+map("n", "<leader>gdd", "<cmd>DiffviewOpen develop..HEAD <CR>", {
+  desc = "(diffview) Diff with dev",
 })
 map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
-  desc = "(gitsigns) Diff file",
+  desc = "(diffview) Diff file",
 })
-map("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
-  desc = "(gitsigns) Close",
+map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
+  desc = "(diffview) Close",
 })
 -- terminal of open buffers
+--TODO: keep only one from the below.
 map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
+map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
 -- telescope
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
 map("n", "<leader>f.", function()
