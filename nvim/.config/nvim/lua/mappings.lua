@@ -25,7 +25,7 @@ map("i", "jj", "<ESC>", { silent = true })
 map("i", "kj", "<ESC>", { silent = true })
 -- <--- ## INSERT mode stuff ###--->
 map("i", "<C-u>", "<C-BS>", { desc = "Control-u operates as backspace" })
-map("i", "<C-d>", "<C-o>dw", { silent = true })
+-- map("i", "<C-d>", "<C-o>dw", { silent = true })
 
 -- <--- ## VISUAL mode stuff ###--->
 -- Moving lines up and down in visual mode
@@ -100,7 +100,7 @@ map("n", "<C-W><", ":vertical resize -10<CR>", { noremap = true })
 map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
 -- Undo with U instead of only C-r
 map("n", "U", "<C-r>", { silent = true })
-vim.api.nvim_del_keymap("n", "<C-r>")
+-- vim.api.nvim_del_keymap("n", "<C-r>")
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
 map(
@@ -141,10 +141,6 @@ end)
 -- Debug prints (plugins/debug.lua)
 map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
--- Copilot (enable/disable, but enabled by default) (plugins/copilot.lua)
-map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
-map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
-map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
 -- git signs (part of default config from nvchad)
 map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", {
   desc = "(diffview) Diff with HEAD",

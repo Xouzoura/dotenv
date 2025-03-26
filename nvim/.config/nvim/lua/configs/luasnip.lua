@@ -34,4 +34,19 @@ ls.add_snippets("all", {
       return "@pytest.mark.new"
     end)
   ),
+  s(
+    "uuid",
+    f(function()
+      -- Use vim.loop to generate a UUID-like string (since lua doesn't have built-in UUID support)
+      local random = math.random
+      return string.format(
+        "%08x-%04x-%04x-%04x-%12x",
+        random(0, 0xffffffff),
+        random(0, 0xffff),
+        random(0, 0xffff),
+        random(0, 0xffff),
+        random(0, 0xffffffffffff)
+      )
+    end)
+  ),
 })
