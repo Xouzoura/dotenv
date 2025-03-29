@@ -1,15 +1,17 @@
 #!/bin/bash
+# Shamelessly stolen from https://github.com/WizardStark/dotfiles/blob/main/setup.sh
+#
 # This script is used to set up my configs to different pcs. To do that, we need to have the structure of 
 # the configs in the `dotenv` directory. The script will then symlink the configs to the correct locations.
 # REQUIRES SUDO for some things.
-#
+
 echo "Starting setup..."
 if [ "$PWD" != "$HOME/dotenv" ]; then
-    echo "Please run this script from the dotenv directory. D"
+    echo "Please run this script from the home directory."
     exit 1
 fi
 
-# Shamelessly stolen from https://github.com/WizardStark/dotfiles/blob/main/setup.sh
+
 
 if [[ $(command -v brew) == "" ]]; then
     echo "Installing Hombrew"
