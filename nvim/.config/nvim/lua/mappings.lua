@@ -156,7 +156,8 @@ map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
 })
 -- terminal of open buffers
 --TODO: keep only one from the below.
-map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
+-- map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
+-- Tab does also include the c-i.
 map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
 -- telescope
 map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
