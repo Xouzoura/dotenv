@@ -35,9 +35,11 @@ lspconfig.pyright.setup {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
+        cacheLibraryFiles = true, -- Speeds up library lookups
+        indexing = true, -- Enables background indexing
         -- diagnosticMode = "workspace", -- works for all open files
         typeCheckingMode = "basic",
-        excludePaths = { "**/.venv/**" },
+        excludePaths = { "**/.venv/**", "**/.git/**" },
       },
     },
   },
