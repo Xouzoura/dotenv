@@ -1,7 +1,8 @@
 #!/bin/bash
 # This script is used to set up my configs to different pcs. To do that, we need to have the structure of 
 # the configs in the `dotenv` directory. The script will then symlink the configs to the correct locations.
-
+# REQUIRES SUDO for some things.
+#
 echo "Starting setup..."
 if [ "$PWD" != "$HOME/dotenv" ]; then
     echo "Please run this script from the dotenv directory. D"
@@ -80,6 +81,13 @@ stow -v --adopt -t $HOME .
     echo "Neovim plugins installed successfully."
 )
 
+(
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar xf lazygit.tar.gz lazygit
+    sudo install lazygit -D -t /usr/local/bin/
+    echo "Lazygit installed successfully at version $(lazygit --version)"
+)
 ~/.config/tmux/plugins/tpm/bin/install_plugins
 
 sudo chsh -s $(which zsh)
