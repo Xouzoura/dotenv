@@ -177,6 +177,7 @@ map({ "n", "t" }, "g,", extras.switch_terminal_buffer_file_wd, { desc = "Go to t
 map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
 map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
 
+map("n", "<Leader>r,", extras.prompt_notification, { noremap = true, silent = true })
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
 map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open .env file" })

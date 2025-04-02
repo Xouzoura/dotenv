@@ -272,5 +272,68 @@ function M.add_env_values_to_buffer()
   end
 end
 
+local function _parse_time_input(input)
+  local hour, min = input:match "^(%d+):(%d+)$"
+  if hour and min then
+    return tonumber(hour), tonumber(min)
+  elseif tonumber(input) then
+    local now = os.date "*t"
+    local future_time = os.time {
+      year = now.year,
+      month = now.month,
+      day = now.day,
+      hour = now.hour,
+      min = now.min + tonumber(input),
+      sec = 0,
+    }
+    local future_hour = os.date("%H", future_time)
+    local future_min = os.date("%M", future_time)
+    return tonumber(future_hour), tonumber(future_min)
+  else
+    print "Invalid input. Use HH:MM or a number of minutes."
+    return nil, nil
+  end
+end
+
+local function _schedule_notification(time_str, message)
+  local hour, min = _parse_time_input(time_str)
+  if not hour or not min then
+    print "Can not parse time format. Use HH:MM or minutes from now."
+    return
+  end
+
+  local tag = "NEOVIM_REMINDER"
+
+  local uid = tonumber(os.getenv "UID") or tonumber(vim.fn.system "id -u")
+  local cron_job = string.format(
+    '%d %d * * * sh -c \'export DISPLAY=:0; export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%d/bus; notify-send "Reminder" "%s"; crontab -l | grep -v "%s" | crontab -\' # %s',
+    min,
+    hour,
+    uid,
+    message,
+    tag,
+    tag
+  )
+  local add_cron_cmd = string.format('(crontab -l 2>/dev/null; echo "%s") | crontab -', cron_job)
+  vim.fn.jobstart({ "sh", "-c", add_cron_cmd }, { detach = true })
+
+  print("Reminder set for " .. string.format("%02d:%02d", hour, min) .. ": " .. message)
+end
+
+function M.prompt_notification()
+  -- Prompt for time and message to send a reminder with notify-send and crontab
+  vim.ui.input({ prompt = "Enter time (HH:MM or minutes from now): " }, function(time_input)
+    if not time_input or time_input == "" then
+      return
+    end
+    vim.ui.input({ prompt = "Enter reminder message: " }, function(message)
+      if not message or message == "" then
+        return
+      end
+      _schedule_notification(time_input, message)
+    end)
+  end)
+end
+
 -- Done
 return M
