@@ -10,7 +10,6 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-# TODO: delete after project.
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -254,10 +253,10 @@ source ~/.zshrc_secrets
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 PATH="$HOME/.local/bin:$PATH" # <-- maybe re-add?
-PATH="$HOME/repos-for-binaries/google-cloud-sdk/bin:$PATH" # remove after.
-# DELETE AFTER NOTE:
-export KOPS_STATE_STORE=gs://cca-eth-2025-group-043-ethzid/
-export PROJECT=`gcloud config get-value project`
+# # DELETE AFTER NOTE:
+# PATH="$HOME/repos-for-binaries/google-cloud-sdk/bin:$PATH" # remove after.
+# export KOPS_STATE_STORE=gs://cca-eth-2025-group-043-ethzid/
+# export PROJECT=`gcloud config get-value project`
 
 # export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
