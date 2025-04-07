@@ -31,8 +31,8 @@ return {
         -- ["<C-d>"] = { "snippet_backward", "fallback" },
 
         -- Mine.
-        -- ["<C-y>"] = { "show_signature", "hide_signature", "fallback" },
-        -- ["<C-i>"] = { "select_and_accept" },
+        -- ["<C-i>"] = { "show_signature", "hide_signature", "fallback" },
+        ["<C-i>"] = { "select_and_accept" },
       },
       snippets = {
         preset = "luasnip",

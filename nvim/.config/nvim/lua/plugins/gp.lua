@@ -10,15 +10,15 @@ return {
       .. "- If you're unsure don't guess and say you don't know instead.\n"
       .. "- Ask question if you need clarification to provide better answer.\n"
       .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-    local endpoint
+    local azure_endpoint
     -- using _AZURE_OPENAI_ENDPOINT as a system environment variable
     if os.getenv "_AZURE_OPENAI_ENDPOINT" == nil then
-      endpoint =
+      azure_endpoint =
         -- does not work
         "https://<...>/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
     else
       -- Assuming _AZURE_OPENAI_ENDPOINT is as https://___.openai.azure.com
-      endpoint = os.getenv "_AZURE_OPENAI_ENDPOINT"
+      azure_endpoint = os.getenv "_AZURE_OPENAI_ENDPOINT"
         .. "/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
     end
     local config = {
@@ -33,15 +33,19 @@ return {
       providers = {
         azure = {
           disable = false,
-          endpoint = endpoint,
+          endpoint = azure_endpoint,
           secret = os.getenv "_AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
+        },
+        googleai = {
+          endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
+          secret = os.getenv "GEMINI_API_KEY",
         },
       },
 
       agents = {
         {
           name = "ChatGPT4o",
-          disable = true,
+          disable = true, -- because i don't want it from gp.nvim default config.
           chat = true,
           command = false,
           -- string with model name or table with model name and parameters
@@ -52,7 +56,7 @@ return {
         {
           provider = "openai",
           name = "ChatGPT4o-mini",
-          disable = true,
+          disable = true, -- because i don't want it from gp.nvim default config.
           chat = true,
           command = false,
           -- string with model name or table with model name and parameters
@@ -80,7 +84,37 @@ return {
           system_prompt = SYSTEM_PROMPT,
           disable = true, -- DOES NOT WORK
         },
+        {
+          provider = "googleai",
+          name = "ChatGemini",
+          disable = true, -- because i don't want it from gp.nvim default config.
+          chat = true,
+          command = false,
+          -- string with model name or table with model name and parameters
+          model = { model = "gemini-pro", temperature = 1.1, top_p = 1 },
+          -- system prompt (use this to specify the persona/role of the AI)
+          system_prompt = require("gp.defaults").chat_system_prompt,
+        },
+        {
+          provider = "googleai",
+          name = "gemini-2.0-flash",
+          chat = true,
+          command = false,
+          model = { model = "gemini-2.0-flash", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+        },
+        {
+          provider = "googleai",
+          name = "gemini-2.5-pro",
+          disabled = true, -- because it's not for free.
+          chat = true,
+          command = false,
+          model = { model = "gemini-2.5-pro-preview-03-25", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+        },
+        --
         -- Last one is the default always
+        --
         {
           provider = "azure",
           name = "gpt4o",

@@ -23,39 +23,92 @@
 --     }
 --   end,
 -- }
+--
 -- Option2: Copilot.vim
-return {
-  "github/copilot.vim",
-  lazy = false,
-  config = function()
-    -- Copilot (enable/disable, but enabled by default) (plugins/copilot.lua)
-    local map = vim.keymap.set
-    map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
-    map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
-    map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
-    -- map("i", "<C-y>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
-    map("i", "<M-[>", "copilot#Previous()", { silent = true, expr = true, replace_keycodes = false })
-    map("i", "<M-]>", "copilot#Next()", { silent = true, expr = true, replace_keycodes = false })
-  end,
-}
---
---
--- Option3: Supermaven
 -- return {
---   "supermaven-inc/supermaven-nvim",
+--   "github/copilot.vim",
 --   lazy = false,
 --   config = function()
---     require("supermaven-nvim").setup {
---       keymaps = {
---         accept_suggestion = "<C-]>",
---         clear_suggestion = "<C-[>",
+--     -- Copilot (enable/disable, but enabled by default) (plugins/copilot.lua)
+--     local map = vim.keymap.set
+--     map("n", "<leader>cpd", "<CMD>Copilot disable<CR>", { desc = "Disable copilot", noremap = true, silent = true })
+--     map("n", "<leader>cpe", "<CMD>Copilot enable<CR>", { desc = "Enable copilot", noremap = true, silent = true })
+--     map("i", "<C-]>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
+--     -- map("i", "<C-y>", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
+--     map("i", "<M-[>", "copilot#Previous()", { silent = true, expr = true, replace_keycodes = false })
+--     map("i", "<M-]>", "copilot#Next()", { silent = true, expr = true, replace_keycodes = false })
+--   end,
+-- }
+--
+-- Option3: Minuet
+-- return {
+--   "milanglacier/minuet-ai.nvim",
+--   lazy = false,
+--   config = function()
+--     require("minuet").setup {
+--       lsp = {
+--         enabled_ft = { "toml", "lua", "cpp", "python" },
+--         -- Enables automatic completion triggering using `vim.lsp.completion.enable`
+--         enabled_auto_trigger_ft = { "cpp", "lua" },
 --       },
---       -- your configuration comes here
---       -- or leave it empty to use the default settings
---       -- refer to the configuration section below
+--       virtualtext = {
+--         auto_trigger_ft = {},
+--         keymap = {
+--           -- accept whole completion
+--           accept = "<A-A>",
+--           -- accept one line
+--           accept_line = "<A-a>",
+--           -- accept n lines (prompts for number)
+--           -- e.g. "A-z 2 CR" will accept 2 lines
+--           accept_n_lines = "<A-z>",
+--           -- Cycle to prev completion item, or manually invoke completion
+--           prev = "<A-[>",
+--           -- Cycle to next completion item, or manually invoke completion
+--           next = "<A-]>",
+--           dismiss = "<A-e>",
+--         },
+--       },
+--       provider = "gemini",
+--       provider_options = {
+--         gemini = {
+--           model = "gemini-2.0-flash",
+--           -- system = "see [Prompt] section for the default value",
+--           -- chat_input = "See [Prompt Section for default value]",
+--           -- stream = true,
+--           -- api_key = "GEMINI_API_KEY",
+--           -- optional = {},
+--         },
+--       },
+--       default_system = {
+--         template = "...",
+--         prompt = "...",
+--         guidelines = "...",
+--         n_completion_template = "...",
+--       },
 --     }
 --   end,
 -- }
+--
+--
+-- Option3: Supermaven
+return {
+  "supermaven-inc/supermaven-nvim",
+  lazy = false,
+  config = function()
+    require("supermaven-nvim").setup {
+      keymaps = {
+        accept_suggestion = "<C-]>",
+        accept_word = "<C-\\>",
+        -- accept_word = "<C-y>",
+        clear_suggestion = "<M-]>",
+      },
+      -- disable_keymaps = true,
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  end,
+}
 --
 --
 -- <------------ Codeium
