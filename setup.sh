@@ -55,6 +55,9 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup update
 echo "Rust installed"
 
+# Install go?
+# rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
+
 # Missing docker ?
 if [[ $(command -v nvim) == "" ]]; then
     # Method1: Use the AppImage
@@ -99,6 +102,9 @@ if [ "$EXTRAS" == true ]; then
         tar xf lazygit.tar.gz lazygit
         sudo install lazygit -D -t /usr/local/bin/
         echo "Lazygit installed successfully at version $(lazygit --version)"
+
+        # Lazydocker missing
+        curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     )
 fi
 
