@@ -133,3 +133,5 @@ return {
 --   lazy = false,
 --   dependencies = { "nvim-lua/plenary.nvim" },
 -- }
+-- Option 5 - Nothing
+-- return {}

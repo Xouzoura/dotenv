@@ -32,7 +32,7 @@ return {
 
         -- Mine.
         -- ["<C-i>"] = { "show_signature", "hide_signature", "fallback" },
-        ["<C-i>"] = { "select_and_accept" },
+        -- ["<C-i>"] = { "select_and_accept" },
       },
       snippets = {
         preset = "luasnip",
