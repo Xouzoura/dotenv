@@ -174,6 +174,7 @@ alias mixxx="pasuspender mixxx"
 
 # nvim as vi
 alias vi="nvim"
+# also have the vis for the stable version, since nvim is nightly.
 alias vo="nvim -c 'Telescope oldfiles'"
 
 # others
