@@ -174,8 +174,9 @@ alias mixxx="pasuspender mixxx"
 
 # nvim as vi
 alias vi="nvim"
-# also have the vis for the stable version, since nvim is nightly.
 alias vo="nvim -c 'Telescope oldfiles'"
+# also have the vis for the stable version, since nvim is nightly.
+alias vos="vis -c 'Telescope oldfiles'"
 
 # others
 alias mouse="keep-presence"
@@ -207,7 +208,7 @@ alias notesd="vi ~/vaults/notes/_daily.md"
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
 alias dbui='nvim +"DBUIToggle"'
-alias gitgraph='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
+# alias gitgraph='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
 #
 # PYTHON
 # Python aliases for my code 
