@@ -181,7 +181,6 @@ map("n", "<Leader>r,", extras.prompt_notification, { noremap = true, silent = tr
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
 map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open .env file" })
-
 -- Garbage collection
 vim.keymap.set(
   "n",

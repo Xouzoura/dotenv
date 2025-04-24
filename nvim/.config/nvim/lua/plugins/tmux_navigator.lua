@@ -1,6 +1,8 @@
 return {
   -- tmux to work together with nvim
+  -- probably doesn't work/needed either way, so disabling it :)
   "alexghergh/nvim-tmux-navigation",
+  enabled = false,
   config = function()
     local nvim_tmux_nav = require "nvim-tmux-navigation"
 
