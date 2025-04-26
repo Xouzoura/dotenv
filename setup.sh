@@ -50,6 +50,10 @@ else
 
 mkdir -p ~/.config
 
+# UV package
+curl -LsSf https://astral.sh/uv/install.sh | sh
+which uv
+echo "UV installed"
 # Rust 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup update
@@ -58,7 +62,6 @@ echo "Rust installed"
 # Install go?
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
 
-# Missing docker ?
 if [[ $(command -v nvim) == "" ]]; then
     # Method1: Use the AppImage
     # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
@@ -107,6 +110,9 @@ if [ "$EXTRAS" == true ]; then
         curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     )
 fi
+
+# Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
+# NCspot?
 
 (
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm

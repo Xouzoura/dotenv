@@ -9,7 +9,13 @@ function M.run_file()
   if extension == "py" then
     -- Check for pyproject.toml to use poetry
     if vim.fn.filereadable(vim.fn.expand "pyproject.toml") == 1 then
-      vim.cmd("!poetry run python " .. filepath)
+      if vim.fn.filereadable(vim.fn.expand "uv.lock") == 1 then
+        vim.cmd("!uv run " .. filepath)
+      elseif vim.fn.filereadable(vim.fn.expand "poetry.lock") == 1 then
+        vim.cmd("!poetry run python " .. filepath)
+      else
+        print "No poetry.lock or uv.lock found, skipping (run first 'uv sync' or 'poetry lock') ..."
+      end
     else
       vim.cmd("!python " .. filepath)
     end
@@ -23,7 +29,7 @@ function M.run_file()
   elseif extension == "sh" then
     vim.cmd("!source " .. filepath)
   else
-    print("Unsupported file type: " .. extension)
+    print("Unsupported file type: " .. extension .. ", skipping ...")
   end
 end
 
