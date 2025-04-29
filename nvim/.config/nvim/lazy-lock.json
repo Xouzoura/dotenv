@@ -74,6 +74,7 @@
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "ui": { "branch": "v3.0", "commit": "1be34d54813da174c576e1de29f55c0218ed90b4" },
   "url-open": { "branch": "main", "commit": "9f8f4a56ac709f26aa17d8ef921b272bf2262a30" },
+  "uv.nvim": { "branch": "main", "commit": "77eac2e6573c5c52073f93ab544637b276296975" },
   "venv-selector.nvim": { "branch": "regexp", "commit": "c677caa1030808a9f90092e522de7cc20c1390dd" },
   "vgit.nvim": { "branch": "main", "commit": "a6dfbeec773ef345eb3b2ad60a84f22e55e17db4" },
   "vim-dadbod": { "branch": "master", "commit": "9f0ca8bcef704659820a95c3bbd2c262583a66a1" },
