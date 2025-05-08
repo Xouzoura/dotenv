@@ -60,6 +60,7 @@ rustup update
 echo "Rust installed"
 
 # Install go?
+# You need to download the installer from https://go.dev/dl/ and run it.
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
 
 if [[ $(command -v nvim) == "" ]]; then
@@ -102,7 +103,9 @@ if [ "$EXTRAS" == true ]; then
         # Update the paths to the kitty and its icon in the kitty desktop file(s)
         sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
         sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+        #
         # Make xdg-terminal-exec (and hence desktop environments that support it use kitty)
+        # Will make the icon prettier, so why not :-)
         echo 'kitty.desktop' > ~/.config/xdg-terminals.list
         echo "Kitty desktop installed successfully."
     )
@@ -118,6 +121,7 @@ if [ "$EXTRAS" == true ]; then
 
 
     (
+        # Lazygit
         LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         tar xf lazygit.tar.gz lazygit
