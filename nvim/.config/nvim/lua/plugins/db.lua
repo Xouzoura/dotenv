@@ -13,6 +13,10 @@ return {
   },
   init = function()
     -- Your DBUI configuration
+    -- BEST WAY TO ADD NEW DB. add this to the .env file
+    -- DB_UI_PRODUCTION=postgres://postgres:password@localhost:5432/db
+    -- crazy easy then to add new connections
+
     vim.g.db_ui_use_nerd_fonts = 1
     vim.api.nvim_set_keymap(
       "n",
