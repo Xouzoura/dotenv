@@ -39,6 +39,7 @@ sudo apt-get install -y build-essential procps curl file git
 
 if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     echo "Installing dependencies with apt"
+    # sudo apt-get install -y ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
     packages=(
       zsh ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza
       zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
@@ -78,7 +79,7 @@ fi
 # You need to download the installer from https://go.dev/dl/ and run it.
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
 
-if [[ $(command -v nvim) == "" ]]; then
+if ! command -v nvim &> /dev/null; then
     # Method1: Use the AppImage
     # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
     # chmod +x nvim-linux-x86_64.appimage
@@ -93,6 +94,8 @@ if [[ $(command -v nvim) == "" ]]; then
         rm -rf neovim
         echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
     )
+else
+    echo "Neovim is already installed at $(which nvim)"
 fi
 
 # Optional but why not 
@@ -133,8 +136,6 @@ if [ "$EXTRAS" == true ]; then
         rm -rf yazi
         echo "Yazi installed successfully at version $(yazi -V)"
     )
-
-
     (
         # Lazygit
         LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
@@ -167,6 +168,19 @@ fi
     ~/.fzf/install --key-bindings --completion --update-rc
 )
 
+# Install ohmyzsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Install starship
+curl -sS https://starship.rs/install.sh | sh
+
+# All secrets that I want my shell to have access to
+cp ~/.zshrc_secrets.example ~/.zshrc_secrets
+
+# Ng is needed for angular cli autocompletion
+npm install -g @angular/cli
+
+# Move to old
 mv ~/.zshrc ~/.zshrc_old
 
 

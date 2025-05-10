@@ -250,8 +250,9 @@ fold_md() {
     echo "Error: $file not found."
   fi
 }
-# All secrets that I want my shell to have access to
+
 source ~/.zshrc_secrets
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
