@@ -158,6 +158,7 @@ fi
 )
 
 mv ~/.zshrc ~/.zshrc_old
+mv .zshrc .zshrc_old
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -170,9 +171,6 @@ cp ~/.zshrc_secrets.example ~/.zshrc_secrets
 # Ng is needed for angular cli autocompletion
 npm install -g @angular/cli
 
-# Move to old
-
-
 # Installations done, use stow to symlink the configs
 # Careful with adopt on the stow command, it will overwrite the files if they exist.
 # stow -v --adopt -t $HOME .
@@ -183,8 +181,10 @@ stow -v starship
 stow -v scripts
 
 rm .zshrc
-mv ~/.zshrc_old ~/.zshrc
+mv .zshrc_old .zshrc
 ln .zshrc ~/.zshrc
+rm ~/.zshrc_old
+rm .zshrc_old
 ln .zshrc_secrets.example ~/.zshrc_secrets
 
 (
