@@ -82,11 +82,13 @@ if ! command -v nvim &> /dev/null; then
         cd ../
         rm -rf neovim
         echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
+        ln -s ~/.local/bin/nvim ~/.local/bin/vis 
     )
 else
     echo "Neovim is already installed at $(which nvim)"
 fi
 
+cargo install eza
 # Optional but why not 
 if [ "$EXTRAS" == true ]; then
     # Decide between wezterm and kitty
