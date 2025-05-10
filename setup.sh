@@ -157,6 +157,7 @@ fi
     ~/.fzf/install --key-bindings --completion --update-rc
 )
 
+mv ~/.zshrc ~/.zshrc_old
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -170,19 +171,19 @@ cp ~/.zshrc_secrets.example ~/.zshrc_secrets
 npm install -g @angular/cli
 
 # Move to old
-mv ~/.zshrc ~/.zshrc_old
-rm -rf ~/.zshrc_old
 
 
 # Installations done, use stow to symlink the configs
 # Careful with adopt on the stow command, it will overwrite the files if they exist.
-stow -v --adopt -t $HOME .
+# stow -v --adopt -t $HOME .
 stow -v nvim
 stow -v tmux
 stow -v kitty
 stow -v starship
 stow -v scripts
 
+rm .zshrc
+mv ~/.zshrc_old ~/.zshrc
 ln .zshrc ~/.zshrc
 ln .zshrc_secrets.example ~/.zshrc_secrets
 
@@ -194,6 +195,8 @@ ln .zshrc_secrets.example ~/.zshrc_secrets
 
 # Done !
 sudo chsh -s $(which zsh)
-source ~/.zshrc
 zsh -l
+
+source ~/.zshrc
+
 echo "Done!"
