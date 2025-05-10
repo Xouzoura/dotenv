@@ -22,27 +22,15 @@ fi
 
 echo "Updating apt"
 sudo apt update
-sudo apt-get install -y build-essential procps curl file git
-
-
-# if [[ $(command -v brew) == "" ]]; then
-#     echo "Installing Hombrew"
-#     export NONINTERACTIVE=1
-#     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-#     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-#         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#     elif "$OSTYPE" == "darwin"* ]]; then
-#         eval "$(/opt/homebrew/bin/brew shellenv)"
-#     fi
-#     brew update
-#     brew install wget nodejs npm tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow
+echo "Installing essentials with apt"
+sudo apt-get install -y build-essential procps curl file git cmake unzip build-essential wget nodejs npm docker
 
 if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     echo "Installing dependencies with apt"
     # sudo apt-get install -y ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
     packages=(
-      zsh ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza
-      zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
+      zsh ninja-build gettext tmux ffind ripgrep jq vivid bat eza
+      zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick 
     )
 
     for pkg in "${packages[@]}"; do
@@ -80,6 +68,7 @@ fi
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
 
 if ! command -v nvim &> /dev/null; then
+    echo "Installing neovim..."
     # Method1: Use the AppImage
     # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
     # chmod +x nvim-linux-x86_64.appimage
@@ -182,11 +171,20 @@ npm install -g @angular/cli
 
 # Move to old
 mv ~/.zshrc ~/.zshrc_old
+rm -rf ~/.zshrc_old
 
 
 # Installations done, use stow to symlink the configs
 # Careful with adopt on the stow command, it will overwrite the files if they exist.
 stow -v --adopt -t $HOME .
+stow -v nvim
+stow -v tmux
+stow -v kitty
+stow -v starship
+stow -v scripts
+
+ln .zshrc ~/.zshrc
+ln .zshrc_secrets.example ~/.zshrc_secrets
 
 (
     nvim --headless "+Lazy! sync" +qa
@@ -194,6 +192,8 @@ stow -v --adopt -t $HOME .
 )
 ~/.config/tmux/plugins/tpm/bin/install_plugins
 
+# Done !
 sudo chsh -s $(which zsh)
+source ~/.zshrc
 zsh -l
 echo "Done!"
