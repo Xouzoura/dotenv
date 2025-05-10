@@ -70,9 +70,12 @@ fi
 if ! command -v nvim &> /dev/null; then
     echo "Installing neovim..."
     # Method1: Use the AppImage
+    # (
     # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
     # chmod +x nvim-linux-x86_64.appimage
     # mv nvim-linux-x86_64.appimage ~/.local/bin/nvims # (or ~/.local/bin/nvim)
+    # ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
+    # )
 
     # Method2: Build from source
     (
@@ -82,7 +85,9 @@ if ! command -v nvim &> /dev/null; then
         cd ../
         rm -rf neovim
         echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
-        ln -s ~/.local/bin/nvim ~/.local/bin/vis 
+        ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
+        ln -s ~/snap/bin/nvim ~/.local/bin/vis
+        ln -s ~/snap/bin/nvim ~/.local/bin/nvim
     )
 else
     echo "Neovim is already installed at $(which nvim)"
@@ -90,6 +95,8 @@ fi
 
 cargo install eza
 # Optional but why not 
+mkdir extra_installations
+cd extra_installations
 if [ "$EXTRAS" == true ]; then
     # Decide between wezterm and kitty
     # (
@@ -123,9 +130,11 @@ if [ "$EXTRAS" == true ]; then
         git clone https://github.com/sxyazi/yazi.git
         cd yazi
         cargo build --release --locked
+        mv target/release/yazi target/release/ya /usr/local/bin/
+        echo "Yazi installed successfully at version $(yazi -V)"
         cd ..
         rm -rf yazi
-        echo "Yazi installed successfully at version $(yazi -V)"
+        echo "removing unneeded yazi files"
     )
     (
         # Lazygit
@@ -134,12 +143,13 @@ if [ "$EXTRAS" == true ]; then
         tar xf lazygit.tar.gz lazygit
         sudo install lazygit -D -t /usr/local/bin/
         echo "Lazygit installed successfully at version $(lazygit --version)"
-
+        rm lazygit.tar.gz
+        rm lazygit
         # Lazydocker missing
         curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     )
 fi
-
+cd ..
 # Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
 # NCspot?
 
@@ -171,11 +181,14 @@ curl -sS https://starship.rs/install.sh | sh
 cp ~/.zshrc_secrets.example ~/.zshrc_secrets
 
 # Ng is needed for angular cli autocompletion
-npm install -g @angular/cli
+cd ..
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+nvm install 20 # Maybe in the future will change.
+nvm use 20
+sudo npm install -g @angular/cli
+cd dotenv
 
 # Installations done, use stow to symlink the configs
-# Careful with adopt on the stow command, it will overwrite the files if they exist.
-# stow -v --adopt -t $HOME .
 stow -v nvim
 stow -v tmux
 stow -v kitty
@@ -189,6 +202,12 @@ rm ~/.zshrc_old
 rm .zshrc_old
 ln .zshrc_secrets.example ~/.zshrc_secrets
 
+# Clone zsh plugins
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# Update the plugins
 (
     nvim --headless "+Lazy! sync" +qa
     echo "Neovim plugins installed successfully."
