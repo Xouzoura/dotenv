@@ -46,6 +46,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     echo "Dependencies installed"
 else 
     exit 1
+fi
 
 
 mkdir -p ~/.config
