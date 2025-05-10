@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 # Shamelessly stolen from https://github.com/WizardStark/dotfiles/blob/main/setup.sh
 
 EXTRAS=false
