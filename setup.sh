@@ -39,10 +39,15 @@ sudo apt-get install -y build-essential procps curl file git
 
 if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     echo "Installing dependencies with apt"
-    sudo apt install -y zsh
-    # install neovim dependencies
-    # The dependencies break if on ubuntu and installed with brew, so here we use apt
-    sudo apt-get install -y ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
+    packages=(
+      zsh ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza
+      zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
+    )
+
+    for pkg in "${packages[@]}"; do
+      echo "Installing $pkg..."
+      sudo apt-get install -y "$pkg" || echo "Warning: Failed to install $pkg"
+    done
     echo "Dependencies installed"
 else 
     exit 1
@@ -52,14 +57,23 @@ fi
 mkdir -p ~/.config
 
 # UV package
-curl -LsSf https://astral.sh/uv/install.sh | sh
-which uv
-echo "UV installed"
-# Rust 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup update
-echo "Rust installed"
+if ! command -v uv &> /dev/null; then
+    echo "Installing UV..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    echo "UV installed at $(which uv)"
+else
+    echo "UV is already installed at $(which uv)"
+fi
 
+# Rust
+if ! command -v rustup &> /dev/null; then
+    echo "Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    echo "Rust installed"
+else
+    echo "Rust is already installed at $(which rustup)"
+    rustup update
+fi
 # Install go?
 # You need to download the installer from https://go.dev/dl/ and run it.
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
