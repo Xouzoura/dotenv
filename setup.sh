@@ -1,6 +1,16 @@
 #!/bin/bash
 # set -e
 # Shamelessly stolen from https://github.com/WizardStark/dotfiles/blob/main/setup.sh
+#
+# VERSIONS: 
+# nvim: 0.11.0, maybe 0.12.0 in the future
+# nvm: 20
+# python: <3.14 (haven't tested)
+
+NVIM_STABLE_VERSION=0.11.0
+NVIM_INSTALLATION=${NVIM_INSTALLATION:-build} # Options: AppImage, build
+NVM_VERSION=20
+
 
 EXTRAS=false
 for arg in "$@"; do
@@ -24,6 +34,7 @@ echo "Updating apt"
 sudo apt update
 echo "Installing essentials with apt"
 sudo apt-get install -y build-essential procps curl file git cmake unzip build-essential wget nodejs npm docker
+echo "ssentials with apt installed..."
 
 if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     echo "Installing dependencies with apt"
@@ -69,35 +80,40 @@ fi
 
 if ! command -v nvim &> /dev/null; then
     echo "Installing neovim..."
-    # Method1: Use the AppImage
-    # (
-    # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
-    # chmod +x nvim-linux-x86_64.appimage
-    # mv nvim-linux-x86_64.appimage ~/.local/bin/nvims # (or ~/.local/bin/nvim)
-    # ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
-    # )
 
-    # Method2: Build from source
-    (
-        git clone --depth 1 -b v0.11.0 https://github.com/neovim/neovim
-        cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
-        sudo make install
-        cd ../
-        rm -rf neovim
-        echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
+    if [ "$NVIM_INSTALLATION" == "build" ]; then
+        # Method1: Build from source
+
+        (
+            git clone --depth 1 -b v${NVIM_STABLE_VERSION} https://github.com/neovim/neovim
+            cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
+            sudo make install
+            cd ../
+            rm -rf neovim
+            echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
+            ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
+            ln -s ~/snap/bin/nvim ~/.local/bin/vis
+            ln -s ~/snap/bin/nvim ~/.local/bin/nvim
+        )
+    else
+        # Method1: Use the AppImage
+        (
+        curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
+        chmod +x nvim-linux-x86_64.appimage
+        mv nvim-linux-x86_64.appimage ~/.local/bin/nvims # (or ~/.local/bin/nvim)
         ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
-        ln -s ~/snap/bin/nvim ~/.local/bin/vis
-        ln -s ~/snap/bin/nvim ~/.local/bin/nvim
-    )
+        )
+    fi
 else
     echo "Neovim is already installed at $(which nvim)"
 fi
 
 cargo install eza
-# Optional but why not 
-mkdir extra_installations
-cd extra_installations
+
 if [ "$EXTRAS" == true ]; then
+    # Optional but why not 
+    mkdir extra_installations
+    cd extra_installations
     # Decide between wezterm and kitty
     # (
     #     # Wezterm, currently use kitty 
@@ -183,8 +199,8 @@ cp ~/.zshrc_secrets.example ~/.zshrc_secrets
 # Ng is needed for angular cli autocompletion
 cd ..
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-nvm install 20 # Maybe in the future will change.
-nvm use 20
+nvm install ${NVM_VERSION} # Maybe in the future will change.
+nvm use ${NVM_VERSION}
 sudo npm install -g @angular/cli
 cd dotenv
 
@@ -193,7 +209,7 @@ stow -v nvim
 stow -v tmux
 stow -v kitty
 stow -v starship
-stow -v scripts
+stow -v -d ~/ -t ~/dotenv scripts # I want the scripts
 
 rm .zshrc
 mv .zshrc_old .zshrc
@@ -209,7 +225,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.
 
 # Update the plugins
 (
-    nvim --headless "+Lazy! sync" +qa
+    nvim --headless "+Lazy! restore" +qa # Sync will make it up-to-date, restore is the lockfile version.
     echo "Neovim plugins installed successfully."
 )
 ~/.config/tmux/plugins/tpm/bin/install_plugins
