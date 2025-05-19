@@ -82,3 +82,6 @@ show_always = false
 
 [nodejs]
 format = "via [🤖 $version](bold green) "
+
+[gcloud]
+disabled = true

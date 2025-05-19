@@ -51,6 +51,6 @@ return {
     global_bookmarks = false, -- if true, arrow will save files globally (ignores separate_by_branch)
     index_keys = "123456789zxcbnmZXVBNM,afghjklAFGHJKLwrtyuiopWRTYUIOP", -- keys mapped to bookmark index, i.e. 1st bookmark will be accessible by 1, and 12th - by c
     full_path_list = { "update_stuff" }, -- filenames on this list will ALWAYS show the file path too.
-    buffer_leader_key = "m", -- Per Buffer Mappings
+    buffer_leader_key = "M", -- Per Buffer Mappings
   },
 }
