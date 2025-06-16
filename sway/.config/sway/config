@@ -20,7 +20,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term kitty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -36,7 +36,7 @@ set $menu exec $term --class=launcher -e bash -c 'compgen -c | grep -v fzf | sor
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg ~/.config/sway/background fill
 set $BROWSER firefox
-exec_always env MOZ_ENABLE_WAYLAND=1 $BROWSER
+# exec_always env MOZ_ENABLE_WAYLAND=1 $BROWSER
 #
 # Example configuration:
 #
@@ -273,15 +273,34 @@ default_border pixel 2
 # Windows config
 for_window [app_id="^launcher$"] floating enable, border none, opacity 0.8
 for_window [app_id="^pavucontrol$"] floating enable
+# this makes the popup window
 
-# this makes the popup window for mic access small and stickied instead of an
+# Assign Firefox to workspace 2
+# for_window [app_id="floorp"] move to workspace 2
+# for_window [app_id="floorp"] move to workspace 2, focus
+#
+# # Assign Brave browser to workspace 3
+# for_window [app_id="brave"] move to workspace 3
+# # Start Firefox on workspace 2
+# exec_always {
+#     swaymsg "workspace 2"
+#     exec flatpak run one.ablaze.floorp
+# }
+#
+# # Start Brave on workspace 3
+# exec_always {
+#     swaymsg "workspace 3"
+#     exec brave
+# }
+# for mic access small and stickied instead of an
 # extra window, this will work until it's fixed in firefox
 for_window [title="\ -\ Sharing\ Indicator$"] floating enable, sticky enable
 
+bindsym $mod+x exec rofi -show drun
 # Start programs
 exec mako
 
-exec swaymsg "workspace 9; exec firefox  --new-instance --private-window https://google.com; workspace 1;"
+# exec swaymsg "workspace 9; exec firefox  --new-instance --private-window https://google.com; workspace 1;"
 
 # volume / brightness / media controls
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -297,7 +316,6 @@ bindsym XF86AudioPrev exec playerctl previous
 # swap monitor focus
 bindsym $mod+Tab focus output eDP-1
 bindsym $mod+Shift+Tab focus output HDMI-A-1
-
 # # bind workspaces to specific outputs
 # workspace 1 output HDMI-A-1
 # workspace 2 output HDMI-A-1

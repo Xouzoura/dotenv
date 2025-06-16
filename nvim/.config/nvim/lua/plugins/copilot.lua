@@ -93,7 +93,7 @@
 -- Option3: Supermaven
 return {
   "supermaven-inc/supermaven-nvim",
-  -- lazy = false,
+  lazy = false,
   config = function()
     require("supermaven-nvim").setup {
       keymaps = {
@@ -102,6 +102,11 @@ return {
         -- accept_word = "<C-y>",
         clear_suggestion = "<M-]>",
       },
+      condition = function()
+        -- If i want specific files to be disabled, or when not to run
+        -- :SupermavenUseFree to set it up
+        return true
+      end,
       -- disable_keymaps = true,
       -- your configuration comes here
       -- or leave it empty to use the default settings

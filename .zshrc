@@ -134,6 +134,7 @@ alias gca='git commit -am'
 alias gbv='git branch -vv'
 alias g-='git checkout -'
 alias gdev='git checkout develop'
+# alias floorp='flatpak run one.ablaze.floorp'
 
 # Ip
 alias myip='curl ipinfo.io/ip'
