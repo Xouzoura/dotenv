@@ -199,6 +199,7 @@ alias fm='nautilus .'
 # Wezterm
 alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
+alias ldo='lazydocker'
 alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
 # NVIM-BASED
 # Notes 
