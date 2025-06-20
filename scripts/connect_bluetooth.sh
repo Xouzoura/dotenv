@@ -1,4 +1,5 @@
 #!/bin/bash
+# Assumes the command knows which are mac addresses :)
 MAC_ADDRESS=$1
 if [ -z "$MAC_ADDRESS" ]; then
   echo "Usage: $0 <MAC_ADDRESS>"

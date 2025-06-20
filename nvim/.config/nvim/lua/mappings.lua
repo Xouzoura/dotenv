@@ -8,6 +8,10 @@ vim.api.nvim_del_keymap("i", "<C-u>")
 vim.api.nvim_del_keymap("n", "<leader>x")
 vim.api.nvim_del_keymap("n", "<C-n>")
 vim.api.nvim_del_keymap("n", "<leader>e")
+vim.api.nvim_del_keymap("n", "<C-c>")
+vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
+vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
+
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
 local map = vim.keymap.set

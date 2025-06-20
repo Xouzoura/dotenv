@@ -35,7 +35,6 @@ vim.opt.swapfile = false
 vim.wo.signcolumn = "yes"
 -- Already defined at diagnostics.lua
 -- vim.diagnostic.config { virtual_text = true, severity_sort = true, signs = true }
-
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false,
 })
