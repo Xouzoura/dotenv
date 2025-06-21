@@ -29,8 +29,4 @@ return {
       vim.api.nvim_set_keymap("n", "<leader>d<", "?|<CR>h", { desc = "Move to previous column separator" })
     end,
   },
-  -- {
-  --   "michhernand/simple-sqlfluff.nvim",
-  --   opts = {},
-  -- },
 }

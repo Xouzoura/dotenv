@@ -221,6 +221,10 @@ alias pdb='poetry run pytest -s --pdb'
 alias pca='pre-commit run --all-files'
 alias jp='python -m jupyter notebook'
 
+# git clone https://github.com/saitamasahil/matrix
+# alias matrix='bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --green'
+alias mg='matrix --green'
+
 # Yazi (yy)
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"

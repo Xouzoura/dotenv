@@ -167,6 +167,9 @@ if [ "$EXTRAS" == true ]; then
 fi
 cd ..
 # Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
+# ----
+# File sizes etc
+cargo install dua-cli
 # NCspot?
 
 (

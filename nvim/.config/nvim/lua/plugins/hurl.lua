@@ -20,7 +20,8 @@ end, { desc = "(hurl) Live Grep in .hurl files" })
 return {
   -- "jellydn/hurl.nvim",
   "Xouzoura/hurl.nvim",
-  branch = "feature/show-body-query-params",
+  -- branch = "feature/show-body-query-params",
+  branch = "main",
   -- dir = "/home/xouzoura/python/me/openai/hurl.nvim",
   dependencies = {
     "MunifTanjim/nui.nvim",
