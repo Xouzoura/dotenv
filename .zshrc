@@ -171,7 +171,8 @@ alias duh='du -sh * | sort -h'
 alias ytd=". scripts/download_video.sh"
 
 # mixxx
-alias mixxx="pasuspender mixxx"
+# alias mixxx="pasuspender mixxx"
+alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
 # nvim as vi
 alias vo="nvim -c 'Telescope oldfiles'"
@@ -224,6 +225,7 @@ alias jp='python -m jupyter notebook'
 # git clone https://github.com/saitamasahil/matrix
 # alias matrix='bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --green'
 alias mg='matrix --green'
+alias koofr='~/.koofr-dist/storagegui'
 
 # Yazi (yy)
 function yy() {

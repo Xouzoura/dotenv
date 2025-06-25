@@ -3,6 +3,9 @@
 # Clis
   - dua: https://github.com/Byron/dua-cli?
   - tailscale
+  - cryptomator
+  - cronitor (sudo cronitor dash)
+  - koofr (backup)
 
 # Other
 

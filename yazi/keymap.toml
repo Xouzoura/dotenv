@@ -146,10 +146,12 @@ keymap = [
 	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go Downloads" },
 	{ on = [ "g", "." ],       run = "cd ~/dotenv",      desc = "Go ~/dotenv/" },
 	{ on = [ "g", "n" ],       run = "cd ~/.config/nvim/",      desc = "Go ~/.config/nvim/" },
+	{ on = [ "g", "l"],       run = "cd ~/.local",          desc = "Go to the .local directory" },
 	{ on = [ "g", "s", "h" ],       run = "cd ~/.local/share",          desc = "Go to the .local/share directory" },
 	{ on = [ "g", "s", "t" ],       run = "cd ~/.local/state",          desc = "Go to the .local/state directory" },
-	{ on = [ "g", "l"],       run = "cd ~/.local",          desc = "Go to the .local directory" },
 	{ on = [ "g", "y"],       run = "cd ~/.config/yazi",          desc = "Go to the yazi directory" },
+	{ on = [ "g", "M"],       run = "cd /media",          desc = "Go to the mount directory (media)" },
+	{ on = [ "g", "K"],       run = "cd ~/Koofr/",          desc = "Go to the Koofr directory (backup)" },
 	{ on = [ "g", "c", "a"],       run = "cd ~/.cache",          desc = "Go to the .cache directory" },
     # Local only for my projects
 	{ on = [ "g", "e" ],       run = "cd ~/Documents/eth/eth-cas/",      desc = "Go CAS-ETH" },
@@ -157,6 +159,7 @@ keymap = [
 	{ on = [ "g", "b", "l" ],  run = "cd ~/python/openai/",      desc = "Go to study libraries" },
 	{ on = [ "g", "b", "t" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/bkw.gpt4km.backend/src/tests/remote/",      desc = "Go backend (test)" },
 	{ on = [ "g", "b", "a" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/ai-tools/inputs/personal/",      desc = "Go ai-tools (test)" },
+    # End of bkw local stuff.
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Go to a directory interactively" },
 
 	# Help
