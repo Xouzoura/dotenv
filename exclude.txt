@@ -1,0 +1,30 @@
+# Temporary files and caches
+.cache/
+.thumbnails/
+.local/share/Trash/
+*.log
+*.tmp
+
+# Virtual environments and build artifacts
+*.venv/
+*.venv3.11/
+*venv3.11/
+*venv/
+venv/
+.venv
+node_modules/
+dist/
+target/
+__pycache__/
+# dont really care about that
+python/me/openai/
+
+# Development metadata
+.git/
+*.pyc
+
+# Large and redundant files
+Downloads/
+Documents/Series
+Koofr/
+
