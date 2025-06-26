@@ -104,12 +104,11 @@ if ! command -v nvim &> /dev/null; then
             ln -s ~/snap/bin/nvim ~/.local/bin/nvim
         )
     else
-        # Method1: Use the AppImage
+        # Method2: Use the AppImage (preferred)
         (
         curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
         chmod +x nvim-linux-x86_64.appimage
-        mv nvim-linux-x86_64.appimage ~/.local/bin/nvims # (or ~/.local/bin/nvim)
-        ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
+        mv nvim-linux-x86_64.appimage ~/.local/bin/nvim
         )
     fi
 else

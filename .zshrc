@@ -174,12 +174,15 @@ alias ytd=". scripts/download_video.sh"
 # alias mixxx="pasuspender mixxx"
 alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
-# nvim as vi
+# Neovim aliases. This can change with a script
+# NOTE: assumes there is the nvimn (nightly) and nvims (stable)
+alias nvim="nvimn"
+
+alias vi="nvim"
 alias vo="nvim -c 'Telescope oldfiles'"
 # also have the vis for the stable version, since nvim is nightly.
 alias vos="vis -c 'Telescope oldfiles'"
 # alias vi="nvim" # Temp disable because v0.12.0 has issues
-alias vi="vis" # TODO: re-add, when all ok. vis is my stable version of nvim
 
 # others
 alias mouse="keep-presence"
