@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # Default usage: 
 # ./switch_nvim_nightly_and_stable.sh nightly
@@ -11,15 +10,28 @@ if [ "$choice" != "stable" ] && [ "$choice" != "nightly" ]; then
   echo "Usage: $0 [stable|nightly]"
   exit 1
 fi
+
+# # Killing all nvim processes
+# if pgrep -fl nvim > /dev/null; then
+#   echo "Neovim is currently running. Please close it before proceeding (pkill nvim)."
+#   exit 1
+# fi
+# echo "✅ No nvim processes"
+#
 if [ "$choice" == "stable" ]; then
   rm ~/.local/bin/nvim
+  echo "✅ Removed ~/.local/bin/nvim"
+  which nvim
   cp ~/.local/bin/nvims ~/.local/bin/nvim
-  echo "✅ Copied STABLE (~/.local/bin/nvims) → ~/.local/bin/nvim"
+  echo "✅ Copied STABLE (~/.local/bin/nvims) → ~/.local/bin/nvim , which is $(which nvim)"
 elif [ "$choice" == "nightly" ]; then
   rm ~/.local/bin/nvim
+  echo "✅ Removed ~/.local/bin/nvim"
   cp ~/.local/bin/nvimn ~/.local/bin/nvim
-  echo "✅ Copied NIGHTLY (~/.local/bin/nvimn) → ~/.local/bin/nvim"
+  echo "✅ Copied NIGHTLY (~/.local/bin/nvimn) → ~/.local/bin/nvim , which is $(which nvim)"
 fi
+
+echo "✅ Now running neovim as appimage with ==> $(nvim -V1 -v)"
 
 # if [ "$choice" == "stable" ]; then
 #   cp ~/.local/bin/nvims ~/.local/bin/nvim
