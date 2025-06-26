@@ -265,11 +265,7 @@ source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-PATH="$HOME/.local/bin:$PATH" # <-- maybe re-add?
-# # DELETE AFTER NOTE:
-# PATH="$HOME/repos-for-binaries/google-cloud-sdk/bin:$PATH" # remove after.
-# export KOPS_STATE_STORE=gs://cca-eth-2025-group-043-ethzid/
-# export PROJECT=`gcloud config get-value project`
+PATH="$HOME/.local/bin:$PATH" 
 
 # export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
@@ -280,9 +276,6 @@ bindkey '^ ' autosuggest-accept
 bindkey '^]' autosuggest-execute
 bindkey '^[p' history-beginning-search-backward
 bindkey '^[n' history-beginning-search-forward
-# Exit with jj and kj 
-bindkey -M viins 'jj' vi-cmd-mode 
-bindkey -M viins 'kj' vi-cmd-mode 
 # git stuff
 source ~/scripts/fzf-git.sh/fzf-git.sh 
 # The hotkeys for git stuff
