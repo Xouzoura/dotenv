@@ -1,18 +1,20 @@
 #!/bin/bash
 set -e
 
-STABLE=false
+# Default usage: 
+# ./update_neovim_with_appimage.sh nightly
+# ./update_neovim_with_appimage.sh stable (default)
 
-for arg in "$@"; do
-    if [ "$arg" == "--stable" ]; then
-        STABLE=true
-        break
-    fi
-done
+choice="${1:-stable}"
+
+if [ "$choice" != "stable" ] && [ "$choice" != "nightly" ]; then
+  echo "Usage: $0 [stable|nightly]"
+  exit 1
+fi
 
 mkdir -p ~/.local/bin
 
-if [[ "$STABLE" == true ]]; then
+if [ "$choice" == "stable" ]; then
     echo "Downloading latest **stable** Neovim AppImage..."
     curl -L -o ~/.local/bin/nvim-stable.appimage https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
     chmod +x ~/.local/bin/nvim-stable.appimage

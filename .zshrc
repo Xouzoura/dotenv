@@ -177,6 +177,7 @@ alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 # Neovim aliases. This can change with a script
 # NOTE: assumes there is the nvimn (nightly) and nvims (stable)
 alias nvim="nvimn"
+# alias nvim="nvims"
 
 alias vi="nvim"
 alias vo="nvim -c 'Telescope oldfiles'"

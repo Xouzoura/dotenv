@@ -8,8 +8,7 @@
 # python: <3.14 (haven't tested)
 
 # Parameters
-NVIM_STABLE_VERSION=0.11.0
-NVIM_INSTALLATION=${NVIM_INSTALLATION:-build} # Options: AppImage, build
+NVIM_INSTALLATION=${NVIM_INSTALLATION:-AppImage} # Options: AppImage, build
 NVM_VERSION=20
 DOT_DIRECTORY=dotenv
 
@@ -90,26 +89,29 @@ if ! command -v nvim &> /dev/null; then
     echo "Installing neovim..."
 
     if [ "$NVIM_INSTALLATION" == "build" ]; then
-        # Method1: Build from source
+        # Method1: Build from source for a specified version
 
         (
+            NVIM_STABLE_VERSION=0.11.0
             git clone --depth 1 -b v${NVIM_STABLE_VERSION} https://github.com/neovim/neovim
             cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
             sudo make install
             cd ../
             rm -rf neovim
             echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
-            ln -s ~/.local/bin/nvim ~/.local/bin/vis # (needed for some stuff in .zshrc)
-            ln -s ~/snap/bin/nvim ~/.local/bin/vis
-            ln -s ~/snap/bin/nvim ~/.local/bin/nvim
+            ln -s ~/snap/bin/nvim ~/.local/bin/nvims # Command needed for stable setup (if preferred)
+            ln -s ~/snap/bin/nvim ~/.local/bin/nvimv # Command needed for nightly setup (if preferred)
         )
     else
-        # Method2: Use the AppImage (preferred)
-        (
-        curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
-        chmod +x nvim-linux-x86_64.appimage
-        mv nvim-linux-x86_64.appimage ~/.local/bin/nvim
-        )
+        # Method2: Use the AppImage (preferred, since don't have to build)
+        ~/dotenv/scripts/nvim/update_neovim_with_appimage.sh stable
+
+        # OLDER but works
+        # (
+        # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
+        # chmod +x nvim-linux-x86_64.appimage
+        # mv nvim-linux-x86_64.appimage ~/.local/bin/nvim
+        # )
     fi
 else
     echo "Neovim is already installed at $(which nvim)"
