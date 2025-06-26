@@ -199,6 +199,15 @@ curl -sS https://starship.rs/install.sh | sh
 # All secrets that I want my shell to have access to
 cp ~/.zshrc_secrets.example ~/.zshrc_secrets
 
+# Add nerd fonts that are needed for kitty
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts || exit
+wget -O JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+unzip -o JetBrainsMono.zip
+rm JetBrainsMono.zip
+fc-cache -fv
+cd ~/dotenv
+
 # Ng is needed for angular cli autocompletion
 cd ..
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
@@ -207,13 +216,18 @@ nvm use ${NVM_VERSION}
 sudo npm install -g @angular/cli
 cd dotenv
 
+
 # Installations done, use stow to symlink the configs
 stow -v nvim
 stow -v tmux
 stow -v kitty
 stow -v starship
-stow -v -d ~/ -t ~/dotenv scripts # I want the scripts
+stow -v yazi
+stow -v lazygit
 
+stow -v -d ~/ -t ~/dotenv scripts # I want the scripts in the ~/scripts/ directory
+
+# Doing the .zshrc stuff while removing unneeded
 rm .zshrc
 mv .zshrc_old .zshrc
 ln .zshrc ~/.zshrc
