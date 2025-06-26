@@ -6,6 +6,7 @@
   - cryptomator
   - cronitor (sudo cronitor dash)
   - koofr (backup)
+  - ncspot (listening to music)
 
 # Other
 

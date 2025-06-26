@@ -2,8 +2,18 @@
 # set -e
 # Shamelessly stolen from https://github.com/WizardStark/dotfiles/blob/main/setup.sh
 #
+# -----------------------------------------------------------
+# Read README if questions, but the proccess is: 
+#
+# .. git clone https://github.com/Xouzoura/dotenv.git
+# .. cd dotenv
+# .. chmod +x setup.sh
+# .. sudo ./setup.sh --extras 
+# -----------------------------------------------------------
+#
+#
 # VERSIONS: 
-# nvim: 0.11.0, maybe 0.12.0 in the future
+# nvim: latest stable or nightly
 # nvm: 20
 # python: <3.14 (haven't tested)
 
