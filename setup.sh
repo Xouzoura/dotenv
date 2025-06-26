@@ -7,12 +7,15 @@
 # nvm: 20
 # python: <3.14 (haven't tested)
 
+# Parameters
 NVIM_STABLE_VERSION=0.11.0
 NVIM_INSTALLATION=${NVIM_INSTALLATION:-build} # Options: AppImage, build
 NVM_VERSION=20
+DOT_DIRECTORY=dotenv
 
-
+# End of parameters
 EXTRAS=false
+
 for arg in "$@"; do
     if [ "$arg" == "--extras" ]; then
         EXTRAS=true
@@ -24,9 +27,10 @@ done
 # the configs in the `dotenv` directory. The script will then symlink the configs to the correct locations.
 # REQUIRES SUDO for some things.
 
+
 echo "Starting setup..."
-if [ "$PWD" != "$HOME/dotenv" ]; then
-    echo "Please run this script from the home directory."
+if [ "$PWD" != "$HOME/$DOT_DIRECTORY" ]; then
+    echo "Please run this script from the dotenv directory ($HOME/$DOT_DIRECTORY)."
     exit 1
 fi
 
@@ -34,11 +38,11 @@ echo "Updating apt"
 sudo apt update
 echo "Installing essentials with apt"
 sudo apt-get install -y build-essential procps curl file git cmake unzip build-essential wget nodejs npm docker
-echo "ssentials with apt installed..."
+echo "Essentials with apt installed..."
 
 if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     echo "Installing dependencies with apt"
-    # sudo apt-get install -y ninja-build gettext cmake unzip curl build-essential wget nodejs npm tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick docker
+    # sudo apt-get install -y zsh ninja-build gettext tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick 
     packages=(
       zsh ninja-build gettext tmux ffind ripgrep jq vivid bat eza
       zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick 
@@ -50,12 +54,15 @@ if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
     done
     echo "Dependencies installed"
 else 
-    exit 1
+    echo "Only apt installation is considered, exiting cleanly"
+    exit 1 
 fi
 
 
 mkdir -p ~/.config
 
+# ----------------- PACKAGES -----------------------------
+#
 # UV package
 if ! command -v uv &> /dev/null; then
     echo "Installing UV..."
@@ -74,6 +81,7 @@ else
     echo "Rust is already installed at $(which rustup)"
     rustup update
 fi
+
 # Install go?
 # You need to download the installer from https://go.dev/dl/ and run it.
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
@@ -161,11 +169,13 @@ if [ "$EXTRAS" == true ]; then
         echo "Lazygit installed successfully at version $(lazygit --version)"
         rm lazygit.tar.gz
         rm lazygit
+    )
+    (
         # Lazydocker missing
-        curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+        # curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     )
 fi
-cd ..
+cd $HOME
 # Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
 # ----
 # File sizes etc
@@ -190,6 +200,7 @@ cargo install dua-cli
 
 mv ~/.zshrc ~/.zshrc_old
 mv .zshrc .zshrc_old
+
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -206,28 +217,28 @@ wget -O JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/lates
 unzip -o JetBrainsMono.zip
 rm JetBrainsMono.zip
 fc-cache -fv
-cd ~/dotenv
+cd ~/$DOT_DIRECTORY
 
 # Ng is needed for angular cli autocompletion
-cd ..
+cd $HOME
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 nvm install ${NVM_VERSION} # Maybe in the future will change.
 nvm use ${NVM_VERSION}
 sudo npm install -g @angular/cli
-cd dotenv
+cd ~/$DOT_DIRECTORY
 
-
-# Installations done, use stow to symlink the configs
+# Installations done, use stow to symlink the configs. All this needs to run in the DOT_DIRECTORY
+cd ~/$DOT_DIRECTORY
 stow -v nvim
 stow -v tmux
 stow -v kitty
 stow -v starship
 stow -v yazi
 stow -v lazygit
-
-stow -v -d ~/ -t ~/dotenv scripts # I want the scripts in the ~/scripts/ directory
+stow -v -d ~/ -t ~/$DOT_DIRECTORY scripts # I want the scripts in the ~/scripts/ directory
 
 # Doing the .zshrc stuff while removing unneeded
+# Removing all these, since on the .dotenv they are configured already.
 rm .zshrc
 mv .zshrc_old .zshrc
 ln .zshrc ~/.zshrc
@@ -253,4 +264,5 @@ zsh -l
 
 source ~/.zshrc
 
-echo "Done!"
+echo "Done with setup."
+echo "Reminder. Setup in secrets (if needed) in the .zshrc_secrets and reload the config"
