@@ -19,10 +19,19 @@ else
     DEST_DIR="$EXTERNAL_DIR"
 fi
 
-mkdir -p "$DEST_DIR"
 mkdir -p $PACKAGES_DIR
+
+# ------------------- PACKAGES --------------------------
+
+# ubuntu (apt installations)
 dpkg --get-selections > $PACKAGES_DIR/ubuntu-packages.txt
+# snap installations
 snap list > $PACKAGES_DIR/snap-packages.txt
+# flatpak installations
 flatpak list > $PACKAGES_DIR/flatpak-packages.txt
+# cargo installations
+cat ~/.cargo/.crates.toml > $PACKAGES_DIR/crates-packages.txt
+
+mkdir -p "$DEST_DIR"
 rsync -av --progress --exclude-from="exclude.txt" "$SOURCE_DIR" "$DEST_DIR"
 echo "$(date) Synced $SOURCE_DIR to $DEST_DIR" >> "$DEST_DIR/rsync-home.log"

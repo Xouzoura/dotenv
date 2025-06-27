@@ -12,8 +12,9 @@ format = " took [$duration]($style)"
 # truncation_length = 5
 format = "/[$path]($style)[$lock_symbol]($lock_style)"
 read_only = " "
-truncation_length = 10
-truncate_to_repo = true # truncates directory to root folder if in github repo
+truncation_length = 50
+# truncate_to_repo = true # truncates directory to root folder if in github repo
+truncate_to_repo = false # truncates directory to root folder if in github repo
 style = "bold italic blue"
 
 [git_branch]
