@@ -5,7 +5,7 @@ return {
     -- alternative to lazygit
     "sindrets/diffview.nvim",
     lazy = false,
-    -- enabled = false,
+    enabled = false,
     -- doesnt work at the moment
     -- TODO: add the scroll for god's sake with c-u and c-d
     -- opts = {
@@ -23,6 +23,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
     -- Lazy loading on 'VimEnter' event is necessary.
     event = "VimEnter",
+    -- enabled = false,
     config = function()
       require("vgit").setup {
         keymaps = {
@@ -56,9 +57,10 @@ return {
           ["n <leader>gbp"] = "buffer_blame_preview",
           ["n <leader>gbd"] = "buffer_diff_preview",
           ["n <leader>gbh"] = "buffer_history_preview",
-          ["n <leader>gu"] = "buffer_reset",
+          ["n <leader>gbu"] = "buffer_reset",
           ["n <leader>gd"] = "project_diff_preview",
-          ["n <leader>gx"] = "toggle_diff_preference",
+          ["n <leader>gl"] = "project_logs_preview",
+          -- ["n <leader>gx"] = "toggle_diff_preference",
           ["n <leader>gbt"] = "toggle_live_blame",
         },
         settings = { live_blame = { enabled = false } },

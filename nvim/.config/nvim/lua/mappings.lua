@@ -146,18 +146,18 @@ end)
 map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 -- git signs (part of default config from nvchad)
-map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", {
-  desc = "(diffview) Diff with HEAD",
-})
-map("n", "<leader>gdd", "<cmd>DiffviewOpen develop..HEAD <CR>", {
-  desc = "(diffview) Diff with dev",
-})
-map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
-  desc = "(diffview) Diff file",
-})
-map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
-  desc = "(diffview) Close",
-})
+-- map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", {
+--   desc = "(diffview) Diff with HEAD",
+-- })
+-- map("n", "<leader>gdd", "<cmd>DiffviewOpen develop..HEAD <CR>", {
+--   desc = "(diffview) Diff with dev",
+-- })
+-- map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
+--   desc = "(diffview) Diff file",
+-- })
+-- map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
+--   desc = "(diffview) Close",
+-- })
 -- terminal of open buffers
 --TODO: keep only one from the below.
 -- map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
