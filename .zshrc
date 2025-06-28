@@ -162,10 +162,10 @@ alias lt='eza -aT --level=2 --color=always --group-directories-first'
 alias l.='eza -a | egrep "^\."'
 
 # Flag
-alias df='df -h'
+# alias df='df -h'
 
 # Misc
-alias duh='du -sh * | sort -h'
+# alias duh='du -sh * | sort -h'
 
 # youtube-dl
 alias ytd=". scripts/download_video.sh"
@@ -175,19 +175,13 @@ alias ytd=". scripts/download_video.sh"
 alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
 # Neovim aliases. This can change with a script
-
 alias vi="nvim"
 alias vo="nvim -c 'Telescope oldfiles'"
-# also have the vis for the stable version, since nvim is nightly.
-alias vos="vis -c 'Telescope oldfiles'"
-# alias vi="nvim" # Temp disable because v0.12.0 has issues
 
 # others
 alias mouse="keep-presence"
-#alias cat="bat"
 alias db="dbeaver-ce"
 alias ncspot="flatpak run io.github.hrkfdn.ncspot"
-# alias music="ncspot"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
 # Show characteristics of laptop
@@ -199,17 +193,14 @@ alias qbt="z ~/Downloads/torrents/ && ./qbittorrent-4.6.6_x86_64_1.AppImage"
 # File manager
 alias fm='nautilus .'
 # Wezterm
-alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
+# alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
 alias ldo='lazydocker'
-alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
-# NVIM-BASED
+# alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
 # Notes 
 alias notes="vi ~/vaults/notes"
-alias notesw="vi ~/vaults/notes/_weekend-goals.md"
 alias notesq="vi ~/vaults/notes/_work.md"
 alias notesd="vi ~/vaults/notes/_daily.md"
-# k8s 
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
 alias dbui='nvim +"DBUIToggle"'
@@ -226,6 +217,8 @@ alias jp='python -m jupyter notebook'
 # git clone https://github.com/saitamasahil/matrix
 # alias matrix='bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --green'
 alias mg='matrix --green'
+
+# Koofr ;)
 alias koofr='~/.koofr-dist/storagegui'
 
 # Yazi (yy)

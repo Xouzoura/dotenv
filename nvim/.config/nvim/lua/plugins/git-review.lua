@@ -1,5 +1,5 @@
 return {
-  -- Ephemeral git open locally
+  -- Ephemeral git open locally with a simple :GitDevOpen Xouzoura/hurl.nvim
   -- examples:
   -- -- :GitDevOpen derailed/k9s {tag="v0.32.4"}
   -- -- :GitDevOpen derailed/k9s

@@ -43,27 +43,27 @@ return {
       },
 
       agents = {
-        {
-          name = "ChatGPT4o",
-          disable = true, -- because i don't want it from gp.nvim default config.
-          chat = true,
-          command = false,
-          -- string with model name or table with model name and parameters
-          model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
-          -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = SYSTEM_PROMPT,
-        },
-        {
-          provider = "openai",
-          name = "ChatGPT4o-mini",
-          disable = true, -- because i don't want it from gp.nvim default config.
-          chat = true,
-          command = false,
-          -- string with model name or table with model name and parameters
-          model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
-          -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = SYSTEM_PROMPT,
-        },
+        -- {
+        --   name = "ChatGPT4o",
+        --   disable = true, -- because i don't want it from gp.nvim default config.
+        --   chat = true,
+        --   command = false,
+        --   -- string with model name or table with model name and parameters
+        --   model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
+        --   -- system prompt (use this to specify the persona/role of the AI)
+        --   system_prompt = SYSTEM_PROMPT,
+        -- },
+        -- {
+        --   provider = "openai",
+        --   name = "ChatGPT4o-mini",
+        --   disable = true, -- because i don't want it from gp.nvim default config.
+        --   chat = true,
+        --   command = false,
+        --   -- string with model name or table with model name and parameters
+        --   model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
+        --   -- system prompt (use this to specify the persona/role of the AI)
+        --   system_prompt = SYSTEM_PROMPT,
+        -- },
         {
           -- Works only with the bypass that is the dispatcher.prepare_payload
           -- doing.
@@ -84,32 +84,40 @@ return {
           system_prompt = SYSTEM_PROMPT,
           disable = true, -- DOES NOT WORK
         },
+        -- {
+        --   provider = "googleai",
+        --   name = "ChatGemini",
+        --   disable = true, -- because i don't want it from gp.nvim default config.
+        --   chat = true,
+        --   command = false,
+        --   -- string with model name or table with model name and parameters
+        --   model = { model = "gemini-pro", temperature = 1.1, top_p = 1 },
+        --   -- system prompt (use this to specify the persona/role of the AI)
+        --   system_prompt = require("gp.defaults").chat_system_prompt,
+        -- },
+        -- {
+        --   provider = "googleai",
+        --   name = "gemini-2.0-flash",
+        --   chat = true,
+        --   command = false,
+        --   model = { model = "gemini-2.0-flash", temperature = 1.1, top_p = 1 },
+        --   system_prompt = SYSTEM_PROMPT,
+        -- },
+        -- {
+        --   provider = "googleai",
+        --   name = "gemini-2.5-pro",
+        --   disabled = true, -- because it's not for free.
+        --   chat = true,
+        --   command = false,
+        --   model = { model = "gemini-2.5-pro-preview-03-25", temperature = 1.1, top_p = 1 },
+        --   system_prompt = SYSTEM_PROMPT,
+        -- },
         {
-          provider = "googleai",
-          name = "ChatGemini",
-          disable = true, -- because i don't want it from gp.nvim default config.
+          provider = "azure",
+          name = "gpt4o",
           chat = true,
           command = false,
-          -- string with model name or table with model name and parameters
-          model = { model = "gemini-pro", temperature = 1.1, top_p = 1 },
-          -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = require("gp.defaults").chat_system_prompt,
-        },
-        {
-          provider = "googleai",
-          name = "gemini-2.0-flash",
-          chat = true,
-          command = false,
-          model = { model = "gemini-2.0-flash", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-        },
-        {
-          provider = "googleai",
-          name = "gemini-2.5-pro",
-          disabled = true, -- because it's not for free.
-          chat = true,
-          command = false,
-          model = { model = "gemini-2.5-pro-preview-03-25", temperature = 1.1, top_p = 1 },
+          model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
         },
         --
@@ -117,10 +125,10 @@ return {
         --
         {
           provider = "azure",
-          name = "gpt4o",
+          name = "gpt-4.1",
           chat = true,
           command = false,
-          model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
+          model = { model = "gpt-4.1", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
         },
       },
