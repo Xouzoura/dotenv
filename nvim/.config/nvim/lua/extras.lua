@@ -323,10 +323,10 @@ local function _schedule_notification(time_str, message)
   local add_cron_cmd = string.format('(crontab -l 2>/dev/null; echo "%s") | crontab -', cron_job)
   vim.fn.jobstart({ "sh", "-c", add_cron_cmd }, { detach = true })
 
-  print("Reminder set for " .. string.format("%02d:%02d", hour, min) .. ": " .. message)
+  print("Reminder set for " .. string.format("%02d:%02d", hour, min) .. " -> " .. message)
 end
 
-function M.prompt_notification()
+function M.send_reminder_notification()
   -- Prompt for time and message to send a reminder with notify-send and crontab
   vim.ui.input({ prompt = "Enter time (HH:MM or minutes from now): " }, function(time_input)
     if not time_input or time_input == "" then
