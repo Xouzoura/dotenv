@@ -13,13 +13,10 @@
 #
 #
 # VERSIONS: 
-# nvim: latest stable or nightly
-# nvm: 20
-# python: <3.14 (haven't tested)
-
-# Parameters
 NVIM_INSTALLATION=${NVIM_INSTALLATION:-AppImage} # Options: AppImage, build
-NVM_VERSION=20
+NVIM_STABLE_VERSION=0.11.0 # Not needed if AppImage is picked
+NG_VERSION=20
+NVM_VERSION=0.39.3
 DOT_DIRECTORY=dotenv
 
 # End of parameters
@@ -70,8 +67,8 @@ fi
 
 mkdir -p ~/.config
 
-# ----------------- PACKAGES -----------------------------
-#
+# ----------------- PACKAGES+LANGUAGES -------------------------
+
 # UV package
 if ! command -v uv &> /dev/null; then
     echo "Installing UV..."
@@ -94,6 +91,12 @@ fi
 # Install go?
 # You need to download the installer from https://go.dev/dl/ and run it.
 # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.2.linux-amd64.tar.gz
+#
+# ----------------- USEFUL-CLI -------------------------
+
+cargo install eza
+cargo install dua-cli
+# Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
 
 if ! command -v nvim &> /dev/null; then
     echo "Installing neovim..."
@@ -102,7 +105,6 @@ if ! command -v nvim &> /dev/null; then
         # Method1: Build from source for a specified version
 
         (
-            NVIM_STABLE_VERSION=0.11.0
             git clone --depth 1 -b v${NVIM_STABLE_VERSION} https://github.com/neovim/neovim
             cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
             sudo make install
@@ -127,13 +129,10 @@ else
     echo "Neovim is already installed at $(which nvim)"
 fi
 
-cargo install eza
-
 if [ "$EXTRAS" == true ]; then
     # Optional but why not 
     mkdir extra_installations
     cd extra_installations
-    # Decide between wezterm and kitty
     # (
     #     # Wezterm, currently use kitty 
     #     curl -LO https://github.com/wezterm/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
@@ -141,6 +140,15 @@ if [ "$EXTRAS" == true ]; then
     #     mv WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage ~/.local/bin/wezterm
     #     echo "Wezterm installed successfully at version $(wezterm --version)"
     # )
+
+    (
+        # Install hurl (needed by neovim hurl.nvim)
+        HURL_VERSION=6.1.1
+        curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$HURL_VERSION/hurl_${HURL_VERSION}_amd64.deb
+        sudo apt install ./hurl_${HURL_VERSION}_amd64.deb
+    )
+
+
     (
         curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
         echo "Kitty installed successfully at version $(kitty --version)"
@@ -187,11 +195,9 @@ if [ "$EXTRAS" == true ]; then
     )
 fi
 cd $HOME
-# Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
 # ----
-# File sizes etc
-cargo install dua-cli
-# NCspot?
+# ---- ZSH + TMUX + STARSHIP Installations and configurations
+# ----
 
 (
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
@@ -232,9 +238,9 @@ cd ~/$DOT_DIRECTORY
 
 # Ng is needed for angular cli autocompletion
 cd $HOME
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-nvm install ${NVM_VERSION} # Maybe in the future will change.
-nvm use ${NVM_VERSION}
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash
+nvm install ${NG_VERSION} # Maybe in the future will change.
+nvm use ${NG_VERSION}
 sudo npm install -g @angular/cli
 cd ~/$DOT_DIRECTORY
 
@@ -262,7 +268,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-# Update the plugins
+# Update the plugins in neovim since all cli stuff are installed.
 (
     nvim --headless "+Lazy! restore" +qa # Sync will make it up-to-date, restore is the lockfile version.
     echo "Neovim plugins installed successfully."
@@ -276,4 +282,5 @@ zsh -l
 source ~/.zshrc
 
 echo "Done with setup."
-echo "Reminder. Setup in secrets (if needed) in the .zshrc_secrets and reload the config"
+echo "Reminder. Setup in secrets (if needed) in the .zshrc_secrets and reload the config..."
+echo "Have fun."
