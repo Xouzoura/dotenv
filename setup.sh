@@ -189,10 +189,10 @@ if [ "$EXTRAS" == true ]; then
         rm lazygit.tar.gz
         rm lazygit
     )
-    (
+    # (
         # Lazydocker missing
         # curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
-    )
+    # )
 fi
 cd $HOME
 # ----

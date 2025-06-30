@@ -5,7 +5,8 @@ download_folder="$HOME/Downloads/music/yt-dl/unsorted"
 
 # URL of the video
 video_url="$1"
-video_url=${video_url//\\/}
+video_url="${video_url//\\/}"                     # Remove backslashes
+video_url="$(echo "$video_url" | sed -e "s/^['[:space:]]*//" -e "s/['[:space:]]*$//")"
 # Check if yt-dlp is installed
 if ! command -v yt-dlp &> /dev/null; then
     echo "yt-dlp is not installed. Please install it using 'pip install -U yt-dlp'."
