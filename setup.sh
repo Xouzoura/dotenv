@@ -253,7 +253,7 @@ stow -v kitty
 stow -v starship
 stow -v yazi
 stow -v lazygit
-stow -v -d ~/ -t ~/$DOT_DIRECTORY scripts # I want the scripts in the ~/scripts/ directory
+stow -v scripts
 
 # Doing the .zshrc stuff while removing unneeded
 # Removing all these, since on the .dotenv they are configured already.
