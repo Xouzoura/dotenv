@@ -173,7 +173,7 @@ if [ "$EXTRAS" == true ]; then
         git clone https://github.com/sxyazi/yazi.git
         cd yazi
         cargo build --release --locked
-        mv target/release/yazi target/release/ya /usr/local/bin/
+        sudo mv target/release/yazi target/release/ya /usr/local/bin/
         echo "Yazi installed successfully at version $(yazi -V)"
         cd ..
         rm -rf yazi
@@ -193,6 +193,7 @@ if [ "$EXTRAS" == true ]; then
         # Lazydocker missing
         # curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     # )
+    rm -rf extra_installations
 fi
 cd $HOME
 # ----
