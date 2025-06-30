@@ -216,8 +216,8 @@ cd $HOME
     ~/.fzf/install --key-bindings --completion --update-rc
 )
 
-mv ~/.zshrc ~/.zshrc_old
-mv .zshrc .zshrc_old
+# mv ~/.zshrc ~/.zshrc_old
+# mv .zshrc .zshrc_old
 
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -257,12 +257,13 @@ stow -v -d ~/ -t ~/$DOT_DIRECTORY scripts # I want the scripts in the ~/scripts/
 
 # Doing the .zshrc stuff while removing unneeded
 # Removing all these, since on the .dotenv they are configured already.
-rm .zshrc
-mv .zshrc_old .zshrc
+git restore .zshrc
+
+# Finally re-add the .zshrc
+cd $DOT_DIRECTORY
 ln .zshrc ~/.zshrc
-rm ~/.zshrc_old
-rm .zshrc_old
 ln .zshrc_secrets.example ~/.zshrc_secrets
+rm -rf extra_installations
 
 # Clone zsh plugins
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -274,6 +275,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.
     nvim --headless "+Lazy! restore" +qa # Sync will make it up-to-date, restore is the lockfile version.
     echo "Neovim plugins installed successfully."
 )
+git restore nvim/.config/nvim/lazy-lock.json
 ~/.config/tmux/plugins/tpm/bin/install_plugins
 
 # Done !
