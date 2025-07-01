@@ -15,12 +15,13 @@
 # VERSIONS: 
 NVIM_INSTALLATION=${NVIM_INSTALLATION:-AppImage} # Options: AppImage, build
 NVIM_STABLE_VERSION=0.11.0 # Not needed if AppImage is picked
-NG_VERSION=20
-NVM_VERSION=0.39.3
+# NG_VERSION=20
+# NVM_VERSION=0.39.3
 DOT_DIRECTORY=dotenv
 
-# End of parameters
+# End of parameters, start of defaults
 EXTRAS=false
+FORCE_REINSTALL=false
 
 for arg in "$@"; do
     if [ "$arg" == "--extras" ]; then
@@ -28,6 +29,14 @@ for arg in "$@"; do
         break
     fi
 done
+
+for arg in "$@"; do
+    if [ "$arg" == "--force_reinstall" ]; then
+        FORCE_REINSTALL=true
+        break
+    fi
+done
+
 
 # This script is used to set up my configs to different pcs. To do that, we need to have the structure of 
 # the configs in the `dotenv` directory. The script will then symlink the configs to the correct locations.
@@ -70,7 +79,7 @@ mkdir -p ~/.config
 # ----------------- PACKAGES+LANGUAGES -------------------------
 
 # UV package
-if ! command -v uv &> /dev/null; then
+if ! command -v uv &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing UV..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
     echo "UV installed at $(which uv)"
@@ -79,13 +88,19 @@ else
 fi
 
 # Rust
-if ! command -v rustup &> /dev/null; then
+if ! command -v rustup &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing Rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     echo "Rust installed"
 else
     echo "Rust is already installed at $(which rustup)"
-    rustup update
+    read -p "Do you want to update Rust? [Y/n] " answer
+    answer=${answer,,} # convert to lowercase
+    if [[ "$answer" =~ ^(y|yes|)$ ]]; then
+        rustup update
+    else
+        echo "Skipping Rust update."
+    fi
 fi
 
 # Install go?
@@ -94,11 +109,22 @@ fi
 #
 # ----------------- USEFUL-CLI -------------------------
 
-cargo install eza
-cargo install dua-cli
+if ! command -v eza &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+
+    cargo install eza
+else
+    echo "Eza already exists at version $(eza --version)"
+fi
+
+if ! command -v dua &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+    cargo install dua-cli
+else
+    echo "Eza already exists at version $(dua --version)"
+fi
+
 # Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
 
-if ! command -v nvim &> /dev/null; then
+if ! command -v nvim &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing neovim..."
 
     if [ "$NVIM_INSTALLATION" == "build" ]; then
@@ -131,8 +157,10 @@ fi
 
 if [ "$EXTRAS" == true ]; then
     # Optional but why not 
+    cd $DOT_DIRECTORY
     mkdir extra_installations
     cd extra_installations
+
     # (
     #     # Wezterm, currently use kitty 
     #     curl -LO https://github.com/wezterm/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
@@ -143,56 +171,78 @@ if [ "$EXTRAS" == true ]; then
 
     (
         # Install hurl (needed by neovim hurl.nvim)
-        HURL_VERSION=6.1.1
-        curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$HURL_VERSION/hurl_${HURL_VERSION}_amd64.deb
-        sudo apt install ./hurl_${HURL_VERSION}_amd64.deb
+        if ! command -v hurl &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+            echo "Installing hurl..."
+            HURL_VERSION=6.1.1
+            curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$HURL_VERSION/hurl_${HURL_VERSION}_amd64.deb
+            sudo apt install ./hurl_${HURL_VERSION}_amd64.deb
+        else 
+            echo "Hurl already exists at $(hurl --version)"
+        fi
     )
 
 
     (
-        curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-        echo "Kitty installed successfully at version $(kitty --version)"
-        # Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
-        # your system-wide PATH)
-        ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
-        # Place the kitty.desktop file somewhere it can be found by the OS
-        cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
-        # If you want to open text files and images in kitty via your file manager also add the kitty-open.desktop file
-        cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
-        # Update the paths to the kitty and its icon in the kitty desktop file(s)
-        sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
-        sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
-        #
-        # Make xdg-terminal-exec (and hence desktop environments that support it use kitty)
-        # Will make the icon prettier, so why not :-)
-        echo 'kitty.desktop' > ~/.config/xdg-terminals.list
-        echo "Kitty desktop installed successfully."
+         if ! command -v kitty &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then   echo "Installing kitty..."
+            curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+            echo "Kitty installed successfully at version $(kitty --version)"
+            # Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
+            # your system-wide PATH)
+            ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
+            # Place the kitty.desktop file somewhere it can be found by the OS
+            cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+            # If you want to open text files and images in kitty via your file manager also add the kitty-open.desktop file
+            cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
+            # Update the paths to the kitty and its icon in the kitty desktop file(s)
+            sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+            sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+            #
+            # Make xdg-terminal-exec (and hence desktop environments that support it use kitty)
+            # Will make the icon prettier, so why not :-)
+            echo 'kitty.desktop' > ~/.config/xdg-terminals.list
+            echo "Kitty desktop installed successfully."
+        else
+            echo "Kitty already exists at $(kitty --version)"
+        fi
+
     )
     (
         # Yazi
-        git clone https://github.com/sxyazi/yazi.git
-        cd yazi
-        cargo build --release --locked
-        sudo mv target/release/yazi target/release/ya /usr/local/bin/
-        echo "Yazi installed successfully at version $(yazi -V)"
-        cd ..
-        rm -rf yazi
-        echo "removing unneeded yazi files"
+        if ! command -v yazi &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then            
+            echo "Installing yazi..."
+            git clone https://github.com/sxyazi/yazi.git
+            cd yazi
+            cargo build --release --locked
+            sudo mv target/release/yazi target/release/ya /usr/local/bin/
+            echo "Yazi installed successfully at version $(yazi -V)"
+            cd ..
+            rm -rf yazi
+        else
+            echo "Yazi already exists at $(yazi --version)"
+        fi
     )
     (
         # Lazygit
-        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-        tar xf lazygit.tar.gz lazygit
-        sudo install lazygit -D -t /usr/local/bin/
-        echo "Lazygit installed successfully at version $(lazygit --version)"
-        rm lazygit.tar.gz
-        rm lazygit
+        if ! command -v lazygit &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+            echo "Installing lazygit..."
+            LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+            curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+            tar xf lazygit.tar.gz lazygit
+            sudo install lazygit -D -t /usr/local/bin/
+            echo "Lazygit installed successfully at version $(lazygit --version)"
+            rm lazygit.tar.gz
+            rm lazygit
+        else
+            echo "Lazygit already exists at $(lazygit --version)"
+        fi
     )
+
     # (
         # Lazydocker missing
         # curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     # )
+
+    cd $DOT_DIRECTORY
     rm -rf extra_installations
 fi
 cd $HOME
@@ -200,48 +250,71 @@ cd $HOME
 # ---- ZSH + TMUX + STARSHIP Installations and configurations
 # ----
 
-(
+# Install Tmux Plugin Manager if not already installed
+if [ ! -d "$HOME/.config/tmux/plugins/tpm"] || [ "$FORCE_REINSTALL" = true ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
     echo "Tmux Plugin Manager installed successfully."
-)
+else
+    echo "Tmux Plugin Manager already installed. Skipping."
+fi
 
-(
-    # Maybe not needed.
+# Install catppuccin zsh-syntax-highlighting if not already installed
+if [ ! -d "$HOME/.zsh-catpuccin"] || [ "$FORCE_REINSTALL" = true ]; then
     git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh-catpuccin
-)
+    echo "Catppuccin ZSH syntax highlighting installed successfully."
+else
+    echo "Catppuccin ZSH syntax highlighting already installed. Skipping."
+fi
 
-(
-    # fzf will be needed for fuzzy search.
+# Install fzf if not already installed
+if [ ! -d "$HOME/.fzf"] || [ "$FORCE_REINSTALL" = true ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --key-bindings --completion --update-rc
-)
-
-# mv ~/.zshrc ~/.zshrc_old
-# mv .zshrc .zshrc_old
+    echo "fzf installed successfully."
+else
+    echo "fzf already installed. Skipping."
+fi
 
 # Install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install starship
-curl -sS https://starship.rs/install.sh | sh
+if ! command -v starship &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+    echo "Installing starship..."
+    curl -sS https://starship.rs/install.sh | sh
+else
+    echo "Starship already installed at $(starship --version)"
 
 # All secrets that I want my shell to have access to
-cp ~/.zshrc_secrets.example ~/.zshrc_secrets
+if [ ! -f "$HOME/.zshrc_secrets"] || [ "$FORCE_REINSTALL" = true ]; then
+    cp "$DOT_DIRECTORY/.zshrc_secrets.example" "$HOME/.zshrc_secrets"
+    echo "~/.zshrc_secrets created from example."
+else
+    echo "~/.zshrc_secrets already exists. Skipping."
+fi
 
 # Add nerd fonts that are needed for kitty
-mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts || exit
-wget -O JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
-unzip -o JetBrainsMono.zip
-rm JetBrainsMono.zip
-fc-cache -fv
+PREFERRED_NERD_FONT=JetBrainsMonoNerd
+if [ ! -f "$HOME/.local/share/fonts/$PREFERRED_NERD_FONT"] || [ "$FORCE_REINSTALL" = true ]; then
+    mkdir -p ~/.local/share/fonts
+    cd ~/.local/share/fonts || exit
+    wget -O JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+    unzip -o JetBrainsMono.zip
+    rm JetBrainsMono.zip
+    fc-cache -fv
+else
+    echo "Jetbrains Mono Nerd already exists. Skipping."
+fi
+
 cd ~/$DOT_DIRECTORY
 
 # Ng is needed for angular cli autocompletion
 cd $HOME
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash
-nvm install ${NG_VERSION} # Maybe in the future will change.
-nvm use ${NG_VERSION}
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash
+# nvm install ${NG_VERSION} # Maybe in the future will change.
+# nvm use ${NG_VERSION}
+nvm install node  # "node" = latest stable
+nvm use node
 sudo npm install -g @angular/cli
 cd ~/$DOT_DIRECTORY
 
@@ -256,7 +329,7 @@ stow -v lazygit
 stow -v scripts
 
 # Doing the .zshrc stuff while removing unneeded
-# Removing all these, since on the .dotenv they are configured already.
+# Restoring potential overwrites by other packages
 git restore .zshrc
 
 # Finally re-add the .zshrc
@@ -265,10 +338,31 @@ ln .zshrc ~/.zshrc
 ln .zshrc_secrets.example ~/.zshrc_secrets
 rm -rf extra_installations
 
-# Clone zsh plugins
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin
-git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+# zsh-syntax-highlighting
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"] || [ "$FORCE_REINSTALL" = true ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+    echo "Cloned zsh-syntax-highlighting."
+else
+    echo "zsh-syntax-highlighting already exists. Skipping."
+fi
+
+# fzf-zsh-plugin
+if [ ! -d "$ZSH_CUSTOM/plugins/fzf-zsh-plugin"] || [ "$FORCE_REINSTALL" = true  ]; then
+    git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git "$ZSH_CUSTOM/plugins/fzf-zsh-plugin"
+    echo "Cloned fzf-zsh-plugin."
+else
+    echo "fzf-zsh-plugin already exists. Skipping."
+fi
+
+# zsh-autosuggestions
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions"] || [ "$FORCE_REINSTALL" = true  ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+    echo "Cloned zsh-autosuggestions."
+else
+    echo "zsh-autosuggestions already exists. Skipping."
+fi
 
 # Update the plugins in neovim since all cli stuff are installed.
 (
