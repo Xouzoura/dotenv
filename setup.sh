@@ -43,7 +43,8 @@ done
 # REQUIRES SUDO for some things.
 
 
-echo "Starting setup..."
+echo "Starting setup with EXTRAS=$EXTRAS and FORCE_REINSTALL=$FORCE_REINSTALL..."
+
 if [ "$PWD" != "$HOME/$DOT_DIRECTORY" ]; then
     echo "Please run this script from the dotenv directory ($HOME/$DOT_DIRECTORY)."
     exit 1
@@ -97,6 +98,7 @@ else
     read -p "Do you want to update Rust? [Y/n] " answer
     answer=${answer,,} # convert to lowercase
     if [[ "$answer" =~ ^(y|yes|)$ ]]; then
+        echo "Updating the rust toolbox."
         rustup update
     else
         echo "Skipping Rust update."
@@ -109,17 +111,31 @@ fi
 #
 # ----------------- USEFUL-CLI -------------------------
 
+# Eza for colorful terminal outputs in .zshrc
 if ! command -v eza &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
-
+    echo "Installing eza..."
     cargo install eza
 else
     echo "Eza already exists at version $(eza --version)"
 fi
 
+# Dua-cli needed to see what is going on in files
 if ! command -v dua &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+    echo "Installing dua-cli..."
     cargo install dua-cli
 else
     echo "Eza already exists at version $(dua --version)"
+fi
+
+# Nushell is needed for yazi admin copy paste
+if ! command -v nu &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+    echo "Installing nushell..."
+    curl -fsSL https://apt.fury.io/nushell/gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg
+    echo "deb https://apt.fury.io/nushell/ /" | sudo tee /etc/apt/sources.list.d/fury.list
+    sudo apt update
+    sudo apt install nushell
+else
+    echo "Nushell already exists at version $(nu --version)"
 fi
 
 # Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
@@ -129,7 +145,6 @@ if ! command -v nvim &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
 
     if [ "$NVIM_INSTALLATION" == "build" ]; then
         # Method1: Build from source for a specified version
-
         (
             git clone --depth 1 -b v${NVIM_STABLE_VERSION} https://github.com/neovim/neovim
             cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
@@ -142,14 +157,8 @@ if ! command -v nvim &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
         )
     else
         # Method2: Use the AppImage (preferred, since don't have to build)
+        # Have already a script for that, so calling that
         ~/dotenv/scripts/nvim/update_neovim_with_appimage.sh stable
-
-        # OLDER but works
-        # (
-        # curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
-        # chmod +x nvim-linux-x86_64.appimage
-        # mv nvim-linux-x86_64.appimage ~/.local/bin/nvim
-        # )
     fi
 else
     echo "Neovim is already installed at $(which nvim)"
@@ -181,8 +190,8 @@ if [ "$EXTRAS" == true ]; then
         fi
     )
 
-
     (
+        # Installing kitty
          if ! command -v kitty &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then   echo "Installing kitty..."
             curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
             echo "Kitty installed successfully at version $(kitty --version)"
