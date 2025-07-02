@@ -114,6 +114,33 @@ map(
   { silent = true, desc = "Close all buffers except the current and unsaved ones" }
 )
 
+-- Diagnostics
+map("n", "<leader>df", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Diagnostic error float open" })
+map("n", "<leader>dy", function()
+  local diag = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })[1]
+  if diag and diag.message then
+    vim.fn.setreg("+", diag.message) -- copy to system clipboard
+    vim.notify("Copied first diagnostic message to clipboard.", vim.log.levels.INFO)
+  else
+    vim.notify("No diagnostic found on this line.", vim.log.levels.WARN)
+  end
+end, { desc = "Copy first diagnostic to clipboard" })
+map("n", "<leader>dY", function()
+  local diags = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
+  if #diags > 0 then
+    -- Concatenate all diagnostic messages with newlines between them
+    local messages = {}
+    for _, diag in ipairs(diags) do
+      table.insert(messages, diag.message)
+    end
+    local all_msgs = table.concat(messages, "\n")
+    vim.fn.setreg("+", all_msgs) -- copy all messages to system clipboard
+    vim.notify("Copied all diagnostic messages to clipboard.", vim.log.levels.INFO)
+  else
+    vim.notify("No diagnostic found on this line.", vim.log.levels.WARN)
+  end
+end, { desc = "Copy diagnostics to clipboard" })
+
 -- format json file
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
 map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })

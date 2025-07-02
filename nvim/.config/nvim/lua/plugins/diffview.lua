@@ -51,7 +51,6 @@ return {
           -- ["n <leader>gx"] = function()
           --   require("vgit").toggle_diff_preference()
           -- end,
-
           ["n <leader>gbr"] = "buffer_hunk_reset",
           ["n <leader>gbs"] = "buffer_hunk_preview",
           ["n <leader>gbp"] = "buffer_blame_preview",

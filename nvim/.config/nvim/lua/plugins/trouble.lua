@@ -28,11 +28,6 @@ return {
       "<cmd>Trouble diagnostics toggle filter.buf=0 win.type = split win.position=right<cr>",
       desc = "(Trouble) Buffer Diagnostics Buffer [R]",
     },
-    {
-      "<leader>df", -- Might need something else since <leader>d(~) is used by debug
-      "<cmd>lua vim.diagnostic.open_float()<cr>",
-      desc = "Diagnostic error float open",
-    },
     -- Currently dont need them
     -- {
     --   "<leader>xl",
