@@ -13,5 +13,6 @@ return {
     vim.keymap.set("n", "xx", require("substitute").line, { noremap = true })
     vim.keymap.set("n", "X", require("substitute").eol, { noremap = true })
     vim.keymap.set("x", "x", require("substitute").visual, { noremap = true })
+    vim.keymap.set("n", "xd", '"_x', { noremap = true, silent = true }) -- original usage of 'x' now as 'xd'
   end,
 }

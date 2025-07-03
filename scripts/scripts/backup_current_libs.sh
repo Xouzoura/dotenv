@@ -13,5 +13,7 @@ snap list > $PACKAGES_DIR/snap-packages.txt
 flatpak list > $PACKAGES_DIR/flatpak-packages.txt
 # cargo installations
 cat ~/.cargo/.crates.toml > $PACKAGES_DIR/crates-packages.txt
+# gnome-extensions (fyi)
+gnome-extensions list > $PACKAGES_DIR/gnome-extensions.txt
 
 echo "✅ Exported libraries/package state to $PACKAGES_DIR"
