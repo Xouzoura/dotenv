@@ -219,7 +219,7 @@ alias jp='python -m jupyter notebook'
 alias mg='matrix --green'
 
 # Koofr ;)
-alias koofr='~/.koofr-dist/storagegui'
+alias koofr='GDK_BACKEND=x11 ~/.koofr-dist/storagegui'
 
 # Yazi (yy)
 function yy() {
@@ -259,6 +259,7 @@ source ~/.zshrc_secrets
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 PATH="$HOME/.local/bin:$PATH" 
+PATH="$HOME/go/bin:$PATH" 
 
 # export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
