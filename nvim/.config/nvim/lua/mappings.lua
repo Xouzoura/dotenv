@@ -2,6 +2,7 @@
 ---
 require "nvchad.mappings"
 local extras = require "extras"
+local picker = require "picker"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>")
@@ -15,6 +16,20 @@ vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes w
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
 local map = vim.keymap.set
+if picker.USE_FZF_LUA then
+  -- Delete first the stupid nvchad pre-loadded
+  for _, keymap in ipairs(picker.TELESCOPE_REMOVE) do
+    vim.api.nvim_del_keymap("n", keymap)
+  end
+end
+-- Loop over the key mappings and set them
+for _, keymap in ipairs(picker.FZF_LUA_KEYS) do
+  local lhs = keymap[1]
+  local rhs = keymap[2]
+  local opts = { desc = keymap.desc }
+  map("n", lhs, rhs, opts)
+end
+
 -- Disable arrow keys
 map("", "<up>", "<nop>")
 map("", "<right>", "<nop>")
@@ -191,15 +206,15 @@ map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off deb
 -- Tab does also include the c-i.
 map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
 -- telescope
-map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
-map("n", "<leader>f.", function()
-  local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
-  require("telescope.builtin").live_grep { search_dirs = { file_dir } }
-end, { desc = "[P]Search grep in current file's directory" })
-map("n", "<leader>fc", function()
-  local current_file = vim.fn.expand "%:p" -- Get full path of current file
-  require("telescope.builtin").live_grep { search_dirs = { current_file } }
-end, { desc = "Search grep in current file" })
+-- map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
+-- map("n", "<leader>f.", function()
+--   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
+--   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
+-- end, { desc = "[P]Search grep in current file's directory" })
+-- map("n", "<leader>fc", function()
+--   local current_file = vim.fn.expand "%:p" -- Get full path of current file
+--   require("telescope.builtin").live_grep { search_dirs = { current_file } }
+-- end, { desc = "Search grep in current file" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })

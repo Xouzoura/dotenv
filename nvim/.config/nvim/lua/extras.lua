@@ -92,9 +92,11 @@ function M.open_buffers()
     sort_mru = true,
     sort_lastused = true,
     initial_mode = "normal",
+    sorting_strategy = "ascending", -- makes results go top-down
     layout_config = {
       width = 0.8,
       preview_width = 0.5,
+      prompt_position = "top", -- needed for horizontal layout, but fine to keep
     },
     path_display = function(opts, path)
       local filename = vim.fn.fnamemodify(path, ":t")

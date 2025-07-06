@@ -1,7 +1,11 @@
+local picker = require "picker"
+local telescope_enabled = not picker.USE_FZF_LUA
+
 return {
   -- <space><space> that mixes the last opened files, buffers etc
   "danielfalk/smart-open.nvim",
   branch = "0.2.x",
+  enabled = telescope_enabled,
   lazy = false,
   dependencies = {
     "kkharji/sqlite.lua",

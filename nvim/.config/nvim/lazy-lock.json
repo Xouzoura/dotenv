@@ -12,6 +12,7 @@
   "dropbar.nvim": { "branch": "master", "commit": "b695c346fd180d504c1d135435cbcfba08ad3946" },
   "flash.nvim": { "branch": "main", "commit": "3c942666f115e2811e959eabbdd361a025db8b63" },
   "fzf-lua": { "branch": "main", "commit": "20d64076669c8d94f94319dd1f451608156ee3da" },
+  "fzf-lua-enchanted-files": { "branch": "master", "commit": "6fc89e000fe1b65f770ddb52cd5323f2470560b2" },
   "garbage-day.nvim": { "branch": "main", "commit": "cce4a0b394d33878bde3c1648f4e6b358e8769bb" },
   "git-dev.nvim": { "branch": "master", "commit": "f8894349d04b2d922f2d170c5d66db729236d86f" },
   "gitsigns.nvim": { "branch": "main", "commit": "1b0350ab707713b2bc6c236151f1a324175347b1" },

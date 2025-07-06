@@ -1,3 +1,5 @@
+local picker = require "picker"
+local telescope_enabled = not picker.USE_FZF_LUA
 return {
   {
     -- TODO: deprecate the nvim-tree.lua changes since i don't use it.
@@ -46,6 +48,7 @@ return {
   {
     -- Plugin: nvim-telescope/telescope.nvim
     "nvim-telescope/telescope.nvim",
+    enabled = telescope_enabled,
     dependencies = {
       {
         "nvim-telescope/telescope-live-grep-args.nvim",
@@ -75,18 +78,14 @@ return {
           },
         },
       }
-      vim.keymap.set(
-        "n",
-        "<leader>fk",
-        ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
-        { noremap = true, silent = true, desc = "Telescope Live Grep Args" }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>fj",
-        live_grep_args_shortcuts.grep_word_under_cursor,
-        { noremap = true, silent = true, desc = "Telescope Live Grep Args (current word)" }
-      )
+      if not picker.FZF_LUA_KEYS then
+        vim.keymap.set(
+          "n",
+          "<leader>fj",
+          live_grep_args_shortcuts.grep_word_under_cursor,
+          { noremap = true, silent = true, desc = "Telescope Live Grep Args (current word)" }
+        )
+      end
       require("telescope").setup {
         extensions = {
           git = {
