@@ -80,7 +80,7 @@ mkdir -p ~/.config
 # ----------------- PACKAGES+LANGUAGES -------------------------
 
 # UV package
-if ! command -v uv &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v uv ] &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing UV..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
     echo "UV installed at $(which uv)"
@@ -89,7 +89,7 @@ else
 fi
 
 # Rust
-if ! command -v rustup &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v rustup ] &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing Rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     echo "Rust installed succesfully."
@@ -114,7 +114,7 @@ fi
 # ----------------- USEFUL-CLI -------------------------
 
 # Eza for colorful terminal outputs in .zshrc
-if ! command -v eza &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v eza ] &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing eza..."
     cargo install eza
 else
@@ -122,7 +122,7 @@ else
 fi
 
 # Dua-cli needed to see what is going on in files
-if ! command -v dua &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v dua ] &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing dua-cli..."
     cargo install dua-cli
 else
@@ -130,7 +130,7 @@ else
 fi
 
 # Nushell is needed for yazi admin copy paste
-if ! command -v nu &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v nu &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing nushell..."
     curl -fsSL https://apt.fury.io/nushell/gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg
     echo "deb https://apt.fury.io/nushell/ /" | sudo tee /etc/apt/sources.list.d/fury.list
@@ -142,7 +142,7 @@ fi
 
 # Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
 
-if ! command -v nvim &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v nvim &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing neovim..."
 
     if [ "$NVIM_INSTALLATION" == "build" ]; then
@@ -182,7 +182,7 @@ if [ "$EXTRAS" == true ]; then
 
     (
         # Install hurl (needed by neovim hurl.nvim)
-        if ! command -v hurl &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+        if [ ! command -v hurl &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then
             echo "Installing hurl..."
             HURL_VERSION=6.1.1
             curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$HURL_VERSION/hurl_${HURL_VERSION}_amd64.deb
@@ -194,7 +194,7 @@ if [ "$EXTRAS" == true ]; then
 
     (
          # Installing kitty
-         if ! command -v kitty &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+         if [ ! command -v kitty &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then
             echo "Installing kitty..."
             curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
             echo "Kitty installed successfully at version $(kitty --version)"
@@ -220,7 +220,7 @@ if [ "$EXTRAS" == true ]; then
     )
     (
         # Yazi
-        if ! command -v yazi &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then            
+        if [ ! command -v yazi &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then            
             echo "Installing yazi..."
             git clone https://github.com/sxyazi/yazi.git
             cd yazi
@@ -235,7 +235,7 @@ if [ "$EXTRAS" == true ]; then
     )
     (
         # Lazygit
-        if ! command -v lazygit &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+        if [ ! command -v lazygit &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then
             echo "Installing lazygit..."
             LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
             curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -255,7 +255,7 @@ if [ "$EXTRAS" == true ]; then
     # )
 
     cd $HOME/$DOT_DIRECTORY
-    rm -rf extra_installations
+    # rm -rf extra_installations
 fi
 cd $HOME
 # ----
@@ -263,7 +263,7 @@ cd $HOME
 # ----
 
 # Install Tmux Plugin Manager if not already installed
-if [ ! -d "$HOME/.config/tmux/plugins/tpm"] || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! -d "$HOME/.config/tmux/plugins/tpm" ] || [ "$FORCE_REINSTALL" = true ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
     echo "Tmux Plugin Manager installed successfully."
 else
@@ -271,7 +271,7 @@ else
 fi
 
 # Install catppuccin zsh-syntax-highlighting if not already installed
-if [ ! -d "$HOME/.zsh-catpuccin"] || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! -d "$HOME/.zsh-catpuccin" ] || [ "$FORCE_REINSTALL" = true ]; then
     git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh-catpuccin
     echo "Catppuccin ZSH syntax highlighting installed successfully."
 else
@@ -279,7 +279,7 @@ else
 fi
 
 # Install fzf if not already installed
-if [ ! -d "$HOME/.fzf"] || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! -d "$HOME/.fzf" ] || [ "$FORCE_REINSTALL" = true ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --key-bindings --completion --update-rc
     echo "fzf installed successfully."
@@ -291,14 +291,14 @@ fi
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install starship
-if ! command -v starship &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! command -v starship &> /dev/null ] || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing starship..."
     curl -sS https://starship.rs/install.sh | sh
 else
     echo "Starship already installed at $(starship --version)"
 
 # All secrets that I want my shell to have access to
-if [ ! -f "$HOME/.zshrc_secrets"] || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! -f "$HOME/.zshrc_secrets" ] || [ "$FORCE_REINSTALL" = true ]; then
     cp "$DOT_DIRECTORY/.zshrc_secrets.example" "$HOME/.zshrc_secrets"
     echo "~/.zshrc_secrets created from example."
 else
@@ -307,7 +307,7 @@ fi
 
 # Add nerd fonts that are needed for kitty
 PREFERRED_NERD_FONT=JetBrainsMonoNerd
-if [ ! -f "$HOME/.local/share/fonts/$PREFERRED_NERD_FONT"] || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! -f "$HOME/.local/share/fonts/$PREFERRED_NERD_FONT" ] || [ "$FORCE_REINSTALL" = true ]; then
     mkdir -p ~/.local/share/fonts
     cd ~/.local/share/fonts || exit
     wget -O JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
@@ -345,7 +345,7 @@ stow -v scripts
 git restore .zshrc
 
 # Finally re-add the .zshrc
-cd $DOT_DIRECTORY
+cd $HOME/$DOT_DIRECTORY
 ln .zshrc ~/.zshrc
 ln .zshrc_secrets.example ~/.zshrc_secrets
 rm -rf extra_installations
