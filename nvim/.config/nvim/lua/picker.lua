@@ -69,29 +69,32 @@ if M.USE_FZF_LUA then
       function()
         local fzf = require "fzf-lua"
         local file_dir = vim.fn.expand "%:p:h"
-        fzf.live_grep { search_dirs = { file_dir } }
+        print(file_dir)
+        fzf.live_grep { cwd = file_dir }
       end,
-      desc = "(fzf) Search grep in current file's directory (fzf-lua)",
+      desc = "(fzf) Search grep in current file's directory",
     },
     {
       "<leader>fc",
       function()
-        local fzf = require "fzf-lua"
-        local current_file = vim.fn.expand "%:p"
-        fzf.live_grep { search_dirs = { current_file } }
+        require("fzf-lua").grep_curbuf()
       end,
-      desc = "(fzf) Search grep in current file",
+      desc = "(fzf) Search in current file only",
     },
     {
       "<leader>fE",
       function()
         local fzf = require "fzf-lua"
-        local current_file = vim.fn.expand "%:p"
         local word = vim.fn.expand "<cword>" -- word under cursor
-
-        fzf.live_grep { search_dirs = { current_file }, search = word }
+        fzf.grep_curbuf { search = word }
       end,
-      desc = "(fzf) Search grep in current file",
+      desc = "cfzfc Search WORD in current file",
+    },
+    {
+      "leader>fs",
+      function()
+        require("fzf-lua").resume()
+      end,
     },
   }
   M.TELESCOPE_REMOVE = {

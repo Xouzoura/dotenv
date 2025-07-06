@@ -176,7 +176,8 @@ alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
 # Neovim aliases. This can change with a script
 alias vi="nvim"
-alias vo="nvim -c 'Telescope oldfiles'"
+# alias vo="nvim -c 'Telescope oldfiles'"
+alias vo="nvim -c 'lua require(\"fzf-lua\").oldfiles()'"
 
 # others
 alias mouse="keep-presence"
