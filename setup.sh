@@ -91,8 +91,10 @@ fi
 # Rust
 if ! command -v rustup &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     echo "Installing Rust..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    echo "Rust installed"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    echo "Rust installed succesfully."
+    export PATH=$PATH:$HOME/cargo/bin
+
 else
     echo "Rust is already installed at $(which rustup)"
     read -p "Do you want to update Rust? [Y/n] " answer
@@ -158,7 +160,7 @@ if ! command -v nvim &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
     else
         # Method2: Use the AppImage (preferred, since don't have to build)
         # Have already a script for that, so calling that
-        ~/dotenv/scripts/nvim/update_neovim_with_appimage.sh stable
+        ~/dotenv/scripts/scripts/nvim/update_neovim_with_appimage.sh stable
     fi
 else
     echo "Neovim is already installed at $(which nvim)"
@@ -191,8 +193,9 @@ if [ "$EXTRAS" == true ]; then
     )
 
     (
-        # Installing kitty
-         if ! command -v kitty &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then   echo "Installing kitty..."
+         # Installing kitty
+         if ! command -v kitty &> /dev/null || [ "$FORCE_REINSTALL" = true ]; then
+            echo "Installing kitty..."
             curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
             echo "Kitty installed successfully at version $(kitty --version)"
             # Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
@@ -251,7 +254,7 @@ if [ "$EXTRAS" == true ]; then
         # curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
     # )
 
-    cd $DOT_DIRECTORY
+    cd $HOME/$DOT_DIRECTORY
     rm -rf extra_installations
 fi
 cd $HOME
@@ -350,7 +353,7 @@ rm -rf extra_installations
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
 # zsh-syntax-highlighting
-if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"] || [ "$FORCE_REINSTALL" = true ]; then
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] || [ "$FORCE_REINSTALL" = true ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
     echo "Cloned zsh-syntax-highlighting."
 else
@@ -358,7 +361,7 @@ else
 fi
 
 # fzf-zsh-plugin
-if [ ! -d "$ZSH_CUSTOM/plugins/fzf-zsh-plugin"] || [ "$FORCE_REINSTALL" = true  ]; then
+if [ ! -d "$ZSH_CUSTOM/plugins/fzf-zsh-plugin" ] || [ "$FORCE_REINSTALL" = true  ]; then
     git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git "$ZSH_CUSTOM/plugins/fzf-zsh-plugin"
     echo "Cloned fzf-zsh-plugin."
 else
@@ -366,7 +369,7 @@ else
 fi
 
 # zsh-autosuggestions
-if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions"] || [ "$FORCE_REINSTALL" = true  ]; then
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ] || [ "$FORCE_REINSTALL" = true  ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
     echo "Cloned zsh-autosuggestions."
 else

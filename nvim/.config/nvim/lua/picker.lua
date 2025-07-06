@@ -1,3 +1,6 @@
+-- THIS IS until i decide that fzf-lua is better than telescope.
+-- I have the option to set the USE_FZF_LUA = false, which will revert to what
+-- i already had.
 -- will leave here global selectors between libraries just in case
 local M = {}
 
@@ -28,6 +31,14 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Live Grep",
     },
     {
+      "<leader>fl",
+      function()
+        require("fzf-lua").grep_last()
+      end,
+      desc = "(fzf) Live Grep",
+    },
+    {
+      -- oldfiles but globally
       "<leader>fO",
       function()
         require("fzf-lua").oldfiles {}
