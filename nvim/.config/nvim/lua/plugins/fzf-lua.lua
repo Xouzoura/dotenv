@@ -37,7 +37,7 @@ return {
           cwd_only = false,
           cwd = nil,
           actions = {
-            ["d"] = { fn = actions.buf_del, reload = true },
+            -- ["d"] = { fn = actions.buf_del, reload = true },
           },
         },
       }
@@ -47,6 +47,12 @@ return {
     "otavioschwanck/fzf-lua-enchanted-files",
     dependencies = { "ibhagwan/fzf-lua" },
     enabled = _enabled,
-    opts = {},
+    config = function()
+      -- Modern configuration using vim.g
+      vim.g.fzf_lua_enchanted_files = {
+        max_history_per_cwd = 50,
+      }
+    end,
+    -- opts = {},
   },
 }

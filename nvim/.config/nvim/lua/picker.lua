@@ -17,6 +17,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Find Files",
     },
     {
+      -- use the plugin that has a history of opened files
       "<leader><leader>",
       function()
         require("fzf-lua-enchanted-files").files()
@@ -24,6 +25,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Find Files",
     },
     {
+      -- do a live grep search
       "<leader>fw",
       function()
         require("fzf-lua").live_grep()
@@ -31,6 +33,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Live Grep",
     },
     {
+      -- rerun last grep search
       "<leader>fl",
       function()
         require("fzf-lua").grep_last()
@@ -46,6 +49,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Oldfiles",
     },
     {
+      -- oldfiles, but cwd only
       "<leader>fo",
       function()
         require("fzf-lua").oldfiles { cwd = vim.loop.cwd() }
@@ -53,10 +57,11 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Oldfiles",
     },
     {
+      -- grep with word under cursor
       "<leader>fe",
       function()
         local fzf = require "fzf-lua"
-        local word = vim.fn.expand "<cword>" -- word under cursor
+        local word = vim.fn.expand "<cword>"
         fzf.live_grep { search = word }
       end,
       desc = "(fzf) Live Grep (word)",
