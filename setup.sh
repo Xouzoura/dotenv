@@ -8,20 +8,31 @@
 # .. git clone https://github.com/Xouzoura/dotenv.git
 # .. cd dotenv
 # .. sudo ./setup.sh --yazi,nvim, 
-# .. sudo ./setup.sh --all 
+# .. sudo ./setup.sh --all --dry-run (to see what commands would be run without executing anything)
 # -----------------------------------------------------------
 #
-#
-# VERSIONS: 
+
+# VERSION-SELECTION OR INSTALLATION METHOD SELECTION: 
 NVIM_INSTALLATION=${NVIM_INSTALLATION:-AppImage} # Options: AppImage, build
 NVIM_STABLE_VERSION=0.11.0 # Not needed if AppImage is picked
-DOT_DIRECTORY=dotenv
+HURL_VERSION=6.1.1
 
-# End of parameters, start of defaults
-EXTRAS=false
+# Directories
+DOT_DIRECTORY=dotenv
+EXTRA_INSTALLATION_LOC="$HOME/$DOT_DIRECTORY/extra_installations"
+
+# PARAMETERS
 FORCE_REINSTALL=false
 INSTALL_LIST="${1:-all}"  # If nothing is passed, install all
 IFS=',' read -ra INSTALL_ARGS <<< "$INSTALL_LIST"
+DRY_RUN=false
+
+# Parse args
+for arg in "$@"; do
+  if [[ "$arg" == "--dry-run" ]]; then
+    DRY_RUN=true
+  fi
+done
 
 should_setup() {
     local target="$1"
@@ -73,11 +84,9 @@ if [ "$PWD" != "$HOME/$DOT_DIRECTORY" ]; then
     exit 1
 fi
 
-EXTRA_INSTALLATION_LOC="$HOME/$DOT_DIRECTORY/extra_installations"
 mkdir -p ~/.config
 mkdir -p ~/.local/bin
 mkdir -p $EXTRA_INSTALLATION_LOC
-
 
 packages_update() {
     echo "Updating apt"
@@ -146,26 +155,34 @@ install_rust() {
 
 # ----------------- USEFUL-CLI -------------------------
 
-# Eza for colorful terminal outputs in .zshrc
+# === Install extra cli that might be useful ===
 install_cli_extra() {
-    if ! command_exists eza || [ "$FORCE_REINSTALL" = true ]; then
-        log_info "Installing eza..."
-        run_cmd "cargo install eza"
+
+    if ! command_exist rustup; then 
+        # Eza for colorful terminal outputs in .zshrc
+        if ! command_exists eza || [ "$FORCE_REINSTALL" = true ]; then
+            log_info "Installing eza..."
+            run_cmd "cargo install eza"
+        fi
+
+        # Dua is for terminal viewing of size of disk etc
+        if ! command_exists dua || [ "$FORCE_REINSTALL" = true ]; then
+            log_info "Installing dua-cli..."
+            run_cmd "cargo install dua-cli"
+        fi
+    else
+        log_err "Need rust to install eza and dua-cli"
     fi
 
-    if ! command_exists dua || [ "$FORCE_REINSTALL" = true ]; then
-        log_info "Installing dua-cli..."
-        run_cmd "cargo install dua-cli"
-    fi
-
+    # Hurl is for making request http (curl improved) and needed for neovim
     if ! command_exists hurl || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing hurl..."
-        HURL_VERSION=6.1.1
         run_cmd "curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/${HURL_VERSION}/hurl_${HURL_VERSION}_amd64.deb"
         run_cmd "apt install ./hurl_${HURL_VERSION}_amd64.deb"
         run_cmd "rm ./hurl_${HURL_VERSION}_amd64.deb"
     fi
 
+    # Lazygit is for simplified 
     if ! command_exists lazygit || [ "$FORCE_REINSTALL" = true ]; then
         # REQUIRES SUDO
         log_info "Installing lazygit..."
@@ -177,26 +194,26 @@ install_cli_extra() {
     fi
 }
 
-# Maybe autocpu-freq (https://github.com/AdnanHodzic/auto-cpufreq)?
-
+# === Install Neovim ===
 install_neovim() {
     if ! command_exists nvim || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing neovim..."
 
         if [ "$NVIM_INSTALLATION" == "build" ]; then
             log_err "Building from source is currently disabled. Use AppImage."
-            exit 1
             # # Method1: Build from source for a specified version
-            # (
-            #     git clone --depth 1 -b v${NVIM_STABLE_VERSION} https://github.com/neovim/neovim
-            #     cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
-            #     sudo make install
-            #     cd ../
-            #     rm -rf neovim
-            #     echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
-            #     ln -s ~/snap/bin/nvim ~/.local/bin/nvims # Command needed for stable setup (if preferred)
-            #     ln -s ~/snap/bin/nvim ~/.local/bin/nvimv # Command needed for nightly setup (if preferred)
-            # )
+            (
+                cd $EXTRA_INSTALLATION_LOC
+                git clone --depth 1 -b v${NVIM_STABLE_VERSION} https://github.com/neovim/neovim
+                cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
+                sudo make install
+                cd ../
+                rm -rf neovim
+                echo "Neovim installed successfully at version $(nvim --version | head -n 1 | cut -d " " -f 2)"
+                ln -s ~/snap/bin/nvim ~/.local/bin/nvims # Command needed for stable setup (if preferred)
+                ln -s ~/snap/bin/nvim ~/.local/bin/nvimv # Command needed for nightly setup (if preferred)
+                cd $HOME
+            )
         else
             # Method2: Use the AppImage (preferred, since don't have to build)
             # Have already a script for that, so calling that
@@ -207,6 +224,7 @@ install_neovim() {
     fi
 }
 
+# === Install Kitty ===
 install_kitty() {
     if ! command_exists kitty || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing Kitty..."
@@ -220,9 +238,9 @@ install_kitty() {
     else
         log_info "Kitty already installed: $(kitty --version)"
     fi
+}
 
 # === Install Yazi ===
-#
 install_yazi() {
     cd "$EXTRA_INSTALLATION_LOC" || return
     if ! command_exists yazi || [ "$FORCE_REINSTALL" = true ]; then
@@ -236,9 +254,8 @@ install_yazi() {
         log_info "Yazi already installed: $(yazi --version 2>/dev/null || echo 'installed')"
     fi
 }
-#
-# === Install TMUX + ZSH + Starship + Catppuccin + FZF plugins ===
-#
+
+# === Install TMUX + ZSH + Catppuccin + FZF plugins ===
 install_tmux_catpuccin_fzf_zsh() {
     cd "$HOME" || return
 
@@ -339,7 +356,7 @@ stow_stuff() {
 post_installation_stuff() {
     cd "$HOME/$DOT_DIRECTORY" || return
     if [ ! -f "$HOME/.zshrc_secrets" ] || [ "$FORCE_REINSTALL" = true ]; then
-        run_cmd "cp \"$DOT_DIRECTORY/.zshrc_secrets.example\" \"$HOME/.zshrc_secrets\""
+        run_cmd "cp \".zshrc_secrets.example\" \"$HOME/.zshrc_secrets\""
         log_info ".zshrc_secrets created."
     else
         log_info ".zshrc_secrets already exists."
@@ -383,7 +400,7 @@ if should_setup "rust"; then
     install_rust
 fi
 
-if should_setup "rust"; then
+if should_setup "cli_extra"; then
     install_cli_extra
 fi
 
@@ -423,10 +440,11 @@ if should_setup "stow"; then
     stow_stuff
 fi
 
-if should_setup "post"; then
+if should_setup "zsh"; then
     post_installation_stuff
 fi
 
 if should_setup "nvim"; then
+    # Should be at end :)
     neovim_plugin_update
 fi
