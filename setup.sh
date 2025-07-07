@@ -25,7 +25,7 @@ FORCE_REINSTALL=false
 INSTALL_LIST="${1:-all}"  # If nothing is passed, install all
 IFS=',' read -ra INSTALL_ARGS <<< "$INSTALL_LIST"
 
-should_install() {
+should_setup() {
     local target="$1"
     [[ "$INSTALL_LIST" == "all" ]] && return 0
     for arg in "${INSTALL_ARGS[@]}"; do
@@ -224,7 +224,9 @@ install_kitty() {
     else
         log_info "Kitty already installed: $(kitty --version)"
     fi
+
 # === Install Yazi ===
+#
 install_yazi() {
     if ! command_exists yazi || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing yazi..."
@@ -305,14 +307,7 @@ install_starship() {
 }
 
 # === Secrets and Nerd Fonts ===
-setup_secrets_and_fonts() {
-    if [ ! -f "$HOME/.zshrc_secrets" ] || [ "$FORCE_REINSTALL" = true ]; then
-        run_cmd "cp \"$DOT_DIRECTORY/.zshrc_secrets.example\" \"$HOME/.zshrc_secrets\""
-        log_info ".zshrc_secrets created."
-    else
-        log_info ".zshrc_secrets already exists."
-    fi
-
+setup_fonts() {
     font_dir="$HOME/.local/share/fonts"
     font_file="$font_dir/JetBrainsMonoNerd"
     if [ ! -f "$font_file" ] || [ "$FORCE_REINSTALL" = true ]; then
@@ -345,6 +340,12 @@ stow_stuff() {
 # === Post installation steps ===
 post_installation_stuff() {
     cd "$HOME/$DOT_DIRECTORY" || return
+    if [ ! -f "$HOME/.zshrc_secrets" ] || [ "$FORCE_REINSTALL" = true ]; then
+        run_cmd "cp \"$DOT_DIRECTORY/.zshrc_secrets.example\" \"$HOME/.zshrc_secrets\""
+        log_info ".zshrc_secrets created."
+    else
+        log_info ".zshrc_secrets already exists."
+    fi
     run_cmd "git restore .zshrc"
     run_cmd "ln -sf .zshrc ~/.zshrc"
     run_cmd "ln -sf .zshrc_secrets.example ~/.zshrc_secrets"
@@ -366,34 +367,62 @@ neovim_plugin_update() {
 
 
 # MAIN PROCESS
-if should_install "yazi"; then
+if should_setup "packages_update"; then
+    packages_update
+fi
+
+if should_setup "nix"; then
+    install_nix
+fi
+
+if should_setup "rust"; then
+    install_rust
+fi
+
+if should_setup "rust"; then
+    install_cli_extra
+fi
+
+if should_setup "uv"; then
+    install_uv
+fi
+
+if should_setup "kitty"; then
+    install_kitty
+fi
+
+if should_setup "nvim"; then
+    install_neovim
+fi
+
+if should_setup "yazi"; then
     install_yazi
 fi
 
-if should_install "zsh"; then
+if should_setup "zsh"; then
     install_tmux_catpuccin_fzf_zsh
 fi
 
-if should_install "starship"; then
+if should_setup "starship"; then
     install_starship
 fi
 
-if should_install "fonts"; then
-    setup_secrets_and_fonts
+if should_setup "fonts"; then
+    setup_fonts
 fi
 
-if should_install "npm"; then
+if should_setup "npm"; then
     install_ng_and_npm
 fi
 
-if should_install "stow"; then
+if should_setup "stow"; then
     stow_stuff
 fi
 
-if should_install "post"; then
+if should_setup "post"; then
     post_installation_stuff
 fi
 
-if should_install "nvim"; then
+if should_setup "nvim"; then
     neovim_plugin_update
 fi
