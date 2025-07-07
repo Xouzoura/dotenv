@@ -7,16 +7,14 @@
 #
 # .. git clone https://github.com/Xouzoura/dotenv.git
 # .. cd dotenv
-# .. chmod +x setup.sh
-# .. sudo ./setup.sh --extras 
+# .. sudo ./setup.sh --yazi,nvim, 
+# .. sudo ./setup.sh --all 
 # -----------------------------------------------------------
 #
 #
 # VERSIONS: 
 NVIM_INSTALLATION=${NVIM_INSTALLATION:-AppImage} # Options: AppImage, build
 NVIM_STABLE_VERSION=0.11.0 # Not needed if AppImage is picked
-# NG_VERSION=20
-# NVM_VERSION=0.39.3
 DOT_DIRECTORY=dotenv
 
 # End of parameters, start of defaults
@@ -75,8 +73,10 @@ if [ "$PWD" != "$HOME/$DOT_DIRECTORY" ]; then
     exit 1
 fi
 
+EXTRA_INSTALLATION_LOC="$HOME/$DOT_DIRECTORY/extra_installations"
 mkdir -p ~/.config
 mkdir -p ~/.local/bin
+mkdir -p $EXTRA_INSTALLATION_LOC
 
 
 packages_update() {
@@ -104,9 +104,7 @@ packages_update() {
         exit 1 
     fi
 }
-#
-# --------------- Installers ---------------
-#
+
 install_nix() {
     # REQUIRES SUDO
     # Nushell is needed for yazi admin copy paste
@@ -121,8 +119,8 @@ install_nix() {
     fi
 }
 
-# UV package
 install_uv() {
+    # UV package
     if ! command_exists uv || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing UV..."
         run_cmd "curl -LsSf https://astral.sh/uv/install.sh | sh"
@@ -131,8 +129,8 @@ install_uv() {
     fi
 }
 
-# Rust
 install_rust() {
+    # Rust
     if ! command_exists rustup || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing Rust..."
         run_cmd "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
@@ -209,9 +207,6 @@ install_neovim() {
     fi
 }
 
-cd $HOME/$DOT_DIRECTORY
-mkdir extra_installations
-
 install_kitty() {
     if ! command_exists kitty || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing Kitty..."
@@ -229,19 +224,21 @@ install_kitty() {
 # === Install Yazi ===
 #
 install_yazi() {
+    cd "$EXTRA_INSTALLATION_LOC" || return
     if ! command_exists yazi || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing yazi..."
         run_cmd "git clone https://github.com/sxyazi/yazi.git"
         run_cmd "cd yazi && cargo build --release --locked"
-        run_cmd "sudo mv yazi/target/release/yazi yazi/target/release/ya /usr/local/bin/"
+        run_cmd "sudo mv target/release/yazi /usr/local/bin/yazi"
         run_cmd "cd .. && rm -rf yazi"
-        command_exists yazi && log_info "Yazi installed successfully: $(yazi -V)"
+        log_info "Yazi installed successfully"
     else
-        log_info "Yazi already exists: $(yazi --version)"
+        log_info "Yazi already installed: $(yazi --version 2>/dev/null || echo 'installed')"
     fi
 }
-
+#
 # === Install TMUX + ZSH + Starship + Catppuccin + FZF plugins ===
+#
 install_tmux_catpuccin_fzf_zsh() {
     cd "$HOME" || return
 
