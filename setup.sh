@@ -33,6 +33,7 @@ should_setup() {
     done
     return 1
 }
+
 # --------------- Logging ---------------
 log_info() { echo -e "\033[1;34m[INFO] $*\033[0m"; }
 log_warn() { echo -e "\033[1;33m[WARN] $*\033[0m"; }
@@ -68,8 +69,6 @@ done
 # This script is used to set up my configs to different pcs. To do that, we need to have the structure of 
 # the configs in the `dotenv` directory. The script will then symlink the configs to the correct locations.
 # REQUIRES SUDO for some things.
-
-echo "Starting setup with EXTRAS=$EXTRAS and FORCE_REINSTALL=$FORCE_REINSTALL..."
 
 if [ "$PWD" != "$HOME/$DOT_DIRECTORY" ]; then
     echo "Please run this script from the dotenv directory ($HOME/$DOT_DIRECTORY)."
@@ -109,6 +108,7 @@ packages_update() {
 # --------------- Installers ---------------
 #
 install_nix() {
+    # REQUIRES SUDO
     # Nushell is needed for yazi admin copy paste
     if ! command_exists nu || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing Nushell..."
@@ -164,11 +164,12 @@ install_cli_extra() {
         log_info "Installing hurl..."
         HURL_VERSION=6.1.1
         run_cmd "curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/${HURL_VERSION}/hurl_${HURL_VERSION}_amd64.deb"
-        run_cmd "sudo apt install ./hurl_${HURL_VERSION}_amd64.deb"
+        run_cmd "apt install ./hurl_${HURL_VERSION}_amd64.deb"
         run_cmd "rm ./hurl_${HURL_VERSION}_amd64.deb"
     fi
 
     if ! command_exists lazygit || [ "$FORCE_REINSTALL" = true ]; then
+        # REQUIRES SUDO
         log_info "Installing lazygit..."
         LAZYGIT_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -Po '"tag_name": *"v\K[^"]*')
         run_cmd "curl -Lo lazygit.tar.gz https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -366,7 +367,13 @@ neovim_plugin_update() {
 }
 
 
+# -----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 # MAIN PROCESS
+# -----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
+#
+
 if should_setup "packages_update"; then
     packages_update
 fi
