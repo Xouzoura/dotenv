@@ -7,6 +7,7 @@
   - cronitor (sudo cronitor dash)
   - koofr (backup)
   - ncspot (listening to music)
+  - systemd-manager-tui
 
 # Other
 
