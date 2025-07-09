@@ -160,12 +160,6 @@ end, { desc = "Copy diagnostics to clipboard" })
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
 map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })
 -- git commands that are useful
-map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
-  desc = "Search git bcommits on current <f>ile",
-})
-map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
-  desc = "Search git commits on <a>ll files",
-})
 -- map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
 --   desc = "Git toggle <b>lame by line",
 -- })
@@ -202,19 +196,8 @@ map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off deb
 -- })
 -- terminal of open buffers
 --TODO: keep only one from the below.
--- map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
 -- Tab does also include the c-i.
 map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
--- telescope
--- map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
--- map("n", "<leader>f.", function()
---   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
---   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
--- end, { desc = "[P]Search grep in current file's directory" })
--- map("n", "<leader>fc", function()
---   local current_file = vim.fn.expand "%:p" -- Get full path of current file
---   require("telescope.builtin").live_grep { search_dirs = { current_file } }
--- end, { desc = "Search grep in current file" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
@@ -222,11 +205,12 @@ map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal 
 map({ "n", "t" }, "g,", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
 map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
 map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
+map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", noremap = true, silent = true })
+map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) buffer", noremap = true, silent = true })
 
-map("n", "<Leader>r,", extras.send_reminder_notification, { noremap = true, silent = true })
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
-map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open .env file" })
+map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject file" })
 -- Garbage collection
 vim.keymap.set(
   "n",

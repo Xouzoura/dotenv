@@ -104,8 +104,24 @@ if M.USE_FZF_LUA then
         local word = vim.fn.expand "<cword>" -- word under cursor
         fzf.grep_curbuf { search = word }
       end,
-      desc = "cfzfc Search WORD in current file",
+      desc = "(fzf) Search WORD in current file",
     },
+    -- Git stuff
+    {
+      "<leader>ga",
+      function()
+        require("fzf-lua").git_commits()
+      end,
+      desc = "(fzf) Git diff for whole project",
+    },
+    {
+      "<leader>gf",
+      function()
+        require("fzf-lua").git_bcommits()
+      end,
+      desc = "(fzf) Git diff for current file",
+    },
+    -- resume
     {
       "leader>fs",
       function()
@@ -166,6 +182,8 @@ else
       ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
       desc = "Telescope Live Grep Args",
     },
+    { "<leader>gf", "<cmd>Telescope git_bcommits<CR>", desc = "Search git bcommits on current <f>ile" },
+    { "<leader>ga", "<cmd>Telescope git_commits<CR>", desc = "Search git commits on <a>ll files" },
   }
   M.TELESCOPE_REMOVE = {}
 end

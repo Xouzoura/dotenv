@@ -343,5 +343,27 @@ function M.send_reminder_notification()
   end)
 end
 
+function M.messages_on_buffer()
+  local messages = vim.api.nvim_exec("messages", true)
+
+  -- Create a new scratch buffer
+  vim.cmd "new"
+  local buf = vim.api.nvim_get_current_buf()
+
+  -- Set buffer options (scratch buffer)
+  vim.bo[buf].buftype = "nofile"
+  vim.bo[buf].bufhidden = "wipe"
+  vim.bo[buf].swapfile = false
+  vim.bo[buf].modifiable = true
+
+  -- Set the buffer content to the messages
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(messages, "\n"))
+
+  -- Optional: make it readonly
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].readonly = true
+  vim.bo[buf].filetype = "messages"
+end
+
 -- Done
 return M
