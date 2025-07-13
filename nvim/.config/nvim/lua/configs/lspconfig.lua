@@ -4,7 +4,7 @@ local on_attach = function(client, bufnr)
   if _nvchad_on_attach then
     _nvchad_on_attach(client, bufnr)
   end
-  client.server_capabilities.signatureHelpProvider = false
+  -- client.server_capabilities.signatureHelpProvider = false
 end
 -- local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init

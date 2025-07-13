@@ -3,5 +3,15 @@ use = "TD-Sky/sudo"
 rev = "af70636"
 hash = "a94dcbe9266512806c677138e8591ddb"
 
+[[plugin.deps]]
+use = "AnirudhG07/nbpreview"
+rev = "7fb073f"
+hash = "a3e32d62ea3cc703e6bf677bdb18a544"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "b886025"
+hash = "2143a53182dbbe935a1abd1623424aa5"
+
 [flavor]
 deps = []

@@ -59,49 +59,49 @@ return {
     },
     opts = function()
       local custom = require "nvchad.configs.telescope"
-      local telescope = require "telescope"
-      telescope.load_extension "live_grep_args"
-      local lga_actions = require "telescope-live-grep-args.actions"
-      local live_grep_args_shortcuts = require "telescope-live-grep-args.shortcuts"
-      custom.defaults.mappings = {
-        n = { ["q"] = require("telescope.actions").close, ["d"] = require("telescope.actions").delete_buffer },
-      }
-      -- Extend the custom configuration
-      custom.extensions = custom.extensions or {}
-      custom.extensions.live_grep_args = {
-        auto_quoting = true,
-        mappings = {
-          i = {
-            ["<C-k>"] = lga_actions.quote_prompt(),
-            ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
-            ["<C-space>"] = require("telescope.actions").to_fuzzy_refine,
-          },
-        },
-      }
       if not picker.FZF_LUA_KEYS then
+        local telescope = require "telescope"
+        telescope.load_extension "live_grep_args"
+        local lga_actions = require "telescope-live-grep-args.actions"
+        local live_grep_args_shortcuts = require "telescope-live-grep-args.shortcuts"
+        custom.defaults.mappings = {
+          n = { ["q"] = require("telescope.actions").close, ["d"] = require("telescope.actions").delete_buffer },
+        }
+        -- Extend the custom configuration
+        custom.extensions = custom.extensions or {}
+        custom.extensions.live_grep_args = {
+          auto_quoting = true,
+          mappings = {
+            i = {
+              ["<C-k>"] = lga_actions.quote_prompt(),
+              ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+              ["<C-space>"] = require("telescope.actions").to_fuzzy_refine,
+            },
+          },
+        }
         vim.keymap.set(
           "n",
           "<leader>fj",
           live_grep_args_shortcuts.grep_word_under_cursor,
           { noremap = true, silent = true, desc = "Telescope Live Grep Args (current word)" }
         )
-      end
-      require("telescope").setup {
-        extensions = {
-          git = {
-            -- Custom command for commits
-            git_commits = function(opts)
-              print "called"
-              opts = opts or {}
-              opts.formatter = function(entry)
-                local commit_date = entry.date:match "^(%d+-%d+-%d+ %d+:%d+:%d+)"
-                return string.format("%s %s", commit_date, entry.summary)
-              end
-              return require("telescope.builtin").git_commits(opts)
-            end,
+        require("telescope").setup {
+          extensions = {
+            git = {
+              -- Custom command for commits
+              git_commits = function(opts)
+                print "called"
+                opts = opts or {}
+                opts.formatter = function(entry)
+                  local commit_date = entry.date:match "^(%d+-%d+-%d+ %d+:%d+:%d+)"
+                  return string.format("%s %s", commit_date, entry.summary)
+                end
+                return require("telescope.builtin").git_commits(opts)
+              end,
+            },
           },
-        },
-      }
+        }
+      end
       return custom
     end,
   },

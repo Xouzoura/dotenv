@@ -117,6 +117,11 @@ preloaders = [
 	{ mime = "font/*", run = "font" },
 	{ mime = "application/ms-opentype", run = "font" },
 ]
+prepend_previewers = [
+  { name = "*.ipynb", run = "nbpreview" },
+    # { name = "*.ipynb", run = "sh -c 'echo Preview called for $1 >> /tmp/yazi-preview.log'" },
+  # { name = "*", run = "piper -- echo "$1"}
+]
 previewers = [
 	{ name = "*/", run = "folder", sync = true },
 	# Code
@@ -144,9 +149,16 @@ previewers = [
 	{ mime = "application/ms-opentype", run = "font" },
 	# Empty file
 	{ mime = "inode/empty", run = "empty" },
+    # { name = "*.ipynb", run = "nbpreview" },
+
 	# Fallback
 	{ name = "*", run = "file" },
 ]
+
+# [[plugin.prepend_previewers]]
+# name = "*"
+# run  = 'piper -- echo "$1"'
+
 
 [input]
 cursor_blink = false

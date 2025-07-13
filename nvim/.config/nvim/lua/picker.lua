@@ -22,7 +22,7 @@ if M.USE_FZF_LUA then
       function()
         require("fzf-lua-enchanted-files").files()
       end,
-      desc = "(fzf) Find Files",
+      desc = "(fzf) Find Files (enchanted)",
     },
     {
       -- do a live grep search
@@ -38,7 +38,7 @@ if M.USE_FZF_LUA then
       function()
         require("fzf-lua").grep_last()
       end,
-      desc = "(fzf) Live Grep",
+      desc = "(fzf) Last grep",
     },
     {
       -- oldfiles but globally
@@ -46,7 +46,7 @@ if M.USE_FZF_LUA then
       function()
         require("fzf-lua").oldfiles {}
       end,
-      desc = "(fzf) Oldfiles",
+      desc = "(fzf) Oldfiles global",
     },
     {
       -- oldfiles, but cwd only
@@ -54,7 +54,7 @@ if M.USE_FZF_LUA then
       function()
         require("fzf-lua").oldfiles { cwd = vim.loop.cwd() }
       end,
-      desc = "(fzf) Oldfiles",
+      desc = "(fzf) Oldfiles in CWD",
     },
     {
       -- grep with word under cursor
@@ -64,7 +64,7 @@ if M.USE_FZF_LUA then
         local word = vim.fn.expand "<cword>"
         fzf.live_grep { search = word }
       end,
-      desc = "(fzf) Live Grep (word)",
+      desc = "(fzf) Live Grep (word under cursor)",
     },
     {
       "<leader>fb",

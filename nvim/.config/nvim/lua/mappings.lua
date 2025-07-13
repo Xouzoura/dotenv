@@ -120,6 +120,9 @@ map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
 -- Undo with U instead of only C-r
 map("n", "U", "<C-r>", { silent = true })
 -- vim.api.nvim_del_keymap("n", "<C-r>")
+-- NOTE: decide which one
+map("n", "gps", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
+map("n", "H", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
 map(

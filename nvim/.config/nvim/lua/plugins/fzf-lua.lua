@@ -10,7 +10,7 @@ return {
     -- dependencies = { "echasnovski/mini.icons" },
     keys = picker.FZF_LUA_KEYS,
     opts = function()
-      -- local actions = require("fzf-lua").actions
+      local actions = require("fzf-lua").actions
 
       return {
         keymap = {
@@ -80,7 +80,7 @@ return {
           cwd_only = false,
           cwd = nil,
           actions = {
-            -- ["d"] = { fn = actions.buf_del, reload = true },
+            ["ctrl-c"] = { fn = actions.buf_del, reload = true },
           },
         },
       }
