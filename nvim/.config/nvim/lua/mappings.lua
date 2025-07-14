@@ -10,6 +10,7 @@ vim.api.nvim_del_keymap("n", "<leader>x")
 vim.api.nvim_del_keymap("n", "<C-n>")
 vim.api.nvim_del_keymap("n", "<leader>e")
 vim.api.nvim_del_keymap("n", "<C-c>")
+-- vim.api.nvim_del_keymap("n", "<C-x>")
 vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
 
@@ -197,13 +198,9 @@ map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off deb
 -- map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
 --   desc = "(diffview) Close",
 -- })
--- terminal of open buffers
---TODO: keep only one from the below.
--- Tab does also include the c-i.
-map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
-map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
-map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
+map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd str" })
+map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path str" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
 map({ "n", "t" }, "g,", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
 map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })

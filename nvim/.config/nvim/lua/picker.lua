@@ -74,6 +74,13 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Buffers",
     },
     {
+      "<Tab>",
+      function()
+        require("fzf-lua").buffers()
+      end,
+      desc = "(fzf) Buffers",
+    },
+    {
       "<leader>fk",
       function()
         require("fzf-lua").keymaps()
@@ -123,7 +130,7 @@ if M.USE_FZF_LUA then
     },
     -- resume
     {
-      "leader>fs",
+      "<leader>fs",
       function()
         require("fzf-lua").resume()
       end,
@@ -155,6 +162,8 @@ else
   -- map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 
   -- local live_grep_args_shortcuts = require "telescope-live-grep-args.shortcuts"
+
+  local extras = require "extras"
   M.FZF_LUA_KEYS = {
     {
       "<leader>fe",
@@ -184,6 +193,11 @@ else
     },
     { "<leader>gf", "<cmd>Telescope git_bcommits<CR>", desc = "Search git bcommits on current <f>ile" },
     { "<leader>ga", "<cmd>Telescope git_commits<CR>", desc = "Search git commits on <a>ll files" },
+    -- terminal of open buffers
+    --TODO: keep only one from the below.
+    -- Tab does also include the c-i.
+    -- map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
+    { "<Tab>", extras.open_buffers, desc = "[P]Open telescope buffers" },
   }
   M.TELESCOPE_REMOVE = {}
 end
