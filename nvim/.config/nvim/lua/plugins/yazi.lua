@@ -17,6 +17,7 @@ return {
     },
     {
       -- "<S-l>", -- was <c-h>
+      -- might not be too useful.
       "<c-f>",
       "<cmd>Yazi toggle<cr>",
       desc = "Resume the last yazi session",

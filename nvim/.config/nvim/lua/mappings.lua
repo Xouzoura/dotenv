@@ -124,6 +124,7 @@ map("n", "U", "<C-r>", { silent = true })
 -- NOTE: decide which one
 map("n", "gps", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
 map("n", "H", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
+map("n", "<C-e>", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
 map(
@@ -185,19 +186,6 @@ end)
 -- Debug prints (plugins/debug.lua)
 map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
--- git signs (part of default config from nvchad)
--- map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", {
---   desc = "(diffview) Diff with HEAD",
--- })
--- map("n", "<leader>gdd", "<cmd>DiffviewOpen develop..HEAD <CR>", {
---   desc = "(diffview) Diff with dev",
--- })
--- map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
---   desc = "(diffview) Diff file",
--- })
--- map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
---   desc = "(diffview) Close",
--- })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd str" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path str" })
