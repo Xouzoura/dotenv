@@ -28,11 +28,11 @@ return {
 
         ["<C-b>"] = { "scroll_documentation_up", "fallback" },
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-        ["<C-s>"] = { "snippet_forward", "fallback" },
+        -- ["<C-s>"] = { "snippet_forward", "fallback" },
         -- ["<C-d>"] = { "snippet_backward", "fallback" },
 
         -- Mine.
-        -- ["<C-i>"] = { "show_signature", "hide_signature", "fallback" },
+        -- ["<C-,>"] = { "show_signature", "hide_signature", "fallback" },
         -- ["<C-i>"] = { "select_and_accept" },
       },
       snippets = {

@@ -13,6 +13,49 @@ return {
       local actions = require("fzf-lua").actions
 
       return {
+        keymap = {
+          -- Below are the default binds, setting any value in these tables will override
+          -- the defaults, to inherit from the defaults change [1] from `false` to `true`
+          builtin = {
+            -- true,
+            false,
+            ["<M-Esc>"] = "hide", -- hide fzf-lua, `:FzfLua resume` to continue
+            ["<F1>"] = "toggle-help",
+            ["<F2>"] = "toggle-fullscreen",
+            -- Only valid with the 'builtin' previewer
+            ["<F3>"] = "toggle-preview-wrap",
+            ["<F4>"] = "toggle-preview",
+            -- Rotate preview clockwise/counter-clockwise
+            ["<F5>"] = "toggle-preview-ccw",
+            ["<F6>"] = "toggle-preview-cw",
+            -- `ts-ctx` binds require `nvim-treesitter-context`
+            ["<F7>"] = "toggle-preview-ts-ctx",
+            ["<F8>"] = "preview-ts-ctx-dec",
+            ["<F9>"] = "preview-ts-ctx-inc",
+            ["<S-Left>"] = "preview-reset",
+            ["<M-S-down>"] = "preview-down",
+            ["<M-S-up>"] = "preview-up",
+            ["<C-d>"] = "preview-page-down",
+            ["<C-u>"] = "preview-page-up",
+          },
+          fzf = {
+            -- true,
+            false,
+            ["ctrl-z"] = "abort",
+            ["ctrl-f"] = "half-page-down",
+            ["ctrl-b"] = "half-page-up",
+            ["ctrl-a"] = "beginning-of-line",
+            ["ctrl-e"] = "end-of-line",
+            ["alt-a"] = "toggle-all",
+            ["alt-g"] = "first",
+            ["alt-G"] = "last",
+            -- Only valid with fzf previewers (bat/cat/git/etc)
+            ["f3"] = "toggle-preview-wrap",
+            ["f4"] = "toggle-preview",
+            ["ctrl-d"] = "preview-page-down",
+            ["ctrl-u"] = "preview-page-up",
+          },
+        },
         winopts = {
           height = 0.85,
           width = 0.85,
@@ -37,7 +80,7 @@ return {
           cwd_only = false,
           cwd = nil,
           actions = {
-            ["d"] = { fn = actions.buf_del, reload = true },
+            ["ctrl-c"] = { fn = actions.buf_del, reload = true },
           },
         },
       }
@@ -47,6 +90,12 @@ return {
     "otavioschwanck/fzf-lua-enchanted-files",
     dependencies = { "ibhagwan/fzf-lua" },
     enabled = _enabled,
-    opts = {},
+    config = function()
+      -- Modern configuration using vim.g
+      vim.g.fzf_lua_enchanted_files = {
+        max_history_per_cwd = 50,
+      }
+    end,
+    -- opts = {},
   },
 }

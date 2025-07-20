@@ -10,6 +10,7 @@ vim.api.nvim_del_keymap("n", "<leader>x")
 vim.api.nvim_del_keymap("n", "<C-n>")
 vim.api.nvim_del_keymap("n", "<leader>e")
 vim.api.nvim_del_keymap("n", "<C-c>")
+-- vim.api.nvim_del_keymap("n", "<C-x>")
 vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
 
@@ -120,6 +121,10 @@ map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
 -- Undo with U instead of only C-r
 map("n", "U", "<C-r>", { silent = true })
 -- vim.api.nvim_del_keymap("n", "<C-r>")
+-- NOTE: decide which one
+map("n", "gps", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
+map("n", "H", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
+map("n", "<C-e>", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
 map(
@@ -160,12 +165,6 @@ end, { desc = "Copy diagnostics to clipboard" })
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
 map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })
 -- git commands that are useful
-map("n", "<leader>gf", "<cmd>Telescope git_bcommits<CR>", {
-  desc = "Search git bcommits on current <f>ile",
-})
-map("n", "<leader>ga", "<cmd>Telescope git_commits<CR>", {
-  desc = "Search git commits on <a>ll files",
-})
 -- map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
 --   desc = "Git toggle <b>lame by line",
 -- })
@@ -187,46 +186,19 @@ end)
 -- Debug prints (plugins/debug.lua)
 map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
--- git signs (part of default config from nvchad)
--- map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", {
---   desc = "(diffview) Diff with HEAD",
--- })
--- map("n", "<leader>gdd", "<cmd>DiffviewOpen develop..HEAD <CR>", {
---   desc = "(diffview) Diff with dev",
--- })
--- map("n", "<leader>gdf", "<cmd>DiffviewFileHistory % <CR>", {
---   desc = "(diffview) Diff file",
--- })
--- map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", {
---   desc = "(diffview) Close",
--- })
--- terminal of open buffers
---TODO: keep only one from the below.
--- map("n", "<S-h>", extras.open_buffers, { desc = "[P]Open telescope buffers" })
--- Tab does also include the c-i.
-map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
--- telescope
--- map("n", "<leader>fe", "<cmd>Telescope grep_string<cr>", { desc = "[P]Find grep current word" })
--- map("n", "<leader>f.", function()
---   local file_dir = vim.fn.expand "%:p:h" -- Get the current file's directory
---   require("telescope.builtin").live_grep { search_dirs = { file_dir } }
--- end, { desc = "[P]Search grep in current file's directory" })
--- map("n", "<leader>fc", function()
---   local current_file = vim.fn.expand "%:p" -- Get full path of current file
---   require("telescope.builtin").live_grep { search_dirs = { current_file } }
--- end, { desc = "Search grep in current file" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
-map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd" })
-map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path" })
+map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd str" })
+map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path str" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
 map({ "n", "t" }, "g,", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
 map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
 map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
+map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", noremap = true, silent = true })
+map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) buffer", noremap = true, silent = true })
 
-map("n", "<Leader>r,", extras.send_reminder_notification, { noremap = true, silent = true })
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
-map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open .env file" })
+map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject file" })
 -- Garbage collection
 vim.keymap.set(
   "n",

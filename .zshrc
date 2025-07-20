@@ -186,7 +186,7 @@ alias ncspot="flatpak run io.github.hrkfdn.ncspot"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
 # Show characteristics of laptop
-alias mypc="neofetch"
+alias mypc="fastfetch"
 # Tmux
 alias ta="source ~/scripts/tmux-anything.sh"
 # Qbittorrent

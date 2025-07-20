@@ -1,24 +1,38 @@
 -- using both diffview and vgit
+-- Leaning towards more the diffview tbh
+-- Key idea in mapping: b = buffer = file
+-- 0: HEAD, 1: MAIN, 2: DEV
 return {
   {
-    -- git view difference between two branches with <leader>gd and many keys there
-    -- alternative to lazygit
     "sindrets/diffview.nvim",
-    lazy = false,
-    enabled = false,
-    -- doesnt work at the moment
-    -- TODO: add the scroll for god's sake with c-u and c-d
-    -- opts = {
-    --   keymaps = {
-    --     file_panel = {
-    --       { "n", "<c-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
-    --       { "n", "<c-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
-    --     },
-    --   },
-    -- },
+    -- lazy = true,
+    config = function()
+      local actions = require "diffview.actions"
+      require("diffview").setup {
+        keymaps = {
+          file_panel = {
+            -- TODO: add the scroll for god's sake with c-u and c-d
+
+            { "n", "<C-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
+            { "n", "<C-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
+          },
+        },
+      }
+
+      local map = vim.keymap.set
+
+      -- <Keymaps>
+      -- Project
+      map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", { desc = "(diffview) Diff with HEAD" })
+      map("n", "<leader>gd2", "<cmd>DiffviewOpen develop..HEAD<CR>", { desc = "(diffview) Diff with dev" })
+      map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", { desc = "(diffview) Close" })
+      -- Buffer
+      map("n", "<leader>gb2", "<cmd>DiffviewOpen develop -- %<CR>", { desc = "(diffview) Diff file with dev" })
+      map("n", "<leader>gb0", "<cmd>DiffviewOpen HEAD -- %<CR>", { desc = "(diffview) Diff file with dev" })
+      map("n", "<leader>gbf", "<cmd>DiffviewFileHistory %<CR>", { desc = "(diffview) Diff file" })
+    end,
   },
   {
-    -- decide whether makes sense.
     "tanvirtin/vgit.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
     -- Lazy loading on 'VimEnter' event is necessary.
@@ -27,42 +41,19 @@ return {
     config = function()
       require("vgit").setup {
         keymaps = {
-          -- ["n <leader>gr"] = function()
-          --   require("vgit").buffer_hunk_reset()
-          -- end,
-          -- ["n <leader>gp"] = function()
-          --   require("vgit").buffer_hunk_preview()
-          -- end,
-          -- ["n <leader>gbt"] = function()
-          --   require("vgit").toggle_live_blame()
-          -- end,
-          -- ["n <leader>gbd"] = function()
-          --   require("vgit").buffer_diff_preview()
-          -- end,
-          -- ["n <leader>gbh"] = function()
-          --   require("vgit").buffer_history_preview()
-          -- end,
-          -- ["n <leader>gu"] = function()
-          --   require("vgit").buffer_reset()
-          -- end,
-          -- ["n <leader>gd"] = function()
-          --   require("vgit").project_diff_preview()
-          -- end,
-          -- ["n <leader>gx"] = function()
-          --   require("vgit").toggle_diff_preference()
-          -- end,
           ["n <"] = "hunk_up",
           ["n >"] = "hunk_down",
-
+          -- Project
+          ["n <leader>gdp"] = "project_diff_preview",
+          ["n <leader>gl"] = "project_logs_preview",
+          -- ["n <leader>gx"] = "toggle_diff_preference",
+          -- Buffer
           ["n <leader>gbr"] = "buffer_hunk_reset",
           ["n <leader>gbs"] = "buffer_hunk_preview",
           ["n <leader>gbp"] = "buffer_blame_preview",
           ["n <leader>gbd"] = "buffer_diff_preview",
           ["n <leader>gbh"] = "buffer_history_preview",
           ["n <leader>gbu"] = "buffer_reset",
-          ["n <leader>gd"] = "project_diff_preview",
-          ["n <leader>gl"] = "project_logs_preview",
-          -- ["n <leader>gx"] = "toggle_diff_preference",
           ["n <leader>gbt"] = "toggle_live_blame",
         },
         settings = { live_blame = { enabled = false } },

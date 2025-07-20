@@ -17,13 +17,15 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Find Files",
     },
     {
+      -- use the plugin that has a history of opened files
       "<leader><leader>",
       function()
         require("fzf-lua-enchanted-files").files()
       end,
-      desc = "(fzf) Find Files",
+      desc = "(fzf) Find Files (enchanted)",
     },
     {
+      -- do a live grep search
       "<leader>fw",
       function()
         require("fzf-lua").live_grep()
@@ -31,11 +33,12 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Live Grep",
     },
     {
+      -- rerun last grep search
       "<leader>fl",
       function()
         require("fzf-lua").grep_last()
       end,
-      desc = "(fzf) Live Grep",
+      desc = "(fzf) Last grep",
     },
     {
       -- oldfiles but globally
@@ -43,26 +46,59 @@ if M.USE_FZF_LUA then
       function()
         require("fzf-lua").oldfiles {}
       end,
-      desc = "(fzf) Oldfiles",
+      desc = "(fzf) Oldfiles global",
     },
     {
+      -- oldfiles, but cwd only
       "<leader>fo",
       function()
         require("fzf-lua").oldfiles { cwd = vim.loop.cwd() }
       end,
-      desc = "(fzf) Oldfiles",
+      desc = "(fzf) Oldfiles in CWD",
     },
     {
+      -- grep with word under cursor
       "<leader>fe",
       function()
         local fzf = require "fzf-lua"
-        local word = vim.fn.expand "<cword>" -- word under cursor
+        local word = vim.fn.expand "<cword>"
         fzf.live_grep { search = word }
       end,
-      desc = "(fzf) Live Grep (word)",
+      desc = "(fzf) Live Grep (word under cursor)",
+    },
+    {
+      -- grep with word under cursor
+      "<leader>fE",
+      function()
+        local fzf = require "fzf-lua"
+        local word = vim.fn.expand "<cWORD>"
+        fzf.live_grep { search = word }
+      end,
+      desc = "(fzf) Live Grep (WORD under cursor)",
     },
     {
       "<leader>fb",
+      function()
+        require("fzf-lua").buffers()
+      end,
+      desc = "(fzf) Buffers",
+    },
+    {
+      "<leader>fd",
+      function()
+        require("fzf-lua").diagnostics_document()
+      end,
+      desc = "(fzf) Diagnostics (buffer)",
+    },
+    {
+      "<leader>fD",
+      function()
+        require("fzf-lua").diagnostics_workspace()
+      end,
+      desc = "(fzf) Diagnostics (workspace)",
+    },
+    {
+      "<Tab>",
       function()
         require("fzf-lua").buffers()
       end,
@@ -99,10 +135,26 @@ if M.USE_FZF_LUA then
         local word = vim.fn.expand "<cword>" -- word under cursor
         fzf.grep_curbuf { search = word }
       end,
-      desc = "cfzfc Search WORD in current file",
+      desc = "(fzf) Search WORD in current file",
+    },
+    -- Git stuff
+    {
+      "<leader>ga",
+      function()
+        require("fzf-lua").git_commits()
+      end,
+      desc = "(fzf) Git diff for whole project",
     },
     {
-      "leader>fs",
+      "<leader>gf",
+      function()
+        require("fzf-lua").git_bcommits()
+      end,
+      desc = "(fzf) Git diff for current file",
+    },
+    -- resume
+    {
+      "<leader>fs",
       function()
         require("fzf-lua").resume()
       end,
@@ -134,6 +186,8 @@ else
   -- map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 
   -- local live_grep_args_shortcuts = require "telescope-live-grep-args.shortcuts"
+
+  local extras = require "extras"
   M.FZF_LUA_KEYS = {
     {
       "<leader>fe",
@@ -161,6 +215,13 @@ else
       ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
       desc = "Telescope Live Grep Args",
     },
+    { "<leader>gf", "<cmd>Telescope git_bcommits<CR>", desc = "Search git bcommits on current <f>ile" },
+    { "<leader>ga", "<cmd>Telescope git_commits<CR>", desc = "Search git commits on <a>ll files" },
+    -- terminal of open buffers
+    --TODO: keep only one from the below.
+    -- Tab does also include the c-i.
+    -- map("n", "<Tab>", extras.open_buffers, { silent = true, noremap = true, desc = "[P]Open telescope buffers" })
+    { "<Tab>", extras.open_buffers, desc = "[P]Open telescope buffers" },
   }
   M.TELESCOPE_REMOVE = {}
 end

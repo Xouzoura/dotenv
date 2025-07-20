@@ -1,17 +1,14 @@
 return {
-  -- kubectl bindings, to be able to use kubectl from nvim. Still under work.
-  "ramilito/kubectl.nvim",
-  -- lazy = false,
-  keys = {
-    {
-      "<leader>kb",
-      function()
-        require("kubectl").open()
-      end,
-      desc = "Kubectl",
-    },
+  {
+    "ramilito/kubectl.nvim",
+    -- lazy = false,
+    version = "2.*",
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    dependencies = "saghen/blink.download",
+    config = function()
+      require("kubectl").setup()
+      vim.keymap.set("n", "<leader>k8", '<cmd>lua require("kubectl").toggle()<cr>', { noremap = true, silent = true })
+    end,
   },
-  config = function()
-    require("kubectl").setup()
-  end,
 }
