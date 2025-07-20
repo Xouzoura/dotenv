@@ -67,11 +67,35 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Live Grep (word under cursor)",
     },
     {
+      -- grep with word under cursor
+      "<leader>fE",
+      function()
+        local fzf = require "fzf-lua"
+        local word = vim.fn.expand "<cWORD>"
+        fzf.live_grep { search = word }
+      end,
+      desc = "(fzf) Live Grep (WORD under cursor)",
+    },
+    {
       "<leader>fb",
       function()
         require("fzf-lua").buffers()
       end,
       desc = "(fzf) Buffers",
+    },
+    {
+      "<leader>fd",
+      function()
+        require("fzf-lua").diagnostics_document()
+      end,
+      desc = "(fzf) Diagnostics (buffer)",
+    },
+    {
+      "<leader>fD",
+      function()
+        require("fzf-lua").diagnostics_workspace()
+      end,
+      desc = "(fzf) Diagnostics (workspace)",
     },
     {
       "<Tab>",
