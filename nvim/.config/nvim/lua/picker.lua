@@ -12,7 +12,8 @@ if M.USE_FZF_LUA then
     {
       "<leader>ff",
       function()
-        require("fzf-lua").files()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.files()
       end,
       desc = "(fzf) Find Files",
     },
@@ -28,7 +29,8 @@ if M.USE_FZF_LUA then
       -- do a live grep search
       "<leader>fw",
       function()
-        require("fzf-lua").live_grep()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.live_grep()
       end,
       desc = "(fzf) Live Grep",
     },
@@ -36,7 +38,8 @@ if M.USE_FZF_LUA then
       -- rerun last grep search
       "<leader>fl",
       function()
-        require("fzf-lua").grep_last()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.grep_last()
       end,
       desc = "(fzf) Last grep",
     },
@@ -44,7 +47,8 @@ if M.USE_FZF_LUA then
       -- oldfiles but globally
       "<leader>fO",
       function()
-        require("fzf-lua").oldfiles {}
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.oldfiles {}
       end,
       desc = "(fzf) Oldfiles global",
     },
@@ -52,17 +56,29 @@ if M.USE_FZF_LUA then
       -- oldfiles, but cwd only
       "<leader>fo",
       function()
-        require("fzf-lua").oldfiles { cwd = vim.loop.cwd() }
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.oldfiles { cwd = vim.loop.cwd() }
       end,
       desc = "(fzf) Oldfiles in CWD",
+    },
+    {
+
+      "<leader>fp",
+      function()
+        local fzf_lua = require "fzf-lua"
+        -- local word = vim.fn.expand "<cword>"
+        local clipboard = vim.fn.getreg "+"
+        fzf_lua.live_grep { search = clipboard }
+      end,
+      desc = "(fzf) Live Grep (word in clipboard)",
     },
     {
       -- grep with word under cursor
       "<leader>fe",
       function()
-        local fzf = require "fzf-lua"
+        local fzf_lua = require "fzf-lua"
         local word = vim.fn.expand "<cword>"
-        fzf.live_grep { search = word }
+        fzf_lua.live_grep { search = word }
       end,
       desc = "(fzf) Live Grep (word under cursor)",
     },
@@ -70,70 +86,83 @@ if M.USE_FZF_LUA then
       -- grep with word under cursor
       "<leader>fE",
       function()
-        local fzf = require "fzf-lua"
+        local fzf_lua = require "fzf-lua"
         local word = vim.fn.expand "<cWORD>"
-        fzf.live_grep { search = word }
+        fzf_lua.live_grep { search = word }
       end,
       desc = "(fzf) Live Grep (WORD under cursor)",
     },
     {
+      "<leader>fLi",
+      function()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.lsp_outgoing_calls {}
+      end,
+      desc = "(fzf) LSP [i]ncoming [c]alls",
+    },
+    {
       "<leader>fb",
       function()
-        require("fzf-lua").buffers()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.buffers()
       end,
       desc = "(fzf) Buffers",
     },
     {
       "<leader>fd",
       function()
-        require("fzf-lua").diagnostics_document()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.diagnostics_document()
       end,
       desc = "(fzf) Diagnostics (buffer)",
     },
     {
       "<leader>fD",
       function()
-        require("fzf-lua").diagnostics_workspace()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.diagnostics_workspace()
       end,
       desc = "(fzf) Diagnostics (workspace)",
     },
     {
       "<Tab>",
       function()
-        require("fzf-lua").buffers()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.buffers()
       end,
       desc = "(fzf) Buffers",
     },
     {
       "<leader>fk",
       function()
-        require("fzf-lua").keymaps()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.keymaps()
       end,
       desc = "(fzf) Keymaps",
     },
     {
       "<leader>f.",
       function()
-        local fzf = require "fzf-lua"
+        local fzf_lua = require "fzf-lua"
         local file_dir = vim.fn.expand "%:p:h"
-        print(file_dir)
-        fzf.live_grep { cwd = file_dir }
+        fzf_lua.live_grep { cwd = file_dir }
       end,
       desc = "(fzf) Search grep in current file's directory",
     },
     {
       "<leader>fc",
       function()
-        require("fzf-lua").grep_curbuf()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.grep_curbuf()
       end,
       desc = "(fzf) Search in current file only",
     },
     {
       "<leader>fE",
       function()
-        local fzf = require "fzf-lua"
+        local fzf_lua = require "fzf-lua"
         local word = vim.fn.expand "<cword>" -- word under cursor
-        fzf.grep_curbuf { search = word }
+        fzf_lua.grep_curbuf { search = word }
       end,
       desc = "(fzf) Search WORD in current file",
     },
@@ -141,14 +170,16 @@ if M.USE_FZF_LUA then
     {
       "<leader>ga",
       function()
-        require("fzf-lua").git_commits()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.git_commits()
       end,
       desc = "(fzf) Git diff for whole project",
     },
     {
       "<leader>gf",
       function()
-        require("fzf-lua").git_bcommits()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.git_bcommits()
       end,
       desc = "(fzf) Git diff for current file",
     },
@@ -156,7 +187,8 @@ if M.USE_FZF_LUA then
     {
       "<leader>fs",
       function()
-        require("fzf-lua").resume()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.resume()
       end,
     },
   }

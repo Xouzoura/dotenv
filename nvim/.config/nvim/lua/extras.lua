@@ -37,17 +37,21 @@ function M.reload_env()
   local env_file = vim.fn.getcwd() .. "/.env"
   if vim.fn.filereadable(env_file) == 1 then
     local file = io.open(env_file, "r")
-    for line in file:lines() do
-      -- Skip comments and empty lines
-      if not line:match "^%s*$" and not line:match "^#" then
-        local key, value = line:match "([^=]+)=(.+)"
-        if key and value then
-          -- Set the environment variable in Neovim
-          vim.fn.setenv(key, value)
+    if file then
+      for line in file:lines() do
+        -- Skip comments and empty lines
+        if not line:match "^%s*$" and not line:match "^#" then
+          local key, value = line:match "([^=]+)=(.+)"
+          if key and value then
+            -- Set the environment variable in Neovim
+            vim.fn.setenv(key, value)
+          end
         end
       end
+      file:close()
+    else
+      print "No .env file found"
     end
-    file:close()
     print "Reloaded .env file"
   else
     print "No .env file found"

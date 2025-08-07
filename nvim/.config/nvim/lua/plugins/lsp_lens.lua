@@ -32,7 +32,8 @@ return {
         SymbolKind.Object, -- added now
       },
       -- Symbol Kinds that may have target symbol kinds as children
-      wrapper_symbol_kinds = { SymbolKind.Struct, SymbolKind.Class, SymbolKind.Object },
+      -- wrapper_symbol_kinds = { SymbolKind.Struct, SymbolKind.Class, SymbolKind.Object },
+      wrapper_symbol_kinds = { SymbolKind.Struct },
       -- added class, object, was just struct.
     }
   end,

@@ -199,6 +199,7 @@ map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) b
 -- General
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
 map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject file" })
+
 -- Garbage collection
 vim.keymap.set(
   "n",

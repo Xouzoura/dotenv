@@ -1,7 +1,7 @@
 ---@diagnostic disable: undefined-global
 require "nvchad.options"
 
-local extras = require "extras"
+-- local extras = require "extras"
 -- Settings
 -- global
 vim.o.mouse = "a"
@@ -59,6 +59,7 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 })
 
 -- Highlight the active window
+-- Define the highlight groups for active window/inactive window
 vim.api.nvim_exec(
   [[
   autocmd WinEnter,CursorMoved * setlocal winhighlight=Normal:ActiveWindow
@@ -67,9 +68,19 @@ vim.api.nvim_exec(
   false
 )
 
--- Define the highlight groups for active window/inactive window
 vim.cmd "highlight ActiveWindow guibg=None guifg=None"
 vim.cmd "highlight InactiveWindow guibg=#2c2f34"
+
+-- function SetWindowHighlight(active)
+--   if vim.fn.mode() ~= "n" then
+--     return
+--   end
+--   if active then
+--     vim.cmd "setlocal winhighlight=Normal:ActiveWindow"
+--   else
+--     vim.cmd "setlocal winhighlight=Normal:InactiveWindow"
+--   end
+-- end
 
 -- highlight on yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
@@ -128,24 +139,3 @@ vim.cmd [[
   augroup END
 ]]
 set_highlights()
-
--- Create a command in Neovim
--- vim.api.nvim_create_user_command("Reminder", extras.prompt_notification, {})
---
--- vim.keymap.set("n", "<Leader>r,", extras.prompt_notification, { noremap = true, silent = true })
--- Decide if I want it to keep max buffers
--- local extras = require "extras"
--- vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter" }, {
---   callback = function()
---     extras.auto_manage_buffers(7)
---   end,
--- })
---
--- USEFUL FOR FINDING WHICH LIBRARY IS CAUSING A PROBLEM
--- local old_notify = vim.notify
--- vim.notify = function(msg, ...)
---   if msg:match "position_encoding" then
---     print(debug.traceback())
---   end
---   old_notify(msg, ...)
--- end
