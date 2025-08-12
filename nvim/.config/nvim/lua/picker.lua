@@ -100,16 +100,16 @@ if M.USE_FZF_LUA then
       end,
       desc = "(fzf) LSP [i]ncoming [c]alls",
     },
+    -- {
+    --   "<leader>fB",
+    --   function()
+    --     local fzf_lua = require "fzf-lua"
+    --     fzf_lua.buffers()
+    --   end,
+    --   desc = "(fzf) Buffers",
+    -- },
     {
-      "<leader>fb",
-      function()
-        local fzf_lua = require "fzf-lua"
-        fzf_lua.buffers()
-      end,
-      desc = "(fzf) Buffers",
-    },
-    {
-      "<leader>fd",
+      "<leader>fbd",
       function()
         local fzf_lua = require "fzf-lua"
         fzf_lua.diagnostics_document()
@@ -117,7 +117,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Diagnostics (buffer)",
     },
     {
-      "<leader>fD",
+      "<leader>fd",
       function()
         local fzf_lua = require "fzf-lua"
         fzf_lua.diagnostics_workspace()
@@ -150,7 +150,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Search grep in current file's directory",
     },
     {
-      "<leader>fc",
+      "<leader>fbw",
       function()
         local fzf_lua = require "fzf-lua"
         fzf_lua.grep_curbuf()
@@ -158,7 +158,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Search in current file only",
     },
     {
-      "<leader>fE",
+      "<leader>fbe",
       function()
         local fzf_lua = require "fzf-lua"
         local word = vim.fn.expand "<cword>" -- word under cursor
@@ -185,7 +185,7 @@ if M.USE_FZF_LUA then
     },
     -- resume
     {
-      "<leader>fs",
+      "<leader>f;",
       function()
         local fzf_lua = require "fzf-lua"
         fzf_lua.resume()

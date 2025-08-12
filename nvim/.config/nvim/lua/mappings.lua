@@ -196,20 +196,51 @@ map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values c
 map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", noremap = true, silent = true })
 map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) buffer", noremap = true, silent = true })
 
--- General
+-- General (or python-based)
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
 map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject file" })
 
 -- Garbage collection
-vim.keymap.set(
+map(
   "n",
   "<leader>Gs",
   '<cmd>lua require("garbage-day.utils").start_lsp()<CR>',
-  { noremap = true, silent = true, desc = "Start LSP" }
+  { noremap = true, silent = true, desc = "(Garbage) Start LSP" }
 )
-vim.keymap.set(
+map(
   "n",
   "<leader>Gx",
   '<cmd>lua require("garbage-day.utils").stop_lsp()<CR>',
-  { noremap = true, silent = true, desc = "Stop LSP" }
+  { noremap = true, silent = true, desc = "(Garbage) Stop LSP" }
 )
+
+-- quickfix
+-- Toggle quickfix
+map("n", "<leader>eo", function()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].buftype == "quickfix" then
+      vim.cmd.cclose()
+      return
+    end
+  end
+  vim.cmd.copen()
+end, { desc = "(Quickfix) Toggle" })
+
+-- Remove current entry from quickfix
+map("n", "<leader>ed", function()
+  if vim.bo.buftype ~= "quickfix" then
+    print "Not in quickfix window"
+    return
+  end
+  local idx = vim.fn.getqflist({ idx = 0 }).idx - 1
+  local list = vim.fn.getqflist()
+  table.remove(list, idx + 1)
+  vim.fn.setqflist(list)
+  vim.cmd "copen"
+end, { desc = "(Quickfix) Remove current entry" })
+
+-- Clear all quickfix entries
+map("n", "<leader>e0", function()
+  vim.fn.setqflist {}
+  print "Quickfix list cleared"
+end, { desc = "(Quickfix) Clear list" })
