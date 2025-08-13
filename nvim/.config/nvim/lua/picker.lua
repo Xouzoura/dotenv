@@ -35,6 +35,24 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Live Grep",
     },
     {
+      -- do a quickfix
+      "<leader>fq",
+      function()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.quickfix()
+      end,
+      desc = "(fzf) Quickfix",
+    },
+    {
+      -- do a quickfix stack
+      "<leader>fQ",
+      function()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.quickfix_stack()
+      end,
+      desc = "(fzf) Quickfix Stack",
+    },
+    {
       -- rerun last grep search
       "<leader>fl",
       function()
