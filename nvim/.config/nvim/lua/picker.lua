@@ -224,7 +224,7 @@ if M.USE_FZF_LUA then
     "<leader>cm",
   }
 else
-  -- NOTE: These are loaded by nvchad
+  -- NOTE: These are loaded by nvchad. I don't need them if fzf-lua is used, but it's good to know which are used by default when loading nvchad.
   -- map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
   -- map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
   -- map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })

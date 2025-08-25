@@ -54,6 +54,9 @@ map("v", "K", [[:m '<-2<CR>gv=gv]])
 -- Better block tabbing
 map("v", "<", "<gv", { silent = true })
 map("v", ">", ">gv", { silent = true })
+-- I just hate the % symbol and M is useless atm
+map("n", "M", "%", { silent = true })
+-- map("v", "M", "%", { silent = true })
 
 -- <--- ## NORMAL mode stuff ###--->
 -- help is <F3>

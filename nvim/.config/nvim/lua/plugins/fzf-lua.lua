@@ -86,6 +86,13 @@ return {
         },
       }
     end,
+    -- This is to be able to select the ui_select. Will see if it works
+    -- by default it is not enabled, helps when searching for it
+    config = function(_, opts)
+      local fzf_lua = require "fzf-lua"
+      fzf_lua.setup(opts)
+      fzf_lua.register_ui_select()
+    end,
   },
   {
     "otavioschwanck/fzf-lua-enchanted-files",

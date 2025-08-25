@@ -17,7 +17,7 @@ local options = {
         "-",
         "--line-length", -- This is because of stupid local forces.
         -- "120", -- This is because of stupid local forces. WILL REMOVE WHEN OUT.
-        "88", --
+        "88", -- this should be the pep8 standard
       },
     },
   },
