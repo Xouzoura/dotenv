@@ -17,6 +17,12 @@ ls.add_snippets("all", {
     end)
   ),
   s(
+    "qs",
+    f(function()
+      return "- [ ] "
+    end)
+  ),
+  s(
     "today",
     f(function()
       return os.date "%Y-%m-%d"

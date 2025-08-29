@@ -22,6 +22,7 @@
   "highlight-undo.nvim": { "branch": "main", "commit": "ee32e12693d70e66f954d09a504a7371d110fc27" },
   "hlargs.nvim": { "branch": "main", "commit": "ce8d705866dae44513ff48613d5e37e4da524d70" },
   "hurl.nvim": { "branch": "main", "commit": "5329c31e53806ee39cfe19aa829a5cfb77adba56" },
+  "import.nvim": { "branch": "main", "commit": "ee8187c36a2270e215961f0aa650e7f3c4b85b62" },
   "indent-blankline.nvim": { "branch": "master", "commit": "005b56001b2cb30bfa61b7986bc50657816ba4ba" },
   "kubectl.nvim": { "branch": "main", "commit": "efce9ba09a76666e60cdd1d10b24aee664fedb7b" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
