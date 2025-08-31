@@ -248,6 +248,7 @@ install_yazi() {
         run_cmd "git clone https://github.com/sxyazi/yazi.git"
         run_cmd "cd yazi && cargo build --release --locked"
         run_cmd "sudo mv target/release/yazi /usr/local/bin/yazi"
+        # run_cmd "mv target/release/yazi target/release/ya /usr/local/bin/"
         run_cmd "cd .. && rm -rf yazi"
         log_info "Yazi installed successfully"
     else
