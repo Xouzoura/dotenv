@@ -259,8 +259,10 @@ source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-PATH="$HOME/.local/bin:$PATH" 
-PATH="$HOME/go/bin:$PATH" 
+# Do i prefer it like this at the end?
+# PATH="$HOME/.local/bin:$PATH"  
+PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/go/bin" 
 
 # export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
