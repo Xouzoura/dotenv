@@ -8,7 +8,6 @@ local M = {
       order = { "mode", "path", "file", "diagnostics", "%=", "lsp_load", "cursor" },
       -- order = { "mode", "path", "file", "diagnostics", "%=", "lsp_msg", "lsp_load", "cursor" },
       modules = {
-
         lsp_load = function()
           local loaded = #vim.lsp.get_clients { bufnr = 0 } > 0
           if not loaded then
@@ -47,6 +46,7 @@ local M = {
           end
           return string.format("%%#StatusLinePath#%s  %s  %%#StatusLine#", icon, formatted_path)
         end,
+        -- venv2 = require("venv-selector.statusline.nvchad").render, -- sets the plugin render function, but can be overridden, see below.,
       },
     },
     tabufline = {

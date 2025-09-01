@@ -8,7 +8,7 @@ return {
   },
   -- lazy = false,
   -- ft = "python", -- somehow when enabled causes issues when opening files with fzf-lua.
-  opts = {},
+  opts = { options = { picker = "fzf-lua" } },
   keys = {
     { "<leader>vs", "<cmd>VenvSelect<cr>" },
   },
