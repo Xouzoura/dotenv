@@ -158,7 +158,7 @@ install_rust() {
 # === Install extra cli that might be useful ===
 install_cli_extra() {
 
-    if ! command_exist rustup; then 
+    if ! command_exists rustup; then 
         # Eza for colorful terminal outputs in .zshrc
         if ! command_exists eza || [ "$FORCE_REINSTALL" = true ]; then
             log_info "Installing eza..."
