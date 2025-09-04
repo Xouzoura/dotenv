@@ -15,6 +15,7 @@
 # VERSION-SELECTION OR INSTALLATION METHOD SELECTION: 
 NVIM_INSTALLATION=${NVIM_INSTALLATION:-AppImage} # Options: AppImage, build
 NVIM_STABLE_VERSION=0.11.0 # Not needed if AppImage is picked
+NVM_VERSION=0.40.3
 HURL_VERSION=6.1.1
 
 # Directories
@@ -192,6 +193,24 @@ install_cli_extra() {
         run_cmd "sudo install lazygit -D -t /usr/local/bin/"
         run_cmd "rm lazygit.tar.gz lazygit"
     fi
+
+    if ! command_exists lazydocker || [ "$FORCE_REINSTALL" = true ]; then
+        log_info "Installing lazydocker..."
+        run_cmd "curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash"
+    fi
+
+    # Add kubectl 
+    if ! command_exists kubectl || [ "$FORCE_REINSTALL" = true ]; then
+        log_info "Installing kubectl..."
+        # If the folder `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+        run_cmd "sudo mkdir -p -m 755 /etc/apt/keyrings"
+        run_cmd "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+        run_cmd "sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring"
+        run_cmd "echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list"
+        run_cmd "sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work corr"
+        run_cmd "sudo apt-get update"
+        run_cmd "sudo apt-get install -y kubectl"
+    fi
 }
 
 # === Install Neovim ===
@@ -339,6 +358,7 @@ setup_fonts() {
 
 # === Install NVM, Node, Angular CLI ===
 install_ng_and_npm() {
+    run_cmd "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{$NVM_VERSION}/install.sh | bash"
     run_cmd "nvm install node"
     run_cmd "nvm use node"
     run_cmd "sudo npm install -g @angular/cli"
