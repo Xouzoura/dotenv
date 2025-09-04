@@ -174,6 +174,9 @@ alias ytd=". ~/scripts/download_video.sh"
 # alias mixxx="pasuspender mixxx"
 alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
+# work C
+alias winc="cd /mnt/c/Users/DIO3713/"
+
 # Neovim aliases. This can change with a script
 alias vi="nvim"
 # alias vo="nvim -c 'Telescope oldfiles'"

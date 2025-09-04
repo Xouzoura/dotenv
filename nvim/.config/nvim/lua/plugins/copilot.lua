@@ -93,6 +93,7 @@
 -- Option3: Supermaven
 return {
   "supermaven-inc/supermaven-nvim",
+  enabled = false,
   lazy = false,
   config = function()
     require("supermaven-nvim").setup {
