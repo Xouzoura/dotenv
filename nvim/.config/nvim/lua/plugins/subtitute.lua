@@ -1,5 +1,6 @@
 return {
   -- NOTE: check if I actually use it.
+  -- Simplifies copy-pasting
   "gbprod/substitute.nvim",
   opts = {
     -- your configuration comes here

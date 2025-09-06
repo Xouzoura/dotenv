@@ -1,4 +1,5 @@
 return {
+  -- Able to see the function class even when scrolling down
   "nvim-treesitter/nvim-treesitter-context",
   dependencies = { "nvim-treesitter/nvim-treesitter" },
   -- enabled = false,

@@ -24,6 +24,7 @@ return {
         -- },
       })
       vim.keymap.set("n", "<leader>a", "<cmd> SymbolsToggle<CR>")
+      vim.keymap.set("n", "<leader>A", "<cmd> SymbolsToggle!<CR>")
       -- vim.keymap.set("n", ",S", "<cmd> SymbolsClose<CR>")
     end,
   },

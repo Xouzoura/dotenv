@@ -117,7 +117,7 @@ map("n", "g\\", "<C-w>v", { noremap = false })
 -- Create a new window vertically and return to original
 map("n", "g|", "<C-w>v<C-w>h", { noremap = false })
 -- Select the whole buffer
-map("n", "<leader>A", "ggVG", { desc = "Select all buffer", noremap = true, silent = true })
+-- map("n", "<leader>A", "ggVG", { desc = "Select all buffer", noremap = true, silent = true })
 -- Resize windows vertically
 map("n", "<C-W><", ":vertical resize -10<CR>", { noremap = true })
 map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
