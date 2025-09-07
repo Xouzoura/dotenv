@@ -1,4 +1,5 @@
 return {
+  -- show one diagnostic message based on the line that you are, and also easily viewed independent of size.
   "rachartier/tiny-inline-diagnostic.nvim",
   event = "VeryLazy", -- Or `LspAttach`
   priority = 1000, -- needs to be loaded in first

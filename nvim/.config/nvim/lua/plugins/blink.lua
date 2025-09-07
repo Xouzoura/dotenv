@@ -21,19 +21,23 @@ return {
     ---@type blink.cmp.Config
     opts = {
       keymap = {
-        preset = "default",
+        -- preset = "default",
+        preset = "none",
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
         ["<C-n>"] = { "select_next", "fallback_to_mappings" },
 
+        ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
         ["<C-b>"] = { "scroll_documentation_up", "fallback" },
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
         -- ["<C-s>"] = { "snippet_forward", "fallback" },
         -- ["<C-d>"] = { "snippet_backward", "fallback" },
 
         -- Mine.
-        -- ["<C-,>"] = { "show_signature", "hide_signature", "fallback" },
-        -- ["<C-i>"] = { "select_and_accept" },
+        ["<C-x>"] = { "show_signature", "hide_signature", "fallback" },
+        ["<C-e>"] = { "select_and_accept" },
+        ["<C-y>"] = { "select_and_accept" },
       },
       snippets = {
         preset = "luasnip",
