@@ -14,7 +14,7 @@ return {
     -- using _AZURE_OPENAI_ENDPOINT as a system environment variable
     if os.getenv "_AZURE_OPENAI_ENDPOINT" == nil then
       azure_endpoint =
-        -- does not work
+        -- does not work, just doesn't throw errors
         "https://<...>/openai/deployments/{{model}}/chat/completions?api-version=2024-12-01-preview"
     else
       -- Assuming _AZURE_OPENAI_ENDPOINT is as https://___.openai.azure.com
@@ -36,34 +36,59 @@ return {
           endpoint = azure_endpoint,
           secret = os.getenv "_AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
         },
-        googleai = {
-          endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
-          secret = os.getenv "GEMINI_API_KEY",
-        },
+        -- googleai = {
+        --   endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
+        --   secret = os.getenv "GEMINI_API_KEY",
+        -- },
       },
 
       agents = {
-        -- {
-        --   name = "ChatGPT4o",
-        --   disable = true, -- because i don't want it from gp.nvim default config.
-        --   chat = true,
-        --   command = false,
-        --   -- string with model name or table with model name and parameters
-        --   model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
-        --   -- system prompt (use this to specify the persona/role of the AI)
-        --   system_prompt = SYSTEM_PROMPT,
-        -- },
-        -- {
-        --   provider = "openai",
-        --   name = "ChatGPT4o-mini",
-        --   disable = true, -- because i don't want it from gp.nvim default config.
-        --   chat = true,
-        --   command = false,
-        --   -- string with model name or table with model name and parameters
-        --   model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
-        --   -- system prompt (use this to specify the persona/role of the AI)
-        --   system_prompt = SYSTEM_PROMPT,
-        -- },
+        --- DISABLE THE DEFAULT ONES BECAUSE THEY ARE STILL PICKED UP.
+        {
+          provider = "azure",
+          name = "CodeGPT4o-mini",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "ChatGPT4o",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "ChatGPT4o-mini",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "ChatGPT-o3-mini",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "ChatGemini",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "CodeGPT4o",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "CodeGemini",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "CodeGPT-o3-mini",
+          disable = true,
+        },
+        {
+          provider = "azure",
+          name = "CodeGPT-o3-mini",
+          disable = true,
+        },
         {
           -- Works only with the bypass that is the dispatcher.prepare_payload
           -- doing.
@@ -73,16 +98,7 @@ return {
           command = false,
           model = { model = "o3-mini", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
-          -- disable = true,
-        },
-        {
-          provider = "azure",
-          name = "o1-mini",
-          chat = true,
-          command = false,
-          model = { model = "o1-mini", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-          disable = true, -- DOES NOT WORK
+          disable = true,
         },
         -- {
         --   provider = "googleai",
