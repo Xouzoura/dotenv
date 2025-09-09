@@ -203,7 +203,7 @@ alias ldo='lazydocker'
 # alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
 # Notes 
 alias notes="vi ~/vaults/notes"
-alias notesq="vi ~/vaults/notes/_work.md"
+alias notesw="vi ~/vaults/notes/_work.md"
 alias notesd="vi ~/vaults/notes/_daily.md"
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'

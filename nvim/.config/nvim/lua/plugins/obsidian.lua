@@ -87,14 +87,14 @@ return {
       desc = "(Obsidian) Open daily notes (global)",
     },
     {
-      "<leader>ms",
+      "<leader>mw;",
       function()
         vim.cmd "e ~/vaults/notes/"
       end,
       desc = "(Obsidian) Open workspace files",
     },
     {
-      "<leader>mwj",
+      "<leader>mww",
       function()
         vim.cmd "e ~/vaults/notes/_work.md"
       end,
@@ -108,7 +108,7 @@ return {
       desc = "(Obsidian) Open daily",
     },
     {
-      "<leader>mww",
+      "<leader>mwg",
       function()
         vim.cmd "e ~/vaults/notes/_weekend-goals.md"
       end,
@@ -118,14 +118,14 @@ return {
   opts = {
 
     workspaces = {
-      {
-        name = "personal",
-        path = "~/vaults/personal",
-      },
-      {
-        name = "work",
-        path = "~/vaults/work",
-      },
+      -- {
+      --   name = "personal",
+      --   path = "~/vaults/personal",
+      -- },
+      -- {
+      --   name = "work",
+      --   path = "~/vaults/work",
+      -- },
     },
     daily_notes = {
       folder = "daily",

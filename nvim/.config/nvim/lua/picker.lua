@@ -186,7 +186,7 @@ if M.USE_FZF_LUA then
     },
     -- Git stuff
     {
-      "<leader>ga",
+      "<leader>fga",
       function()
         local fzf_lua = require "fzf-lua"
         fzf_lua.git_commits()
@@ -194,7 +194,7 @@ if M.USE_FZF_LUA then
       desc = "(fzf) Git diff for whole project",
     },
     {
-      "<leader>gf",
+      "<leader>fgb",
       function()
         local fzf_lua = require "fzf-lua"
         fzf_lua.git_bcommits()
