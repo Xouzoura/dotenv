@@ -103,6 +103,6 @@ return {
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
     -- General mappings
     { "<leader>ce", ":edit vars.env<CR>", desc = "(Hurl) Open vars.env file" },
-    { "<leader>cj", ":edit hurls/vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
+    { "<leader>cj", ":edit .hurls/vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
   },
 }
