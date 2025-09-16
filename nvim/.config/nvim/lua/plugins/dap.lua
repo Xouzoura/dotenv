@@ -1,5 +1,6 @@
 -- Debug
 return {
+  -- REMEMBER YOU NEED DEBUGPY INSTALLED IF YOU USE IT WITH .venv
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
@@ -137,3 +138,72 @@ return {
     },
   },
 }
+
+--- .vscode/launch.json example
+--[=====[
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Test (-m new)",
+      "type": "python",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "-s",
+        "-m new"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "Python: Test ai-tools request",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/services.py",
+      "args": [
+        "--ai_emb",
+        "--v"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "Python: Main debug",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "app.main:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--reload",
+        "--log-level",
+        "debug"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "cwd": "${workspaceFolder}/src",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
+--]=====]
