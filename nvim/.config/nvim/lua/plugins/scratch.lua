@@ -1,4 +1,5 @@
 return {
+  -- haven't used it in a while
   "LintaoAmons/scratch.nvim",
   event = "VeryLazy",
   dependencies = {

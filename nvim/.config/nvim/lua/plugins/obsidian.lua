@@ -1,4 +1,5 @@
 return {
+  -- Go to the new version at one point
   "epwalsh/obsidian.nvim",
   version = "*",
   -- lazy = false,

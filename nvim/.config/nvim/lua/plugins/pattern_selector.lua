@@ -1,6 +1,7 @@
 return {
+  -- regex, uuids etc
   "Xouzoura/pattern-selector",
-  lazy = false,
+  lazy = true,
   branch = "master",
   config = function(_, opts)
     require("pattern_selector").setup(opts)
