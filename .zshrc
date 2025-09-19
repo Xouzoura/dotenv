@@ -266,6 +266,9 @@ source ~/.zshrc_secrets
 # PATH="$HOME/.local/bin:$PATH"  
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/go/bin" 
+if [[ ":$PATH:" != *"/snap/bin:"* ]]; then 
+    export PATH="$PATH:/snap/bin"
+fi
 
 # export PATH="$HOME/.fzf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
