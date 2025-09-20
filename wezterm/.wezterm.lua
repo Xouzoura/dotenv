@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-
-return {
+-- local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+local config = {
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 	font = wezterm.font("JetBrains Mono"), -- Set your favorite font
 	color_scheme = "Dracula", -- Use a built-in color scheme
@@ -13,7 +13,7 @@ return {
 	font_size = 12.0,
 	enable_tab_bar = true,
 	use_fancy_tab_bar = false,
-	enable_wayland = true,
+	enable_wayland = false, -- decide what makes sense, it doesn't work well in either linux or wsl when true
 	tab_bar_at_bottom = false,
 	-- window_decorations = "NONE",
 	window_decorations = "RESIZE",
@@ -36,6 +36,16 @@ return {
 	leader = { key = "q", mods = "CTRL" },
 	default_prog = { "zsh" }, -- Change this to your preferred shell if necessary
 	keys = {
+		-- {
+		-- 	key = "S",
+		-- 	mods = "CTRL",
+		-- 	action = workspace_switcher.switch_workspace(),
+		-- },
+		-- {
+		-- 	key = "S",
+		-- 	mods = "LEADER",
+		-- 	action = workspace_switcher.switch_to_prev_workspace(),
+		-- },
 		{ key = ".", mods = "ALT", action = wezterm.action.ActivateTabRelative(1) },
 		{ key = ",", mods = "ALT", action = wezterm.action.ActivateTabRelative(-1) },
 		{ key = "'", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
@@ -64,6 +74,11 @@ return {
 			mods = "CMD",
 			action = act.CloseCurrentPane({ confirm = true }),
 		},
+		{
+			key = "H",
+			mods = "SHIFT|CTRL",
+			action = wezterm.action.Search({ Regex = "[a-f0-9]{6,}" }),
+		},
 	},
 
 	key_tables = {
@@ -80,3 +95,7 @@ return {
 		},
 	},
 }
+
+-- workspace_switcher.apply_to_config(config)
+
+return config

@@ -208,6 +208,7 @@ alias notesd="vi ~/vaults/notes/_daily.md"
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
 alias dbui='nvim +"DBUIToggle"'
+alias wz='wezterm'
 # alias gitgraph='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
 #
 # PYTHON
