@@ -105,15 +105,6 @@ return {
           system_prompt = SYSTEM_PROMPT,
           disable = true,
         },
-        {
-          provider = "pplx",
-          name = "sonar",
-          chat = true,
-          command = false,
-          model = { model = "sonar", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-          -- disable = true,
-        },
         -- {
         --   provider = "googleai",
         --   name = "ChatGemini",
@@ -150,9 +141,6 @@ return {
           model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
         },
-        --
-        -- Last one is the default always
-        --
         {
           provider = "azure",
           name = "gpt-4.1",
@@ -160,6 +148,18 @@ return {
           command = false,
           model = { model = "gpt-4.1", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
+        },
+        --
+        -- Last one is the default always
+        --
+        {
+          provider = "pplx",
+          name = "sonar",
+          chat = true,
+          command = false,
+          model = { model = "sonar", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+          -- disable = true,
         },
       },
       chat_user_prefix = "---------------------------- NEW 💬 ----------------------------",
