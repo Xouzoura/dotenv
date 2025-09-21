@@ -36,6 +36,10 @@ return {
           endpoint = azure_endpoint,
           secret = os.getenv "_AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
         },
+        pplx = {
+          endpoint = "https://api.perplexity.ai/chat/completions",
+          secret = os.getenv "PPLX_API_KEY",
+        },
         -- googleai = {
         --   endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
         --   secret = os.getenv "GEMINI_API_KEY",
@@ -89,6 +93,7 @@ return {
           name = "CodeGPT-o3-mini",
           disable = true,
         },
+        { provider = "pplx", name = "ChatPerplexityLlama3.1-8B", disable = true },
         {
           -- Works only with the bypass that is the dispatcher.prepare_payload
           -- doing.
@@ -99,6 +104,15 @@ return {
           model = { model = "o3-mini", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
           disable = true,
+        },
+        {
+          provider = "pplx",
+          name = "sonar",
+          chat = true,
+          command = false,
+          model = { model = "sonar", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+          -- disable = true,
         },
         -- {
         --   provider = "googleai",

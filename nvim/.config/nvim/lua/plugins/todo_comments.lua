@@ -7,6 +7,7 @@ return {
   -- NOTE:
   -- PERF:
   "folke/todo-comments.nvim",
+  enabled = false, -- haven't used it in a while
   lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {

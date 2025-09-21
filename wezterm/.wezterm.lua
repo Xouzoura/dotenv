@@ -5,6 +5,7 @@ local config = {
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 	font = wezterm.font("JetBrains Mono"), -- Set your favorite font
 	color_scheme = "Dracula", -- Use a built-in color scheme
+	-- color_scheme = "Tokyo Night", -- Use a built-in color scheme
 	colors = {
 		cursor_fg = "#111111",
 		cursor_bg = "#FF00FF",
@@ -22,6 +23,11 @@ local config = {
 	use_resize_increments = false,
 	adjust_window_size_when_changing_font_size = false,
 	hide_mouse_cursor_when_typing = true,
+	inactive_pane_hsb = {
+		saturation = 0.9,
+		brightness = 0.7,
+	},
+	-- window_background_image = "/home/xouzoura/Koofr/pictures/wallpapers/californication_hank.jpg",
 	window_padding = {
 		left = 0,
 		right = 0,
@@ -49,15 +55,17 @@ local config = {
 		{ key = ".", mods = "ALT", action = wezterm.action.ActivateTabRelative(1) },
 		{ key = ",", mods = "ALT", action = wezterm.action.ActivateTabRelative(-1) },
 		{ key = "'", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+		{ key = "_", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 		{ key = "h", mods = "ALT|SHIFT", action = wezterm.action.ActivatePaneDirection("Left") },
 		{ key = "l", mods = "ALT|SHIFT", action = wezterm.action.ActivatePaneDirection("Right") },
 		{ key = "k", mods = "ALT|SHIFT", action = wezterm.action.ActivatePaneDirection("Up") },
 		{ key = "j", mods = "ALT|SHIFT", action = wezterm.action.ActivatePaneDirection("Down") },
 		{ key = "o", mods = "ALT|SHIFT", action = wezterm.action.ActivatePaneDirection("Next") },
-		{ key = ";", mods = "ALT", action = act.SpawnTab("CurrentPaneDomain") },
+		{ key = ";", mods = "ALT", action = act.SpawnTab("DefaultDomain") },
+		{ key = ":", mods = "ALT", action = act.SpawnTab("CurrentPaneDomain") },
 		{ key = "[", mods = "ALT", action = act.ActivateCopyMode },
 		{
-			key = "r",
+			key = "a",
 			mods = "CTRL|SHIFT",
 			action = act.ActivateKeyTable({
 				name = "resize_pane",
@@ -65,16 +73,7 @@ local config = {
 			}),
 		},
 		{
-			key = "t",
-			mods = "LEADER",
-			action = wezterm.action.SpawnTab("CurrentPaneDomain"),
-		},
-		{
-			key = "w",
-			mods = "CMD",
-			action = act.CloseCurrentPane({ confirm = true }),
-		},
-		{
+			-- regex search
 			key = "H",
 			mods = "SHIFT|CTRL",
 			action = wezterm.action.Search({ Regex = "[a-f0-9]{6,}" }),
@@ -97,5 +96,4 @@ local config = {
 }
 
 -- workspace_switcher.apply_to_config(config)
-
 return config
