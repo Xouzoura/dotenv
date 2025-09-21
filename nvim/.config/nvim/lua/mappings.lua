@@ -5,12 +5,12 @@ local extras = require "extras"
 local picker = require "picker"
 
 -- unmaps
-vim.api.nvim_del_keymap("i", "<C-u>")
-vim.api.nvim_del_keymap("n", "<leader>x")
-vim.api.nvim_del_keymap("n", "<C-n>")
-vim.api.nvim_del_keymap("n", "<leader>e")
-vim.api.nvim_del_keymap("n", "<C-c>")
--- vim.api.nvim_del_keymap("n", "<C-x>")
+vim.api.nvim_del_keymap("i", "<C-u>") -- don't want whatever it did
+vim.api.nvim_del_keymap("n", "<leader>x") -- don't want whatever it did
+vim.api.nvim_del_keymap("n", "<C-n>") -- nvim-tree is useless
+vim.api.nvim_del_keymap("n", "<leader>e") -- don't want to focus on nvim-tree
+vim.api.nvim_del_keymap("n", "<C-c>") -- don't want a hotkey to copy whole buffer
+vim.api.nvim_del_keymap("n", "<A-h>") -- don't want terminal to open with alt-h
 vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
 
