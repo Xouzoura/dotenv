@@ -6,7 +6,7 @@ local picker = require "picker"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>") -- don't want whatever it did
-vim.api.nvim_del_keymap("n", "<leader>x") -- don't want whatever it did
+-- vim.api.nvim_del_keymap("n", "<leader>x") -- don't want whatever it did
 vim.api.nvim_del_keymap("n", "<C-n>") -- nvim-tree is useless
 vim.api.nvim_del_keymap("n", "<leader>e") -- don't want to focus on nvim-tree
 vim.api.nvim_del_keymap("n", "<C-c>") -- don't want a hotkey to copy whole buffer
