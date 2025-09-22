@@ -154,6 +154,8 @@ keymap = [
 	{ on = [ "g", "K"],       run = "cd ~/Koofr/",          desc = "Go to the ~/Koofr directory (backup)" },
 	{ on = [ "g", "c", "a"],       run = "cd ~/.cache",          desc = "Go to the ~/.cache directory" },
 	{ on = [ "g", "j"],            run = "cd ~/code",          desc = "Go to the code directory" },
+    # WINDOWS FOR WORK-LAPTOP
+	{ on = [ "g", "W"],            run = "cd /mnt/c/Users/DIO3713/",          desc = "Go to the personal Windows" },
     # Local only for my projects
 	# { on = [ "g", "e" ],       run = "cd ~/Documents/eth/eth-cas/",      desc = "Go CAS-ETH" },
 	# { on = [ "g", "b", "b" ],  run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/",      desc = "Go backend (BKW)" },

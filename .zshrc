@@ -84,7 +84,7 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git zsh-syntax-highlighting zsh-autosuggestions
-	sudo history jsontools ssh-agent fzf vi-mode
+	sudo history jsontools ssh-agent fzf # vi-mode
     copypath copyfile copybuffer dirhistory fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
@@ -175,7 +175,7 @@ alias ytd=". ~/scripts/download_video.sh"
 alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
 # work C
-alias winc="cd /mnt/c/Users/DIO3713/"
+alias winc="z /mnt/c/Users/DIO3713/"
 
 # Neovim aliases. This can change with a script
 alias vi="nvim"
@@ -196,8 +196,6 @@ alias ta="source ~/scripts/tmux-anything.sh"
 alias qbt="z ~/Downloads/torrents/ && ./qbittorrent-4.6.6_x86_64_1.AppImage"
 # File manager
 alias fm='nautilus .'
-# Wezterm
-# alias wz='WAYLAND_DISPLAY= XWAYLAND=1 wezterm'
 alias lg='lazygit'
 alias ldo='lazydocker'
 # alias backup-rsync='rsync -av --progress --exclude-from="exclude.txt" "/home/xouzoura/" "/media/xouzoura/T7 Touch/backups/rsync"'
@@ -213,9 +211,9 @@ alias wz='wezterm'
 #
 # PYTHON
 # Python aliases for my code 
-alias pnew='poetry run pytest -s -m new'
-alias plf='poetry run pytest -s --lf'
-alias pdb='poetry run pytest -s --pdb'
+alias pnew='uv run pytest -s -m new'
+alias plf='uv run pytest -s --lf'
+alias pdb='uv run pytest -s --pdb'
 alias pca='pre-commit run --all-files'
 alias jp='python -m jupyter notebook'
 
