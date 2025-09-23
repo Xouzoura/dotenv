@@ -7,12 +7,13 @@ return {
   -- NOTE:
   -- PERF:
   "folke/todo-comments.nvim",
-  enabled = false, -- haven't used it in a while
+  -- enabled = false, -- haven't used it in a while
   lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
-    { "<leader>TDL", "<cmd>TodoLocList<cr>", desc = "To Do List" },
-    { "<leader>TDT", "<cmd>TodoTelescope<cr>", desc = "To Do Telescope" },
+    { "<leader>tq", "<cmd>TodoLocList<cr>", desc = "<ToDo> Loclist" },
+    { "<leader>et", "<cmd>TodoQuickfix<cr>", desc = "<ToDo> Quickfix" },
+    { "<leader>ftd", "<cmd>TodoFzfLua<cr>", desc = "<ToDo> FzfLua" },
   },
   opts = {},
 }

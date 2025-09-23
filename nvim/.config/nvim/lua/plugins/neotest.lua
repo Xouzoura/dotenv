@@ -58,7 +58,7 @@ return {
 
     vim.keymap.set("n", "<leader>tc", run_custom_tests, { desc = "[t]Run tests with custom args" })
 
-    vim.keymap.set("n", "<leader>ts", function()
+    vim.keymap.set("n", "<leader>t;", function()
       neotest.summary.toggle()
     end, { desc = "[t]Toggle test summary" })
 
