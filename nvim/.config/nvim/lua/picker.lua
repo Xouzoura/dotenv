@@ -57,7 +57,7 @@ if M.USE_FZF_LUA then
       "<leader>fl",
       function()
         local fzf_lua = require "fzf-lua"
-        fzf_lua.grep_last()
+        fzf_lua.grep { resume = true }
       end,
       desc = "(fzf) Last grep",
     },
