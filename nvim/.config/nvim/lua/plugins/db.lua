@@ -29,4 +29,19 @@ return {
       vim.api.nvim_set_keymap("n", "<leader>d<", "?|<CR>h", { desc = "Move to previous column separator" })
     end,
   },
+  -- { -- optional saghen/blink.cmp completion source
+  --   "saghen/blink.cmp",
+  --   opts = {
+  --     sources = {
+  --       default = { "lsp", "path", "snippets", "buffer" },
+  --       per_filetype = {
+  --         sql = { "snippets", "dadbod", "buffer" },
+  --       },
+  --       -- add vim-dadbod-completion to your completion providers
+  --       providers = {
+  --         dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+  --       },
+  --     },
+  --   },
+  -- },
 }
