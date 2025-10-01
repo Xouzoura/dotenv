@@ -13,6 +13,7 @@ vim.api.nvim_del_keymap("n", "<C-c>") -- don't want a hotkey to copy whole buffe
 vim.api.nvim_del_keymap("n", "<A-h>") -- don't want terminal to open with alt-h
 vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
+vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without formatting" })
 
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
