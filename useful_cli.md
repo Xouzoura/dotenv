@@ -8,6 +8,8 @@
   - ncspot (listening to music)
   - systemd-manager-tui (systemd manager)
   - fastfetch (see system's installed packages, hardware, managers)
+  - eza (needed for yazi)
+  - duckdb
 
 # Other
 

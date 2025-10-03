@@ -16,3 +16,10 @@ function Linemode:mtimev2()
 	end
 	return ui.Line(string.format(time))
 end
+
+-- Eza
+require("eza-preview"):setup({
+	default_tree = false,
+	level = 1,
+})
+require("duckdb"):setup()

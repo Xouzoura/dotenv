@@ -13,5 +13,15 @@ use = "yazi-rs/plugins:piper"
 rev = "b886025"
 hash = "2143a53182dbbe935a1abd1623424aa5"
 
+[[plugin.deps]]
+use = "ahkohd/eza-preview"
+rev = "a97cf55"
+hash = "cc3aef07a8b1c3fe820f1fbb9a5a2483"
+
+[[plugin.deps]]
+use = "wylie102/duckdb"
+rev = "3f8c863"
+hash = "87b9233a74325e95011670ed20bbd0d4"
+
 [flavor]
 deps = []
