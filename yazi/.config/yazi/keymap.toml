@@ -450,13 +450,6 @@ keymap = [
         "g",
         "W",
     ], run = "cd /mnt/c/Users/DIO3713/", desc = "Go to the personal Windows" },
-    # Local only for my projects
-    # { on = [ "g", "e" ],       run = "cd ~/Documents/eth/eth-cas/",      desc = "Go CAS-ETH" },
-    # { on = [ "g", "b", "b" ],  run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/",      desc = "Go backend (BKW)" },
-    # { on = [ "g", "b", "l" ],  run = "cd ~/python/openai/",      desc = "Go to study libraries" },
-    # { on = [ "g", "b", "t" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/bkw.gpt4km.backend/src/tests/remote/",      desc = "Go backend (test)" },
-    # { on = [ "g", "b", "a" ],       run = "cd ~/python/bkw/ai-tools/ai-lib/ai-backend2/ai-tools/inputs/personal/",      desc = "Go ai-tools (test)" },
-    # End of bkw local stuff.
     { on = [
         "g",
         "<Space>",
@@ -552,17 +545,19 @@ prepend_keymap = [
         "M",
     ], run = "plugin mount", desc = "[pl] Mount" },
     { on = [
-        "H",
+        "<",
     ], run = "plugin duckdb -1", desc = "[pl] Scroll one column to the left" },
     { on = [
-        "L",
+        ">",
     ], run = "plugin duckdb +1", desc = "[pl] Scroll one column to the right" },
     { on = [
         "g",
+        "D",
         "o",
     ], run = "plugin duckdb -open", desc = "[pl] open with duckdb" },
     { on = [
         "g",
+        "D",
         "u",
     ], run = "plugin duckdb -ui", desc = "[pl] open with duckdb ui" },
 
