@@ -174,7 +174,7 @@ alias ytd=". ~/scripts/download_video.sh"
 # alias mixxx="pasuspender mixxx"
 alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
-# work C
+# work C (mounted drive)
 alias winc="z /mnt/c/Users/DIO3713/"
 
 # Neovim aliases. This can change with a script
@@ -208,9 +208,9 @@ alias oil='nvim +"Oil"'
 alias dbui='nvim +"DBUIToggle"'
 alias wz='wezterm'
 # alias gitgraph='nvim +"lua require(\"gitgraph\").draw({}, {all=true, max_count=5000})"'
-#
+
 # PYTHON
-# Python aliases for my code 
+# Python aliases for my code (uv)
 alias pnew='uv run pytest -s -m new'
 alias plf='uv run pytest -s --lf'
 alias pdb='uv run pytest -s --pdb'
@@ -234,6 +234,7 @@ function yy() {
 	fi
 	rm -f -- "$tmp"
 }
+
 # adding a second one because of the stupid issue with wayland on preview.
 function yyf() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -245,6 +246,7 @@ function yyf() {
 	fi
 	rm -f -- "$tmp"
 }
+
 ## Autofold (fold_md)
 fold_md() {
   local file="$1"
@@ -256,6 +258,11 @@ fold_md() {
   fi
 }
 
+# fzf integration with zoxide of my paths (fz)
+fz() {
+  local dir
+  dir=$(zoxide query -l | fzf --height 40% --reverse --inline-info) && cd "$dir"
+}
 source ~/.zshrc_secrets
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
