@@ -150,7 +150,6 @@ prepend_previewers = [
     { name = "*.ipynb", run = "nbpreview" },
     { name = "*.csv", run = "duckdb" },
     { name = "*.json", run = "duckdb" },
-    # { name = "*", run = "piper -- echo "$1"}
 ]
 prepend_preloaders = [
     { name = "*.csv", run = "duckdb", multi = false },

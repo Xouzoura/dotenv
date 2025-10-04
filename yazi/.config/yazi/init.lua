@@ -18,8 +18,17 @@ function Linemode:mtimev2()
 end
 
 -- Eza
-require("eza-preview"):setup({
-	default_tree = false,
-	level = 1,
-})
-require("duckdb"):setup()
+local ok_eza, eza = pcall(require, "eza-preview")
+if ok_eza then
+	eza:setup({
+		default_tree = false,
+		level = 1,
+		git_ignore = false,
+	})
+end
+
+-- DuckDB
+local ok_duckdb, duckdb = pcall(require, "duckdb")
+if ok_duckdb then
+	duckdb:setup({ mode = "standard" })
+end

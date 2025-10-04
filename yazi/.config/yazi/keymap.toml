@@ -525,22 +525,12 @@ prepend_keymap = [
     ], run = "plugin eza-preview inc-level", desc = "[pl] Increment tree level" },
     { on = [
         "e",
-        "$",
-    ], run = "plugin eza-preview toggle-follow-symlinks", desc = "[pl] Toggle tree follow symlinks" },
-    { on = [
-        "e",
-        "*",
+        ".",
     ], run = "plugin eza-preview toggle-hidden", desc = "[pl] Toggle hidden files" },
     { on = [
         "e",
         "g",
-        "i",
     ], run = "plugin eza-preview toggle-git-ignore", desc = "[pl] Toggle .gitignore files" },
-    { on = [
-        "e",
-        "g",
-        "s",
-    ], run = "plugin eza-preview toggle-git-status", desc = "[pl] Toggle showing git status" },
     { on = [
         "M",
     ], run = "plugin mount", desc = "[pl] Mount" },
@@ -550,15 +540,15 @@ prepend_keymap = [
     { on = [
         ">",
     ], run = "plugin duckdb +1", desc = "[pl] Scroll one column to the right" },
+    # { on = [
+    #     "g",
+    #     "D",
+    #     "o",
+    # ], run = "plugin duckdb -open", desc = "[pl] open with duckdb" },
     { on = [
         "g",
         "D",
-        "o",
-    ], run = "plugin duckdb -open", desc = "[pl] open with duckdb" },
-    { on = [
-        "g",
-        "D",
-        "u",
+        # "u",
     ], run = "plugin duckdb -ui", desc = "[pl] open with duckdb ui" },
 
 ]
