@@ -386,6 +386,9 @@ keymap = [
         "w",
     ], run = "tasks_show", desc = "Show the tasks manager" },
 
+    # Spot 
+    { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
+
     # Goto
     { on = [
         "g",
@@ -459,6 +462,7 @@ keymap = [
     { on = [
         "~",
     ], run = "help", desc = "Open help" },
+    { on = "<F1>", run = "help", desc = "Open help" },
 
     # -- sudo commands
     { on = [
@@ -592,6 +596,8 @@ keymap = [
     { on = [
         "~",
     ], run = "help", desc = "Open help" },
+    { on = "<F1>", run = "help", desc = "Open help" },
+
 ]
 
 [confirm]
@@ -609,7 +615,8 @@ keymap = [
     { on = [
         "<Enter>",
     ], run = "close --submit", desc = "Submit the selection" },
-
+    { on = "n", run = "close", desc = "Cancel the confirm" },
+    { on = "y", run = "close --submit", desc = "Submit the confirm" },
     { on = [
         "k",
     ], run = "arrow -1", desc = "Move cursor up" },
@@ -641,6 +648,7 @@ keymap = [
     { on = [
         "~",
     ], run = "help", desc = "Open help" },
+    { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [input]
@@ -817,13 +825,12 @@ keymap = [
         "U",
     ], run = "redo", desc = "Redo the last operation" },
 
-    # Spot 
-    { on = ";", run = "spot", desc = "Spot hovered file" },
 
     # Help
     { on = [
         "~",
     ], run = "help", desc = "Open help" },
+    { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [spot]
@@ -890,6 +897,7 @@ keymap = [
     { on = [
         "~",
     ], run = "help", desc = "Open help" },
+    { on = "<F1>", run = "help", desc = "Open help" },
 ]
 
 [help]
