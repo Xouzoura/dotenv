@@ -1,10 +1,11 @@
 #!/bin/bash
-
+ORIG_DIR=$(pwd)
 # Navigate to your repo (optional)
 z ~/vaults/notes/
-
-# Commit with message "update"
+git pull
 git commit -am "update"
-
-# Push to master
 git push origin master
+
+echo "Pushed changes..."
+
+z $ORIG_DIR
