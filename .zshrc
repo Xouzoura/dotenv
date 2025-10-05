@@ -169,6 +169,7 @@ alias l.='eza -a | egrep "^\."'
 
 # youtube-dl
 alias ytd=". ~/scripts/download_video.sh"
+alias pn=". ~/scripts/push_notes.sh" # push notes
 
 # mixxx
 # alias mixxx="pasuspender mixxx"
