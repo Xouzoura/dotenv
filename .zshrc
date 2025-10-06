@@ -169,7 +169,6 @@ alias l.='eza -a | egrep "^\."'
 
 # youtube-dl
 alias ytd=". ~/scripts/download_video.sh"
-alias pn=". ~/scripts/push_notes.sh" # push notes
 
 # mixxx
 # alias mixxx="pasuspender mixxx"
@@ -204,6 +203,8 @@ alias ldo='lazydocker'
 alias notes="vi ~/vaults/notes"
 alias notesw="vi ~/vaults/notes/_work.md"
 alias notesd="vi ~/vaults/notes/_daily.md"
+alias n,=". ~/scripts/push_notes.sh pull" # pull notes
+alias n.=". ~/scripts/push_notes.sh push" # push notes
 alias k8s='nvim +"lua require(\"kubectl\").open()"'
 alias oil='nvim +"Oil"'
 alias dbui='nvim +"DBUIToggle"'

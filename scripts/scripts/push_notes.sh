@@ -1,11 +1,22 @@
 #!/bin/bash
+
 ORIG_DIR=$(pwd)
-# Navigate to your repo (optional)
-z ~/vaults/notes/
-git pull
-git commit -am "update"
-git push origin master
+cd ~/vaults/notes/ || exit
 
-echo "Pushed changes..."
+MODE=${1:-push}
 
-z $ORIG_DIR
+if [[ "$MODE" == "pull" ]]; then
+    echo "Pulling latest changes..."
+    git pull
+elif [[ "$MODE" == "push" ]]; then
+    git pull
+    git commit -am "update"
+    git push origin master
+    echo "Pushed changes..."
+else
+    echo "Unknown mode: $MODE"
+    echo "Usage: $0 [pull|push]"
+fi
+
+cd "$ORIG_DIR" || exit
+
