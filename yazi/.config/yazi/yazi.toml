@@ -148,12 +148,12 @@ prepend_previewers = [
     { name = "*/", run = "eza-preview" },
     { name = "*.ipynb", run = "nbpreview" },
     { name = "*.csv", run = "duckdb" },
-    { name = "*.json", run = "duckdb" },
+    # { name = "*.json", run = "duckdb" },
 ]
 prepend_preloaders = [
     { name = "*.csv", run = "duckdb", multi = false },
-    { name = "*.json", run = "duckdb", multi = false },
-    { name = "*.xlsx", run = "duckdb", multi = false },
+    # { name = "*.json", run = "duckdb", multi = false },
+    # { name = "*.xlsx", run = "duckdb", multi = false },
 ]
 previewers = [
     { name = "*/", run = "folder", sync = true },
