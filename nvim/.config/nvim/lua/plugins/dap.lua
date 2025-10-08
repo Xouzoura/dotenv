@@ -10,12 +10,93 @@ return {
     config = function()
       local dap = require "dap"
       local dapui = require "dapui"
-      dapui.setup()
+      dapui.setup {
+        layouts = {
+          {
+            elements = {
+              { id = "scopes", size = 0.3 },
+              { id = "watches", size = 0.2 },
+              { id = "breakpoints", size = 0.2 },
+              { id = "console", size = 0.3 },
+            },
+            position = "left",
+            size = 40, -- width in columns
+          },
+          {
+            elements = {
+              { id = "repl", size = 1 },
+            },
+            position = "bottom",
+            size = 15, -- height in lines
+          },
+        },
+      }
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
       dap.listeners.before.event_terminated.dapui_config = dapui.close
       dap.listeners.before.event_exited.dapui_config = dapui.close
+      -- keys
+      -- go to a specific place
+      vim.keymap.set("n", "<leader>d1", function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name:match "%[dap%-repl" then
+            vim.api.nvim_set_current_win(win)
+            return
+          end
+        end
+        vim.notify("DAP REPL not found", vim.log.levels.WARN)
+      end, { desc = "[d] Focus DAP REPL" })
+
+      vim.keymap.set("n", "<leader>d2", function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name:match "%Console" then
+            vim.api.nvim_set_current_win(win)
+            return
+          end
+        end
+        vim.notify("DAP Console not found", vim.log.levels.WARN)
+      end, { desc = "[d] Focus stdout" })
+      vim.keymap.set("n", "<leader>d3", function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name:match "Watches" then
+            vim.api.nvim_set_current_win(win)
+            return
+          end
+        end
+        vim.notify("DAP Watches not found", vim.log.levels.WARN)
+      end, { desc = "[d] Focus watches" })
+
+      vim.keymap.set("n", "<leader>d4", function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name:match "Breakpoints" then
+            vim.api.nvim_set_current_win(win)
+            return
+          end
+        end
+        vim.notify("DAP Breakpoints not found", vim.log.levels.WARN)
+      end, { desc = "[d] Focus breakpoints" })
+      -- 2
+      vim.keymap.set("n", "<leader>dos", function()
+        require("dapui").float_element("stacks", {})
+      end, { desc = "[d] Float stacks (traces)" })
+      vim.keymap.set("n", "<leader>dov", function()
+        require("dapui").float_element("scopes", {})
+      end, { desc = "[d] Float scopes (variables)" })
+      vim.keymap.set("n", "<leader>dob", function()
+        require("dapui").float_element("breakpoints", {})
+      end, { desc = "[d] Float breakpoints" })
+      vim.keymap.set("n", "<leader>dow", function()
+        require("dapui").float_element("watches", {})
+      end, { desc = "[d] Float watches" })
     end,
   },
   {
@@ -35,9 +116,9 @@ return {
       vim.keymap.set("n", "<F9>", function()
         require("dap").restart()
       end, { desc = "[d]Restart" })
-      vim.keymap.set("n", "<leader>dz", function()
-        require("dap").close()
-      end, { desc = "[d]Close/Stop" })
+      -- vim.keymap.set("n", "<leader>dz", function()
+      --   require("dap").close()
+      -- end, { desc = "[d]Close/Stop" })
       vim.keymap.set("n", "<F2>", function()
         require("dap").terminate()
       end, { desc = "Terminate" })
@@ -51,15 +132,10 @@ return {
       vim.keymap.set("n", "<F12>", function()
         require("dap").step_out()
       end, { desc = "Step Out" })
-      -- Commented-out since I see the persistent db
-      -- vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, {desc="Toggle Breakpoint"})
       vim.keymap.set("n", "<leader>dB", function()
         require("dap").set_breakpoint()
       end, { desc = "[d]Set (non-persistent) Breakpoint" })
-      -- vim.keymap.set("n", "<leader>dd", function()
-      --   require("dap").set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
-      -- end, { desc = "[d]Log Point" })
-      vim.keymap.set("n", "<leader>dR", ":edit .vscode/launch.json<CR>", { desc = "Step Over" })
+      vim.keymap.set("n", "<leader>dR", ":edit .vscode/launch.json<CR>", { desc = "[d] Open launch.json" })
     end,
   },
   {
@@ -136,6 +212,12 @@ return {
         desc = "[d]Clear All Breakpoints",
       },
     },
+  },
+  {
+    "igorlfs/nvim-dap-view",
+    ---@module 'dap-view'
+    ---@type dapview.Config
+    opts = {},
   },
 }
 

@@ -5,6 +5,7 @@
 return {
   "andrewferrier/debugprint.nvim",
   lazy = false,
+  enabled = false,
   opts = {
     keymaps = {
       normal = {
