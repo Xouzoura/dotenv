@@ -17,17 +17,17 @@ return {
               { id = "scopes", size = 0.3 },
               { id = "watches", size = 0.2 },
               { id = "breakpoints", size = 0.2 },
-              { id = "console", size = 0.3 },
+              { id = "repl", size = 0.3 },
             },
             position = "left",
-            size = 40, -- width in columns
+            size = 45, -- width in columns
           },
           {
             elements = {
-              { id = "repl", size = 1 },
+              { id = "console", size = 1 },
             },
             position = "bottom",
-            size = 15, -- height in lines
+            size = 20, -- height in lines
           },
         },
       }
@@ -148,7 +148,7 @@ return {
       require("nvim-dap-virtual-text").setup {
         virt_text_pos = "eol",
       }
-      vim.keymap.set("n", "<leader>duv", "<cmd>DapVirtualTextToggle<CR>", { desc = "[d]Toggle Virtual Text" })
+      vim.keymap.set("n", "<leader>dv", "<cmd>DapVirtualTextToggle<CR>", { desc = "[d]Toggle Virtual Text" })
     end,
   },
   {
@@ -180,7 +180,7 @@ return {
     end,
     keys = {
       { "<leader>d;", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },
-      { "<leader>dur", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "[d]Reset DAP UI" },
+      { "<leader>du", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "[d]Reset DAP UI" },
       -- { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
     },
   },
@@ -205,7 +205,7 @@ return {
         desc = "[d]Toggle Breakpoint (Persistent)",
       },
       {
-        "<leader>dc",
+        "<leader>dC",
         function()
           require("persistent-breakpoints.api").clear_all_breakpoints()
         end,

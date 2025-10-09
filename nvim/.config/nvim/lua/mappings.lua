@@ -168,13 +168,10 @@ end, { desc = "Copy diagnostics to clipboard" })
 -- format json file
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
 map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })
--- git commands that are useful
--- map("n", "<leader>gb", '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', {
---   desc = "Git toggle <b>lame by line",
--- })
 
 map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
 map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove 'new' marks", noremap = true, silent = true })
+map("n", "gl", "<C-^>", { noremap = true, silent = true, desc = "Last buffer" })
 
 -------------------------
 -- PLUGINS --------------
