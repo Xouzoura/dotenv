@@ -1,141 +1,70 @@
 ---@diagnostic disable: undefined-global
-require "nvchad.options"
+-- require "nvchad.options"
+local opt = vim.opt
+local o = vim.o
+local g = vim.g
 
--- local extras = require "extras"
--- Settings
--- global
-vim.o.mouse = "a"
-vim.o.breakindent = true
-vim.o.foldcolumn = "1" -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 10
-vim.o.foldenable = true
+-------------------------------------- options ------------------------------------------
+o.laststatus = 3
+o.showmode = false
+o.splitkeep = "screen"
+
+o.clipboard = "unnamedplus"
+o.cursorline = true
+o.cursorlineopt = "number"
+
+-- Indenting
+o.expandtab = true
+o.shiftwidth = 4
+o.smartindent = true
+o.tabstop = 4
+o.softtabstop = 4
+
+-- Numbers
+o.number = true
+o.numberwidth = 4
+o.relativenumber = true
+o.ruler = false
+
+o.breakindent = true
+o.foldcolumn = "1" -- '0' is not bad
+o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevelstart = 10
+o.foldenable = true
 -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-vim.o.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
-vim.o.inccommand = "split"
-vim.o.updatetime = 250
-vim.o.cursorline = true
--- opts
-vim.opt.laststatus = 2
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.ignorecase = true -- search case insensitive
-vim.opt.smartcase = true -- search matters if capital letter
-vim.opt.inccommand = "split" -- "for incsearch while sub
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.numberwidth = 4
-vim.opt.wrap = true
-vim.opt.showbreak = [[↪ ]]
-vim.opt.breakindent = true
--- sync buffers automatically
-vim.opt.autoread = true
--- disable neovim generating a swapfile and showing a warning
-vim.opt.swapfile = false
-vim.wo.signcolumn = "yes"
--- Already defined at diagnostics.lua
--- vim.diagnostic.config { virtual_text = true, severity_sort = true, signs = true }
-local id = vim.api.nvim_create_augroup("startup", {
-  clear = false,
-})
--- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#282C34", fg = "#F8F8F2" })
-local persistbuffer = function(bufnr)
-  bufnr = bufnr or vim.api.nvim_get_current_buf()
-  vim.fn.setbufvar(bufnr, "bufpersist", 1)
-end
+o.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
+o.inccommand = "split"
+o.updatetime = 250
+-- disable nvim intro
+-- opt.shortmess:append "sI"
 
-vim.api.nvim_create_autocmd({ "BufRead" }, {
-  group = id,
-  pattern = { "*" },
-  callback = function()
-    vim.api.nvim_create_autocmd({ "InsertEnter", "BufModifiedSet" }, {
-      buffer = 0,
-      once = true,
-      callback = function()
-        persistbuffer()
-      end,
-    })
-  end,
-})
+o.signcolumn = "yes"
+o.splitbelow = true
+o.splitright = true
+o.timeoutlen = 400
+o.undofile = true
 
--- Highlight the active window
--- Define the highlight groups for active window/inactive window
-vim.api.nvim_exec(
-  [[
-  autocmd WinEnter,CursorMoved * setlocal winhighlight=Normal:ActiveWindow
-  autocmd WinLeave * setlocal winhighlight=Normal:InactiveWindow
-]],
-  false
-)
+-- go to previous/next line with h,l,left arrow and right arrow
+-- when cursor reaches end/beginning of line
+opt.whichwrap:append "<>[]hl"
+opt.showbreak = [[↪ ]]
+opt.wrap = true
+opt.ignorecase = true -- search case insensitive
+opt.smartcase = true -- search matters if capital letter
+opt.autoread = true
+opt.swapfile = false
 
-vim.cmd "highlight ActiveWindow guibg=None guifg=None"
-vim.cmd "highlight InactiveWindow guibg=#2c2f34"
+-- disable some default providers
+g.loaded_node_provider = 0
+g.loaded_python3_provider = 0
+g.loaded_perl_provider = 0
+g.loaded_ruby_provider = 0
 
--- function SetWindowHighlight(active)
---   if vim.fn.mode() ~= "n" then
---     return
---   end
---   if active then
---     vim.cmd "setlocal winhighlight=Normal:ActiveWindow"
---   else
---     vim.cmd "setlocal winhighlight=Normal:InactiveWindow"
---   end
--- end
+-- add binaries installed by mason.nvim to path
+local is_windows = vim.fn.has "win32" ~= 0
+local sep = is_windows and "\\" or "/"
+local delim = is_windows and ";" or ":"
+vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
 
--- highlight on yank
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank { timeout = 300 }
-  end,
-  group = highlight_group,
-  pattern = "*",
-})
-
--- disable large files from opening with lsp
-local autocmd = vim.api.nvim_create_autocmd
-local autogroup = vim.api.nvim_create_augroup
-
--- Disable certain features when opening large files
-local big_file = autogroup("BigFile", { clear = true })
-vim.filetype.add {
-  pattern = {
-    [".*"] = {
-      function(path, buf)
-        return vim.bo[buf]
-            and vim.bo[buf].filetype ~= "bigfile"
-            and path
-            and vim.fn.getfsize(path) > 1024 * 300
-            and "bigfile"
-          or nil -- bigger than 300KB
-      end,
-    },
-  },
-}
-
-autocmd({ "FileType" }, {
-  group = big_file,
-  pattern = "bigfile",
-  callback = function(ev)
-    vim.cmd "syntax off"
-    vim.opt_local.foldmethod = "manual"
-    vim.opt_local.spell = false
-    vim.schedule(function()
-      vim.bo[ev.buf].syntax = vim.filetype.match { buf = ev.buf } or ""
-    end)
-  end,
-})
-
--- Define a function to set highlights for search
-function set_highlights()
-  vim.api.nvim_set_hl(0, "Search", { bg = "#8B8000", fg = "#000000" })
-end
-
--- Create an augroup for highlights
-vim.cmd [[
-  augroup SetSearchHighlights
-    autocmd!
-    autocmd VimEnter,BufWinEnter,BufRead,BufNewFile * lua set_highlights()
-  augroup END
-]]
-set_highlights()
+-- colorscheme
+vim.cmd "colorscheme nightfox"

@@ -16,7 +16,6 @@ local options = {
         "$FILENAME",
         "-",
         "--line-length", -- This is because of stupid local forces.
-        -- "120", -- This is because of stupid local forces. WILL REMOVE WHEN OUT.
         "88", -- this should be the pep8 standard
       },
     },

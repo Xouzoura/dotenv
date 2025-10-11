@@ -1,16 +1,16 @@
 ---@diagnostic disable: undefined-global
 ---
-require "nvchad.mappings"
+-- require "nvchad.mappings"
 local extras = require "extras"
 local picker = require "picker"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>") -- don't want whatever it did
 -- vim.api.nvim_del_keymap("n", "<leader>x") -- don't want whatever it did
-vim.api.nvim_del_keymap("n", "<C-n>") -- nvim-tree is useless
-vim.api.nvim_del_keymap("n", "<leader>e") -- don't want to focus on nvim-tree
-vim.api.nvim_del_keymap("n", "<C-c>") -- don't want a hotkey to copy whole buffer
-vim.api.nvim_del_keymap("n", "<A-h>") -- don't want terminal to open with alt-h
+-- vim.api.nvim_del_keymap("n", "<C-n>") -- nvim-tree is useless
+-- vim.api.nvim_del_keymap("n", "<leader>e") -- don't want to focus on nvim-tree
+-- vim.api.nvim_del_keymap("n", "<C-c>") -- don't want a hotkey to copy whole buffer
+-- vim.api.nvim_del_keymap("n", "<A-h>") -- don't want terminal to open with alt-h
 vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
 vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without formatting" })
@@ -18,12 +18,12 @@ vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
 local map = vim.keymap.set
-if picker.USE_FZF_LUA then
-  -- Delete first the stupid nvchad pre-loadded
-  for _, keymap in ipairs(picker.TELESCOPE_REMOVE) do
-    vim.api.nvim_del_keymap("n", keymap)
-  end
-end
+-- if picker.USE_FZF_LUA then
+-- Delete first the stupid nvchad pre-loadded
+-- for _, keymap in ipairs(picker.TELESCOPE_REMOVE) do
+--   vim.api.nvim_del_keymap("n", keymap)
+-- end
+-- end
 -- Loop over the key mappings and set them
 for _, keymap in ipairs(picker.FZF_LUA_KEYS) do
   local lhs = keymap[1]
@@ -37,6 +37,13 @@ map("", "<up>", "<nop>")
 map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
+
+-- Comment
+map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+-- save
+map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 
 -- Terminal exits
 -- They fuck up yazi.nvim, so see what makes sense.
