@@ -61,6 +61,6 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    enabled = false, -- Disable nvim-cmp
+    enabled = false, -- Disable nvim-cmp everywhere
   },
 }

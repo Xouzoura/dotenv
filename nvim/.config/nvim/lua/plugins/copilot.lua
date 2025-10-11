@@ -1,3 +1,4 @@
+return {} -- disabled all ai stuff
 -- <------------ Copilot
 -- Option1: Copilot.lua
 -- return {
@@ -91,30 +92,30 @@
 --
 --
 -- Option3: Supermaven
-return {
-  "supermaven-inc/supermaven-nvim",
-  enabled = false,
-  lazy = false,
-  config = function()
-    require("supermaven-nvim").setup {
-      keymaps = {
-        accept_suggestion = "<C-]>",
-        accept_word = "<C-\\>",
-        -- accept_word = "<C-y>",
-        clear_suggestion = "<M-]>",
-      },
-      condition = function()
-        -- If i want specific files to be disabled, or when not to run
-        -- :SupermavenUseFree to set it up
-        return true
-      end,
-      -- disable_keymaps = true,
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end,
-}
+-- return {
+-- "supermaven-inc/supermaven-nvim",
+-- enabled = false,
+-- lazy = false,
+-- config = function()
+--   require("supermaven-nvim").setup {
+--     keymaps = {
+--       accept_suggestion = "<C-]>",
+--       accept_word = "<C-\\>",
+--       -- accept_word = "<C-y>",
+--       clear_suggestion = "<M-]>",
+--     },
+--     condition = function()
+--       -- If i want specific files to be disabled, or when not to run
+--       -- :SupermavenUseFree to set it up
+--       return true
+--     end,
+--     -- disable_keymaps = true,
+--     -- your configuration comes here
+--     -- or leave it empty to use the default settings
+--     -- refer to the configuration section below
+--   }
+-- end,
+-- }
 --
 --
 -- <------------ Codeium

@@ -1,10 +1,10 @@
 return {
   -- Autocomplete with tab for the cmd
   "gelguy/wilder.nvim",
-  lazy = false,
+  -- lazy = false,
   dependencies = {
     "neovim/nvim-lspconfig",
-    "hrsh7th/nvim-cmp",
+    -- "hrsh7th/nvim-cmp",
   },
   -- after = "nvim-cmp",
   config = function()

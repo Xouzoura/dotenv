@@ -10,7 +10,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      -- require "nvchad.configs.lspconfig"
       require "configs.lspconfig"
     end,
   },
@@ -36,4 +35,5 @@ return {
       },
     },
   },
+  { "nvim-tree/nvim-web-devicons", opts = {} },
 }
