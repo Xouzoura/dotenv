@@ -37,6 +37,10 @@ map("", "<up>", "<nop>")
 map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
+map("i", "<C-h>", "<Left>", { desc = "move left" })
+map("i", "<C-l>", "<Right>", { desc = "move right" })
+map("i", "<C-j>", "<Down>", { desc = "move down" })
+map("i", "<C-k>", "<Up>", { desc = "move up" })
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
 -- Comment

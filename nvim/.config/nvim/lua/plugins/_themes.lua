@@ -23,6 +23,18 @@ return {
           comment = "#60728a",
         },
       },
+      groups = {
+        all = {
+          Whitespace = { link = "Comment" },
+          IncSearch = { bg = "palette.cyan" },
+          -- Visual = { bg = "#d1d1c0", fg = "#ffffff" },
+          Visual = { bg = "#999988", fg = "#ffffff" }, -- darker gray, white text
+        },
+        nightfox = {
+          PmenuSel = { bg = "#73daca", fg = "bg0" },
+          Visual = { bg = "#999988", fg = "#ffffff" }, -- darker gray, white text
+        },
+      },
     }
   end,
 }

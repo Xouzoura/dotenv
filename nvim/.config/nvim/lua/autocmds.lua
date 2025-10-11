@@ -120,3 +120,34 @@ vim.cmd [[
   augroup END
 ]]
 set_highlights()
+vim.o.statusline = table.concat {
+  "%f",
+  " %m",
+  " %{v:lua.LspDiagnostics()}", -- LSP diagnostics
+  " %=",
+  "%{v:lua.LspStatus()}",
+  " %p%%",
+}
+function _G.LspStatus()
+  local buf_clients = vim.lsp.get_clients { bufnr = 0 }
+  if next(buf_clients) == nil then
+    return ""
+  end
+  local names = {}
+  for _, client in ipairs(buf_clients) do
+    table.insert(names, client.name)
+  end
+  return "[" .. table.concat(names, ",") .. "]"
+end
+function _G.LspDiagnostics()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local diags = vim.diagnostic.count(bufnr)
+  if not diags or vim.tbl_isempty(diags) then
+    return ""
+  end
+  local err = diags[vim.diagnostic.severity.ERROR] or 0
+  local warn = diags[vim.diagnostic.severity.WARN] or 0
+  local hint = diags[vim.diagnostic.severity.HINT] or 0
+  local info = diags[vim.diagnostic.severity.INFO] or 0
+  return string.format(" E:%d W:%d", err, warn, hint, info)
+end

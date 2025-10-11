@@ -31,13 +31,13 @@ return {
         ["<Down>"] = { "select_next", "fallback" },
         ["<C-b>"] = { "scroll_documentation_up", "fallback" },
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+        ["<C-y>"] = { "select_and_accept" },
         -- ["<C-s>"] = { "snippet_forward", "fallback" },
         -- ["<C-d>"] = { "snippet_backward", "fallback" },
 
         -- Mine.
         ["<C-x>"] = { "show_signature", "hide_signature", "fallback" },
         ["<C-e>"] = { "select_and_accept" },
-        ["<C-y>"] = { "select_and_accept" },
       },
       snippets = {
         preset = "luasnip",
