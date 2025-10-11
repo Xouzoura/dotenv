@@ -17,6 +17,12 @@ ls.add_snippets("all", {
     end)
   ),
   s(
+    "ll",
+    f(function()
+      return "- [ ] "
+    end)
+  ),
+  s(
     "qs",
     f(function()
       return "- [ ] "
