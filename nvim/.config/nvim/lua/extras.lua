@@ -369,5 +369,27 @@ function M.messages_on_buffer()
   vim.bo[buf].filetype = "messages"
 end
 
+function M.remove_quickfix_entry()
+  local list = vim.fn.getqflist()
+  if #list == 0 then
+    return
+  end
+
+  local idx = vim.fn.getqflist({ idx = 0 }).idx
+  if idx == 0 then
+    return
+  end -- nothing selected
+
+  if vim.bo.buftype == "quickfix" then
+    -- in quickfix window
+    table.remove(list, idx)
+    vim.fn.setqflist(list)
+    vim.cmd "copen"
+  else
+    -- not in quickfix window
+    table.remove(list, idx)
+    vim.fn.setqflist({}, "r", { items = list, idx = idx > #list and #list or idx })
+  end
+end
 -- Done
 return M

@@ -36,7 +36,7 @@ o.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
 o.inccommand = "split"
 o.updatetime = 250
 -- disable nvim intro
--- opt.shortmess:append "sI"
+-- opt.shortmess:append "sI" -- dashboard show or not
 
 o.signcolumn = "yes"
 o.splitbelow = true

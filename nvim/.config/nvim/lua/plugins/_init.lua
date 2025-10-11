@@ -23,9 +23,17 @@ return {
     end,
   },
   {
-    "nvchad/base46",
-    build = function()
-      require("base46").load_all_highlights()
-    end,
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show { global = false }
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
 }

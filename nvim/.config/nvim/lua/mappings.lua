@@ -6,24 +6,13 @@ local picker = require "picker"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>") -- don't want whatever it did
--- vim.api.nvim_del_keymap("n", "<leader>x") -- don't want whatever it did
--- vim.api.nvim_del_keymap("n", "<C-n>") -- nvim-tree is useless
--- vim.api.nvim_del_keymap("n", "<leader>e") -- don't want to focus on nvim-tree
--- vim.api.nvim_del_keymap("n", "<C-c>") -- don't want a hotkey to copy whole buffer
--- vim.api.nvim_del_keymap("n", "<A-h>") -- don't want terminal to open with alt-h
+-- base
+local map = vim.keymap.set
 vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
 vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without formatting" })
-
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 -- Start the mapping
-local map = vim.keymap.set
--- if picker.USE_FZF_LUA then
--- Delete first the stupid nvchad pre-loadded
--- for _, keymap in ipairs(picker.TELESCOPE_REMOVE) do
---   vim.api.nvim_del_keymap("n", keymap)
--- end
--- end
 -- Loop over the key mappings and set them
 for _, keymap in ipairs(picker.FZF_LUA_KEYS) do
   local lhs = keymap[1]
@@ -37,6 +26,11 @@ map("", "<up>", "<nop>")
 map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
+-- movement
+map("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
+map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
+map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
+map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 map("i", "<C-h>", "<Left>", { desc = "move left" })
 map("i", "<C-l>", "<Right>", { desc = "move right" })
 map("i", "<C-j>", "<Down>", { desc = "move down" })
@@ -46,13 +40,10 @@ map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 -- Comment
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
--- save
+-- Save
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 
 -- Terminal exits
--- They fuck up yazi.nvim, so see what makes sense.
--- map("t", "kj", [[<C-\><C-n>]], { noremap = true, silent = true })
--- map("t", "jj", [[<C-\><C-n>]], { noremap = true, silent = true })
 map("i", "jj", "<ESC>", { silent = true })
 map("i", "kj", "<ESC>", { silent = true })
 -- <--- ## INSERT mode stuff ###--->
@@ -88,15 +79,8 @@ map("n", "B", "^", { noremap = false })
 -- yank-delete-paste
 map({ "n", "v" }, "<leader>0d", [["_d]])
 map({ "n", "v" }, "<leader>0D", [["_D]])
-map("x", "<leader>p", [["_dP]])
 map("n", "<leader>P", 'h"0p', { noremap = true, silent = true })
 map("n", "gV", "`[v`]", { noremap = true, silent = true })
--- will i ever use these?
--- map({ "n", "v" }, "<leader>y", [["+y]])
--- map("n", "<leader>Y", [["+Y]])
-
--- remap nvim tree open with control-b (removing this for now to use something else)
--- map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 -- RUN files
 map("n", "<leader>F", extras.run_file, { desc = "Exexute <F>ile" })
 map("n", "g*", "*gg0nzzzv")
@@ -196,17 +180,23 @@ map("n", "g:", function()
   require("oil").open(proj_pwd)
 end)
 -- Debug prints (plugins/debug.lua)
-map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
-map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
+-- map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
+-- map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
 map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd str" })
 map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path str" })
 map({ "n", "t" }, "g.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
 map({ "n", "t" }, "g,", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
 map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
-map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy env values clean" })
+map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy all env values that are valid." })
 map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", noremap = true, silent = true })
 map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) buffer", noremap = true, silent = true })
+map(
+  "n",
+  "<leader>ed",
+  extras.remove_quickfix_entry,
+  { desc = "remove current entry from quickfix", noremap = true, silent = true }
+)
 
 -- General (or python-based)
 map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
@@ -238,18 +228,18 @@ map("n", "<leader>eo", function()
   vim.cmd.copen()
 end, { desc = "(Quickfix) Toggle" })
 
--- Remove current entry from quickfix
-map("n", "<leader>ed", function()
-  if vim.bo.buftype ~= "quickfix" then
-    print "Not in quickfix window"
-    return
-  end
-  local idx = vim.fn.getqflist({ idx = 0 }).idx - 1
-  local list = vim.fn.getqflist()
-  table.remove(list, idx + 1)
-  vim.fn.setqflist(list)
-  vim.cmd "copen"
-end, { desc = "(Quickfix) Remove current entry" })
+-- -- Remove current entry from quickfix
+-- map("n", "<leader>ed", function()
+--   if vim.bo.buftype ~= "quickfix" then
+--     print "Not in quickfix window"
+--     return
+--   end
+--   local idx = vim.fn.getqflist({ idx = 0 }).idx - 1
+--   local list = vim.fn.getqflist()
+--   table.remove(list, idx + 1)
+--   vim.fn.setqflist(list)
+--   vim.cmd "copen"
+-- end, { desc = "(Quickfix) Remove current entry" })
 
 -- Clear all quickfix entries
 map("n", "<leader>e0", function()

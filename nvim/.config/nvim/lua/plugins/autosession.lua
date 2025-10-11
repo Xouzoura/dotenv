@@ -12,7 +12,7 @@ return {
   },
   keys = {
     { "<leader>ss", "<cmd>AutoSession save<CR>", desc = "<auto-session> Save session" },
-    { "<leader>sr", "<cmd>AutoSession delete<CR>", desc = "<auto-session> Delete session" },
+    { "<leader>sd", "<cmd>AutoSession delete<CR>", desc = "<auto-session> Delete session" },
     { "<leader>sf", "<cmd>AutoSession search<CR>", desc = "<auto-session> Search session" },
   },
 }
