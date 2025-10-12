@@ -15,11 +15,8 @@ return {
         nightfox = {
           red = "#c94f6d",
         },
-        dayfox = {
-          blue = { base = "#4d688e", bright = "#4e75aa", dim = "#485e7d" },
-        },
         nordfox = {
-          sel1 = "#4f6074", -- Popup sel bg, search bg
+          sel1 = "#4f6074",
           comment = "#60728a",
         },
       },

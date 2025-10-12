@@ -5,16 +5,17 @@
 return {
   {
     "sindrets/diffview.nvim",
-    -- lazy = true,
+    lazy = false,
     config = function()
       local actions = require "diffview.actions"
       require("diffview").setup {
         keymaps = {
           file_panel = {
-            -- TODO: add the scroll for god's sake with c-u and c-d
-
-            { "n", "<C-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
-            { "n", "<C-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
+            -- test
+            -- { "n", "<C-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
+            -- { "n", "<C-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
+            { "n", "<C-u>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
+            { "n", "<C-d>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
           },
         },
       }
@@ -24,12 +25,15 @@ return {
       -- <Keymaps>
       -- Project
       map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", { desc = "(diffview) Diff with HEAD" })
-      map("n", "<leader>gd2", "<cmd>DiffviewOpen develop..HEAD<CR>", { desc = "(diffview) Diff with dev" })
-      map("n", "<leader>gd;", "<cmd>DiffviewClose<CR>", { desc = "(diffview) Close" })
+      map("n", "<leader>gd1", "<cmd>DiffviewOpen master<CR>", { desc = "(diffview) Diff with master" })
+      map("n", "<leader>gd2", "<cmd>DiffviewOpen develop<CR>", { desc = "(diffview) Diff with dev" })
+      -- map("n", "<leader>gd3", "<cmd>DiffviewOpen HEAD..develop<CR>", { desc = "(diffview) Diff with dev" })
+      map("n", "<leader>g;", "<cmd>DiffviewClose<CR>", { desc = "(diffview) Close" })
       -- Buffer
-      map("n", "<leader>gb2", "<cmd>DiffviewOpen develop -- %<CR>", { desc = "(diffview) Diff file with dev" })
-      map("n", "<leader>gb0", "<cmd>DiffviewOpen HEAD -- %<CR>", { desc = "(diffview) Diff file with dev" })
-      map("n", "<leader>gbf", "<cmd>DiffviewFileHistory %<CR>", { desc = "(diffview) Diff file" })
+      map("n", "<leader>gb1", "<cmd>DiffviewOpen develop -- %<CR>", { desc = "(diffview) Diff file with master" })
+      map("n", "<leader>gb2", "<cmd>DiffviewOpen master -- %<CR>", { desc = "(diffview) Diff file with dev" })
+      -- map("n", "<leader>gb0", "<cmd>DiffviewOpen HEAD..develop -- %<CR>", { desc = "(diffview) Diff file with " })
+      map("n", "<leader>gbh", "<cmd>DiffviewFileHistory %<CR>", { desc = "(diffview) Diff file" })
     end,
   },
   {
@@ -37,7 +41,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
     -- Lazy loading on 'VimEnter' event is necessary.
     event = "VimEnter",
-    -- enabled = false,
+    enabled = false,
     config = function()
       require("vgit").setup {
         keymaps = {

@@ -67,4 +67,8 @@ local delim = is_windows and ";" or ":"
 vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
 
 -- colorscheme
-vim.cmd "colorscheme nightfox"
+local cs = vim.env.NVIM_COLORSCHEME or "nightfox"
+if cs and cs ~= "" then
+  vim.cmd("colorscheme " .. cs)
+end
+-- vim.cmd "colorscheme nightfox"
