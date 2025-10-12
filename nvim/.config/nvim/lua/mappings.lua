@@ -167,6 +167,7 @@ map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Fo
 map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
 map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove 'new' marks", noremap = true, silent = true })
 map("n", "gl", "<C-^>", { noremap = true, silent = true, desc = "Last buffer" })
+map("n", "z;", "za<CR>", { noremap = true, silent = true, desc = "Open oil" })
 
 -------------------------
 -- PLUGINS --------------

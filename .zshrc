@@ -212,6 +212,7 @@ alias wz='wezterm'
 gdiff() {
   NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
 }
+alias hotspot='nmcli dev wifi connect "Ts0t"'
 
 # PYTHON
 # Python aliases for my code (uv)

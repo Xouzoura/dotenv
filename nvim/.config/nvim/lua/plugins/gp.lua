@@ -201,6 +201,43 @@ return {
       -- forward (W) or backward (bW)
       vim.fn.search(symbol, direction) -- 'W' ensures it wraps around to the start of the file
     end
+    local function delete_after_line_to_last(pattern, start_after_line, do_delete)
+      -- without recreating files etc, remove everything
+      local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+      local matches = {}
+
+      -- collect all matching line numbers
+      for i, line in ipairs(lines) do
+        if line:find(pattern) then
+          table.insert(matches, i)
+        end
+      end
+
+      -- find the first occurrence **after start_after_line**
+      local first = nil
+      for _, lnum in ipairs(matches) do
+        if lnum > start_after_line then
+          first = lnum
+          break
+        end
+      end
+
+      if not first then
+        print("No occurrence found after line " .. start_after_line)
+        return
+      end
+
+      if #matches < 3 then
+        print("Not enough occurrences (" .. #matches .. ")")
+        return
+      end
+
+      local last = matches[#matches] - 1
+
+      if do_delete then
+        vim.api.nvim_buf_set_lines(0, first - 1, last, false, {})
+      end
+    end
     local map = vim.keymap.set
     map({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions "New Chat")
     map({ "n", "i" }, "<C-g>;", "<cmd>GpChatToggle<cr>", keymapOptions "Toggle Chat")
@@ -218,10 +255,9 @@ return {
     map({ "n" }, "]g", function()
       goToPlace(a_symbol, "W")
     end, keymapOptions "Go to next answer")
-    -- map({ "n" }, "<C-g>]", goToNextQuestion, keymapOptions "Go to next question")
-    -- map({ "n" }, "<C-g>[", goToPreviousQuestion, keymapOptions "Go to previous question")
-    -- map({ "n" }, "<C-g>}", goToNextAnswer, keymapOptions "Go to next answer")
-    -- map({ "n" }, "<C-g>{", goToPreviousAnswer, keymapOptions "Go to previous answer")
+    map({ "n" }, "<C-g>q", function()
+      delete_after_line_to_last(q_symbol, 9, true)
+    end, keymapOptions "Delete previous questions")
 
     map("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions "Visual Chat New")
     map("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions "Visual Chat Paste")
