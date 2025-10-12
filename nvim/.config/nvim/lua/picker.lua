@@ -21,7 +21,9 @@ if M.USE_FZF_LUA then
       -- use the plugin that has a history of opened files
       "<leader><leader>",
       function()
-        require("fzf-lua-enchanted-files").files()
+        -- require("fzf-lua-enchanted-files").files()
+        local fzf_lua = require "fzf-lua"
+        fzf_lua.files()
       end,
       desc = "(fzf) Find Files (enchanted)",
     },

@@ -2,17 +2,26 @@ return {
   -- Way to jump between the edits that I have made (alt+p, alt+n)
   "bloznelis/before.nvim",
   lazy = false,
+  keys = {
+    {
+      "<M-p>",
+      function()
+        require("before").jump_to_last_edit()
+      end,
+      desc = "Jump to last edit",
+    },
+    {
+      "<M-n>",
+      function()
+        require("before").jump_to_next_edit()
+      end,
+      desc = "Jump to next edit",
+    },
+    -- Optional leader bindings:
+    -- { "<leader>oq", function() require("before").show_edits_in_quickfix() end, desc = "Edits in quickfix" },
+    -- { "<leader>oe", function() require("before").show_edits_in_telescope() end, desc = "Edits in telescope" },
+  },
   config = function()
-    local before = require "before"
-    before.setup()
-
-    vim.keymap.set("n", "<M-p>", before.jump_to_last_edit, {})
-    vim.keymap.set("n", "<M-n>", before.jump_to_next_edit, {})
-    --
-    -- -- Look for previous edits in quickfix list
-    -- vim.keymap.set("n", "<leader>oq", before.show_edits_in_quickfix, {})
-    --
-    -- -- Look for previous edits in telescope (needs telescope, obviously)
-    -- vim.keymap.set("n", "<leader>oe", before.show_edits_in_telescope, {})
+    require("before").setup()
   end,
 }

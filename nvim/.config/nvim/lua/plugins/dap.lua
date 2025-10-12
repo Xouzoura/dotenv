@@ -1,15 +1,87 @@
 -- Debug
 return {
   -- REMEMBER YOU NEED DEBUGPY INSTALLED IF YOU USE IT WITH .venv
+  -- uv add debugpy
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-      "nvim-neotest/nvim-nio",
+    lazy = true, -- lazy load
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    keys = {
+      {
+        "<leader>d;",
+        function()
+          require("dapui").toggle()
+        end,
+        desc = "[d]Toggle DAP UI",
+      },
+      {
+        "<leader>du",
+        function()
+          require("dapui").open { reset = true }
+        end,
+        desc = "[d]Reset DAP UI",
+      },
+      {
+        "<leader>d1",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.api.nvim_buf_get_name(buf):match "%[dap%-repl" then
+              vim.api.nvim_set_current_win(win)
+              return
+            end
+          end
+          vim.notify("DAP REPL not found", vim.log.levels.WARN)
+        end,
+        desc = "[d] Focus DAP REPL",
+      },
+      {
+        "<leader>d2",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.api.nvim_buf_get_name(buf):match "%Console" then
+              vim.api.nvim_set_current_win(win)
+              return
+            end
+          end
+          vim.notify("DAP Console not found", vim.log.levels.WARN)
+        end,
+        desc = "[d] Focus stdout",
+      },
+      {
+        "<leader>d3",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.api.nvim_buf_get_name(buf):match "Watches" then
+              vim.api.nvim_set_current_win(win)
+              return
+            end
+          end
+          vim.notify("DAP Watches not found", vim.log.levels.WARN)
+        end,
+        desc = "[d] Focus watches",
+      },
+      {
+        "<leader>d4",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.api.nvim_buf_get_name(buf):match "Breakpoints" then
+              vim.api.nvim_set_current_win(win)
+              return
+            end
+          end
+          vim.notify("DAP Breakpoints not found", vim.log.levels.WARN)
+        end,
+        desc = "[d] Focus breakpoints",
+      },
     },
     config = function()
       local dap = require "dap"
       local dapui = require "dapui"
+
       dapui.setup {
         layouts = {
           {
@@ -20,83 +92,21 @@ return {
               { id = "repl", size = 0.3 },
             },
             position = "left",
-            size = 45, -- width in columns
+            size = 45,
           },
           {
-            elements = {
-              { id = "console", size = 1 },
-            },
+            elements = { { id = "console", size = 1 } },
             position = "bottom",
-            size = 20, -- height in lines
+            size = 20,
           },
         },
       }
+
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
       dap.listeners.before.event_terminated.dapui_config = dapui.close
       dap.listeners.before.event_exited.dapui_config = dapui.close
-      -- keys
-      -- go to a specific place
-      vim.keymap.set("n", "<leader>d1", function()
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local name = vim.api.nvim_buf_get_name(buf)
-          if name:match "%[dap%-repl" then
-            vim.api.nvim_set_current_win(win)
-            return
-          end
-        end
-        vim.notify("DAP REPL not found", vim.log.levels.WARN)
-      end, { desc = "[d] Focus DAP REPL" })
-
-      vim.keymap.set("n", "<leader>d2", function()
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local name = vim.api.nvim_buf_get_name(buf)
-          if name:match "%Console" then
-            vim.api.nvim_set_current_win(win)
-            return
-          end
-        end
-        vim.notify("DAP Console not found", vim.log.levels.WARN)
-      end, { desc = "[d] Focus stdout" })
-      vim.keymap.set("n", "<leader>d3", function()
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local name = vim.api.nvim_buf_get_name(buf)
-          if name:match "Watches" then
-            vim.api.nvim_set_current_win(win)
-            return
-          end
-        end
-        vim.notify("DAP Watches not found", vim.log.levels.WARN)
-      end, { desc = "[d] Focus watches" })
-
-      vim.keymap.set("n", "<leader>d4", function()
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local name = vim.api.nvim_buf_get_name(buf)
-          if name:match "Breakpoints" then
-            vim.api.nvim_set_current_win(win)
-            return
-          end
-        end
-        vim.notify("DAP Breakpoints not found", vim.log.levels.WARN)
-      end, { desc = "[d] Focus breakpoints" })
-      -- 2
-      vim.keymap.set("n", "<leader>dos", function()
-        require("dapui").float_element("stacks", {})
-      end, { desc = "[d] Float stacks (traces)" })
-      vim.keymap.set("n", "<leader>dov", function()
-        require("dapui").float_element("scopes", {})
-      end, { desc = "[d] Float scopes (variables)" })
-      vim.keymap.set("n", "<leader>dob", function()
-        require("dapui").float_element("breakpoints", {})
-      end, { desc = "[d] Float breakpoints" })
-      vim.keymap.set("n", "<leader>dow", function()
-        require("dapui").float_element("watches", {})
-      end, { desc = "[d] Float watches" })
     end,
   },
   {
@@ -140,21 +150,24 @@ return {
   },
   {
     "theHamsta/nvim-dap-virtual-text",
-    lazy = false,
+    -- lazy = false,
     dependencies = {
       "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
+    },
+    keys = {
+      { "<leader>dv", "<cmd>DapVirtualTextToggle<CR>", desc = "[d]Toggle text UI" },
     },
     config = function()
       require("nvim-dap-virtual-text").setup {
         virt_text_pos = "eol",
       }
-      vim.keymap.set("n", "<leader>dv", "<cmd>DapVirtualTextToggle<CR>", { desc = "[d]Toggle Virtual Text" })
     end,
   },
   {
     "mfussenegger/nvim-dap-python",
     ft = "python",
-    lazy = false,
+    -- lazy = false,
     dependencies = {
       "mfussenegger/nvim-dap",
       "rcarriga/nvim-dap-ui",
@@ -181,7 +194,6 @@ return {
     keys = {
       { "<leader>d;", "<cmd>lua require( 'dapui' ).toggle()<CR>", desc = "[d]Toggle DAP UI" },
       { "<leader>du", "<cmd>lua require( 'dapui' ).open({reset=true})<CR>", desc = "[d]Reset DAP UI" },
-      -- { "<leader>dx", "<cmd>lua require( 'dapui' ).close()<CR>", desc = "[d]Close DAP UI" },
     },
   },
   {
@@ -213,12 +225,12 @@ return {
       },
     },
   },
-  {
-    "igorlfs/nvim-dap-view",
-    ---@module 'dap-view'
-    ---@type dapview.Config
-    opts = {},
-  },
+  -- {
+  --   "igorlfs/nvim-dap-view",
+  --   ---@module 'dap-view'
+  --   ---@type dapview.Config
+  --   opts = {},
+  -- },
 }
 
 --- .vscode/launch.json example

@@ -1,7 +1,38 @@
 return {
-  -- Search and replace within all the files
   "nvim-pack/nvim-spectre",
-  lazy = false,
+  lazy = true, -- only load on key press
+  keys = {
+    {
+      "<leader>r;",
+      function()
+        require("spectre").toggle()
+      end,
+      desc = "<Spectre> Toggle",
+    },
+    {
+      "<leader>rc",
+      function()
+        require("spectre").open_visual { select_word = true }
+      end,
+      mode = "n",
+      desc = "<Spectre> Replace word",
+    },
+    {
+      "<leader>rc",
+      function()
+        require("spectre").open_visual()
+      end,
+      mode = "v",
+      desc = "<Spectre> Replace visual selection",
+    },
+    {
+      "<leader>rf",
+      function()
+        require("spectre").open_file_search { select_word = true }
+      end,
+      desc = "<Spectre> Search on current file",
+    },
+  },
   config = function()
     require("spectre").setup {
       result_padding = "",
@@ -11,18 +42,5 @@ return {
         },
       },
     }
-    local map = vim.keymap.set
-    map("n", "<leader>r;", '<cmd>lua require("spectre").toggle()<CR>', {
-      desc = "<Spectre> Toggle",
-    })
-    map("n", "<leader>rc", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-      desc = "<Spectre> Replace word",
-    })
-    map("v", "<leader>rc", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-      desc = "<Spectre> Replace visual selection",
-    })
-    map("n", "<leader>rf", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-      desc = "<Spectre> Search on current file",
-    })
   end,
 }

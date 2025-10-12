@@ -5,35 +5,45 @@
 return {
   {
     "sindrets/diffview.nvim",
-    lazy = false,
+    lazy = true, -- only load on key press
+    keys = {
+      -- Project-level
+      { "<leader>gd0", "<cmd>DiffviewOpen<CR>", desc = "(diffview) Diff with HEAD" },
+      { "<leader>gd1", "<cmd>DiffviewOpen master<CR>", desc = "(diffview) Diff with master" },
+      { "<leader>gd2", "<cmd>DiffviewOpen develop<CR>", desc = "(diffview) Diff with dev" },
+      { "<leader>g;", "<cmd>DiffviewClose<CR>", desc = "(diffview) Close" },
+      -- Buffer-level
+      { "<leader>gb1", "<cmd>DiffviewOpen develop -- %<CR>", desc = "(diffview) Diff file with develop" },
+      { "<leader>gb2", "<cmd>DiffviewOpen master -- %<CR>", desc = "(diffview) Diff file with master" },
+      { "<leader>gb0", "<cmd>DiffviewOpen -- %<CR>", desc = "(diffview) Diff file with HEAD" },
+      { "<leader>gbh", "<cmd>DiffviewFileHistory %<CR>", desc = "(diffview) Diff file history" },
+    },
     config = function()
       local actions = require "diffview.actions"
       require("diffview").setup {
         keymaps = {
           file_panel = {
-            -- test
-            -- { "n", "<C-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
-            -- { "n", "<C-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
             { "n", "<C-u>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
             { "n", "<C-d>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
           },
         },
       }
-
-      local map = vim.keymap.set
-
-      -- <Keymaps>
-      -- Project
-      map("n", "<leader>gdh", "<cmd>DiffviewOpen<CR>", { desc = "(diffview) Diff with HEAD" })
-      map("n", "<leader>gd1", "<cmd>DiffviewOpen master<CR>", { desc = "(diffview) Diff with master" })
-      map("n", "<leader>gd2", "<cmd>DiffviewOpen develop<CR>", { desc = "(diffview) Diff with dev" })
-      -- map("n", "<leader>gd3", "<cmd>DiffviewOpen HEAD..develop<CR>", { desc = "(diffview) Diff with dev" })
-      map("n", "<leader>g;", "<cmd>DiffviewClose<CR>", { desc = "(diffview) Close" })
-      -- Buffer
-      map("n", "<leader>gb1", "<cmd>DiffviewOpen develop -- %<CR>", { desc = "(diffview) Diff file with master" })
-      map("n", "<leader>gb2", "<cmd>DiffviewOpen master -- %<CR>", { desc = "(diffview) Diff file with dev" })
-      -- map("n", "<leader>gb0", "<cmd>DiffviewOpen HEAD..develop -- %<CR>", { desc = "(diffview) Diff file with " })
-      map("n", "<leader>gbh", "<cmd>DiffviewFileHistory %<CR>", { desc = "(diffview) Diff file" })
+    end,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    lazy = false,
+    event = "User FilePost",
+    keys = {
+      { "<leader>gB", "<cmd>GitSigns blame<CR>", desc = "(git-signs) Toggle blame" },
+    },
+    opts = function()
+      return {
+        signs = {
+          delete = { text = "󰍵" },
+          changedelete = { text = "󱕖" },
+        },
+      }
     end,
   },
   {

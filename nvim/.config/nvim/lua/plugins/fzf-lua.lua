@@ -97,7 +97,8 @@ return {
   {
     "otavioschwanck/fzf-lua-enchanted-files",
     dependencies = { "ibhagwan/fzf-lua" },
-    enabled = _enabled,
+    -- enabled = _enabled,
+    enabled = false,
     config = function()
       -- Modern configuration using vim.g
       vim.g.fzf_lua_enchanted_files = {

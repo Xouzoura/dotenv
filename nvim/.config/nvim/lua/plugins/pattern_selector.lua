@@ -1,24 +1,24 @@
 return {
   -- regex, uuids etc
   "Xouzoura/pattern-selector",
-  lazy = true,
   branch = "master",
+  keys = {
+    {
+      "<leader>cu",
+      function()
+        require("pattern_selector").FindAndSelectPattern()
+      end,
+      desc = "Find and select pattern",
+    },
+    {
+      "<leader>cr",
+      function()
+        require("pattern_selector").ReplaceWithClipboard()
+      end,
+      desc = "Replace with clipboard",
+    },
+  },
   config = function(_, opts)
     require("pattern_selector").setup(opts)
-    -- Set a keymap to call the pattern selector function
-    vim.api.nvim_set_keymap(
-      "n",
-      "<leader>cu",
-      ":lua require('pattern_selector').FindAndSelectPattern()<CR>",
-      { noremap = true, silent = true, desc = "Find and select pattern" }
-    )
-    -- Set a keymap to call the replace with function
-
-    vim.api.nvim_set_keymap(
-      "n",
-      "<leader>cr",
-      ":lua require('pattern_selector').ReplaceWithClipboard()<CR>",
-      { noremap = true, silent = true, desc = "Replace with clipboard" }
-    )
   end,
 }
