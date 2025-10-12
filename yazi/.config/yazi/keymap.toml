@@ -433,6 +433,11 @@ keymap = [
     ], run = "cd ~/.config/yazi", desc = "Go to the ~/.config/yazi directory" },
     { on = [
         "g",
+        "P",
+        "d",
+    ], run = "cd ~/Koofr/personal_documents/", desc = "Go to the personal documents" },
+    { on = [
+        "g",
         "M",
     ], run = "cd /media", desc = "Go to the mount directory (media)" },
     { on = [

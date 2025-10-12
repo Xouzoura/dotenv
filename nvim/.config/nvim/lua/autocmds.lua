@@ -108,7 +108,7 @@ autocmd({ "FileType" }, {
 })
 
 -- Define a function to set highlights for search
-function set_highlights()
+function _G.set_highlights()
   vim.api.nvim_set_hl(0, "Search", { bg = "#8B8000", fg = "#000000" })
 end
 
@@ -116,16 +116,16 @@ end
 vim.cmd [[
   augroup SetSearchHighlights
     autocmd!
-    autocmd VimEnter,BufWinEnter,BufRead,BufNewFile * lua set_highlights()
+    autocmd VimEnter,BufWinEnter,BufRead,BufNewFile * lua _G.set_highlights()
   augroup END
 ]]
-set_highlights()
+_G.set_highlights()
 vim.o.statusline = table.concat {
   "%f",
   " %m",
-  " %{v:lua.LspDiagnostics()}", -- LSP diagnostics
   " %=",
-  "%{v:lua.LspStatus()}",
+  " %{v:lua.LspDiagnostics()}", -- LSP diagnostics
+  " %{v:lua.LspStatus()}",
   " %p%%",
 }
 function _G.LspStatus()
