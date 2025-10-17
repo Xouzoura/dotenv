@@ -86,18 +86,18 @@ return {
         layouts = {
           {
             elements = {
-              { id = "scopes", size = 0.3 },
+              { id = "scopes", size = 0.2 },
               { id = "watches", size = 0.2 },
               { id = "breakpoints", size = 0.2 },
-              { id = "repl", size = 0.3 },
+              { id = "console", size = 0.4 },
             },
             position = "left",
             size = 45,
           },
           {
-            elements = { { id = "console", size = 1 } },
+            elements = { { id = "repl", size = 1 } },
             position = "bottom",
-            size = 20,
+            size = 30,
           },
         },
       }
