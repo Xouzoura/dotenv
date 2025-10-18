@@ -22,6 +22,42 @@ return {
         desc = "[d]Reset DAP UI",
       },
       {
+        "<leader>da",
+        function()
+          require("dapui").float_element "scopes"
+        end,
+        desc = "[d] Float scopes",
+      },
+      {
+        "<leader>ds",
+        function()
+          require("dapui").float_element "stacks"
+        end,
+        desc = "[d] Float stacks",
+      },
+      {
+        "<leader>dw",
+        function()
+          require("dapui").float_element "watches"
+        end,
+        desc = "[d] Float watches",
+      },
+      {
+        "<leader>d0",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local name = vim.api.nvim_buf_get_name(buf)
+            if not name:match "dap" then
+              vim.api.nvim_set_current_win(win)
+              return
+            end
+          end
+          vim.notify("DAP REPL not found", vim.log.levels.WARN)
+        end,
+        desc = "[d] Focus DAP REPL",
+      },
+      {
         "<leader>d1",
         function()
           for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -40,7 +76,8 @@ return {
         function()
           for _, win in ipairs(vim.api.nvim_list_wins()) do
             local buf = vim.api.nvim_win_get_buf(win)
-            if vim.api.nvim_buf_get_name(buf):match "%Console" then
+            print(vim.api.nvim_buf_get_name(buf))
+            if vim.api.nvim_buf_get_name(buf):match "Console" or vim.api.nvim_buf_get_name(buf):match "terminal" then
               vim.api.nvim_set_current_win(win)
               return
             end
@@ -84,20 +121,25 @@ return {
 
       dapui.setup {
         layouts = {
-          {
-            elements = {
-              { id = "scopes", size = 0.2 },
-              { id = "watches", size = 0.2 },
-              { id = "breakpoints", size = 0.2 },
-              { id = "console", size = 0.4 },
-            },
-            position = "left",
-            size = 45,
-          },
+          -- {
+          --   elements = {
+          --     { id = "scopes", size = 0.2 },
+          --     { id = "watches", size = 0.2 },
+          --     { id = "breakpoints", size = 0.2 },
+          --     { id = "console", size = 0.4 },
+          --   },
+          --   position = "left",
+          --   size = 35,
+          -- },
           {
             elements = { { id = "repl", size = 1 } },
             position = "bottom",
-            size = 30,
+            size = 20,
+          },
+          {
+            elements = { { id = "console", size = 1 } },
+            position = "bottom",
+            size = 20,
           },
         },
       }
