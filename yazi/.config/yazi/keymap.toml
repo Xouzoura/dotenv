@@ -559,6 +559,14 @@ prepend_keymap = [
         "D",
         # "u",
     ], run = "plugin duckdb -ui", desc = "[pl] open with duckdb ui" },
+    { on = [
+        "Y",
+        "M",
+    ], run = '''
+    shell --
+	paths=$(for p in "$@"; do echo "$p"; done | paste -s -d,)
+	thunderbird -compose "attachment='$paths'"
+    ''', desc = "Attach to email" },
 
 ]
 [tasks]
@@ -837,6 +845,8 @@ keymap = [
     ], run = "help", desc = "Open help" },
     { on = "<F1>", run = "help", desc = "Open help" },
 ]
+
+prepend_keymap = [{ on = ["<Esc>"], run = "close", desc = "Cancel input" }]
 
 [spot]
 

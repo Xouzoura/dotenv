@@ -46,36 +46,35 @@ return {
     vim.keymap.set("n", "z0", function()
       vim.wo.foldlevel = 0
       print "Fold level: 0" -- Display the new fold level
-    end, { desc = "Set fold to 0" })
+    end, { desc = "[ufo] Set fold to 0" })
 
     -- 1
     vim.keymap.set("n", "z1", function()
       vim.wo.foldlevel = 1
       print "Fold level: 1" -- Display the new fold level
-    end, { desc = "Set fold to 1" })
+    end, { desc = "[ufo] Set fold to 1" })
 
     vim.keymap.set("n", "z2", function()
       vim.wo.foldlevel = 2
       print "Fold level: 2" -- Display the new fold level
-    end, { desc = "Set fold to 2" })
+    end, { desc = "[ufo] Set fold to 2" })
     -- max
-    vim.keymap.set("n", "z=", function()
+    vim.keymap.set("n", "z.", function()
       vim.wo.foldlevel = 20
       print "Fold level: 20" -- Display the new fold level
-    end, { desc = "Set fold to max" })
+    end, { desc = "[ufo] Set fold to max" })
     -- decrease
-    vim.keymap.set("n", "z-", function()
+    vim.keymap.set("n", "z[", function()
       local current_level = vim.wo.foldlevel
       vim.wo.foldlevel = math.max(current_level - 1, 0) -- Ensure it doesn't go below 0
       print("Fold level: " .. vim.wo.foldlevel) -- Display the new fold level
-    end, { desc = "Decrease fold level" })
+    end, { desc = "[ufo] Decrease fold level" })
 
-    -- increase
-    vim.keymap.set("n", "z+", function()
+    vim.keymap.set("n", "z]", function()
       local current_level = vim.wo.foldlevel
-      vim.wo.foldlevel = current_level + 1
+      vim.wo.foldlevel = math.min(current_level + 1, 20) -- Ensure it doesn't go below 0
       print("Fold level: " .. vim.wo.foldlevel) -- Display the new fold level
-    end, { desc = "Increase fold level" })
+    end, { desc = "[ufo] Increase fold level" })
 
     -- Hover and sneak-peek
     vim.keymap.set("n", "zp", function()

@@ -42,6 +42,7 @@ return {
             -- true,
             false,
             ["ctrl-q"] = "select-all+accept",
+            ["ctrl-r"] = "select-all+accept",
             ["ctrl-z"] = "abort",
             ["ctrl-f"] = "half-page-down",
             ["ctrl-b"] = "half-page-up",
