@@ -181,6 +181,7 @@ alias winc="z /mnt/c/Users/DIO3713/"
 alias vi="nvim"
 # alias vo="nvim -c 'Telescope oldfiles'"
 alias vo="nvim -c 'lua require(\"fzf-lua\").oldfiles()'"
+alias vid="DAP_FULL_LAYOUT=1 nvim"
 
 # others
 alias mouse="keep-presence"

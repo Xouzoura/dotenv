@@ -117,31 +117,32 @@ return {
     config = function()
       local dap = require "dap"
       local dapui = require "dapui"
+      local enable_full_layout = os.getenv "DAP_FULL_LAYOUT" == "1"
 
-      dapui.setup {
-        layouts = {
-          -- {
-          --   elements = {
-          --     { id = "scopes", size = 0.2 },
-          --     { id = "watches", size = 0.2 },
-          --     { id = "breakpoints", size = 0.2 },
-          --     { id = "console", size = 0.4 },
-          --   },
-          --   position = "left",
-          --   size = 35,
-          -- },
-          {
-            elements = { { id = "repl", size = 1 } },
-            position = "bottom",
-            size = 20,
-          },
-          {
-            elements = { { id = "console", size = 1 } },
-            position = "bottom",
-            size = 20,
-          },
+      local _layouts = {
+        {
+          elements = { { id = "repl", size = 1 } },
+          position = "bottom",
+          size = 14,
+        },
+        {
+          elements = { { id = "console", size = 1 } },
+          position = "bottom",
+          size = 20,
         },
       }
+      if enable_full_layout then
+        table.insert(_layouts, 1, {
+          elements = {
+            { id = "scopes", size = 0.5 },
+            { id = "watches", size = 0.3 },
+            { id = "breakpoints", size = 0.2 },
+          },
+          position = "left",
+          size = 30,
+        })
+      end
+      dapui.setup { layouts = _layouts }
 
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
@@ -174,15 +175,18 @@ return {
         require("dap").terminate()
       end, { desc = "Terminate" })
       -- Continue
-      vim.keymap.set("n", "<F4>", function()
+      vim.keymap.set("n", "<F10>", function()
         require("dap").step_over()
       end, { desc = "Step Over" })
-      vim.keymap.set("n", "<F3>", function()
+      --
+      vim.keymap.set("n", "<F11>", function()
         require("dap").step_into()
       end, { desc = "Step Into" })
+      --
       vim.keymap.set("n", "<F12>", function()
         require("dap").step_out()
       end, { desc = "Step Out" })
+      --
       vim.keymap.set("n", "<leader>dB", function()
         require("dap").set_breakpoint()
       end, { desc = "[d]Set (non-persistent) Breakpoint" })

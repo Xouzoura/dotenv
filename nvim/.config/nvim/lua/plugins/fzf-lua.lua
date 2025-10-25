@@ -127,7 +127,7 @@ return {
       --   desc = "(fzf) Buffers",
       -- },
       {
-        "<leader>fbd",
+        "<leader>fbD",
         function()
           local fzf_lua = require "fzf-lua"
           fzf_lua.diagnostics_document()
@@ -135,7 +135,7 @@ return {
         desc = "(fzf) Diagnostics (buffer)",
       },
       {
-        "<leader>fd",
+        "<leader>fD",
         function()
           local fzf_lua = require "fzf-lua"
           fzf_lua.diagnostics_workspace()
@@ -200,6 +200,31 @@ return {
           fzf_lua.git_bcommits()
         end,
         desc = "(fzf) Git diff for current file",
+      },
+      -- DAP
+      {
+        "<leader>fdv",
+        function()
+          local fzf_lua = require "fzf-lua"
+          fzf_lua.dap_variables()
+        end,
+        desc = "(fzf)[d] Variables ",
+      },
+      {
+        "<leader>fdb",
+        function()
+          local fzf_lua = require "fzf-lua"
+          fzf_lua.dap_breakpoints()
+        end,
+        desc = "(fzf)[d] Breakpoints ",
+      },
+      {
+        "<leader>fdf",
+        function()
+          local fzf_lua = require "fzf-lua"
+          fzf_lua.dap_frames()
+        end,
+        desc = "(fzf)[d] Frames ",
       },
       -- resume
       {
