@@ -20,10 +20,10 @@ return {
         toggle_comment_debug_prints = "<leader>dD",
         delete_debug_prints = "<leader>dd",
       },
-      visual = {
-        variable_below = "g?v",
-        variable_above = "g?V",
-      },
+      -- visual = {
+      --   variable_below = "g?v",
+      --   variable_above = "g?V",
+      -- },
     },
     commands = {
       toggle_comment_debug_prints = "ToggleCommentDebugPrints",
