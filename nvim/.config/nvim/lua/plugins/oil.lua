@@ -33,4 +33,19 @@ return {
       show_hidden = true,
     },
   },
+  keys = {
+    {
+      "g;",
+      "<cmd>Oil<CR>",
+      desc = "Open oil",
+    },
+    {
+      "g:",
+      function()
+        local proj_pwd = vim.fn.getcwd()
+        require("oil").open(proj_pwd)
+      end,
+      desc = "Open oil at cwd",
+    },
+  },
 }

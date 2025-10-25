@@ -116,9 +116,6 @@ map("n", "<C-W>>", ":vertical resize +10<CR>", { noremap = true })
 -- Undo with U instead of only C-r
 map("n", "U", "<C-r>", { silent = true })
 -- vim.api.nvim_del_keymap("n", "<C-r>")
--- NOTE: decide which one
-map("n", "gps", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
-map("n", "H", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
 map("n", "<C-e>", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
 -- close item from buffer
 map("n", "<leader>q", "<cmd>bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Close current buffer", silent = true })
@@ -131,30 +128,8 @@ map(
 
 -- Diagnostics
 map("n", "<leader>df", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Diagnostic error float open" })
-map("n", "<leader>dy", function()
-  local diag = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })[1]
-  if diag and diag.message then
-    vim.fn.setreg("+", diag.message) -- copy to system clipboard
-    vim.notify("Copied first diagnostic message to clipboard.", vim.log.levels.INFO)
-  else
-    vim.notify("No diagnostic found on this line.", vim.log.levels.WARN)
-  end
-end, { desc = "Copy first diagnostic to clipboard" })
-map("n", "<leader>dY", function()
-  local diags = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
-  if #diags > 0 then
-    -- Concatenate all diagnostic messages with newlines between them
-    local messages = {}
-    for _, diag in ipairs(diags) do
-      table.insert(messages, diag.message)
-    end
-    local all_msgs = table.concat(messages, "\n")
-    vim.fn.setreg("+", all_msgs) -- copy all messages to system clipboard
-    vim.notify("Copied all diagnostic messages to clipboard.", vim.log.levels.INFO)
-  else
-    vim.notify("No diagnostic found on this line.", vim.log.levels.WARN)
-  end
-end, { desc = "Copy diagnostics to clipboard" })
+map("n", "<leader>dy", extras.diagnostic_copy_first_msg, { desc = "[copy] first diagnostic to clipboard" })
+map("n", "<leader>dY", extras.diagnostic_copy_all_msgs, { desc = "[copy] All diagnostic to clipboard" })
 
 -- format json file
 map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
@@ -163,55 +138,17 @@ map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Fo
 map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
 map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove 'new' marks", noremap = true, silent = true })
 map("n", "gl", "<C-^>", { noremap = true, silent = true, desc = "Last buffer" })
-map("n", "z;", "za<CR>", { noremap = true, silent = true, desc = "Open oil" })
+map("n", "z;", "za<CR>", { noremap = true, silent = true, desc = "Toggle fold" })
 
--------------------------
--- PLUGINS --------------
--------------------------
--- puppetter
-map("n", "<leader>tp", "<cmd>PuppeteerToggle<cr>", { desc = "<fstring> toggle" })
--- Oil
-map("n", "g;", ":Oil<CR>", { noremap = true, silent = true, desc = "Open oil" })
-map("n", "g:", function()
-  local proj_pwd = vim.fn.getcwd()
-  require("oil").open(proj_pwd)
-end)
--- Debug prints (plugins/debug.lua)
--- map("n", "<leader>d[", "<CMD>ToggleCommentDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
--- map("n", "<leader>d]", "<CMD>DeleteDebugPrints<CR>", { desc = "Toggle on/off debug statements" })
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
-map("n", "<leader>yP", extras.cwd, { desc = "Copy cwd str" })
-map("n", "<leader>yF", extras.file_wd, { desc = "Copy file path str" })
+map("n", "<leader>yP", extras.cwd, { desc = "[copy] Cwd as str" })
+map("n", "<leader>yF", extras.file_wd, { desc = "[copy] File as str" })
 map({ "n", "t" }, "<c-y>", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
--- map({ "n", "t" }, "<c-1>", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
-map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
-map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "Copy all env values that are valid." })
+-- map({ "n", "t" }, "<c-m>", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
+-- map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
+map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "[copy] all ACTIVE env values (without #)." })
 map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", noremap = true, silent = true })
 map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) buffer", noremap = true, silent = true })
-map(
-  "n",
-  "<leader>ed",
-  extras.remove_quickfix_entry,
-  { desc = "remove current entry from quickfix", noremap = true, silent = true }
-)
-
--- General (or python-based)
-map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
-map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject file" })
-
--- Garbage collection
-map(
-  "n",
-  "<leader>Gs",
-  '<cmd>lua require("garbage-day.utils").start_lsp()<CR>',
-  { noremap = true, silent = true, desc = "(Garbage) Start LSP" }
-)
-map(
-  "n",
-  "<leader>Gx",
-  '<cmd>lua require("garbage-day.utils").stop_lsp()<CR>',
-  { noremap = true, silent = true, desc = "(Garbage) Stop LSP" }
-)
 
 -- quickfix
 -- Toggle quickfix
@@ -225,21 +162,26 @@ map("n", "<leader>eo", function()
   vim.cmd.copen()
 end, { desc = "(Quickfix) Toggle" })
 
--- -- Remove current entry from quickfix
--- map("n", "<leader>ed", function()
---   if vim.bo.buftype ~= "quickfix" then
---     print "Not in quickfix window"
---     return
---   end
---   local idx = vim.fn.getqflist({ idx = 0 }).idx - 1
---   local list = vim.fn.getqflist()
---   table.remove(list, idx + 1)
---   vim.fn.setqflist(list)
---   vim.cmd "copen"
--- end, { desc = "(Quickfix) Remove current entry" })
+-- delete entries
+map(
+  "n",
+  "<leader>ed",
+  extras.remove_quickfix_entry,
+  { desc = "remove current entry from quickfix", noremap = true, silent = true }
+)
+map(
+  "v",
+  "<leader>ed",
+  extras.remove_quickfix_selection,
+  { desc = "remove current entries from quickfix", noremap = true, silent = true }
+)
 
 -- Clear all quickfix entries
 map("n", "<leader>e0", function()
   vim.fn.setqflist {}
   print "Quickfix list cleared"
 end, { desc = "(Quickfix) Clear list" })
+
+-- General (or python-based)
+map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
+map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject.toml file" })

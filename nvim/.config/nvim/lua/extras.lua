@@ -391,5 +391,58 @@ function M.remove_quickfix_entry()
     vim.fn.setqflist({}, "r", { items = list, idx = idx > #list and #list or idx })
   end
 end
+function M.remove_quickfix_selection()
+  local list = vim.fn.getqflist()
+  if #list == 0 then
+    return
+  end
+
+  -- get the visual selection range
+  local start_line = vim.fn.line "v" -- visual start
+  local end_line = vim.fn.line "." -- cursor position
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  -- remove selected items from the quickfix list
+  for i = end_line, start_line, -1 do
+    table.remove(list, i)
+  end
+
+  -- update quickfix
+  if vim.bo.buftype == "quickfix" then
+    vim.fn.setqflist(list)
+    vim.cmd "copen"
+  else
+    local idx = vim.fn.getqflist({ idx = 0 }).idx
+    vim.fn.setqflist({}, "r", { items = list, idx = idx > #list and #list or idx })
+  end
+end
+
+function M.diagnostic_copy_first_msg()
+  local diag = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })[1]
+  if diag and diag.message then
+    vim.fn.setreg("+", diag.message) -- copy to system clipboard
+    vim.notify("Copied first diagnostic message to clipboard.", vim.log.levels.INFO)
+  else
+    vim.notify("No diagnostic found on this line.", vim.log.levels.WARN)
+  end
+end
+
+function M.diagnostic_copy_all_msgs()
+  local diags = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
+  if #diags > 0 then
+    -- Concatenate all diagnostic messages with newlines between them
+    local messages = {}
+    for _, diag in ipairs(diags) do
+      table.insert(messages, diag.message)
+    end
+    local all_msgs = table.concat(messages, "\n")
+    vim.fn.setreg("+", all_msgs) -- copy all messages to system clipboard
+    vim.notify("Copied all diagnostic messages to clipboard.", vim.log.levels.INFO)
+  else
+    vim.notify("No diagnostic found on this line.", vim.log.levels.WARN)
+  end
+end
 -- Done
 return M
