@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- Debug
 return {
   -- REMEMBER YOU NEED DEBUGPY INSTALLED IF YOU USE IT WITH .venv

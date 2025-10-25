@@ -457,7 +457,13 @@ keymap = [
     { on = [
         "g",
         "W",
-    ], run = "cd /mnt/c/Users/DIO3713/", desc = "Go to the personal Windows" },
+        "h",
+    ], run = "cd /mnt/c/Users/DIO3713/", desc = "Go to the personal Windows (home)" },
+    { on = [
+        "g",
+        "W",
+        "d",
+    ], run = "cd /mnt/c/Users/DIO3713/Downloads", desc = "Go to the Windows (downloads)" },
     { on = [
         "g",
         "<Space>",
