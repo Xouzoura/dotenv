@@ -254,6 +254,15 @@ return {
         end,
         desc = "(fzf) Find 'test_' files",
       },
+      {
+        "<leader>fT",
+        function()
+          require("fzf-lua").live_grep {
+            search = "pytest.mark.new",
+          }
+        end,
+        desc = "(fzf) Show (new) marks",
+      },
     },
     opts = function()
       local actions = require("fzf-lua").actions
