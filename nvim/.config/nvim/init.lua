@@ -14,6 +14,7 @@ local lazy_config = require "configs.lazy"
 require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
+
 vim.schedule(function()
   require "mappings"
   require "options"

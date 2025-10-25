@@ -1,22 +1,4 @@
 --- Hurl.nvim configuration
-local builtin = require "telescope.builtin"
-
-vim.keymap.set("n", "<leader>cf", function()
-  builtin.find_files {
-    prompt_title = "Find Hurl Files",
-    cwd = vim.loop.cwd(), -- Use the current working directory
-    find_command = { "rg", "--files", "--glob", "*.hurl" },
-  }
-end, { desc = "(hurl) Find .hurl files in project" })
-vim.keymap.set("n", "<leader>cw", function()
-  require("telescope.builtin").live_grep {
-    prompt_title = "Grep Hurl Files",
-    cwd = vim.loop.cwd(), -- Use the current working directory
-    additional_args = function()
-      return { "--glob", "*.hurl" }
-    end,
-  }
-end, { desc = "(hurl) Live Grep in .hurl files" })
 return {
   -- "jellydn/hurl.nvim",
   "Xouzoura/hurl.nvim",
@@ -94,15 +76,32 @@ return {
     -- Run API request
     { "<leader>cA", "<cmd>HurlRunner<CR>", desc = "(Hurl) Run All requests" },
     { "<leader>ca", "<cmd>HurlRunnerAt<CR>", desc = "(Hurl) Run Api request" },
-    -- { "<leader>cz", "<cmd>HurlRunnerToEntry<CR>", desc = "(Hurl) Run Api request to entry" },
-    -- { "<leader>cm", "<cmd>HurlToggleMode<CR>", desc = "(Hurl) Toggle Mode" },
-    -- { "<leader>cv", "<cmd>HurlVerbose<CR>", desc = "(Hurl) Run Api in verbose mode" },
     { "<leader>c[", "<cmd>HurlShowLastResponse<CR>", desc = "(Hurl) Show last response" },
     { "<leader>ck", "<cmd>HurlRerun<CR>", desc = "(Hurl) Rerun last command" },
     -- Run Hurl request in visual mode
     { "<leader>c", ":HurlRunner<CR>", desc = "(Hurl) Visual Runner", mode = "v" },
-    -- General mappings
     { "<leader>ce", ":edit vars.env<CR>", desc = "(Hurl) Open vars.env file" },
     { "<leader>cj", ":edit .hurls/vars.hurl<CR>", desc = "(Hurl) Open vars.hurl file" },
+    -- Custom
+    {
+      "<leader>cf",
+      function()
+        require("fzf-lua").files {
+          cmd = "rg --files --glob '*.hurl'",
+        }
+      end,
+      desc = "(Hurl) Find .hurl files in project",
+    },
+    {
+      "<leader>cw",
+      function()
+        require("fzf-lua").live_grep {
+          prompt = "Grep Hurl Files > ",
+          cwd = vim.loop.cwd(),
+          rg_opts = "--column --line-number --no-heading --color=always --smart-case --glob '*.hurl'",
+        }
+      end,
+      desc = "(Hurl) Live Grep in .hurl files",
+    },
   },
 }

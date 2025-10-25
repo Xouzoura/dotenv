@@ -2,7 +2,6 @@
 -- check https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/plugins/blink-cmp.lua
 -- find solution for snippets, hotkeys etc
 return {
-  -- { import = "nvchad.blink.lazyspec" },
   {
     "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source

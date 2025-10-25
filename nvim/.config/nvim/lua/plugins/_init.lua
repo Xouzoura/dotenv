@@ -2,7 +2,6 @@
 return {
   {
     "williamboman/mason.nvim",
-    -- No need to add this with new nvchad.
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     lazy = false,
     opts = {},

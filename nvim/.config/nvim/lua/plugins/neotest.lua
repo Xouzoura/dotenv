@@ -31,16 +31,6 @@ return {
     end
 
     -- Function to run tests with custom arguments
-    local function run_custom_tests()
-      vim.ui.input({ prompt = "Enter pytest arguments: " }, function(input)
-        if input then
-          neotest.run.run {
-            vim.fn.getcwd(),
-            extra_args = vim.split(input, " "),
-          }
-        end
-      end)
-    end
     -- Keymaps (will all start from <leader>t)
     vim.keymap.set("n", "<leader>tt", function()
       neotest.run.run()
@@ -55,8 +45,6 @@ return {
     end, { desc = "[t]Debug" })
 
     vim.keymap.set("n", "<leader>ta", run_all_tests, { desc = "[t]Run all tests" })
-
-    vim.keymap.set("n", "<leader>tc", run_custom_tests, { desc = "[t]Run tests with custom args" })
 
     vim.keymap.set("n", "<leader>t;", function()
       neotest.summary.toggle()

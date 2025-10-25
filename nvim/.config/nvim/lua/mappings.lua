@@ -1,8 +1,6 @@
 ---@diagnostic disable: undefined-global
 ---
--- require "nvchad.mappings"
 local extras = require "extras"
-local picker = require "picker"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>") -- don't want whatever it did
@@ -12,21 +10,19 @@ vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
 vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without formatting" })
 vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
--- Start the mapping
--- Loop over the key mappings and set them
-for _, keymap in ipairs(picker.FZF_LUA_KEYS) do
-  local lhs = keymap[1]
-  local rhs = keymap[2]
-  local opts = { desc = keymap.desc }
-  map("n", lhs, rhs, opts)
-end
+
+--------------------------
+--- Start the mappings ---
+--------------------------
 
 -- Disable arrow keys
 map("", "<up>", "<nop>")
 map("", "<right>", "<nop>")
 map("", "<down>", "<nop>")
 map("", "<left>", "<nop>")
+--
 -- movement
+--
 map("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
 map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
 map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })

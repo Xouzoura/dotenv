@@ -5,7 +5,7 @@
 return {
   "andrewferrier/debugprint.nvim",
   lazy = false,
-  enabled = false,
+  -- enabled = false,
   opts = {
     keymaps = {
       normal = {
@@ -17,8 +17,8 @@ return {
         variable_above_alwaysprompt = nil,
         textobj_below = nil,
         textobj_above = nil,
-        toggle_comment_debug_prints = nil,
-        delete_debug_prints = nil,
+        toggle_comment_debug_prints = "<leader>dD",
+        delete_debug_prints = "<leader>dd",
       },
       visual = {
         variable_below = "g?v",

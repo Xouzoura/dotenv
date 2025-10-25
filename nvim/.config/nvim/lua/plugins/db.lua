@@ -23,7 +23,7 @@ return {
         "n",
         "<leader>d:",
         ":DBUIToggle<CR>",
-        { noremap = true, silent = true, desc = "Toggle DBUI" }
+        { noremap = true, silent = true, desc = "[D] Toggle DBUI" }
       )
       vim.api.nvim_set_keymap("n", "<leader>d>", "/|<CR>l", { desc = "Move to next column separator" })
       vim.api.nvim_set_keymap("n", "<leader>d<", "?|<CR>h", { desc = "Move to previous column separator" })

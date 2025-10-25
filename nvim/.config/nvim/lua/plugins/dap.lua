@@ -197,7 +197,7 @@ return {
       "rcarriga/nvim-dap-ui",
     },
     keys = {
-      { "<leader>dv", "<cmd>DapVirtualTextToggle<CR>", desc = "[d]Toggle text UI" },
+      { "<leader>dv", "<cmd>DapVirtualTextToggle<CR>", desc = "[d] Toggle text UI" },
     },
     config = function()
       require("nvim-dap-virtual-text").setup {
