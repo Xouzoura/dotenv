@@ -1,15 +1,15 @@
 ---@diagnostic disable: undefined-global
----
+
 local extras = require "extras"
 
 -- unmaps
 vim.api.nvim_del_keymap("i", "<C-u>") -- don't want whatever it did
 -- base
 local map = vim.keymap.set
-vim.keymap.set("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
-vim.keymap.set("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
-vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without formatting" })
-vim.keymap.set("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
+map("n", "<C-c>", "<Nop>", { noremap = true, silent = true })
+map("t", "<C-i>", [[<C-\><C-n>]], { noremap = true }) -- swap modes with c-i and i
+map("n", "<leader>W", ":noautocmd w<CR>", { desc = "Save file without formatting" })
+map("n", "<C-o>", "<Nop>") -- using this in tmux to switch panes.
 
 --------------------------
 --- Start the mappings ---
