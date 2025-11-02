@@ -84,10 +84,10 @@ map("n", "g0", "*G0Nzzzv")
 -- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
 -- Add a newline and return to normal mode
-map("n", "<leader>o", "printf('m`%so<ESC>``', v:count1)", {
-  expr = true,
-  desc = "insert line below",
-})
+-- map("n", "<leader>o", "printf('m`%so<ESC>``', v:count1)", {
+--   expr = true,
+--   desc = "insert line below",
+-- })
 map("n", "<leader>O", "printf('m`%sO<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line above",

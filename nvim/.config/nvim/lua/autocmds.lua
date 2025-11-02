@@ -128,6 +128,15 @@ vim.o.statusline = table.concat {
   " %{v:lua.LspStatus()}",
   " %p%%",
 }
+-- vim.o.winbar = table.concat {
+--   "%f",
+--   " %m",
+--   " %=",
+--   " %{v:lua.LspDiagnostics()}",
+--   " %{v:lua.LspStatus()}",
+--   " %p%%",
+-- }
+-- vim.o.laststatus = 0
 function _G.LspStatus()
   local buf_clients = vim.lsp.get_clients { bufnr = 0 }
   if next(buf_clients) == nil then
