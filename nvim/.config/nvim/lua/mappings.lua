@@ -84,11 +84,20 @@ map("n", "g0", "*G0Nzzzv")
 -- close terminal
 map("t", "<Esc>", [[<c-\><c-n>]])
 -- Add a newline and return to normal mode
+-- Removed the one below because i want the leader<o> empty, so will leave other empty
 -- map("n", "<leader>o", "printf('m`%so<ESC>``', v:count1)", {
 --   expr = true,
 --   desc = "insert line below",
 -- })
-map("n", "<leader>O", "printf('m`%sO<ESC>``', v:count1)", {
+-- map("n", "<leader>O", "printf('m`%sO<ESC>``', v:count1)", {
+--   expr = true,
+--   desc = "insert line above",
+-- })
+map("n", "<leader>j", "printf('m`%so<ESC>``', v:count1)", {
+  expr = true,
+  desc = "insert line below",
+})
+map("n", "<leader>k", "printf('m`%sO<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line above",
 })
@@ -144,7 +153,7 @@ map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc 
 map("n", "<leader>yP", extras.cwd, { desc = "[copy] Cwd as str" })
 map("n", "<leader>yF", extras.file_wd, { desc = "[copy] File as str" })
 map({ "n", "t" }, "<c-y>", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
--- map({ "n", "t" }, "<c-m>", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
+map({ "n", "t" }, "<m-y>", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
 -- map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })
 map("n", "<leader>yE", extras.copy_env_values_clean, { desc = "[copy] all ACTIVE env values (without #)." })
 map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", noremap = true, silent = true })
