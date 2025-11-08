@@ -1,12 +1,7 @@
 #!/bin/bash
 # Requires: https://github.com/lucaswerkmeister/activate-window-by-title, busctl, installed https://extensions.gnome.org/extension/5021/activate-window-by-title/
-if flatpak ps | grep -q 'io.github.hrkfdn.ncspot';
+if pgrep -f "ncspot" > /dev/null
 then
-   
-    if [ $# -gt 0 ]; then
-        echo "Debug: true"
-    fi
-
     busctl --user call \
     org.gnome.Shell \
     /de/lucaswerkmeister/ActivateWindowByTitle \
@@ -14,9 +9,5 @@ then
     activateBySubstring \
     s 'ncspot'
 else
-    if [ $# -gt 0 ]; then
-        echo "Debug: false"
-    fi
-    # gnome-terminal --title="ncspot" -- bash -c 'flatpak run io.github.hrkfdn.ncspot'
     gnome-terminal --title="ncspot" -- bash -c 'ncspot'
 fi
