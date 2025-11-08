@@ -89,9 +89,11 @@ end
 --
 -- MUSIC
 -- Add what is playing (if it's playing).
+-- Using cache since it can be annoying fetching every redraw the song
 --
-local _player_ctl_status_interval_ms = 5000
-function _G.NowPlaying()
+local _player_ctl_status_interval_ms = 3000
+local now_playing_cache = ""
+function _G._NowPlaying()
   local max_len = 40
   local note_icon = "♪ <"
   local status_handle = io.popen "playerctl status 2>/dev/null"
@@ -122,11 +124,15 @@ function _G.NowPlaying()
   return note_icon .. result .. ">"
 end
 
+function _G.NowPlaying()
+  return now_playing_cache ~= "" and now_playing_cache or ""
+end
 local timer = vim.loop.new_timer()
+
 timer:start(
   0,
   _player_ctl_status_interval_ms,
   vim.schedule_wrap(function()
-    vim.cmd "redrawstatus"
+    now_playing_cache = _G._NowPlaying()
   end)
 )
