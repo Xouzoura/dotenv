@@ -1,5 +1,5 @@
-library_tabs=["tracks","albums","artists","playlists","browse"]
-statusbar_format="%artists - %title -- [ %album ]"
+library_tabs = ["tracks", "albums", "artists", "playlists", "browse"]
+statusbar_format = "%artists - %title -- [ %album ]"
 # notify=true
 
 [keybindings]
@@ -8,9 +8,9 @@ statusbar_format="%artists - %title -- [ %album ]"
 "Shift+h" = "previous"
 "s" = "playpause"
 "Space" = "playpause"
-# "v" = "share_clipboard"
-# "Shift+v" = "share_clipboard selected"
-"v" = "stop"
+"y" = "share selected"
+"Shift+y" = "share current"
+"x" = "stop"
 "q" = "back"
 "Ctrl+t" = "queue"
 "Shift+j" = "move down 5"
