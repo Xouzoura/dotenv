@@ -1,6 +1,6 @@
 #!/bin/bash
 # Requires: https://github.com/lucaswerkmeister/activate-window-by-title, busctl, installed https://extensions.gnome.org/extension/5021/activate-window-by-title/
-if pgrep -f "ncspot" > /dev/null
+if pgrep -x "ncspot" > /dev/null
 then
     busctl --user call \
     org.gnome.Shell \

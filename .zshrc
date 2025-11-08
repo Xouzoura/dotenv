@@ -129,6 +129,7 @@ alias vpnd='sudo tailscale up --exit-node='
 
 # Git
 alias glog='git log --graph --oneline --all --decorate'
+alias ggraph='git-graph --color=always | less' # requires `cargo install git-graph`
 alias gst='git status'
 alias gca='git commit -am'
 alias gbv='git branch -vv'

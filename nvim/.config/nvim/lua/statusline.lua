@@ -90,8 +90,10 @@ end
 -- MUSIC
 -- Add what is playing (if it's playing).
 --
+local _player_ctl_status_interval_ms = 5000
 function _G.NowPlaying()
   local max_len = 40
+  local note_icon = "♪ <"
   local status_handle = io.popen "playerctl status 2>/dev/null"
   if not status_handle then
     return ""
@@ -117,13 +119,13 @@ function _G.NowPlaying()
   if #result > max_len then
     result = result:sub(1, max_len - 3) .. "..."
   end
-  return result
+  return note_icon .. result .. ">"
 end
 
 local timer = vim.loop.new_timer()
 timer:start(
   0,
-  10000,
+  _player_ctl_status_interval_ms,
   vim.schedule_wrap(function()
     vim.cmd "redrawstatus"
   end)
