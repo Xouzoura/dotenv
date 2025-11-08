@@ -17,7 +17,6 @@ else
     if [ $# -gt 0 ]; then
         echo "Debug: false"
     fi
-    # gnome-terminal ncspot &
-    # gnome-terminal -- bash -c "flatpak run io.github.hrkfdn.ncspot; exec bash" &
-    gnome-terminal --title="ncspot" -- bash -c 'flatpak run io.github.hrkfdn.ncspot'
+    # gnome-terminal --title="ncspot" -- bash -c 'flatpak run io.github.hrkfdn.ncspot'
+    gnome-terminal --title="ncspot" -- bash -c 'ncspot'
 fi

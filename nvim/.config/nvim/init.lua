@@ -19,4 +19,5 @@ vim.schedule(function()
   require "mappings"
   require "options"
   require "autocmds"
+  require "statusline"
 end)

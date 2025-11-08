@@ -74,10 +74,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
--- disable large files from opening with lsp
-local autogroup = vim.api.nvim_create_augroup
+-----------------------------------------------------------------
+-- BIGFILES (disable large files from opening with lsp)
+-----------------------------------------------------------------
 
--- Disable certain features when opening large files
+local autogroup = vim.api.nvim_create_augroup
 local big_file = autogroup("BigFile", { clear = true })
 vim.filetype.add {
   pattern = {
@@ -107,7 +108,9 @@ autocmd({ "FileType" }, {
   end,
 })
 
--- Define a function to set highlights for search
+-----------------------------------------------------------------
+-- DEFINE DIFFERENT COLOR FOR HIGHLIGHTING OF CURRENT WORD AND OTHERS
+-----------------------------------------------------------------
 function _G.set_highlights()
   vim.api.nvim_set_hl(0, "Search", { bg = "#8B8000", fg = "#000000" })
 end
@@ -120,43 +123,3 @@ vim.cmd [[
   augroup END
 ]]
 _G.set_highlights()
-vim.o.statusline = table.concat {
-  "%f",
-  " %m",
-  " %=",
-  " %{v:lua.LspDiagnostics()}", -- LSP diagnostics
-  " %{v:lua.LspStatus()}",
-  " %p%%",
-}
--- vim.o.winbar = table.concat {
---   "%f",
---   " %m",
---   " %=",
---   " %{v:lua.LspDiagnostics()}",
---   " %{v:lua.LspStatus()}",
---   " %p%%",
--- }
--- vim.o.laststatus = 0
-function _G.LspStatus()
-  local buf_clients = vim.lsp.get_clients { bufnr = 0 }
-  if next(buf_clients) == nil then
-    return ""
-  end
-  local names = {}
-  for _, client in ipairs(buf_clients) do
-    table.insert(names, client.name)
-  end
-  return "[" .. table.concat(names, ",") .. "]"
-end
-function _G.LspDiagnostics()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local diags = vim.diagnostic.count(bufnr)
-  if not diags or vim.tbl_isempty(diags) then
-    return ""
-  end
-  local err = diags[vim.diagnostic.severity.ERROR] or 0
-  local warn = diags[vim.diagnostic.severity.WARN] or 0
-  local hint = diags[vim.diagnostic.severity.HINT] or 0
-  local info = diags[vim.diagnostic.severity.INFO] or 0
-  return string.format(" E:%d W:%d", err, warn, hint, info)
-end
