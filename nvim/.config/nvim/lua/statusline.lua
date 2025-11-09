@@ -93,8 +93,9 @@ end
 --
 local _player_ctl_status_interval_ms = 3000
 -- local now_playing_cache = ""
+local _cache = { ts = 0, status = "", meta = "" } -- local (RAM) cache
 local cache_file = "/tmp/nowplaying.cache" -- where i have the data.
--- local log_file = "/tmp/nowplaying.log"
+local log_file = "/tmp/nowplaying.log"
 local function read_cache()
   local f = io.open(cache_file, "r")
   if not f then
@@ -117,12 +118,8 @@ end
 
 -- update player info
 local function update_now_playing()
+  -- expensive, so only call when caches fail.
   local max_len = 40
-  -- local f_log = io.open(log_file, "a")
-  -- if f_log then
-  --   f_log:write(os.date "%Y-%m-%d %H:%M:%S" .. " - update_now_playing called\n")
-  --   f_log:close()
-  -- end
 
   local handle = io.popen "playerctl metadata --format '{{status}}|{{artist}} - {{title}}' 2>/dev/null"
   if not handle then
@@ -152,32 +149,33 @@ local function update_now_playing()
   return status, meta
 end
 
-function _G.NowPlaying()
-  local ts, status, meta = read_cache()
-  local now = os.time()
-
-  -- skip if cache is too old or no status
-  if not ts or now - ts > 3 then
-    status, meta = update_now_playing()
-
-    -- return "" -- cache is stale
-  end
-
-  -- only show if playing
-  if status and status ~= "Playing" then
+local function _format_metadata(status, meta)
+  local note_icon = "♪ <"
+  if status == "Playing" then
+    return note_icon .. meta .. ">"
+  else
     return ""
   end
+end
+function _G.NowPlaying()
+  local now = os.time()
+  -- 1. check local cache (RAM)
+  if now - _cache.ts <= 3 then
+    return _format_metadata(_cache.status, _cache.meta)
+  end
 
-  meta = meta or ""
-  return meta
+  -- 2. check file cache
+  local ts, status, meta = read_cache()
+  if now - ts <= 3 then
+    _cache = { ts = ts, status = status, meta = meta }
+    return _format_metadata(_cache.status, _cache.meta)
+  end
+
+  -- 3. caching fails, expensive call.
+  status, meta = update_now_playing()
+
+  _cache = { ts = ts, status = status, meta = meta }
+  return _format_metadata(_cache.status, _cache.meta)
 end
 local timer = vim.loop.new_timer()
 timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(_G.NowPlaying))
--- timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(update_now_playing))
--- timer:start(
---   0,
---   _player_ctl_status_interval_ms,
---   vim.schedule_wrap(function()
---     now_playing_cache = _G._NowPlaying()
---   end)
--- )
