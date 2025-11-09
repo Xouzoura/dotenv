@@ -10,6 +10,7 @@
   - fastfetch (see system's installed packages, hardware, managers)
   - eza (needed for yazi)
   - duckdb
+  - espanso (if i want to use `:emailme` and hotkeys globally (systemctl --user start espanso.service).
 
 # Other
 

@@ -92,47 +92,93 @@ end
 -- Using cache since it can be annoying fetching every redraw the song
 --
 local _player_ctl_status_interval_ms = 3000
-local now_playing_cache = ""
-function _G._NowPlaying()
+-- local now_playing_cache = ""
+local cache_file = "/tmp/nowplaying.cache"
+local log_file = "/tmp/nowplaying.log"
+local function read_cache()
+  local f = io.open(cache_file, "r")
+  if not f then
+    return 0, "", ""
+  end
+  local line = f:read "*l" or ""
+  f:close()
+  local ts, status, meta = line:match "^(%d+)|([^|]*)|(.*)$"
+  return tonumber(ts) or 0, status or "", meta or ""
+end
+
+-- write cache
+local function write_cache(ts, status, meta)
+  local f = io.open(cache_file, "w")
+  if f then
+    f:write(string.format("%d|%s|%s", ts, status or "", meta or ""))
+    f:close()
+  end
+end
+
+-- update player info
+local function update_now_playing()
   local max_len = 40
-  local note_icon = "♪ <"
-  local status_handle = io.popen "playerctl status 2>/dev/null"
-  if not status_handle then
-    return ""
-  end
-  local status = status_handle:read "*a" or ""
-  status_handle:close()
-
-  if not status:match "Playing" then
-    return ""
+  local f_log = io.open(log_file, "a")
+  if f_log then
+    f_log:write(os.date "%Y-%m-%d %H:%M:%S" .. " - update_now_playing called\n")
+    f_log:close()
   end
 
-  -- now we are still playing
-  local handle = io.popen "playerctl metadata --format '{{ artist }} - {{ title }}' 2>/dev/null"
-  if handle == nil then
-    return ""
+  local handle = io.popen "playerctl metadata --format '{{status}}|{{artist}} - {{title}}' 2>/dev/null"
+  if not handle then
+    write_cache(os.time(), "", "")
+    return
   end
-  local result = handle:read "*a"
+
+  local result = handle:read "*a" or ""
   handle:close()
-  result = result:gsub("\n", "") -- remove newline
-  if result == "" then
-    return "No track"
+
+  local status, meta = result:match "^(.-)|(.+)$"
+  meta = meta or ""
+  if not status or not meta then
+    write_cache(os.time(), "", "")
+    return
   end
-  if #result > max_len then
-    result = result:sub(1, max_len - 3) .. "..."
+
+  meta = meta:gsub("\n", "")
+  if meta == "" then
+    meta = "No track"
   end
-  return note_icon .. result .. ">"
+  if #meta > max_len then
+    meta = meta:sub(1, max_len - 3) .. "..."
+  end
+
+  write_cache(os.time(), status, meta)
+  return status, meta
 end
 
 function _G.NowPlaying()
-  return now_playing_cache ~= "" and now_playing_cache or ""
+  return ""
+  -- local ts, status, meta = read_cache()
+  -- local now = os.time()
+  --
+  -- -- skip if cache is too old or no status
+  -- if not ts or now - ts > 3 then
+  --   status, meta = update_now_playing()
+  --
+  --   -- return "" -- cache is stale
+  -- end
+  --
+  -- -- only show if playing
+  -- if status and status ~= "Playing" then
+  --   return ""
+  -- end
+  --
+  -- meta = meta or ""
+  -- return meta
 end
 local timer = vim.loop.new_timer()
-
-timer:start(
-  0,
-  _player_ctl_status_interval_ms,
-  vim.schedule_wrap(function()
-    now_playing_cache = _G._NowPlaying()
-  end)
-)
+timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(_G.NowPlaying))
+-- timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(update_now_playing))
+-- timer:start(
+--   0,
+--   _player_ctl_status_interval_ms,
+--   vim.schedule_wrap(function()
+--     now_playing_cache = _G._NowPlaying()
+--   end)
+-- )
