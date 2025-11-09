@@ -153,24 +153,23 @@ local function update_now_playing()
 end
 
 function _G.NowPlaying()
-  return ""
-  -- local ts, status, meta = read_cache()
-  -- local now = os.time()
-  --
-  -- -- skip if cache is too old or no status
-  -- if not ts or now - ts > 3 then
-  --   status, meta = update_now_playing()
-  --
-  --   -- return "" -- cache is stale
-  -- end
-  --
-  -- -- only show if playing
-  -- if status and status ~= "Playing" then
-  --   return ""
-  -- end
-  --
-  -- meta = meta or ""
-  -- return meta
+  local ts, status, meta = read_cache()
+  local now = os.time()
+
+  -- skip if cache is too old or no status
+  if not ts or now - ts > 3 then
+    status, meta = update_now_playing()
+
+    -- return "" -- cache is stale
+  end
+
+  -- only show if playing
+  if status and status ~= "Playing" then
+    return ""
+  end
+
+  meta = meta or ""
+  return meta
 end
 local timer = vim.loop.new_timer()
 timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(_G.NowPlaying))
