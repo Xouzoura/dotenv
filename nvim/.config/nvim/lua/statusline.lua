@@ -93,8 +93,8 @@ end
 --
 local _player_ctl_status_interval_ms = 3000
 -- local now_playing_cache = ""
-local cache_file = "/tmp/nowplaying.cache"
-local log_file = "/tmp/nowplaying.log"
+local cache_file = "/tmp/nowplaying.cache" -- where i have the data.
+-- local log_file = "/tmp/nowplaying.log"
 local function read_cache()
   local f = io.open(cache_file, "r")
   if not f then
@@ -118,11 +118,11 @@ end
 -- update player info
 local function update_now_playing()
   local max_len = 40
-  local f_log = io.open(log_file, "a")
-  if f_log then
-    f_log:write(os.date "%Y-%m-%d %H:%M:%S" .. " - update_now_playing called\n")
-    f_log:close()
-  end
+  -- local f_log = io.open(log_file, "a")
+  -- if f_log then
+  --   f_log:write(os.date "%Y-%m-%d %H:%M:%S" .. " - update_now_playing called\n")
+  --   f_log:close()
+  -- end
 
   local handle = io.popen "playerctl metadata --format '{{status}}|{{artist}} - {{title}}' 2>/dev/null"
   if not handle then
