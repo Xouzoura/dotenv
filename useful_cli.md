@@ -1,12 +1,12 @@
 # What i think potentially is needed but depends on use-case
 
 # Clis
-  - dua: https://github.com/Byron/dua-cli?
+  - dua: https://github.com/Byron/dua-cli? (see size of directories etc)
   - tailscale (only to connect)
   - cryptomator (only for backup)
   - koofr (only for backup)
-  - ncspot (listening to music)
-  - systemd-manager-tui (systemd manager)
+  - ncspot (listening to music), with cargo
+  - systemd-manager-tui (systemd manager), 
   - fastfetch (see system's installed packages, hardware, managers)
   - eza (needed for yazi)
   - duckdb
