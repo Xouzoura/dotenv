@@ -126,6 +126,8 @@ alias .5='cd ../../../../..'
 # alias vpnd='. vpn/disc.sh'
 alias vpnc='sudo tailscale set --exit-node=remote-laptop.tailfa8e1.ts.net.'
 alias vpnd='sudo tailscale up --exit-node='
+# this is installed via cargo.
+alias xlsx='xleak -i'
 
 # Git
 alias glog='git log --graph --oneline --all --decorate'

@@ -151,6 +151,9 @@ end
 
 local function _format_metadata(status, meta)
   local note_icon = "♪ <"
+  -- meta = meta:gsub("[Rr][Ee][Mm][Aa][Ss][Tt][Ee][Rr]", "")
+  meta = meta:gsub("[Rr][Ee][Mm][Aa][Ss][Tt][Ee][Rr].*$", "")
+  meta = meta:gsub("\r", "")
   if status == "Playing" then
     return note_icon .. meta .. ">"
   else
@@ -160,7 +163,7 @@ end
 function _G.NowPlaying()
   local now = os.time()
   -- 1. check local cache (RAM)
-  if now - _cache.ts <= 3 then
+  if _cache.ts ~= nil and (now - _cache.ts <= 3) then
     return _format_metadata(_cache.status, _cache.meta)
   end
 
@@ -172,7 +175,9 @@ function _G.NowPlaying()
   end
 
   -- 3. caching fails, expensive call.
-  status, meta = update_now_playing()
+  if not vim.env.WSL_DISTRO_NAME then
+    status, meta = update_now_playing()
+  end
 
   _cache = { ts = ts, status = status, meta = meta }
   return _format_metadata(_cache.status, _cache.meta)
