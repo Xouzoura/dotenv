@@ -7,7 +7,8 @@ return {
       sync_with_numbered_registers = true,
     },
     system_clipboard = {
-      sync_with_ring = true,
+      sync_with_ring = false, -- this is causing me issues with multiple nvim sessions open
+      clipboard_register = nil, -- this is causing me issues with multiple nvim sessions open
     },
     highlight = {
       on_yank = false,

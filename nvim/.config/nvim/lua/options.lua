@@ -70,4 +70,3 @@ local cs = vim.env.NVIM_COLORSCHEME or "nightfox"
 if cs and cs ~= "" then
   vim.cmd("colorscheme " .. cs)
 end
--- vim.cmd "colorscheme nightfox"
