@@ -98,7 +98,10 @@ packages_update() {
 
     if [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(command -v apt) != "" ]]; then
         echo "Installing dependencies with apt"
+        # OPTION1: Faster
         # sudo apt-get install -y zsh ninja-build gettext tmux ffind ripgrep jq vivid bat eza zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick 
+        #
+        # OPTION2: Slower but can see what went wrong.
         packages=(
           zsh ninja-build gettext tmux ffind ripgrep jq vivid bat eza
           zoxide git-delta stow ffmpeg 7zip poppler-utils fd-find imagemagick 
@@ -160,22 +163,28 @@ install_rust() {
 install_cli_extra() {
 
     if ! command_exists rustup; then 
-        # Eza for colorful terminal outputs in .zshrc
+        # <eza> for colorful terminal outputs in .zshrc
         if ! command_exists eza || [ "$FORCE_REINSTALL" = true ]; then
             log_info "Installing eza..."
             run_cmd "cargo install eza"
         fi
 
-        # Dua is for terminal viewing of size of disk etc
+        # <dua> is for terminal viewing of size of disk etc, with dua -i
         if ! command_exists dua || [ "$FORCE_REINSTALL" = true ]; then
             log_info "Installing dua-cli..."
             run_cmd "cargo install dua-cli"
         fi
+        
+        # Decide if i want it.
+        # if ! command_exists xleak || [ "$FORCE_REINSTALL" = true ]; then
+        #     log_info "Installing xleak..."
+        #     run_cmd "cargo install xleak"
+        # fi
     else
         log_err "Need rust to install eza and dua-cli"
     fi
 
-    # Hurl is for making request http (curl improved) and needed for neovim
+    # <hurl> is for making request http (curl improved) and needed for neovim
     if ! command_exists hurl || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing hurl..."
         run_cmd "curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/${HURL_VERSION}/hurl_${HURL_VERSION}_amd64.deb"
@@ -183,7 +192,7 @@ install_cli_extra() {
         run_cmd "rm ./hurl_${HURL_VERSION}_amd64.deb"
     fi
 
-    # Lazygit is for simplified 
+    # <Lazygit> is for simplified git experience.
     if ! command_exists lazygit || [ "$FORCE_REINSTALL" = true ]; then
         # REQUIRES SUDO
         log_info "Installing lazygit..."
@@ -194,12 +203,13 @@ install_cli_extra() {
         run_cmd "rm lazygit.tar.gz lazygit"
     fi
 
+    # <Lazydocker> is for simplified docker experience.
     if ! command_exists lazydocker || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing lazydocker..."
         run_cmd "curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash"
     fi
 
-    # Add kubectl 
+    # <kubectl> 
     if ! command_exists kubectl || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing kubectl..."
         # If the folder `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
@@ -260,6 +270,10 @@ install_kitty() {
 }
 
 # === Install Yazi ===
+# Yazi dependencies:
+# -> duckdb (.local/bin/) from `curl https://install.duckdb.org | sh`
+# -> nbpreview (.local/bin/nbpreview) from pipx `pipx install nbpreview`
+# -> eza (cargo)
 install_yazi() {
     cd "$EXTRA_INSTALLATION_LOC" || return
     if ! command_exists yazi || [ "$FORCE_REINSTALL" = true ]; then
@@ -270,6 +284,16 @@ install_yazi() {
         # run_cmd "mv target/release/yazi target/release/ya /usr/local/bin/"
         run_cmd "cd .. && rm -rf yazi"
         log_info "Yazi installed successfully"
+
+        # Extras
+        # 1) duckdb
+        run_cmd "curl https://install.duckdb.org | sh"
+        log_info "duck db installed."
+
+        # 2) nbpreview.
+        run_cmd "pipx install nbpreview"
+        log_info "nbpreview installed."
+
     else
         log_info "Yazi already installed: $(yazi --version 2>/dev/null || echo 'installed')"
     fi
@@ -368,7 +392,7 @@ install_ng_and_npm() {
 # === Stow dotfiles ===
 stow_stuff() {
     cd "$HOME/$DOT_DIRECTORY" || return
-    for pkg in nvim tmux kitty starship yazi lazygit scripts; do
+    for pkg in nvim tmux kitty wezterm starship yazi lazygit lazydocker scripts; do
         run_cmd "stow -v $pkg"
     done
 }
