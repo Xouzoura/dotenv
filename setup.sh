@@ -7,8 +7,10 @@
 #
 # .. git clone https://github.com/Xouzoura/dotenv.git
 # .. cd dotenv
-# .. sudo ./setup.sh --yazi,nvim, 
-# .. sudo ./setup.sh --all --dry-run (to see what commands would be run without executing anything)
+# .. (0) ./setup.sh yazi,nvim, 
+# .. (1) sudo ./setup.sh yazi,nvim, 
+# .. (2) sudo ./setup.sh all --dry-run (to see what commands would be run without executing anything)
+# .. (3) ./setup.sh all --dry-run --force-reinstall (to force a reinstallation if possible)
 # -----------------------------------------------------------
 #
 
@@ -20,7 +22,7 @@ HURL_VERSION=6.1.1
 
 # Directories
 DOT_DIRECTORY=dotenv
-EXTRA_INSTALLATION_LOC="$HOME/$DOT_DIRECTORY/extra_installations"
+EXTRA_INSTALLATION_LOC="$HOME/repos-for-binaries/"
 
 # PARAMETERS
 FORCE_REINSTALL=false
@@ -69,7 +71,7 @@ for arg in "$@"; do
 done
 
 for arg in "$@"; do
-    if [ "$arg" == "--force_reinstall" ]; then
+    if [ "$arg" == "--force-reinstall" ]; then
         FORCE_REINSTALL=true
         break
     fi
@@ -276,9 +278,12 @@ install_kitty() {
 # -> eza (cargo)
 install_yazi() {
     cd "$EXTRA_INSTALLATION_LOC" || return
+    echo $FORCE_REINSTALL
     if ! command_exists yazi || [ "$FORCE_REINSTALL" = true ]; then
         log_info "Installing yazi..."
         run_cmd "git clone https://github.com/sxyazi/yazi.git"
+        commit=$(cat "$HOME/$DOT_DIRECTORY/yazi/.config/yazi/yazi_version.txt")
+        run_cmd "git checkout $commit"
         run_cmd "cd yazi && cargo build --release --locked"
         run_cmd "sudo mv target/release/yazi /usr/local/bin/yazi"
         # run_cmd "mv target/release/yazi target/release/ya /usr/local/bin/"
