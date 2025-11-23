@@ -1,18 +1,19 @@
 return {
   "gbprod/yanky.nvim",
+  -- enabled = false,
   opts = {
     ring = {
-      history_length = 15,
+      history_length = 4,
       storage = "shada",
-      sync_with_numbered_registers = true,
+      sync_with_numbered_registers = false,
     },
     system_clipboard = {
       sync_with_ring = false, -- this is causing me issues with multiple nvim sessions open
       clipboard_register = nil, -- this is causing me issues with multiple nvim sessions open
     },
     highlight = {
-      on_yank = false,
-      on_put = false,
+      on_yank = true,
+      on_put = true,
     },
     preserve_cursor_position = {
       enabled = true,

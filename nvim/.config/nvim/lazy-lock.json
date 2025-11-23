@@ -26,6 +26,7 @@
   "kubectl.nvim": { "branch": "main", "commit": "bd6bdec3b2fc6d2933a8c0826ec9a27a7e7b8642" },
   "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
   "lsp-lens.nvim": { "branch": "feature/supports-method-remove", "commit": "6515c870b61147b4c01276c8135900ed9d390bee" },
+  "lyrics-in-buffer.nvim": { "branch": "master", "commit": "81a8a2f552933a9ae89d0e250cb6eeb9dd006ba1" },
   "mason.nvim": { "branch": "main", "commit": "57e5a8addb8c71fb063ee4acda466c7cf6ad2800" },
   "neotest": { "branch": "master", "commit": "deadfb1af5ce458742671ad3a013acb9a6b41178" },
   "neotest-python": { "branch": "master", "commit": "b0d3a861bd85689d8ed73f0590c47963a7eb1bf9" },
