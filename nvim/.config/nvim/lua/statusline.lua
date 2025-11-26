@@ -177,9 +177,10 @@ function _G.NowPlaying()
   if not vim.env.WSL_DISTRO_NAME then
     status, meta = update_now_playing()
     _cache = { ts = ts, status = status, meta = meta }
+    return _format_metadata(_cache.status, _cache.meta)
   end
-
-  return _format_metadata(_cache.status, _cache.meta)
+  -- nothing worked no song is playing or working.
+  return ""
 end
 local timer = vim.loop.new_timer()
 timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(_G.NowPlaying))
