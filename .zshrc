@@ -182,8 +182,9 @@ alias winc="z /mnt/c/Users/DIO3713/"
 
 # Neovim aliases. This can change with a script
 alias vi="nvim"
-# alias vo="nvim -c 'Telescope oldfiles'"
-alias vo="nvim -c 'lua require(\"fzf-lua\").oldfiles()'"
+# alias vo="nvim -c 'lua require(\"fzf-lua\").oldfiles()'"
+# added delay since it causes atm some issue with lines
+alias vo="nvim -c 'sleep 100m | lua require(\"fzf-lua\").oldfiles()'"
 alias vid="DAP_FULL_LAYOUT=1 nvim"
 
 # others

@@ -13,7 +13,7 @@ return {
       function()
         require("lyrics").get_current_song()
       end,
-      desc = "(Lyrics) Search what is playing now",
+      desc = "<lyrics> Search what is playing now",
     },
   },
 }
