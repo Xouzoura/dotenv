@@ -184,6 +184,15 @@ return {
         end,
         desc = "(fzf) Search WORD in current file",
       },
+      {
+        "gpi",
+        function()
+          local fzf_lua = require "fzf-lua"
+          local word = vim.fn.expand "<cword>" -- word under cursor
+          fzf_lua.grep_curbuf { search = word, no_esc = true, rg_blob = false, fzf_opts = { ["--exact"] = true } }
+        end,
+        desc = "(fzf) Search WORD in current file",
+      },
       -- Git stuff
       {
         "<leader>fga",

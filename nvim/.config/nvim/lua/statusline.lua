@@ -161,20 +161,22 @@ local function _format_metadata(status, meta)
 end
 function _G.NowPlaying()
   local now = os.time()
+  local cache_duration = 6 -- windows i expose it every 5 secs
   -- 1. check local cache (RAM)
-  if _cache.ts ~= nil and (now - _cache.ts <= 3) then
+  if _cache.ts ~= nil and (now - _cache.ts <= cache_duration) then
     return _format_metadata(_cache.status, _cache.meta)
   end
 
   -- 2. check file cache
   local ts, status, meta = read_cache()
-  if now - ts <= 3 then
+  if (now - ts) <= cache_duration then
     _cache = { ts = ts, status = status, meta = meta }
     return _format_metadata(_cache.status, _cache.meta)
   end
 
   -- 3. caching fails, expensive call.
   if not vim.env.WSL_DISTRO_NAME then
+    -- wsl doesn't do it by default, need extra scripts
     status, meta = update_now_playing()
     _cache = { ts = ts, status = status, meta = meta }
     return _format_metadata(_cache.status, _cache.meta)

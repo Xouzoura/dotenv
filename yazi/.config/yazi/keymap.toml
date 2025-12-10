@@ -439,7 +439,11 @@ keymap = [
     { on = [
         "g",
         "M",
-    ], run = "cd /media", desc = "Go to the mount directory (media)" },
+    ], run = "cd /media", desc = "Go to the mount directory (/media)" },
+    { on = [
+        "g",
+        "m",
+    ], run = "cd /mnt", desc = "Go to the mount directory (/mnt)" },
     { on = [
         "g",
         "K",
