@@ -320,6 +320,17 @@ capture_and_edit_last_command_output() {
     vi /tmp/last_command_output.txt
 }
 
+wifi() {
+    ssid="$1"
+    pass="$2"
+
+    if [ -z "$pass" ]; then
+        nmcli dev wifi connect "$ssid"
+    else
+        nmcli dev wifi connect "$ssid" password "$pass"
+    fi
+}
+
 # Alias to capture the last command output and open it in Vim
 alias capture='capture_and_edit_last_command_output'
 # Always keep at the end
