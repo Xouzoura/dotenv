@@ -112,7 +112,7 @@ end
 
 function M.switch_terminal_buffer()
   local bufname = vim.api.nvim_buf_get_name(0)
-  if string.find(bufname, "term://") then
+  if string.find(bufname, "term://") and not bufname:match "yazi$" then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
     vim.cmd "b#"
   else
@@ -133,7 +133,7 @@ end
 
 function M.switch_terminal_buffer_file_wd()
   local bufname = vim.api.nvim_buf_get_name(0)
-  if string.find(bufname, "term://") then
+  if string.find(bufname, "term://") and not bufname:match "yazi$" then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
     vim.cmd "b#"
   else

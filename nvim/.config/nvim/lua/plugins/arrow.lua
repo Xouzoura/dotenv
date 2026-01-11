@@ -1,3 +1,6 @@
+-- decide what i want, bento or arrow (probably arrow)
+-- return { "serhez/bento.nvim", lazy = false, opts = { ui = { mode = "tabline" } } }
+
 return {
   -- default marks with ; and m + a-z
   "otavioschwanck/arrow.nvim",

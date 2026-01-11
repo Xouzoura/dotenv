@@ -190,6 +190,8 @@ alias vid="DAP_FULL_LAYOUT=1 nvim"
 # others
 alias mouse="keep-presence"
 alias db="dbeaver-ce"
+alias pingg="ping -c 4 8.8.8.8"
+alias speed="cloudflare-speed-cli"
 # alias ncspot="flatpak run io.github.hrkfdn.ncspot"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
