@@ -53,11 +53,12 @@ keymap = [
     ], run = "arrow 50%", desc = "Move cursor down half page" },
     { on = [
         "<C-b>",
-    ], run = "arrow -100%", desc = "Move cursor up one page" },
+    ], run = "seek -50", desc = "Move cursor up one page in preview" },
+    # ], run = "arrow -100%", desc = "Move cursor up one page" },
     { on = [
         "<C-f>",
-    ], run = "arrow 100%", desc = "Move cursor down one page" },
-
+    ], run = "seek 50", desc = "Move cursor down one page in preview" },
+    # ], run = "arrow 100%", desc = "Move cursor down one page" },
     { on = [
         "<C-PageUp>",
     ], run = "arrow -50%", desc = "Move cursor up half page" },
@@ -536,11 +537,11 @@ prepend_keymap = [
     ], run = "plugin eza-preview", desc = "[pl] Toggle tree/list dir preview" },
     { on = [
         "e",
-        "-",
+        "h",
     ], run = "plugin eza-preview dec-level", desc = "[pl] Decrement tree level" },
     { on = [
         "e",
-        "=",
+        "l",
     ], run = "plugin eza-preview inc-level", desc = "[pl] Increment tree level" },
     { on = [
         "e",

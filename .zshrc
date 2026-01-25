@@ -220,6 +220,7 @@ gdiff() {
   NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
 }
 alias hotspot='nmcli dev wifi connect "Ts0t"'
+alias kubens='kubectl config set-context --current --namespace'
 
 # PYTHON
 # Python aliases for my code (uv)
