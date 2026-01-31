@@ -223,6 +223,7 @@ alias hotspot='nmcli dev wifi connect "Ts0t"'
 # Kubectl
 alias k='kubectl'
 alias kns='kubectl config set-context --current --namespace'
+alias ks='k9s'
 
 # PYTHON
 # Python aliases for my code (uv)
