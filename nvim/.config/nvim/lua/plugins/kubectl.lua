@@ -1,6 +1,7 @@
 return {
   {
     "ramilito/kubectl.nvim",
+    enabled = false,
     -- lazy = false,
     version = "2.*",
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust

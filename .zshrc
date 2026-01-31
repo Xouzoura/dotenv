@@ -220,7 +220,9 @@ gdiff() {
   NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
 }
 alias hotspot='nmcli dev wifi connect "Ts0t"'
-alias kubens='kubectl config set-context --current --namespace'
+# Kubectl
+alias k='kubectl'
+alias kns='kubectl config set-context --current --namespace'
 
 # PYTHON
 # Python aliases for my code (uv)
@@ -228,7 +230,7 @@ alias pnew='uv run pytest -s -m new'
 alias plf='uv run pytest -s --lf'
 alias pdb='uv run pytest -s --pdb'
 alias pca='pre-commit run --all-files'
-alias jp='python -m jupyter notebook'
+# alias jp='python -m jupyter notebook'
 
 # git clone https://github.com/saitamasahil/matrix
 # alias matrix='bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --green'

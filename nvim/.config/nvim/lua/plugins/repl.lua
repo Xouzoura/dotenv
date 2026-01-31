@@ -1,5 +1,6 @@
 return {
   "pappasam/nvim-repl",
+  enabled = false,
   keys = {
     -- { "<Leader>r", "<cmd>Repl<cr>", mode = "n", desc = "<Repl> Create" },
     { "<Leader>r.", "<cmd>ReplToggle<cr>", mode = "n", desc = "<Repl> Toggle" },
