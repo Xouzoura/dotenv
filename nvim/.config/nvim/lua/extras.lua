@@ -112,14 +112,14 @@ end
 
 function M.switch_terminal_buffer()
   local bufname = vim.api.nvim_buf_get_name(0)
-  if string.find(bufname, "term://") and not bufname:match "yazi$" then
+  if string.find(bufname, "term://") and not bufname:match "yazi$" and bufname:match "/usr/bin/zsh$" then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
     vim.cmd "b#"
   else
     local buffers = vim.api.nvim_list_bufs()
     for _, bufid in pairs(buffers) do
       local bufname2 = vim.api.nvim_buf_get_name(bufid)
-      if string.find(bufname2, "term://") ~= nil then
+      if string.find(bufname2, "term://") ~= nil and bufname2:match "/usr/bin/zsh$" then
         vim.cmd("buffer " .. bufid)
         return
       end
@@ -133,14 +133,14 @@ end
 
 function M.switch_terminal_buffer_file_wd()
   local bufname = vim.api.nvim_buf_get_name(0)
-  if string.find(bufname, "term://") and not bufname:match "yazi$" then
+  if string.find(bufname, "term://") and not bufname:match "yazi$" and bufname:match "/usr/bin/zsh$" then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
     vim.cmd "b#"
   else
     local buffers = vim.api.nvim_list_bufs()
     for _, bufid in pairs(buffers) do
       local bufname2 = vim.api.nvim_buf_get_name(bufid)
-      if string.find(bufname2, "term://") ~= nil then
+      if string.find(bufname2, "term://") ~= nil and bufname2:match "/usr/bin/zsh$" then
         vim.cmd("buffer " .. bufid)
         return
       end
