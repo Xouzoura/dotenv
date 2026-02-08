@@ -6,7 +6,6 @@ return {
       lyrics_fetcher_path = "~/code/python/me/lyrics",
     }
   end,
-
   keys = {
     {
       "<leader>sn",
