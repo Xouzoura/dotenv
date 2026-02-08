@@ -40,10 +40,10 @@ return {
           endpoint = "https://api.perplexity.ai/chat/completions",
           secret = os.getenv "PPLX_API_KEY",
         },
-        -- googleai = {
-        --   endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
-        --   secret = os.getenv "GEMINI_API_KEY",
-        -- },
+        googleai = {
+          endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
+          secret = os.getenv "GEMINI_API_KEY",
+        },
       },
 
       agents = {
@@ -116,14 +116,14 @@ return {
         --   -- system prompt (use this to specify the persona/role of the AI)
         --   system_prompt = require("gp.defaults").chat_system_prompt,
         -- },
-        -- {
-        --   provider = "googleai",
-        --   name = "gemini-2.0-flash",
-        --   chat = true,
-        --   command = false,
-        --   model = { model = "gemini-2.0-flash", temperature = 1.1, top_p = 1 },
-        --   system_prompt = SYSTEM_PROMPT,
-        -- },
+        {
+          provider = "googleai",
+          name = "gemini-3-flash-preview",
+          chat = true,
+          command = false,
+          model = { model = "gemini-3-flash-preview", temperature = 1.1, top_p = 1 },
+          system_prompt = SYSTEM_PROMPT,
+        },
         -- {
         --   provider = "googleai",
         --   name = "gemini-2.5-pro",
@@ -133,33 +133,32 @@ return {
         --   model = { model = "gemini-2.5-pro-preview-03-25", temperature = 1.1, top_p = 1 },
         --   system_prompt = SYSTEM_PROMPT,
         -- },
+        -- disabled sonar since it's not free anymore
+        -- {
+        --   provider = "pplx",
+        --   name = "sonar",
+        --   chat = true,
+        --   command = false,
+        --   model = { model = "sonar", temperature = 1.1, top_p = 1 },
+        --   system_prompt = SYSTEM_PROMPT,
+        --   -- disable = true,
+        -- },
         {
           provider = "azure",
-          name = "gpt4o",
+          name = "gpt-5.1",
           chat = true,
           command = false,
-          model = { model = "gpt4o", temperature = 1.1, top_p = 1 },
+          model = { model = "gpt-5.1", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
         },
-        {
-          provider = "azure",
-          name = "gpt-4.1",
-          chat = true,
-          command = false,
-          model = { model = "gpt-4.1", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-        },
-        --
         -- Last one is the default always
-        --
         {
-          provider = "pplx",
-          name = "sonar",
+          provider = "azure",
+          name = "gpt-5.2",
           chat = true,
           command = false,
-          model = { model = "sonar", temperature = 1.1, top_p = 1 },
+          model = { model = "gpt-5.2", temperature = 1.1, top_p = 1 },
           system_prompt = SYSTEM_PROMPT,
-          -- disable = true,
         },
       },
       chat_user_prefix = "---------------------------- NEW 💬 ----------------------------",
