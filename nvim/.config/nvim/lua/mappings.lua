@@ -160,8 +160,8 @@ map("n", "<leader>r,", extras.send_reminder_notification, { desc = "Reminder!", 
 map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) buffer", noremap = true, silent = true })
 
 -- quickfix
--- Toggle quickfix
-map("n", "<leader>eo", function()
+-- Toggle quickfix (<leader>u)
+map("n", "<leader>uo", function()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.bo[vim.api.nvim_win_get_buf(win)].buftype == "quickfix" then
       vim.cmd.cclose()
@@ -174,21 +174,21 @@ end, { desc = "(Quickfix) Toggle" })
 -- delete entries
 map(
   "n",
-  "<leader>ed",
+  "<leader>ud",
   extras.remove_quickfix_entry,
-  { desc = "remove current entry from quickfix", noremap = true, silent = true }
+  { desc = "(Quickfix) remove current entry from quickfix", noremap = true, silent = true }
 )
 map(
   "v",
-  "<leader>ed",
+  "<leader>ud",
   extras.remove_quickfix_selection,
-  { desc = "remove current entries from quickfix", noremap = true, silent = true }
+  { desc = "(Quickfix) remove current entries from quickfix", noremap = true, silent = true }
 )
 
 -- Clear all quickfix entries
-map("n", "<leader>e0", function()
+map("n", "<leader>u0", function()
   vim.fn.setqflist {}
-  print "Quickfix list cleared"
+  print "(Quickfix) list cleared"
 end, { desc = "(Quickfix) Clear list" })
 
 -- General (or python-based)
