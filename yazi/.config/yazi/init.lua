@@ -32,6 +32,3 @@ local ok_duckdb, duckdb = pcall(require, "duckdb")
 if ok_duckdb then
 	duckdb:setup({ mode = "standard" })
 end
-
--- TODO: decide if i keep this
-require("recycle-bin"):setup()
