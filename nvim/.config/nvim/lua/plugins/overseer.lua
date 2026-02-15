@@ -1,7 +1,9 @@
 return {
   "stevearc/overseer.nvim",
   -- "",
-  tag = "v1.6.0", -- bro said breaking changes after
+  -- tag = "v1.6.0", -- bro said breaking changes after that
+  tag = "v2.1.0", -- bro said breaking changes after that
+  -- #TODO: try 2.1.0
   opts = {},
   -- lazy = false,
   keys = {

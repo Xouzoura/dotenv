@@ -161,7 +161,7 @@ map("n", "<leader>cM", extras.messages_on_buffer, { desc = "See messages (E+W) b
 
 -- quickfix
 -- Toggle quickfix (<leader>u)
-map("n", "<leader>uo", function()
+map("n", "<leader>u;", function()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.bo[vim.api.nvim_win_get_buf(win)].buftype == "quickfix" then
       vim.cmd.cclose()
