@@ -3,7 +3,7 @@ return {
   -- dir = "/home/xouzoura/code/lua/me/lyrics",
   config = function()
     require("lyrics").setup {
-      lyrics_fetcher_path = "~/code/python/me/lyrics",
+      lyrics_fetcher_path = "~/code/personal/python/lyrics",
     }
   end,
   keys = {
