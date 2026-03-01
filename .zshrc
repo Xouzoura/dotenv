@@ -279,6 +279,12 @@ fz() {
   local dir
   dir=$(zoxide query -l | fzf --height 40% --reverse --inline-info) && cd "$dir"
 }
+# fr to use fzf to find all repos in the ~/code directory
+fr() {
+    local repo
+    repo=$(fd -t d -H -I -u '^\.git$' ~/code --exec dirname '{}' \; | fzf) || return
+    cd "$repo" || return
+}
 source ~/.zshrc_secrets
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -316,13 +322,8 @@ bindkey '^U' backward-delete-char
 bindkey '^M' accept-line
 # Capture last command outputs to a file and open it in Vim
 capture_and_edit_last_command_output() {
-    # Get the last command from history
     local last_command=$(fc -ln -1)
-
-    # Re-run the last command and save its output to a temporary file
     eval "$last_command" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' > /tmp/last_command_output.txt 2>&1
-
-    # Open the output in Vim
     vi /tmp/last_command_output.txt
 }
 
