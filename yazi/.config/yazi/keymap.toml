@@ -559,6 +559,9 @@ prepend_keymap = [
         "M",
     ], run = "plugin mount", desc = "[pl] Mount" },
     { on = [
+        "T",
+    ], run = "plugin toggle-pane max-preview", desc = "[pl] Maximize" },
+    { on = [
         "<",
     ], run = "plugin duckdb -1", desc = "[pl] Scroll one column to the left" },
     { on = [
