@@ -70,3 +70,50 @@ local cs = vim.env.NVIM_COLORSCHEME or "nightfox"
 if cs and cs ~= "" then
   vim.cmd("colorscheme " .. cs)
 end
+
+-- IF I DECIDE TO USE THIS
+-- if vim.fn.has("wsl") == 1 then
+--   -- WSL → Windows clipboard
+--   vim.g.clipboard = {
+--     name = "WslClipboard",
+--     copy = {
+--       ["+"] = "clip.exe",
+--       ["*"] = "clip.exe",
+--     },
+--     paste = {
+--       ["+"] = "powershell.exe -NoProfile -Command Get-Clipboard",
+--       ["*"] = "powershell.exe -NoProfile -Command Get-Clipboard",
+--     },
+--     cache_enabled = 0,
+--   }
+--
+-- elseif vim.env.WAYLAND_DISPLAY then
+--   -- Wayland Linux
+--   vim.g.clipboard = {
+--     name = "wl-clipboard",
+--     copy = {
+--       ["+"] = "wl-copy",
+--       ["*"] = "wl-copy",
+--     },
+--     paste = {
+--       ["+"] = "wl-paste --no-newline",
+--       ["*"] = "wl-paste --no-newline",
+--     },
+--     cache_enabled = 0,
+--   }
+--
+-- elseif vim.env.DISPLAY then
+--   -- X11 Linux
+--   vim.g.clipboard = {
+--     name = "xclip",
+--     copy = {
+--       ["+"] = "xclip -selection clipboard -in",
+--       ["*"] = "xclip -selection primary -in",
+--     },
+--     paste = {
+--       ["+"] = "xclip -selection clipboard -out",
+--       ["*"] = "xclip -selection primary -out",
+--     },
+--     cache_enabled = 0,
+--   }
+-- end
