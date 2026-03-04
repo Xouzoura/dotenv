@@ -436,7 +436,7 @@ keymap = [
         "g",
         "P",
         "d",
-    ], run = "cd ~/Koofr/personal_documents/", desc = "Go to the personal documents" },
+    ], run = "cd ~/Koofr/personal_documents/", desc = "Go to the ~/Koofr/personal_documents/" },
     { on = [
         "g",
         "M",
@@ -457,7 +457,11 @@ keymap = [
     { on = [
         "g",
         "j",
-    ], run = "cd ~/code", desc = "Go to the code directory" },
+    ], run = "cd ~/code", desc = "Go to the ~/code directory" },
+    { on = [
+        "g",
+        "r",
+    ], run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"', desc = "Go to the git parent directory" },
     # WINDOWS FOR WORK-LAPTOP
     { on = [
         "g",
