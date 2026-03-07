@@ -95,7 +95,7 @@ local _player_ctl_status_interval_ms = 3000
 -- local now_playing_cache = ""
 local _cache = { ts = 0, status = "", meta = "" } -- local (RAM) cache
 local cache_file = "/tmp/nowplaying.cache" -- where i have the data.
-local log_file = "/tmp/nowplaying.log"
+-- local log_file = "/tmp/nowplaying.log"
 local function read_cache()
   local f = io.open(cache_file, "r")
   if not f then
@@ -119,9 +119,18 @@ end
 -- update player info
 local function update_now_playing()
   -- expensive, so only call when caches fail.
+  -- FYI, i don't use it on window, just linux to test it.
   local max_len = 40
 
-  local handle = io.popen "playerctl metadata --format '{{status}}|{{artist}} - {{title}}' 2>/dev/null"
+  --NOTE: This was working, just when i had ncspot and youtube always picked up youtube even if paused
+  -- local handle = io.popen "playerctl metadata --format '{{status}}|{{artist}} - {{title}}' 2>/dev/null"
+
+  -- this now picks the correct one (more expensive though).
+  -- playerctl -a metadata --format "{{status}}|{{artist}} - {{title}}"
+  -- Paused|The Black Crowes - Topic - She Talks To Angels
+  -- Playing|Morrissey - Everyday Is Like Sunday - 2011 Remaster
+  local handle =
+    io.popen [[playerctl -a metadata --format "{{status}}|{{artist}} - {{title}}" 2>/dev/null | grep "^Playing" | head -n1]]
   if not handle then
     write_cache(os.time(), "", "")
     return
