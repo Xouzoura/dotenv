@@ -1,0 +1,10 @@
+{
+  "agents": [
+    { "provider": "googleai", "name": "gemini-2.5-flash", "chat": true, "command": false,
+      "model": { "model": "gemini-2.5-flash", "temperature": 1.1, "top_p": 1 }
+    },
+    { "provider": "azure", "name": "gpt-5.2", "chat": true, "command": false,
+      "model": { "model": "gpt-5.2", "temperature": 1.1, "top_p": 1 }
+    }
+  ]
+}

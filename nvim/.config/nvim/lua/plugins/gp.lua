@@ -1,15 +1,39 @@
+local function _load_json(path)
+  local f = io.open(path, "r")
+  if not f then
+    return {}
+  end
+  local content = f:read "*a"
+  f:close()
+  return vim.json.decode(content)
+end
+local function get_agents()
+  local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation, unless specifically requested. Be precise, concise, avoid repeating what I have asked, repeating code. When asked to explain, be explain what you are asked only, when asked to code, be brief providing only code.\n\n"
+    .. "- When asked to explain, only explain what you are asked without repeating information and giving too much information.\n"
+    .. "- Focus on code first. Try to limit the explanation to the code, and the words to a minimum. Answer strictly the question\n"
+    .. "- The user provided the additional info about how they would like you to respond:\n"
+    .. "- If you're unsure don't guess and say you don't know instead.\n"
+    .. "- Ask question if you need clarification to provide better answer.\n"
+    .. "- Zoom out first to see the big picture and then zoom in to details.\n"
+  local env = os.getenv "NVIM_AI_ENV" or "pers"
+  local base = vim.fn.stdpath "config" .. "/lua/configs/ai/"
+
+  local disabled = _load_json(base .. "disabled.json").agents or {}
+  local env_agents = _load_json(base .. env .. ".json").agents or {}
+
+  for _, a in ipairs(env_agents) do
+    if a.chat then
+      a.system_prompt = SYSTEM_PROMPT
+    end
+  end
+  local agents = vim.list_extend(disabled, env_agents)
+  return agents
+end
 return {
   -- chatgpt in the nvim config
   "robitx/gp.nvim",
   lazy = false,
   config = function()
-    local SYSTEM_PROMPT = "You are a general AI assistant working for a senior software engineer, so focus more on code and limit the explanation, unless specifically requested. Be precise, concise, avoid repeating what I have asked, repeating code. When asked to explain, be explain what you are asked only, when asked to code, be brief providing only code.\n\n"
-      .. "- When asked to explain, only explain what you are asked without repeating information and giving too much information.\n"
-      .. "- Focus on code first. Try to limit the explanation to the code, and the words to a minimum. Answer strictly the question\n"
-      .. "- The user provided the additional info about how they would like you to respond:\n"
-      .. "- If you're unsure don't guess and say you don't know instead.\n"
-      .. "- Ask question if you need clarification to provide better answer.\n"
-      .. "- Zoom out first to see the big picture and then zoom in to details.\n"
     local azure_endpoint
     -- using _AZURE_OPENAI_ENDPOINT as a system environment variable
     if os.getenv "_AZURE_OPENAI_ENDPOINT" == nil then
@@ -36,134 +60,23 @@ return {
           endpoint = azure_endpoint,
           secret = os.getenv "_AZURE_OPENAI_KEY", -- KEEP IN MIND THAT YOU NEED THIS AS A SYSTEM ENVIRONMENT VARIABLE
         },
-        pplx = {
-          endpoint = "https://api.perplexity.ai/chat/completions",
-          secret = os.getenv "PPLX_API_KEY",
-        },
+        -- pplx = {
+        --   endpoint = "https://api.perplexity.ai/chat/completions",
+        --   secret = os.getenv "PPLX_API_KEY",
+        -- },
         googleai = {
           endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
           secret = os.getenv "GEMINI_API_KEY",
         },
       },
 
-      agents = {
-        --- DISABLE THE DEFAULT ONES BECAUSE THEY ARE STILL PICKED UP.
-        {
-          provider = "azure",
-          name = "CodeGPT4o-mini",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "ChatGPT4o",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "ChatGPT4o-mini",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "ChatGPT-o3-mini",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "ChatGemini",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "CodeGPT4o",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "CodeGemini",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "CodeGPT-o3-mini",
-          disable = true,
-        },
-        {
-          provider = "azure",
-          name = "CodeGPT-o3-mini",
-          disable = true,
-        },
-        { provider = "pplx", name = "ChatPerplexityLlama3.1-8B", disable = true },
-        {
-          -- Works only with the bypass that is the dispatcher.prepare_payload
-          -- doing.
-          provider = "azure",
-          name = "o3-mini",
-          chat = true,
-          command = false,
-          model = { model = "o3-mini", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-          disable = true,
-        },
-        -- {
-        --   provider = "googleai",
-        --   name = "ChatGemini",
-        --   disable = true, -- because i don't want it from gp.nvim default config.
-        --   chat = true,
-        --   command = false,
-        --   -- string with model name or table with model name and parameters
-        --   model = { model = "gemini-pro", temperature = 1.1, top_p = 1 },
-        --   -- system prompt (use this to specify the persona/role of the AI)
-        --   system_prompt = require("gp.defaults").chat_system_prompt,
-        -- },
-        {
-          provider = "googleai",
-          name = "gemini-3-flash-preview",
-          chat = true,
-          command = false,
-          model = { model = "gemini-3-flash-preview", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-        },
-        -- {
-        --   provider = "googleai",
-        --   name = "gemini-2.5-pro",
-        --   disabled = true, -- because it's not for free.
-        --   chat = true,
-        --   command = false,
-        --   model = { model = "gemini-2.5-pro-preview-03-25", temperature = 1.1, top_p = 1 },
-        --   system_prompt = SYSTEM_PROMPT,
-        -- },
-        -- disabled sonar since it's not free anymore
-        -- {
-        --   provider = "pplx",
-        --   name = "sonar",
-        --   chat = true,
-        --   command = false,
-        --   model = { model = "sonar", temperature = 1.1, top_p = 1 },
-        --   system_prompt = SYSTEM_PROMPT,
-        --   -- disable = true,
-        -- },
-        {
-          provider = "azure",
-          name = "gpt-5.1",
-          chat = true,
-          command = false,
-          model = { model = "gpt-5.1", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-        },
-        -- Last one is the default always
-        {
-          provider = "azure",
-          name = "gpt-5.2",
-          chat = true,
-          command = false,
-          model = { model = "gpt-5.2", temperature = 1.1, top_p = 1 },
-          system_prompt = SYSTEM_PROMPT,
-        },
-      },
+      agents = {},
       chat_user_prefix = "---------------------------- NEW 💬 ----------------------------",
       chat_assistant_prefix = { ">>> 🤖 : ", "[{{agent}}]", " <<<" },
     }
+
+    config.agents = get_agents()
+
     require("gp").setup(config)
     -- https://github.com/Robitx/gp.nvim/issues/245 solution from the issue
     -- related to https://github.com/Robitx/gp.nvim/pull/246

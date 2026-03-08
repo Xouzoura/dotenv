@@ -1,0 +1,12 @@
+{
+  "agents": [
+    { "provider": "azure", "name": "CodeGPT4o-mini", "disable": true },
+    { "provider": "azure", "name": "ChatGPT4o", "disable": true },
+    { "provider": "azure", "name": "ChatGPT4o-mini", "disable": true },
+    { "provider": "azure", "name": "ChatGPT-o3-mini", "disable": true },
+    { "provider": "azure", "name": "ChatGemini", "disable": true },
+    { "provider": "azure", "name": "CodeGPT4o", "disable": true },
+    { "provider": "azure", "name": "CodeGemini", "disable": true },
+    { "provider": "azure", "name": "CodeGPT-o3-mini", "disable": true }
+  ]
+}
