@@ -6,6 +6,9 @@ return {
   {
     "sindrets/diffview.nvim",
     lazy = true, -- only load on key press
+    cmd = {
+      "DiffviewOpen",
+    },
     keys = {
       -- Project-level
       { "<leader>gd0", "<cmd>DiffviewOpen<CR>", desc = "(diffview) Diff with HEAD" },

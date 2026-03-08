@@ -285,6 +285,10 @@ fr() {
     repo=$(fd -t d -H -I -u '^\.git$' ~/code --exec dirname '{}' \; | fzf) || return
     cd "$repo" || return
 }
+# Since i want the diffviewopen a lot 
+ngit() {
+  nvim -c "DiffviewOpen $1..$2"
+}
 source ~/.zshrc_secrets
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
