@@ -230,18 +230,15 @@ alias mg='matrix --green'
 
 # Koofr ;)
 alias koofr='GDK_BACKEND=x11 ~/.koofr-dist/storagegui'
+alias sshpi="ssh xouzoura@192.168.1.254"
 
-# WINDOWS-PC alias (only for work needed)
+# >>>>>>>>>>>>>> WINDOWS-PC alias (only for work needed) <<<<<<<<<<<<<<<<<<<<<
 # work C (mounted drive)
 alias winc="z /mnt/c/Users/DIO3713/"
 # primeo specific
 alias glab='GITLAB_HOST=git.primeo-energie.ch GITLAB_TOKEN=$GITLAB_TOKEN_GLAB glab'
 # > temp but useful
 alias kpod="kubectl get pod -n ent-dev -l app=ent-mock-app -o jsonpath='{.items[0].metadata.name}' | clip.exe"
-# alias for fd
-alias fd="fdfind"
-alias sshpi="ssh xouzoura@192.168.1.254"
-
 
 # ---------------------------------------------------
 # CUSTOM FUNCTIONS
