@@ -177,15 +177,11 @@ alias ytd=". ~/scripts/download_video.sh"
 # alias mixxx="pasuspender mixxx"
 alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
 
-# work C (mounted drive)
-alias winc="z /mnt/c/Users/DIO3713/"
-
 # Neovim aliases. This can change with a script
 alias vi="nvim"
-# alias vo="nvim -c 'lua require(\"fzf-lua\").oldfiles()'"
 # added delay since it causes atm some issue with lines
 alias vo="nvim -c 'sleep 100m | lua require(\"fzf-lua\").oldfiles()'"
-alias vid="DAP_FULL_LAYOUT=1 nvim"
+alias vid="DAP_FULL_LAYOUT=1 nvim" # for debug
 
 # others
 alias mouse="keep-presence"
@@ -212,13 +208,9 @@ alias notesw="vi ~/vaults/notes/_work.md"
 alias notesd="vi ~/vaults/notes/_daily.md"
 alias n,=". ~/scripts/push_notes.sh pull" # pull notes
 alias n.=". ~/scripts/push_notes.sh push" # push notes
-alias k8s='nvim +"lua require(\"kubectl\").open()"'
-alias oil='nvim +"Oil"'
 alias dbui='nvim +"DBUIToggle"'
 alias wz='wezterm'
-gdiff() {
-  NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
-}
+# use my hotspot
 alias hotspot='nmcli dev wifi connect "Ts0t"'
 # Kubectl
 alias k='kubectl'
@@ -231,7 +223,6 @@ alias pnew='uv run pytest -s -m new'
 alias plf='uv run pytest -s --lf'
 alias pdb='uv run pytest -s --pdb'
 alias pca='pre-commit run --all-files'
-# alias jp='python -m jupyter notebook'
 
 # git clone https://github.com/saitamasahil/matrix
 # alias matrix='bash <(curl -s https://raw.githubusercontent.com/saitamasahil/matrix/main/matrix) --green'
@@ -240,6 +231,12 @@ alias mg='matrix --green'
 # Koofr ;)
 alias koofr='GDK_BACKEND=x11 ~/.koofr-dist/storagegui'
 
+# WINDOWS-PC alias (only for work needed)
+# work C (mounted drive)
+alias winc="z /mnt/c/Users/DIO3713/"
+
+# ---------------------------------------------------
+# CUSTOM FUNCTIONS
 # Yazi (yy)
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -279,6 +276,7 @@ fz() {
   local dir
   dir=$(zoxide query -l | fzf --height 40% --reverse --inline-info) && cd "$dir"
 }
+
 # fr to use fzf to find all repos in the ~/code directory
 fr() {
     local repo
@@ -289,47 +287,22 @@ fr() {
 ngit() {
   nvim -c "DiffviewOpen $1..$2"
 }
-source ~/.zshrc_secrets
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+gdiff() {
+  NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
+}
+# ports
+ports() {
+    lsof -iTCP -sTCP:LISTEN -P -n
+}
 
-# Do i prefer it like this at the end?
-# PATH="$HOME/.local/bin:$PATH"  
-PATH="$PATH:$HOME/.local/bin"
-PATH="$PATH:$HOME/go/bin" 
-if [[ ":$PATH:" != *"/snap/bin:"* ]]; then 
-    export PATH="$PATH:/snap/bin"
-fi
-
-# export PATH="$HOME/.fzf/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-eval "$(zoxide init zsh)"
-bindkey '^ ' autosuggest-accept
-bindkey '^]' autosuggest-execute
-bindkey '^[p' history-beginning-search-backward
-bindkey '^[n' history-beginning-search-forward
-# git stuff
-source ~/scripts/fzf-git.sh/fzf-git.sh 
-# The hotkeys for git stuff
-# 
-    # CTRL-G - CTRL-F for Files
-    # CTRL-G - CTRL-B for Branches
-    # CTRL-G - CTRL-T for Tags
-    # CTRL-G - CTRL-R for Remotes
-    # CTRL-G - CTRL-G for Commits
-# control + u = backspace
-# control + m = enter
-bindkey '^U' backward-delete-char
-bindkey '^M' accept-line
 # Capture last command outputs to a file and open it in Vim
 capture_and_edit_last_command_output() {
     local last_command=$(fc -ln -1)
     eval "$last_command" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' > /tmp/last_command_output.txt 2>&1
     vi /tmp/last_command_output.txt
 }
+alias capture='capture_and_edit_last_command_output'
 
 wifi() {
     ssid="$1"
@@ -342,12 +315,49 @@ wifi() {
     fi
 }
 
-# Alias to capture the last command output and open it in Vim
-alias capture='capture_and_edit_last_command_output'
+# add the secrets
+source ~/.zshrc_secrets
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Do i prefer it like this at the end?
+PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/go/bin" 
+if [[ ":$PATH:" != *"/snap/bin:"* ]]; then 
+    export PATH="$PATH:/snap/bin"
+fi
+
+# This is for autocompletion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+eval "$(zoxide init zsh)"
+# git stuff
+source ~/scripts/fzf-git.sh/fzf-git.sh 
+# The hotkeys for git stuff
+# 
+    # CTRL-G - CTRL-F for Files
+    # CTRL-G - CTRL-B for Branches
+    # CTRL-G - CTRL-T for Tags
+    # CTRL-G - CTRL-R for Remotes
+    # CTRL-G - CTRL-G for Commits
+
+# final bindings
+bindkey '^ ' autosuggest-accept
+bindkey '^]' autosuggest-execute
+bindkey '^[p' history-beginning-search-backward
+bindkey '^[n' history-beginning-search-forward
+# control + u = backspace
+# control + m = enter
+bindkey '^U' backward-delete-char
+bindkey '^M' accept-line
+
+
+# ------------------------------------------------
 # Always keep at the end
 eval "$(starship init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)

@@ -36,6 +36,7 @@ map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 -- Comment
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+map("v", "<leader>f", 'y/\\V<C-r>"<CR>', { desc = "search in visual", remap = true })
 -- Save
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 
@@ -141,8 +142,10 @@ map("n", "<leader>dy", extras.diagnostic_copy_first_msg, { desc = "[copy] first 
 map("n", "<leader>dY", extras.diagnostic_copy_all_msgs, { desc = "[copy] All diagnostic to clipboard" })
 
 -- format json file
-map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json" })
-map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format json of area" })
+map("n", "<leader>jj", ":%!jq .<CR>", { noremap = true, silent = true, desc = "Format file json (str->dict)" })
+map("n", "<leader>jJ", ":%!jq -c .<CR>", { noremap = true, silent = true, desc = "Format file json (dict->str)" })
+map("v", "<leader>jj", ":!jq .<CR>", { noremap = true, silent = true, desc = "Format file json (str->dict)" })
+map("v", "<leader>jJ", ":!jq -c .<CR>", { noremap = true, silent = true, desc = "Format file json (dict->str)" })
 
 map("n", "<leader>mm", extras.ToggleMouse, { desc = "disable/enable mouse", noremap = true, silent = true })
 map("n", "<leader>tn", "/@pytest\\.mark\\.new<CR>", { desc = "remove 'new' marks", noremap = true, silent = true })
