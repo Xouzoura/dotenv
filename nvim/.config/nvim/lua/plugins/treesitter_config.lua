@@ -39,10 +39,6 @@ return {
           enable = true,
           keymaps = {
             -- decided for s-l and s-h since i don't use them
-            -- init_selection = "<c-space>",
-            -- node_incremental = "<c-space>",
-            -- node_decremental = "<c-backspace>",
-            -- scope_incremental = "<c-s>",
             init_selection = "<s-l>",
             node_incremental = "<s-l>",
             node_decremental = "<s-h>",

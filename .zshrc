@@ -131,7 +131,6 @@ alias xlsx='xleak -i'
 
 # Git
 alias glog='git log --graph --oneline --all --decorate'
-alias ggraph='git-graph --color=always | less' # requires `cargo install git-graph`
 alias gst='git status'
 alias gca='git commit -am'
 alias gbv='git branch -vv'
@@ -288,14 +287,25 @@ fr() {
     repo=$(fd -t d -H -I -u '^\.git$' ~/code --exec dirname '{}' \; | fzf) || return
     cd "$repo" || return
 }
-# Since i want the diffviewopen a lot 
-ngit() {
-  nvim -c "DiffviewOpen $1..$2"
+
+# Since i want the diffviewopen a lot to compare commits ngit commita commitb (or branches)
+gitd() {
+  case $# in
+    0)
+      NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
+      ;;
+    1)
+      NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $1"
+      ;;
+    2)
+      NVIM_COLORSCHEME=habamax nvim -c "DiffviewOpen $1..$2"
+      ;;
+    *)
+      NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
+      ;;
+  esac
 }
 
-gdiff() {
-  NVIM_COLORSCHEME=habamax nvim +"DiffviewOpen $*"
-}
 # ports
 ports() {
     lsof -iTCP -sTCP:LISTEN -P -n
