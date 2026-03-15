@@ -9,7 +9,7 @@ return {
     {
       "<leader>D;",
       "<cmd>Dockyard<cr>",
-      desc = "(fzf) Find Files",
+      desc = "(Docker) open",
     },
   },
   lazy = true,
