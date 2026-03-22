@@ -9,7 +9,7 @@
   - systemd-manager-tui (systemd manager), 
   - fastfetch (see system's installed packages, hardware, managers)
   - eza (needed for yazi)
-  - duckdb
+  - ncdu
   - espanso (if i want to use `:emailme` and hotkeys globally (systemctl --user start espanso.service).
 
 # Other
