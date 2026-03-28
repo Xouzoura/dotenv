@@ -1,6 +1,6 @@
 return {
   "Xouzoura/lyrics-in-buffer.nvim",
-  -- dir = "/home/xouzoura/code/lua/me/lyrics",
+  -- dir = "/home/xouzoura/code/personal/lua/lyrics",
   config = function()
     require("lyrics").setup {
       lyrics_fetcher_path = "~/code/personal/python/lyrics",

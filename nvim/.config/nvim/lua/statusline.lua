@@ -92,10 +92,9 @@ end
 -- Using cache since it can be annoying fetching every redraw the song
 --
 local _player_ctl_status_interval_ms = 3000
--- local now_playing_cache = ""
-local _cache = { ts = 0, status = "", meta = "" } -- local (RAM) cache
+local _cache = { ts = 0, status = "", artist = "", title = "", album = "" } -- local (RAM) cache
 local cache_file = "/tmp/nowplaying.cache" -- where i have the data.
--- local log_file = "/tmp/nowplaying.log"
+
 local function read_cache()
   local f = io.open(cache_file, "r")
   if not f then
@@ -103,67 +102,68 @@ local function read_cache()
   end
   local line = f:read "*l" or ""
   f:close()
-  local ts, status, meta = line:match "^(%d+)|([^|]*)|(.*)$"
-  return tonumber(ts) or 0, status or "", meta or ""
+  local ts, status, artist, title, album = line:match "^(%d+)|(.-)|([^|]*)|([^|]*)|([^|]*)$"
+
+  return tonumber(ts) or 0, status or "", artist or "", title or "", album or ""
 end
 
 -- write cache
-local function write_cache(ts, status, meta)
+local function write_cache(ts, status, artist, title, album)
   local f = io.open(cache_file, "w")
   if f then
-    f:write(string.format("%d|%s|%s", ts, status or "", meta or ""))
+    f:write(string.format("%d|%s|%s|%s|%s", ts, status or "", artist or "", title or "", album or ""))
     f:close()
   end
 end
 
 -- update player info
 local function update_now_playing()
-  -- expensive, so only call when caches fail.
   -- FYI, i don't use it on window, just linux to test it.
-  local max_len = 40
 
-  --NOTE: This was working, just when i had ncspot and youtube always picked up youtube even if paused
-  -- local handle = io.popen "playerctl metadata --format '{{status}}|{{artist}} - {{title}}' 2>/dev/null"
-
-  -- this now picks the correct one (more expensive though).
-  -- playerctl -a metadata --format "{{status}}|{{artist}} - {{title}}"
+  -- playerctl -a metadata --format "{{status}}|{{artist}}|{{title}}|{{album}}"
   -- Paused|The Black Crowes - Topic - She Talks To Angels
   -- Playing|Morrissey - Everyday Is Like Sunday - 2011 Remaster
   local handle =
-    io.popen [[playerctl -a metadata --format "{{status}}|{{artist}} - {{title}}" 2>/dev/null | grep "^Playing" | head -n1]]
+    io.popen [[playerctl -a metadata --format "{{status}}|{{artist}}|{{title}}|{{album}}" 2>/dev/null | grep "^Playing" | head -n1]]
   if not handle then
-    write_cache(os.time(), "", "")
-    return
+    write_cache(os.time(), "", "", "", "")
+    return "", "", "", ""
   end
 
   local result = handle:read "*a" or ""
   handle:close()
 
-  local status, meta = result:match "^(.-)|(.+)$"
-  meta = meta or ""
-  if not status or not meta then
-    write_cache(os.time(), "", "")
-    return
+  local status, artist, title, album = result:match "^(.-)|([^|]*)|([^|]*)|([^|]*)$"
+  if not status or not title then
+    write_cache(os.time(), "", "", "", "")
+    return "", "", "", ""
   end
 
-  meta = meta:gsub("\n", "")
-  if meta == "" then
+  write_cache(os.time(), status, artist, title, album)
+  return status, artist, title, album
+end
+
+local function _format_metadata(status, artist, track, album)
+  local max_len = 50
+
+  artist = artist or ""
+  track = track or ""
+  album = album or ""
+
+  local meta = artist .. " - " .. track .. " - [" .. album .. "]"
+  meta = meta:gsub("\n", ""):gsub("\r", "")
+
+  if meta == "" or meta == " -  - " then
     meta = "No track"
   end
+
   if #meta > max_len then
     meta = meta:sub(1, max_len - 3) .. "..."
   end
 
-  write_cache(os.time(), status, meta)
-  return status, meta
-end
-
-local function _format_metadata(status, meta)
-  local note_icon = "♪ <"
-  if meta ~= nil and status == "Playing" then
+  if status == "Playing" then
     meta = meta:gsub("[Rr][Ee][Mm][Aa][Ss][Tt][Ee][Rr].*$", "")
-    meta = meta:gsub("\r", "")
-    return note_icon .. meta .. ">"
+    return "♪ <" .. meta .. ">"
   else
     return ""
   end
@@ -173,22 +173,22 @@ function _G.NowPlaying()
   local cache_duration = 6 -- windows i expose it every 5 secs
   -- 1. check local cache (RAM)
   if _cache.ts ~= nil and (now - _cache.ts <= cache_duration) then
-    return _format_metadata(_cache.status, _cache.meta)
+    return _format_metadata(_cache.status, _cache.artist, _cache.track, _cache.album)
   end
 
   -- 2. check file cache
-  local ts, status, meta = read_cache()
+  local ts, status, artist, track, album = read_cache()
   if (now - ts) <= cache_duration then
-    _cache = { ts = ts, status = status, meta = meta }
-    return _format_metadata(_cache.status, _cache.meta)
+    _cache = { ts = ts, status = status, artist = artist, track = track, album = album }
+    return _format_metadata(_cache.status, _cache.artist, _cache.track, _cache.album)
   end
 
   -- 3. caching fails, expensive call.
   if not vim.env.WSL_DISTRO_NAME then
     -- wsl doesn't do it by default, need extra scripts
-    status, meta = update_now_playing()
-    _cache = { ts = ts, status = status, meta = meta }
-    return _format_metadata(_cache.status, _cache.meta)
+    status, artist, title, album = update_now_playing()
+    _cache = { ts = ts, status = status, artist = artist, track = track, album = album }
+    return _format_metadata(_cache.status, _cache.artist, _cache.track, _cache.album)
   end
   -- nothing worked no song is playing or working.
   return ""
