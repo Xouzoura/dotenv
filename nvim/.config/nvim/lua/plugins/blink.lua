@@ -35,7 +35,7 @@ return {
         -- ["<C-d>"] = { "snippet_backward", "fallback" },
 
         -- Mine.
-        ["<C-x>"] = { "show_signature", "hide_signature", "fallback" },
+        ["<C-s>"] = { "show_signature", "hide_signature", "fallback" },
         ["<C-e>"] = { "select_and_accept" },
       },
       snippets = {
@@ -59,6 +59,9 @@ return {
             fallbacks = { "buffer" },
           },
         },
+      },
+      signature = {
+        enabled = true,
       },
     },
     opts_extend = { "sources.default" },

@@ -16,7 +16,8 @@ local options = {
         "$FILENAME",
         "-",
         "--line-length", -- This is because of stupid local forces.
-        "88", -- this should be the pep8 standard
+        -- "88", -- this should be the pep8 standard
+        "120", -- this is in my most pre-commits
       },
     },
   },
