@@ -124,7 +124,10 @@ local function update_now_playing()
   -- Paused|The Black Crowes - Topic - She Talks To Angels
   -- Playing|Morrissey - Everyday Is Like Sunday - 2011 Remaster
   local handle =
-    io.popen [[playerctl -a metadata --format "{{status}}|{{artist}}|{{title}}|{{album}}" 2>/dev/null | grep "^Playing" | head -n1]]
+    -- without ncspot
+    -- io.popen [[playerctl -a metadata --format "{{status}}|{{artist}}|{{title}}|{{album}}" 2>/dev/null | grep "^Playing" | head -n1]]
+    -- with ncspot
+    io.popen [[playerctl --player ncspot -a metadata --format "{{status}}|{{artist}}|{{title}}|{{album}}" 2>/dev/null | grep "^Playing" | head -n1]]
   if not handle then
     write_cache(os.time(), "", "", "", "")
     return "", "", "", ""

@@ -231,7 +231,8 @@ alias mg='matrix --green'
 alias koofr='GDK_BACKEND=x11 ~/.koofr-dist/storagegui'
 # Raspberry
 alias sshpi="ssh xouzoura@192.168.1.254"
-alias sshpi_tunnel="ssh -L 8123:localhost:8123 xouzoura@192.168.1.254 -N"
+alias sshts="ssh xouzoura@100.95.93.106" # via tailscale...
+alias sshpi_tunnel="ssh -L 8123:localhost:8123 xouzoura@192.168.1.254 -N" # to see the network.
 
 # >>>>>>>>>>>>>> WINDOWS-PC alias (only for work needed) <<<<<<<<<<<<<<<<<<<<<
 # work C (mounted drive)
