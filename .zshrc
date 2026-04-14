@@ -278,17 +278,35 @@ fold_md() {
   fi
 }
 
-# fzf integration with zoxide of my paths (fz)
+# fz - integration with zoxide of my paths (fz)
 fz() {
   local dir
   dir=$(zoxide query -l | fzf --height 40% --reverse --inline-info) && cd "$dir"
 }
 
-# fr to use fzf to find all repos in the ~/code directory
+# fr - to use fzf to find all repos in the ~/code directory
 fr() {
     local repo
     repo=$(fd -t d -H -I -u '^\.git$' ~/code --exec dirname '{}' \; | fzf) || return
     cd "$repo" || return
+}
+
+# fn - see the note files to pick easily with fzf
+fn() {
+  local dir="$HOME/vaults"
+  local file
+  file=$(cd "$dir" && fd -t f -e md -H -I -u | fzf \
+    --preview 'bat --style=numbers --color=always '"$dir"'/{} || cat '"$dir"'/{}') || return
+  [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
+}
+
+# See the work notes only
+fnw() {
+  local dir="$HOME/vaults/personal/notes"
+  local file
+  file=$(cd "$dir" && fd -t f -e md -H -I -u | fzf \
+    --preview 'bat --style=numbers --color=always '"$dir"'/{} || cat '"$dir"'/{}') || return
+  [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
 }
 
 # Since i want the diffviewopen a lot to compare commits ngit commita commitb (or branches)
