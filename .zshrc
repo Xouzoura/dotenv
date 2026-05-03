@@ -210,7 +210,7 @@ alias n.=". ~/scripts/push_notes.sh push" # push notes
 alias dbui='nvim +"DBUIToggle"'
 alias wz='wezterm'
 # use my hotspot
-alias hotspot='nmcli dev wifi connect "Ts0t"'
+alias hotspot='for i in {1..5}; do nmcli dev wifi connect "Ts0t" && break || echo "Attempt $i failed, retrying..."; sleep 2; done'
 # Kubectl
 alias k='kubectl'
 alias kns='kubectl config set-context --current --namespace'
