@@ -264,6 +264,15 @@ return {
         desc = "(fzf) Find 'test_' files",
       },
       {
+        "<leader>fn",
+        function()
+          require("fzf-lua").files {
+            cmd = "rg --files --glob '*.md' ~/vaults/",
+          }
+        end,
+        desc = "(fzf) Find note files",
+      },
+      {
         "<leader>fT",
         function()
           require("fzf-lua").live_grep {
