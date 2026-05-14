@@ -21,6 +21,7 @@
   "hlargs.nvim": { "branch": "main", "commit": "0b29317c944fb1f76503ce4540d6dceffbb5ccd2" },
   "hurl.nvim": { "branch": "main", "commit": "5329c31e53806ee39cfe19aa829a5cfb77adba56" },
   "import.nvim": { "branch": "main", "commit": "b3b0294827eb9c4db0af6d2a0684e2862325fc0c" },
+  "jupynvim": { "branch": "main", "commit": "2ffb8e81eec5c90d1b3c23a97e5d7245964a5148" },
   "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
   "lsp-lens.nvim": { "branch": "feature/supports-method-remove", "commit": "6515c870b61147b4c01276c8135900ed9d390bee" },
   "lyrics-in-buffer.nvim": { "branch": "master", "commit": "1155b40e88ad0c0bcbf24807c05741075ce402af" },

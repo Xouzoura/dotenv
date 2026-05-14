@@ -134,6 +134,10 @@ alias glog='git log --graph --oneline --all --decorate'
 alias gst='git status'
 alias gca='git commit -am'
 alias gbv='git branch -vv'
+unalias gb
+gb() {
+  git checkout "$(git branch --format='%(refname:short)' | fzf)"
+}
 alias g-='git checkout -'
 alias gdev='git checkout develop'
 # alias floorp='flatpak run one.ablaze.floorp'
