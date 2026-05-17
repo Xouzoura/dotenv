@@ -130,7 +130,7 @@ alias vpnd='sudo tailscale up --exit-node='
 alias xlsx='xleak -i'
 
 # Git
-alias glog='git log --graph --oneline --all --decorate'
+alias glog="git log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(bold red){{%an}}%C(reset) | %C(red)%s%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
 alias gst='git status'
 alias gca='git commit -am'
 alias gbv='git branch -vv'
@@ -330,6 +330,7 @@ gitd() {
       ;;
   esac
 }
+alias gdiff='gitd'
 
 # ports
 ports() {

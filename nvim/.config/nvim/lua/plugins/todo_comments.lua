@@ -7,7 +7,7 @@ return {
   -- NOTE:
   -- PERF:
   "folke/todo-comments.nvim",
-  lazy = false,
+  -- lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     { "<leader>tl", "<cmd>TodoLocList<cr>", desc = "<ToDo> Loclist" },

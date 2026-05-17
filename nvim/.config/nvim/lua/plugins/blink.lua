@@ -22,6 +22,7 @@ return {
       keymap = {
         -- preset = "default",
         preset = "none",
+        -- all those are shown during INSERT mode fyi...
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
         ["<C-n>"] = { "select_next", "fallback_to_mappings" },
