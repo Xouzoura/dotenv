@@ -178,7 +178,7 @@ alias ytd=". ~/scripts/download_video.sh"
 
 # mixxx
 # alias mixxx="pasuspender mixxx"
-alias cryptomator="cd ~/Appimages && ./cryptomator-1.16.0-x86_64.AppImage"
+alias cryptomator="~/Appimages/cryptomator-1.19.2-x86_64.AppImage"
 
 # Neovim aliases. This can change with a script
 alias vi="nvim"
