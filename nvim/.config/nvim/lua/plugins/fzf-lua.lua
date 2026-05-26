@@ -35,6 +35,15 @@ return {
         desc = "(fzf) Live Grep",
       },
       {
+        -- do a live grep search for exact matches
+        "<leader>fW",
+        function()
+          local fzf_lua = require "fzf-lua"
+          fzf_lua.live_grep({  rg_opts = "-w --hidden --no-heading --line-number --color=always --column"})
+        end,
+        desc = "(fzf) Live Grep (but exact)",
+      },
+      {
         -- do a quickfix
         "<leader>fq",
         function()
