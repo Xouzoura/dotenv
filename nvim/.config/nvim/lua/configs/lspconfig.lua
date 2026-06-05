@@ -24,7 +24,7 @@ vim.lsp.config("pyright", {
 -- local servers = { "html", "cssls", "clangd", "lua_ls", "ts_ls", "angularls", "taplo", "csharp_ls", "terraformls", "pyright"}
 -- 2) experimental with ty
 local servers =
-  { "html", "cssls", "bashls", "clangd", "lua_ls", "ts_ls", "angularls", "taplo", "csharp_ls", "terraformls", "ty" }
+  { "html", "cssls", "bashls", "clangd", "lua_ls", "ts_ls", "angularls", "gopls", "taplo", "csharp_ls", "terraformls", "ty" }
 -- 3) super basic with pyright
 -- local servers = { "html", "clangd", "taplo", "pyright" } -- simpler
 
