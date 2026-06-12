@@ -56,7 +56,7 @@ map("v", "<", "<gv", { silent = true })
 map("v", ">", ">gv", { silent = true })
 -- I just hate the % symbol and M is useless atm
 map("n", "M", "%", { silent = true })
--- map("v", "M", "%", { silent = true })
+map("v", "M", "%", { silent = true })
 
 -- <--- ## NORMAL mode stuff ###--->
 -- help is <F3>
@@ -189,21 +189,21 @@ map(
 )
 
 map("n", "<leader>ut", function()
-    -- fill quickfix with TODO/FIXME using ripgrep
-    local result = vim.fn.systemlist([[rg --vimgrep "TODO:FIXME"]])
-    vim.fn.setqflist({}, " ", {
-        title = "TODO/FIXME",
-        lines = result,
-        efm = "%f:%l:%c:%m",
-    })
+  -- fill quickfix with TODO/FIXME using ripgrep
+  local result = vim.fn.systemlist [[rg --vimgrep "TODO:FIXME"]]
+  vim.fn.setqflist({}, " ", {
+    title = "TODO/FIXME",
+    lines = result,
+    efm = "%f:%l:%c:%m",
+  })
 
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-        if vim.bo[vim.api.nvim_win_get_buf(win)].buftype == "quickfix" then
-            vim.cmd.cclose()
-            return
-        end
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].buftype == "quickfix" then
+      vim.cmd.cclose()
+      return
     end
-    vim.cmd.copen()
+  end
+  vim.cmd.copen()
 end, { desc = "(Quickfix) TODO+FIXME" })
 -- Clear all quickfix entries
 map("n", "<leader>u0", function()

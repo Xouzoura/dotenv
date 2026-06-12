@@ -5,9 +5,10 @@
 return {
   {
     "sindrets/diffview.nvim",
-    lazy = true, -- only load on key press
+    lazy = true,
     cmd = {
       "DiffviewOpen",
+      "DiffviewFileHistory",
     },
     keys = {
       -- Project-level
@@ -20,6 +21,7 @@ return {
       { "<leader>gb2", "<cmd>DiffviewOpen master -- %<CR>", desc = "(diffview) Diff file with master" },
       { "<leader>gb0", "<cmd>DiffviewOpen -- %<CR>", desc = "(diffview) Diff file with HEAD" },
       { "<leader>gbh", "<cmd>DiffviewFileHistory %<CR>", desc = "(diffview) Diff file history" },
+      { "<leader>gb", ":'<,'>DiffviewFileHistory<CR>", mode = "v", desc = "(diffview) Diff history (selection)" },
     },
     config = function()
       local actions = require "diffview.actions"
@@ -38,7 +40,8 @@ return {
     lazy = false,
     event = "User FilePost",
     keys = {
-      { "<leader>gB", "<cmd>GitSigns blame<CR>", desc = "(git-signs) Toggle blame" },
+      { "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "(git-signs) Toggle blame" },
+      { "<leader>gn", "<cmd>Gitsigns blame_line<CR>", desc = "(git-signs) Toggle blame (line)" },
     },
     opts = function()
       return {

@@ -140,6 +140,7 @@ gb() {
 }
 alias g-='git checkout -'
 alias gdev='git checkout develop'
+alias ghome='cd "$(git rev-parse --show-toplevel)"'
 # alias floorp='flatpak run one.ablaze.floorp'
 
 # Ip
