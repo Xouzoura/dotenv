@@ -3,6 +3,7 @@
 return {
   -- REMEMBER YOU NEED DEBUGPY INSTALLED IF YOU USE IT WITH .venv
   -- uv add debugpy
+  -- DAP_FULL_LAYOUT=1
   {
     "rcarriga/nvim-dap-ui",
     lazy = true, -- lazy load
@@ -135,8 +136,9 @@ return {
       if enable_full_layout then
         table.insert(_layouts, 1, {
           elements = {
-            { id = "scopes", size = 0.5 },
-            { id = "watches", size = 0.3 },
+            { id = "scopes", size = 0.4 },
+            { id = "watches", size = 0.2 },
+            { id = "stacks", size = 0.2 },
             { id = "breakpoints", size = 0.2 },
           },
           position = "left",
