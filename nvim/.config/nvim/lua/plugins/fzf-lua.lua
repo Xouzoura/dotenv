@@ -39,7 +39,7 @@ return {
         "<leader>fW",
         function()
           local fzf_lua = require "fzf-lua"
-          fzf_lua.live_grep({  rg_opts = "-w --hidden --no-heading --line-number --color=always --column"})
+          fzf_lua.live_grep { rg_opts = "-w --hidden --no-heading --line-number --color=always --column" }
         end,
         desc = "(fzf) Live Grep (but exact)",
       },
@@ -280,6 +280,16 @@ return {
           }
         end,
         desc = "(fzf) Find note files",
+      },
+      {
+        "<leader>fN",
+        function()
+          require("fzf-lua").live_grep {
+            cwd = "~/vaults",
+            rg_opts = [[--column --line-number --no-heading --color=always --smart-case -g "*.md"]],
+          }
+        end,
+        desc = "(fzf) grep note files",
       },
       {
         "<leader>fT",

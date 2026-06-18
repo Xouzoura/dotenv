@@ -315,6 +315,22 @@ fnw() {
   [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
 }
 
+fnw() {
+  local selection
+  selection=$(
+    rg --line-number --no-heading --color=always . ~/vaults |
+    fzf --ansi \
+        --delimiter : \
+        --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'
+  ) || return
+
+  local file line
+  file=$(echo "$selection" | cut -d: -f1)
+  line=$(echo "$selection" | cut -d: -f2)
+
+  nvim "+$line" "$file"
+}
+
 # Since i want the diffviewopen a lot to compare commits ngit commita commitb (or branches)
 gitd() {
   case $# in
