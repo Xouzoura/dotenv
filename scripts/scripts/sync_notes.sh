@@ -2,7 +2,10 @@
 set -e
 
 cd /home/xouzoura/vaults/notes || exit 1
-
+if ! curl -fsS --max-time 3 https://github.com >/dev/null; then
+  echo "[sync] no internet, skipping"
+  exit 0
+fi
 git pull --rebase --autostash || true
 git add -A
 git commit -m "autosync $(date -Iseconds)" || true
