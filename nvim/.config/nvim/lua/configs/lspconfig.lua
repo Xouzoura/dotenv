@@ -1,5 +1,6 @@
 ---@diagnostic disable: undefined-global
 
+-- custom configs
 vim.lsp.config("pyright", {
   settings = {
     python = {
@@ -18,13 +19,52 @@ vim.lsp.config("pyright", {
   },
 })
 
+-- underdevelopment
+vim.lsp.config("ty", {
+  settings = {
+    ty = {
+      configuration = {
+        rules = {
+          ["unresolved-import-test"] = "error",
+          ["unresolved-import"] = "error",
+          ["possibly-unresolved-reference"] = "error",
+          ["division-by-zero"] = "error",
+          -- ["undefined-local-with-import-star-usage"] = "error",
+          -- ["unresolved-reference"] = "warn",
+        },
+        analysis = {
+          ["unresolved-import"] = "error",
+          --   -- ["undefined-local-with-import-star-usage"] = "error",
+          --   -- ["unresolved-reference"] = "warn",
+        },
+      },
+    },
+  },
+})
+
 -- <PICK SERVERS> --
 
--- 1) old with pyright
--- local servers = { "html", "cssls", "clangd", "lua_ls", "ts_ls", "angularls", "taplo", "csharp_ls", "terraformls", "pyright"}
--- 2) experimental with ty
-local servers =
-  { "html", "cssls", "bashls", "clangd", "lua_ls", "ts_ls", "angularls", "gopls", "taplo", "csharp_ls", "terraformls", "ty", "yaml-language-server"}
+local servers = {
+  ---- >> frontend <<
+  "html",
+  "cssls",
+  "ts_ls",
+  "angularls",
+  ---- >> backend <<
+  "bashls",
+  "clangd",
+  "lua_ls",
+  "gopls",
+  "csharp_ls",
+  ---- >> backend (python) <<
+  -- "ty",
+  -- "pyright",
+  "pyrefly",
+  ---- >> IaaC and others <<
+  "yaml-language-server",
+  "taplo",
+  "terraformls",
+}
 -- 3) super basic with pyright
 -- local servers = { "html", "clangd", "taplo", "pyright" } -- simpler
 
