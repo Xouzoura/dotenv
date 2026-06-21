@@ -50,6 +50,7 @@
   "outline.nvim": { "branch": "main", "commit": "6c44527837ff7ac1cd054dc365a721e881020a2e" },
   "overseer.nvim": { "branch": "master", "commit": "95b1099c043e4231a1204abd9a394d379e69f029" },
   "pattern-selector": { "branch": "master", "commit": "20c51f40180f2c8da2ef6b1e0607c21eef94ebb5" },
+  "peeper-picker.nvim": { "branch": "main", "commit": "7a1977ab5f2431f4c74fea8280e91d3213bfdcc3" },
   "persistent-breakpoints.nvim": { "branch": "main", "commit": "d1656221836207787b8a7969cc2dc72668c4742a" },
   "plenary.nvim": { "branch": "master", "commit": "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
   "promise-async": { "branch": "main", "commit": "119e8961014c9bfaf1487bf3c2a393d254f337e2" },

@@ -20,27 +20,6 @@ vim.lsp.config("pyright", {
 })
 
 -- underdevelopment
-vim.lsp.config("ty", {
-  settings = {
-    ty = {
-      configuration = {
-        rules = {
-          ["unresolved-import-test"] = "error",
-          ["unresolved-import"] = "error",
-          ["possibly-unresolved-reference"] = "error",
-          ["division-by-zero"] = "error",
-          -- ["undefined-local-with-import-star-usage"] = "error",
-          -- ["unresolved-reference"] = "warn",
-        },
-        analysis = {
-          ["unresolved-import"] = "error",
-          --   -- ["undefined-local-with-import-star-usage"] = "error",
-          --   -- ["unresolved-reference"] = "warn",
-        },
-      },
-    },
-  },
-})
 
 -- <PICK SERVERS> --
 
@@ -57,9 +36,13 @@ local servers = {
   "gopls",
   "csharp_ls",
   ---- >> backend (python) <<
-  -- "ty",
+  -- <combo1>
+  "ty",
+  "ruff",
+  -- <combo2>
   -- "pyright",
-  "pyrefly",
+  -- <combo3>
+  -- "pyrefly",
   ---- >> IaaC and others <<
   "yaml-language-server",
   "taplo",
