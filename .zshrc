@@ -240,14 +240,6 @@ alias sshpi="ssh xouzoura@192.168.1.254"
 alias sshts="ssh xouzoura@100.95.93.106" # via tailscale...
 alias sshpi_tunnel="ssh -L 8123:localhost:8123 xouzoura@192.168.1.254 -N" # to see the network.
 
-# >>>>>>>>>>>>>> WINDOWS-PC alias (only for work needed) <<<<<<<<<<<<<<<<<<<<<
-# work C (mounted drive)
-alias winc="z /mnt/c/Users/DIO3713/"
-# primeo specific
-alias glab='GITLAB_HOST=git.primeo-energie.ch GITLAB_TOKEN=$GITLAB_TOKEN_GLAB glab'
-# > temp but useful
-alias kpod="kubectl get pod -n ent-dev -l app=ent-mock-app -o jsonpath='{.items[0].metadata.name}' | clip.exe"
-
 # Custom scripts not tracked by source control
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
