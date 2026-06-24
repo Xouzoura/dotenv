@@ -248,6 +248,9 @@ alias glab='GITLAB_HOST=git.primeo-energie.ch GITLAB_TOKEN=$GITLAB_TOKEN_GLAB gl
 # > temp but useful
 alias kpod="kubectl get pod -n ent-dev -l app=ent-mock-app -o jsonpath='{.items[0].metadata.name}' | clip.exe"
 
+# Custom scripts not tracked by source control
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
 # ---------------------------------------------------
 # CUSTOM FUNCTIONS
 # Yazi (yy)
@@ -307,7 +310,7 @@ fn() {
 }
 
 # See the work notes only
-fnw() {
+fnn() {
   local dir="$HOME/vaults/personal/notes"
   local file
   file=$(cd "$dir" && fd -t f -e md -H -I -u | fzf \
@@ -401,6 +404,8 @@ source ~/scripts/fzf-git.sh/fzf-git.sh
     # CTRL-G - CTRL-T for Tags
     # CTRL-G - CTRL-R for Remotes
     # CTRL-G - CTRL-G for Commits
+
+[[ -f ~/.zshrc.post ]] && source ~/.zshrc.post
 
 # final bindings
 bindkey '^ ' autosuggest-accept
