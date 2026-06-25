@@ -302,7 +302,7 @@ fn() {
 }
 
 # See the work notes only
-fnn() {
+fW() {
   local dir="$HOME/vaults/personal/notes"
   local file
   file=$(cd "$dir" && fd -t f -e md -H -I -u | fzf \
@@ -310,7 +310,8 @@ fnn() {
   [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
 }
 
-fnw() {
+# grep from notes
+fN() {
   local selection
   selection=$(
     rg --line-number --no-heading --color=always . ~/vaults |
