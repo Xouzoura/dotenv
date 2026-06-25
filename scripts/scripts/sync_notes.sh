@@ -11,5 +11,5 @@ if ! curl -fsS --max-time 3 https://github.com >/dev/null; then
 fi
 git pull --rebase --autostash || true
 git add -A
-git commit -m "autosync $(date -Iseconds)" || true
+git commit -m "autosync $(date +%F) $(hostname)" || true
 git push || true
