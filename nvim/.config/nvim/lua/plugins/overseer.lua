@@ -1,3 +1,4 @@
+local docker_running = false
 return {
   "stevearc/overseer.nvim",
   -- "",
@@ -35,9 +36,24 @@ return {
       "<leader>ek",
       mode = { "n" },
       function()
-        vim.cmd "OverseerRestartLast" -- this is part of the config below
+        vim.cmd "OverseerRestartLast"
       end,
       desc = "(Overseer) Rerun Last",
+    },
+    {
+      "<leader>ej",
+      mode = { "n" },
+      function()
+        local overseer = require "overseer"
+        if docker_running then
+          overseer.run_task { name = "docker compose down" }
+          docker_running = false
+        else
+          overseer.run_task { name = "docker compose up" }
+          docker_running = true
+        end
+      end,
+      desc = "(Overseer) Docker compose toggle",
     },
   },
   config = function(_, opts)
@@ -51,5 +67,7 @@ return {
         overseer.run_action(tasks[1], "restart")
       end
     end, {})
+    require("overseer").register_template(require("configs.overseer").docker_up)
+    require("overseer").register_template(require("configs.overseer").docker_down)
   end,
 }

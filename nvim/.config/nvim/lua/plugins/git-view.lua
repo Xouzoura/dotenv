@@ -43,6 +43,14 @@ return {
     keys = {
       { "<leader>gn", "<cmd>Gitsigns blame<CR>", desc = "(git-signs) Toggle blame window" },
       { "<leader>gN", "<cmd>Gitsigns toggle_current_line_blame<CR>", desc = "(git-signs) Toggle blame (line)" },
+      { "<leader>gbq", "<cmd>Gitsigns setqflist<CR>", desc = "(git-signs) Buffer changes qflist" },
+      {
+        "<leader>gq",
+        function()
+          require("gitsigns").setqflist("all", { open = true })
+        end,
+        desc = "(gitsigns) Repo changes qflist",
+      },
     },
     opts = function()
       return {
