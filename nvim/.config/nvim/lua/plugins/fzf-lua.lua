@@ -89,11 +89,9 @@ return {
         desc = "(fzf) Oldfiles in CWD",
       },
       {
-
-        "<leader>fp",
+        "<leader>fy",
         function()
           local fzf_lua = require "fzf-lua"
-          -- local word = vim.fn.expand "<cword>"
           local clipboard = vim.fn.getreg "+"
           fzf_lua.live_grep { search = clipboard }
         end,
@@ -255,7 +253,7 @@ return {
       },
       -- My personal one because i tend to search prints a lot.
       {
-        "<leader>fp",
+        "<leader>fP",
         function()
           require("fzf-lua").live_grep {
             search = "print(",
@@ -279,7 +277,7 @@ return {
             cmd = "rg --files --glob '*.md' ~/vaults/",
           }
         end,
-        desc = "(fzf) Find note files",
+        desc = "(fzf) Find notes files",
       },
       {
         "<leader>fN",

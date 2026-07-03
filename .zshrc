@@ -292,7 +292,7 @@ fr() {
     cd "$repo" || return
 }
 
-# fn - see the note files to pick easily with fzf
+# fn - see the notes
 fn() {
   local dir="$HOME/vaults"
   local file
@@ -301,8 +301,8 @@ fn() {
   [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
 }
 
-# See the work notes only
-fW() {
+# See the work notes only (find-primeo)
+fnn() {
   local dir="$HOME/vaults/personal/notes"
   local file
   file=$(cd "$dir" && fd -t f -e md -H -I -u | fzf \
@@ -310,7 +310,7 @@ fW() {
   [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
 }
 
-# grep from notes
+# grep from notes (find-Notes)
 fN() {
   local selection
   selection=$(
