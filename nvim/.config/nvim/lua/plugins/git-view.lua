@@ -42,7 +42,7 @@ return {
     event = "User FilePost",
     keys = {
       { "<leader>gn", "<cmd>Gitsigns blame<CR>", desc = "(git-signs) Toggle blame window" },
-      -- { "<leader>gN", "<cmd>Gitsigns blame_line<CR>", desc = "(git-signs) Toggle blame (line)" },
+      { "<leader>gN", "<cmd>Gitsigns toggle_current_line_blame<CR>", desc = "(git-signs) Toggle blame (line)" },
     },
     opts = function()
       return {
