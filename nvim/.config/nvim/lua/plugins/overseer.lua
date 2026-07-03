@@ -55,6 +55,14 @@ return {
       end,
       desc = "(Overseer) Docker compose toggle",
     },
+    {
+      "<leader>ey",
+      mode = { "n" },
+      function()
+        vim.cmd "OverseerToggleUv"
+      end,
+      desc = "(Overseer) toggle uv",
+    },
   },
   config = function(_, opts)
     require("overseer").setup(opts)
@@ -67,7 +75,24 @@ return {
         overseer.run_action(tasks[1], "restart")
       end
     end, {})
+    vim.api.nvim_create_user_command("OverseerToggleUv", function()
+      local overseer = require "overseer"
+
+      for _, task in ipairs(overseer.list_tasks()) do
+        if string.find(task.name or "", "uv run", 1, true) then
+          if task:is_running() then
+            overseer.run_action(task, "stop")
+          else
+            overseer.run_action(task, "restart")
+          end
+          return
+        end
+      end
+
+      overseer.run_task { name = "uv run" }
+    end, {})
     require("overseer").register_template(require("configs.overseer").docker_up)
     require("overseer").register_template(require("configs.overseer").docker_down)
+    require("overseer").register_template(require("configs.overseer").uv_run)
   end,
 }
