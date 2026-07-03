@@ -44,7 +44,7 @@ return {
       if not entry then
         return nil
       end
-
+      print("STARTING ", entry)
       return {
         cmd = { "uv" },
         args = { "run", entry },

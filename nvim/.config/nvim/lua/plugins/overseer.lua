@@ -81,8 +81,10 @@ return {
       for _, task in ipairs(overseer.list_tasks()) do
         if string.find(task.name or "", "uv run", 1, true) then
           if task:is_running() then
+            print("STOPPING ", task.name)
             overseer.run_action(task, "stop")
           else
+            print("RESTARTING ", task.name)
             overseer.run_action(task, "restart")
           end
           return
