@@ -36,12 +36,13 @@ return {
     end,
   },
   {
+    -- since i like the visual off the sidebar i keep it
     "lewis6991/gitsigns.nvim",
     lazy = false,
     event = "User FilePost",
     keys = {
-      { "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "(git-signs) Toggle blame" },
-      { "<leader>gn", "<cmd>Gitsigns blame_line<CR>", desc = "(git-signs) Toggle blame (line)" },
+      { "<leader>gn", "<cmd>Gitsigns blame<CR>", desc = "(git-signs) Toggle blame window" },
+      -- { "<leader>gN", "<cmd>Gitsigns blame_line<CR>", desc = "(git-signs) Toggle blame (line)" },
     },
     opts = function()
       return {
