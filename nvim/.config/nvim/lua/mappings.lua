@@ -216,3 +216,9 @@ map("n", "<leader>E", ":edit .env<CR>", { desc = "Open .env file" })
 map("n", "<leader>R", ":edit pyproject.toml<CR>", { desc = "Open pyproject.toml file" })
 map("n", "<leader>Do", ":edit Dockerfile<CR>", { desc = "Open Dockerfile file" })
 map("n", "<leader>Dc", ":edit docker-compose.yml<CR>", { desc = "Open docker-compose file" })
+map(
+  "n",
+  "<leader>ms",
+  ":<CR>:Agenda ~/vaults/notes/_daily.md ~/vaults/notes/_work.md<CR>",
+  { desc = "Open TODO next 7 days" }
+)

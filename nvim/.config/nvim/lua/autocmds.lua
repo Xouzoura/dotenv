@@ -123,3 +123,108 @@ vim.cmd [[
   augroup END
 ]]
 _G.set_highlights()
+
+-----------------------------------------------------------
+------ OPEN TASKS FOR THE WEEK ----------------------------
+-----------------------------------------------------------
+local agenda_script =
+  vim.fn.fnamemodify(vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h") .. "/../python/agenda.py", ":p")
+local vault_root = vim.fn.expand "~/vaults/notes"
+
+local function open_task_under_cursor()
+  local line = vim.api.nvim_get_current_line()
+  local file, lnum = line:match "%(([%w_%-%.]+%.md):(%d+)%)%s*$"
+  if not file then
+    vim.notify("No file:line reference on this line", vim.log.levels.WARN)
+    return
+  end
+
+  local matches = vim.fn.globpath(vault_root, "**/" .. file, false, true)
+  if #matches == 0 then
+    vim.notify("Could not find " .. file .. " under " .. vault_root, vim.log.levels.ERROR)
+    return
+  end
+
+  vim.cmd "wincmd p"
+  vim.cmd("edit " .. vim.fn.fnameescape(matches[1]))
+  vim.api.nvim_win_set_cursor(0, { tonumber(lnum), 0 })
+end
+
+vim.api.nvim_create_user_command("Agenda", function(opts)
+  local files = opts.fargs
+  if #files == 0 then
+    files = { vim.fn.expand "%:p" }
+  else
+    files = vim.tbl_map(function(f)
+      return vim.fn.expand(f)
+    end, files)
+  end
+  local cmd = { "python3", agenda_script }
+  vim.list_extend(cmd, files)
+  local output = vim.fn.system(cmd)
+  if vim.v.shell_error ~= 0 then
+    vim.notify("Agenda script failed:\n" .. output, vim.log.levels.ERROR)
+    return
+  end
+
+  local prev_buf = vim.api.nvim_get_current_buf()
+
+  vim.cmd "enew"
+  local agenda_buf = vim.api.nvim_get_current_buf()
+  vim.bo.buftype = "nofile"
+  vim.bo.filetype = "markdown"
+  vim.bo.bufhidden = "wipe"
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(output, "\n"))
+
+  vim.keymap.set("n", "q", function()
+    if vim.api.nvim_buf_is_valid(prev_buf) then
+      vim.cmd("buffer " .. prev_buf)
+    else
+      vim.cmd "bdelete"
+    end
+  end, { buffer = agenda_buf })
+
+  vim.keymap.set("n", "<CR>", open_task_under_cursor, { buffer = agenda_buf })
+end, { nargs = "*", complete = "file" })
+
+-----------------------------------------------------------
+------ HIGHLIGHT DUE DATE ON MARKDOWN ---------------------
+-----------------------------------------------------------
+local due_ns = vim.api.nvim_create_namespace "todo_due"
+
+local function highlight_due(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_clear_namespace(bufnr, due_ns, 0, -1)
+
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  for lnum, line in ipairs(lines) do
+    local start_idx = 1
+    while true do
+      local s, e = line:find("due:%d%d%d%d%-%d%d%-%d%d", start_idx)
+      if not s then
+        break
+      end
+      vim.api.nvim_buf_set_extmark(bufnr, due_ns, lnum - 1, s - 1, {
+        end_col = e,
+        hl_group = "TodoDue",
+      })
+      start_idx = e + 1
+    end
+  end
+end
+
+vim.api.nvim_set_hl(0, "TodoDue", { fg = "#e06c75", bold = true })
+
+vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter" }, {
+  pattern = "markdown",
+  callback = function(args)
+    highlight_due(args.buf)
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufWritePost" }, {
+  pattern = "*.md",
+  callback = function(args)
+    highlight_due(args.buf)
+  end,
+})

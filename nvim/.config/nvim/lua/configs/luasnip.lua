@@ -2,18 +2,11 @@ local ls = require "luasnip"
 local s = ls.snippet
 local f = ls.function_node
 
--- Snippet for Unix datetime
 ls.add_snippets("all", {
   s(
     "ts",
     f(function()
       return tostring(os.time())
-    end)
-  ),
-  s(
-    "``",
-    f(function()
-      return "- [ ] "
     end)
   ),
   s(
@@ -23,9 +16,9 @@ ls.add_snippets("all", {
     end)
   ),
   s(
-    "qs",
+    "ld",
     f(function()
-      return "- [ ] "
+      return "due:" .. os.date "%Y-%m-%d" .. " ||"
     end)
   ),
   s(
