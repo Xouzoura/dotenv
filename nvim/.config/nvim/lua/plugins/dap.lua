@@ -55,9 +55,9 @@ return {
               return
             end
           end
-          vim.notify("DAP REPL not found", vim.log.levels.WARN)
+          vim.notify("DAP main not found", vim.log.levels.WARN)
         end,
-        desc = "[d] Focus DAP REPL",
+        desc = "[d] Focus DAP main",
       },
       {
         "<leader>d1",

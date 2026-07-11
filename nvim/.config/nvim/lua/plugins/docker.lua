@@ -8,7 +8,7 @@ return {
     {
       "<leader>ld",
       "<cmd>Dockyard<cr>",
-      desc = "(fzf) Find Files",
+      desc = "Docker",
     },
   },
   lazy = true,

@@ -12,6 +12,7 @@ vim.o.statusline = table.concat {
   " %=", -- separator
   "%{v:lua.LspDiagnostics()}", -- LSP diagnostics
   " %{v:lua.LspStatus()}", -- LSP status
+  "%{v:lua.checkLastCommit()}", -- LSP diagnostics
   " %p%%", -- % of the file length
 }
 -- if i want something on top
@@ -189,12 +190,52 @@ function _G.NowPlaying()
   -- 3. caching fails, expensive call.
   if not vim.env.WSL_DISTRO_NAME then
     -- wsl doesn't do it by default, need extra scripts
-    status, artist, title, album = update_now_playing()
+    status, artist, track, album = update_now_playing()
     _cache = { ts = ts, status = status, artist = artist, track = track, album = album }
     return _format_metadata(_cache.status, _cache.artist, _cache.track, _cache.album)
   end
   -- nothing worked no song is playing or working.
   return ""
 end
+local _git_root_cache = {} -- { ts, is_git, message }
+
+function _G.checkLastCommit()
+  local filepath = vim.api.nvim_buf_get_name(0)
+  if filepath == "" or not filepath:match("%.md$") then
+    return ""
+  end
+
+  local dir = vim.fn.fnamemodify(filepath, ":h")
+
+  -- resolve the git root for this dir (cheap-ish, but we still cache it)
+  local root = vim.fn.system(
+    string.format("git -C %s rev-parse --show-toplevel 2>/dev/null", vim.fn.shellescape(dir))
+  ):gsub("%s+$", "")
+
+  if root == "" or vim.v.shell_error ~= 0 then
+    return "" -- not inside a git repo
+  end
+
+  local now = os.time()
+  local cache_duration = 120 -- 2 minutes
+
+  local cached = _git_root_cache[root]
+  if cached ~= nil and (now - cached.ts <= cache_duration) then
+    return cached.message
+  end
+
+  local message = vim.fn.system(
+    string.format("git -C %s log -1 --format='%%s'", vim.fn.shellescape(root))
+  ):gsub("\n$", "")
+
+  if vim.v.shell_error ~= 0 then
+    message = ""
+  end
+
+  _git_root_cache[root] = { ts = now, message = message }
+  return message
+end
+
 local timer = vim.loop.new_timer()
 timer:start(0, _player_ctl_status_interval_ms, vim.schedule_wrap(_G.NowPlaying))
+
