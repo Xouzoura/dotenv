@@ -1,28 +1,20 @@
 return {
   -- Go to the new version at one point
-  "epwalsh/obsidian.nvim",
-  version = "*",
-  -- lazy = false,
-  lazy = true,
+  -- "epwalsh/obsidian.nvim",
+  "obsidian-nvim/obsidian.nvim",
+  -- version = "*",
   event = {
     "BufReadPre ~/vaults/personal/*.md",
     "BufNewFile ~/vaults/personal/*.md",
   },
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "hrsh7th/nvim-cmp",
-    "nvim-telescope/telescope.nvim",
-  },
+  -- dependencies = {
+  -- "nvim-lua/plenary.nvim",
+  -- "hrsh7th/nvim-cmp",
+  -- "nvim-telescope/telescope.nvim",
+  -- },
   keys = {
     -- Keymaps specified in keys can be used from anywhere
     -- Keymaps specified in opts can only be used when the plugin has been loaded
-    {
-      "<leader>md",
-      function()
-        vim.cmd "ObsidianToday"
-      end,
-      desc = "(Obsidian) Daily",
-    },
     {
       "<leader>mn",
       function()
@@ -30,13 +22,6 @@ return {
         vim.cmd("ObsidianNew " .. filename)
       end,
       desc = "(Obsidian) New File",
-    },
-    {
-      "<leader>mx",
-      function()
-        vim.cmd "ObsidianOpen"
-      end,
-      desc = "(Obsidian) Open in Obsidian app",
     },
     {
       "<leader>mt",
@@ -81,20 +66,6 @@ return {
       desc = "(Obsidian) Find buffer links",
     },
     {
-      "<leader>mg",
-      function()
-        vim.cmd "e ~/vaults/notes/_daily.md"
-      end,
-      desc = "(Obsidian) Open daily notes (global)",
-    },
-    {
-      "<leader>mw;",
-      function()
-        vim.cmd "e ~/vaults/notes/"
-      end,
-      desc = "(Obsidian) Open workspace files",
-    },
-    {
       "<leader>mww",
       function()
         vim.cmd "e ~/vaults/notes/_work.md"
@@ -106,18 +77,13 @@ return {
       function()
         vim.cmd "e ~/vaults/notes/_daily.md"
       end,
-      desc = "(Obsidian) Open daily",
-    },
-    {
-      "<leader>mwg",
-      function()
-        vim.cmd "e ~/vaults/notes/_weekend-goals.md"
-      end,
-      desc = "(Obsidian) Open weekend",
+      desc = "(Obsidian) Open my daily",
     },
   },
   opts = {
-
+    picker = {
+      name = "fzf-lua",
+    },
     workspaces = {
       {
         name = "personal",
