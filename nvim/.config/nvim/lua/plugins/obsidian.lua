@@ -14,8 +14,14 @@
 -- }
 return {
   "obsidian-nvim/obsidian.nvim",
-  lazy = false,
+  -- lazy = false,
   ft = "markdown", -- or event-based loading, see below
+  dependencies = { "ibhagwan/fzf-lua" },
+  event = {
+    "BufReadPre ~/vaults/*.md",
+    "BufNewFile ~/vaults/*.md",
+  },
+
   keys = {
     {
       "<leader>mn",
