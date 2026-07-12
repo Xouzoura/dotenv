@@ -13,10 +13,7 @@
 --   },
 -- }
 return {
-  -- Go to the new version at one point
-  -- "epwalsh/obsidian.nvim",
   "obsidian-nvim/obsidian.nvim",
-  -- version = "*",
   lazy = false,
   ft = "markdown", -- or event-based loading, see below
   keys = {
@@ -99,9 +96,6 @@ return {
       --   name = "work",
       --   path = "~/vaults/work",
       -- },
-    },
-    daily_notes = {
-      folder = "daily",
     },
     notes_subdir = "notes",
     completion = {
