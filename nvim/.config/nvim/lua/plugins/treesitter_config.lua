@@ -4,6 +4,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
+    lazy = false,
     opts = function()
       return {
         ensure_installed = { "lua", "luadoc", "printf", "vim", "vimdoc" },

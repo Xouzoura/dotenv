@@ -264,8 +264,8 @@ return {
       {
         "<leader>ft",
         function()
-          require("fzf-lua").files {
-            cmd = "rg --files --glob 'test_*.py'",
+          require("fzf-lua").live_grep {
+            search = "TODO:FIXME",
           }
         end,
         desc = "(fzf) Find 'test_' files",
