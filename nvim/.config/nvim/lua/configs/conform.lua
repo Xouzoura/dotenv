@@ -1,7 +1,6 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    -- python = { "black" },
     python = { "ruff_format" },
     javascript = { "prettier" },
     c = { "clang-format" },
@@ -27,4 +26,5 @@ local options = {
   },
 }
 
-require("conform").setup(options)
+-- let's see without formatting
+-- require("conform").setup(options)
