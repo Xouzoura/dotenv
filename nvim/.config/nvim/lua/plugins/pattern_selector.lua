@@ -1,6 +1,7 @@
 return {
   -- regex, uuids etc
   "Xouzoura/pattern-selector",
+  -- dir = "/home/xouzoura/code/personal/lua/_plugins/nvim-pattern-selector",
   branch = "master",
   keys = {
     {

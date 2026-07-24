@@ -48,7 +48,7 @@
   "oil.nvim": { "branch": "master", "commit": "b73018b75affd13fa38e2fc94ef753b465f770d7" },
   "outline.nvim": { "branch": "main", "commit": "6c44527837ff7ac1cd054dc365a721e881020a2e" },
   "overseer.nvim": { "branch": "master", "commit": "95b1099c043e4231a1204abd9a394d379e69f029" },
-  "pattern-selector": { "branch": "master", "commit": "20c51f40180f2c8da2ef6b1e0607c21eef94ebb5" },
+  "pattern-selector": { "branch": "master", "commit": "64853ef93c1132c9d3f192798c1873ffeafe568d" },
   "persistent-breakpoints.nvim": { "branch": "main", "commit": "d1656221836207787b8a7969cc2dc72668c4742a" },
   "plenary.nvim": { "branch": "master", "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b" },
   "promise-async": { "branch": "main", "commit": "119e8961014c9bfaf1487bf3c2a393d254f337e2" },
