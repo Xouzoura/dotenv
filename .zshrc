@@ -301,9 +301,9 @@ fn() {
   [[ -n "$file" ]] && ${EDITOR:-vi} "$dir/$file"
 }
 
-# See the work notes only (find-primeo)
+# fnn - see the work notes only
 fnn() {
-  local dir="$HOME/vaults/personal/notes"
+  local dir="$HOME/vaults/notes/work"
   local file
   file=$(cd "$dir" && fd -t f -e md -H -I -u | fzf \
     --preview 'bat --style=numbers --color=always '"$dir"'/{} || cat '"$dir"'/{}') || return
