@@ -1,3 +1,4 @@
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -84,7 +85,7 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git zsh-syntax-highlighting zsh-autosuggestions
-	sudo history jsontools ssh-agent fzf # vi-mode
+	history jsontools ssh-agent fzf # vi-mode
     copypath copyfile copybuffer dirhistory fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
