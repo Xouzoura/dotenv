@@ -105,6 +105,7 @@ map("n", "<leader>k", "printf('m`%sO<ESC>``', v:count1)", {
 -- show messages
 map("n", "<leader>cl", "<cmd>@:<cr>", { desc = "Repeat Last Command" })
 map("n", "<leader>cm", "<cmd>messages<cr>", { desc = "View all printed messages" })
+map("n", "<leader>ct", "<cmd>set relativenumber!<cr>", { desc = "toggle relative number" })
 -- Resizing of windows
 -- Full focus on the current window
 map("n", "-", "<C-w>_<C-w>|")
@@ -153,8 +154,9 @@ map("n", "gl", "<C-^>", { noremap = true, silent = true, desc = "Last buffer" })
 map("n", "z;", "za<CR>", { noremap = true, silent = true, desc = "Toggle fold" })
 
 map("n", "<leader>rq", extras.reload_env, { noremap = true, silent = true, desc = "Reload env" })
-map("n", "<leader>yP", extras.cwd, { desc = "[copy] Cwd as str" })
-map("n", "<leader>yF", extras.file_wd, { desc = "[copy] File as str" })
+map("n", "<leader>yP", extras.cwd, { desc = "[copy] Cwd as absolute path" })
+map("n", "<leader>yF", extras.file_wd, { desc = "[copy] File as relative path" })
+map("n", "<leader>yA", extras.file_cwd, { desc = "[copy] File as absolute path" })
 map({ "n", "t" }, "<leader>.", extras.switch_terminal_buffer, { desc = "Go to terminal buffer" })
 map({ "n", "t" }, "<leader>,", extras.switch_terminal_buffer_file_wd, { desc = "Go to terminal buffer (of file)" })
 -- map("n", "<leader>wd", extras.change_wd, { desc = "Change working directory to that of open buffer" })

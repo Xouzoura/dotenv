@@ -70,7 +70,16 @@ function M.file_wd()
   -- Function to copy the relative path to the clipboard
   local file_path = vim.fn.expand "%" -- Get relative file path
   vim.fn.setreg("+", file_path) -- Copy to clipboard (system register '+')
-  print("Copied relative path: " .. file_path)
+  print("Copied relative path of file: " .. file_path)
+end
+
+function M.file_cwd()
+  -- Function to copy the relative path to the clipboard
+  local cwd = vim.fn.getcwd()
+  local file_path = vim.fn.expand "%" -- Get relative file path
+  local file = cwd .. "/" .. file_path
+  vim.fn.setreg("+", file) -- Copy to clipboard (system register '+')
+  print("Copied absolute path of current file: " .. file)
 end
 
 function M.ToggleMouse()

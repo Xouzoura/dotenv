@@ -318,6 +318,7 @@ fN() {
     rg --line-number --no-heading --color=always . ~/vaults |
     fzf --ansi \
         --delimiter : \
+        --exact \
         --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'
   ) || return
 
