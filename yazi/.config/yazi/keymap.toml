@@ -456,6 +456,10 @@ keymap = [
     ], run = "cd ~/.cache", desc = "Go to the ~/.cache directory" },
     { on = [
         "g",
+        "T",
+    ], run = "cd ~/.local/share/Trash", desc = "Go to the ~/.local/share/Trash directory" },
+    { on = [
+        "g",
         "j",
     ], run = "cd ~/code", desc = "Go to the ~/code directory" },
     { on = [
