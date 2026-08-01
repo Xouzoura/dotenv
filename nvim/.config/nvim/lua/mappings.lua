@@ -106,6 +106,7 @@ map("n", "<leader>k", "printf('m`%sO<ESC>``', v:count1)", {
 map("n", "<leader>cl", "<cmd>@:<cr>", { desc = "Repeat Last Command" })
 map("n", "<leader>cm", "<cmd>messages<cr>", { desc = "View all printed messages" })
 map("n", "<leader>ct", "<cmd>set relativenumber!<cr>", { desc = "toggle relative number" })
+map("n", "<leader>cO", vim.lsp.buf.code_action, { desc = "Code Action" })
 -- Resizing of windows
 -- Full focus on the current window
 map("n", "-", "<C-w>_<C-w>|")

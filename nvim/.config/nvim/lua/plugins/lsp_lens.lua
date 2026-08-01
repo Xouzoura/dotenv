@@ -1,9 +1,9 @@
 return {
   -- plugin to show how can times a symbol is referenced
   -- "VidocqH/lsp-lens.nvim",
-  "Xouzoura/lsp-lens.nvim",
-  -- branch = "main",
-  branch = "feature/supports-method-remove",
+  "Xouzoura/lsp-lens.nvim", -- my fork
+  branch = "main",
+  -- branch = "feature/supports-method-remove",
   -- dir = "/home/xouzoura/python/me/openai/lua/lsp-lens.nvim",
   lazy = false,
   config = function()
