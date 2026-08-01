@@ -46,7 +46,7 @@ local servers = {
   ---- >> IaaC and others <<
   "yaml-language-server",
   "taplo",
-  "terraformls",
+  -- "terraformls", -- sucks
 }
 -- 3) super basic with pyright
 -- local servers = { "html", "clangd", "taplo", "pyright" } -- simpler
