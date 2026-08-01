@@ -5,6 +5,16 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").setup()
+      local ensure_installed = { "lua", "luadoc", "printf", "vim", "vimdoc", "python", "bash", "hurl", "rust", "go" }
+      require("nvim-treesitter").install(ensure_installed)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = ensure_installed,
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
     end,
   },
 
