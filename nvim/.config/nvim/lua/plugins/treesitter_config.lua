@@ -109,6 +109,17 @@ return {
       end)
     end,
   },
+  {
+    "maxischmaxi/inc-select.nvim",
+    lazy = false,
+    opts = {
+      keymaps = {
+        init_selection = "<S-l>",
+        node_incremental = "<S-l>",
+        node_decremental = "<S-h>",
+      },
+    },
+  },
 }
 -- return {
 --   {

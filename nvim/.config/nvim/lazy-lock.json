@@ -19,6 +19,7 @@
   "highlight-undo.nvim": { "branch": "main", "commit": "ee32e12693d70e66f954d09a504a7371d110fc27" },
   "hlargs.nvim": { "branch": "main", "commit": "05f3d1789642d5e1807121c05c42a5e883ba46d3" },
   "hurl.nvim": { "branch": "main", "commit": "5329c31e53806ee39cfe19aa829a5cfb77adba56" },
+  "inc-select.nvim": { "branch": "main", "commit": "9995db6b5854989bc774827fbf80b866a1908da8" },
   "jupynvim": { "branch": "main", "commit": "666717172ea4b008af0a3361dd1794cfd3b2ac44" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lsp-lens.nvim": { "branch": "feature/supports-method-remove", "commit": "6515c870b61147b4c01276c8135900ed9d390bee" },
