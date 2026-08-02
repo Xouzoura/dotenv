@@ -86,7 +86,8 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 plugins=(
     git zsh-syntax-highlighting zsh-autosuggestions
 	history jsontools ssh-agent fzf # vi-mode
-    copypath copyfile copybuffer dirhistory fzf-zsh-plugin)
+    copypath copyfile copybuffer dirhistory fzf-zsh-plugin
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -381,7 +382,6 @@ source ~/.zshrc_secrets
 # Do i prefer it like this at the end?
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/go/bin" 
-PATH="/home/xouzoura/.nvm/versions/node/v18.0.0/lib/node_modules/node/bin:$PATH"
 if [[ ":$PATH:" != *"/snap/bin:"* ]]; then 
     export PATH="$PATH:/snap/bin"
 fi
