@@ -14,9 +14,8 @@ local options = {
         "--stdin-filename",
         "$FILENAME",
         "-",
-        "--line-length", -- This is because of stupid local forces.
-        "88", -- this should be the pep8 standard
-        -- "120", -- this is in my most pre-commits
+        "--line-length",
+        "88",
       },
     },
   },
@@ -26,5 +25,4 @@ local options = {
   },
 }
 
--- let's see without formatting
 require("conform").setup(options)
