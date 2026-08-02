@@ -393,8 +393,12 @@ keymap = [
     # Goto
     { on = [
         "g",
+        "/",
+    ], run = "cd /", desc = "Go /" },
+    { on = [
+        "g",
         "h",
-    ], run = "cd ~", desc = "Go ~" },
+    ], run = "cd ~", desc = "Go ~/" },
     { on = [
         "g",
         "c",
@@ -430,6 +434,7 @@ keymap = [
     ], run = "cd ~/.local/state", desc = "Go to the ~/.local/state directory" },
     { on = [
         "g",
+        "c",
         "y",
     ], run = "cd ~/.config/yazi", desc = "Go to the ~/.config/yazi directory" },
     { on = [
@@ -440,7 +445,7 @@ keymap = [
     { on = [
         "g",
         "M",
-    ], run = "cd /media", desc = "Go to the mount directory (/media)" },
+    ], run = "cd /media", desc = "Go to the media directory (/media)" },
     { on = [
         "g",
         "m",
@@ -465,7 +470,7 @@ keymap = [
     { on = [
         "g",
         "r",
-    ], run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"', desc = "Go to the git parent directory" },
+    ], run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"', desc = "Go to the git home" },
     # WINDOWS FOR WORK-LAPTOP
     { on = [
         "g",
@@ -576,11 +581,11 @@ prepend_keymap = [
     #     "D",
     #     "o",
     # ], run = "plugin duckdb -open", desc = "[pl] open with duckdb" },
-    { on = [
-        "g",
-        "D",
-        # "u",
-    ], run = "plugin duckdb -ui", desc = "[pl] open with duckdb ui" },
+    # { on = [
+    #     "g",
+    #     "D",
+    #     # "u",
+    # ], run = "plugin duckdb -ui", desc = "[pl] open with duckdb ui" },
     { on = [
         "Y",
         "M",

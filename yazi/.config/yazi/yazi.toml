@@ -153,7 +153,6 @@ prepend_previewers = [
 prepend_preloaders = [
     { name = "*.csv", run = "duckdb", multi = false },
     # { name = "*.json", run = "duckdb", multi = false },
-    # { name = "*.xlsx", run = "duckdb", multi = false },
 ]
 previewers = [
     { name = "*/", run = "folder", sync = true },
