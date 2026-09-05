@@ -223,6 +223,7 @@ alias hotspot='for i in {1..5}; do nmcli dev wifi connect "Ts0t" && break || ech
 alias k='kubectl'
 alias kns='kubectl config set-context --current --namespace'
 alias ks='k9s'
+alias nw='netwatch'
 
 # PYTHON
 # Python aliases for my code (uv)
