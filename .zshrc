@@ -135,7 +135,6 @@ alias xlsx='xleak -i'
 alias glog="git log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(bold red){{%an}}%C(reset) | %C(red)%s%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
 alias gst='git status'
 alias gca='git commit -am'
-alias gbv='git branch -vv'
 unalias gb
 gb() {
   git checkout "$(git branch --format='%(refname:short)' | fzf)"
@@ -216,7 +215,7 @@ alias n,=". ~/scripts/push_notes.sh pull" # pull notes
 alias n.=". ~/scripts/push_notes.sh push" # push notes
 alias dbui='nvim +"DBUIToggle"'
 alias wz='wezterm'
-alias packages='gpk'
+alias packages='gpk' # Find the packages that are installed on my machine
 # use my hotspot
 alias hotspot='for i in {1..5}; do nmcli dev wifi connect "Ts0t" && break || echo "Attempt $i failed, retrying..."; sleep 2; done'
 # Kubectl
@@ -257,29 +256,6 @@ function yy() {
 		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
-}
-
-# adding a second one because of the stupid issue with wayland on preview.
-function yyf() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-
-    # Workaround to view images.
-    env -u WAYLAND_DISPLAY wezterm start -- yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-## Autofold (fold_md)
-fold_md() {
-  local file="$1"
-  if [ -f "$file" ]; then
-    fold -s -w 80 "$file" > temp.md && mv temp.md "$file"
-    echo "Formatted $file with a width of 80 characters."
-  else
-    echo "Error: $file not found."
-  fi
 }
 
 # fz - integration with zoxide of my paths (fz)
@@ -348,20 +324,26 @@ gitd() {
       ;;
   esac
 }
-alias gdiff='gitd'
+alias gdiff='gitd' # i like both
 
 # ports
 ports() {
+    # ss equivalent `ss -ltnp`
     lsof -iTCP -sTCP:LISTEN -P -n
+}
+ports443() {
+    lsof -iTCP:443 -P -n
+}
+killf() {
+    pgrep -af "$1" | fzf --multi | awk '{print $1}' | xargs -r kill -9
 }
 
 # Capture last command outputs to a file and open it in Vim
-capture_and_edit_last_command_output() {
+capture() {
     local last_command=$(fc -ln -1)
     eval "$last_command" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' > /tmp/last_command_output.txt 2>&1
     vi /tmp/last_command_output.txt
 }
-alias capture='capture_and_edit_last_command_output'
 
 wifi() {
     ssid="$1"
@@ -414,7 +396,6 @@ bindkey '^[n' history-beginning-search-forward
 bindkey '^U' backward-delete-char
 bindkey '^M' accept-line
 
-
 # ------------------------------------------------
 # Always keep at the end
 eval "$(starship init zsh)"
@@ -422,3 +403,5 @@ eval "$(starship init zsh)"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+eval $(thefuck --alias) # TODO:if i want it to decide

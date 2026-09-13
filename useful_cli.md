@@ -1,3 +1,8 @@
+---
+id: useful_cli
+aliases: []
+tags: []
+---
 # What i think potentially is needed but depends on use-case
 
 # Clis
