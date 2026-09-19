@@ -1,7 +1,5 @@
 return {
   "rmagatti/auto-session",
-  lazy = false,
-
   ---enables autocomplete for opts
   ---@module "auto-session"
   ---@type AutoSession.Config
@@ -12,6 +10,7 @@ return {
   },
   keys = {
     { "<leader>ss", "<cmd>AutoSession save<CR>", desc = "<auto-session> Save session" },
+    { "<leader>sl", "<cmd>AutoSession restore<CR>", desc = "<auto-session> Restore session" },
     { "<leader>sd", "<cmd>AutoSession delete<CR>", desc = "<auto-session> Delete session" },
     { "<leader>sf", "<cmd>AutoSession search<CR>", desc = "<auto-session> Search session" },
   },
