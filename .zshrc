@@ -338,12 +338,6 @@ killf() {
     pgrep -af "$1" | fzf --multi | awk '{print $1}' | xargs -r kill -9
 }
 
-# Capture last command outputs to a file and open it in Vim
-capture() {
-    local last_command=$(fc -ln -1)
-    eval "$last_command" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' > /tmp/last_command_output.txt 2>&1
-    vi /tmp/last_command_output.txt
-}
 
 wifi() {
     ssid="$1"
