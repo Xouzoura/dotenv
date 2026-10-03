@@ -22,6 +22,7 @@ then
     activateBySubstring \
     s 'ncspot'
 else
-    gnome-terminal --title="ncspot" -- bash -c 'ncspot'
+    # gnome-terminal --title="ncspot" -- bash -c 'ncspot'
+    /usr/bin/ptyxis -- bash -c 'ncspot' # workaround for mow
 fi
 

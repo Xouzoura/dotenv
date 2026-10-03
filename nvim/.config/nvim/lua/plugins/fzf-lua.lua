@@ -298,6 +298,27 @@ return {
         end,
         desc = "(fzf) Show (new) marks",
       },
+      {
+        "<leader>F",
+        function()
+          local fzf_lua = require "fzf-lua"
+
+          local old_reg = vim.fn.getreg '"'
+          local old_regtype = vim.fn.getregtype '"'
+
+          vim.cmd "silent normal! y"
+
+          local selection = vim.fn.getreg '"'
+
+          vim.fn.setreg('"', old_reg, old_regtype)
+
+          fzf_lua.live_grep {
+            search = selection,
+          }
+        end,
+        mode = "v",
+        desc = "(fzf) Live Grep (selection)",
+      },
     },
     opts = function()
       local actions = require("fzf-lua").actions
