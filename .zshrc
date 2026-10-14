@@ -193,6 +193,7 @@ alias mouse="keep-presence"
 alias db="dbeaver-ce"
 alias pingg="ping -c 4 8.8.8.8"
 alias speed="cloudflare-speed-cli"
+alias history_edit="fc -W && vi ~/.zsh_history && fc -R"
 # alias ncspot="flatpak run io.github.hrkfdn.ncspot"
 # Find and activate virtualenv
 alias venv="source ~/scripts/venv.sh"
