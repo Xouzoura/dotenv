@@ -25,7 +25,10 @@
 
 if [[ $# -eq 1 ]]; then
   branches() {
-    git branch "$@" --sort=-committerdate --sort=-HEAD --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' --color=always | column -ts$'\t'
+    git branch "$@" \
+      --sort=-committerdate --sort=-HEAD \
+      --format=$'%(HEAD) %(color:yellow)%(refname:short)\t%(color:green)%(committerdate:relative)\t%(color:blue)%(authorname)\t%(color:white)%(subject)%(color:reset)' \
+      --color=always | column -ts$'\t'
   }
   refs() {
     git for-each-ref --sort=-creatordate --sort=-HEAD --color=always --format=$'%(refname) %(color:green)(%(creatordate:relative))\t%(color:blue)%(subject)%(color:reset)' |
@@ -34,7 +37,7 @@ if [[ $# -eq 1 ]]; then
       column -ts$'\t'
   }
   hashes() {
-    git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always "$@"
+    git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %C(bold blue)%an%C(reset) %s" --graph --color=always "$@"
   }
   case "$1" in
     branches)
@@ -180,16 +183,63 @@ _fzf_git_branches() {
   sed 's/^..//' | cut -d' ' -f1
 }
 
-_fzf_git_tags() {
+_fzf_git_ytags() {
   _fzf_git_check || return
-  git tag --sort -version:refname |
-  _fzf_git_fzf --preview-window right,70% \
-    --border-label '📛 Tags' \
-    --header $'CTRL-O (open in browser)\n\n' \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git tag {}" \
-    --preview 'git show --color=always {}' "$@"
+
+  {
+    printf 'TAG\t\tDATE\t\tAUTHOR\t\tBRANCH\t\tMESSAGE\n'
+
+    git for-each-ref --sort=-version:refname \
+      --format='%(refname:short)' refs/tags |
+    while IFS= read -r tag; do
+      commit=$(git rev-parse "$tag^{commit}" 2>/dev/null) || continue
+
+      IFS=$'\t' read -r date author subject < <(
+        git log -1 --format='%cs%x09%an%x09%s' "$commit"
+      )
+
+      branch=$(git branch -a --contains "$commit" --format='%(refname:short)' |
+        head -n 1)
+
+      printf '%s\t%s\t%s\t\t%s\t\t%s\n' \
+        "$tag" "$date" "$author" "${branch:--}" "$subject"
+    done
+  } |
+    _fzf_git_fzf --ansi \
+      --border-label '📛 Tags' \
+      --header-lines 1 \
+      --tiebreak begin \
+      --preview-window down,border-top,40% \
+      --no-hscroll \
+      --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
+      --bind "ctrl-o:execute-silent:bash $__fzf_git tag {1}" \
+      --preview 'git log --oneline --graph --decorate --date=short --color=always -n 30 "$(git rev-parse {1}^{commit})"' "$@" |
+    cut -f1
 }
 
+_fzf_git_tags() {
+  _fzf_git_check || return
+
+  {
+    printf 'TAG\tDATE\tAUTHOR\tMESSAGE\n'
+    git for-each-ref \
+      --sort=-version:refname \
+      --color=always \
+      --format='%(color:yellow)%(refname:short)%(color:reset)%09%(color:green)%(*authordate:short)%(color:reset)%09%(color:blue)%(*authorname)%(color:reset)%09%(color:white)%(*subject)%(color:reset)' \
+      refs/tags
+  } |
+    _fzf_git_fzf --ansi \
+      --border-label '📛 Tags' \
+      --header-lines 1 \
+      --tiebreak begin \
+      --preview-window down,border-top,40% \
+      --no-hscroll \
+      --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
+      --bind "ctrl-o:execute-silent:bash $__fzf_git tag {1}" \
+      --preview 'git log --oneline --graph --decorate --date=short --color=always -n 30 "$(git rev-parse {1}^{commit})"' "$@" |
+    sed -E 's/\x1B\[[0-9;]*m//g' |
+    cut -f1
+}
 _fzf_git_hashes() {
   _fzf_git_check || return
   bash "$__fzf_git" hashes |
@@ -312,7 +362,7 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
     done
   }
 fi
-__fzf_git_init files branches tags remotes hashes stashes lreflogs each_ref worktrees
-
+# __fzf_git_init files branches tags remotes hashes stashes lreflogs each_ref worktrees
+__fzf_git_init branches tags ytags hashes stashes 
 # -----------------------------------------------------------------------------
 fi

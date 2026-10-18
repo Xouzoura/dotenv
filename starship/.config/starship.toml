@@ -1,7 +1,8 @@
 # ~/.config/starship.toml
+format = "$directory$git_branch$git_status$line_break$character"
 
 [character]
-error_symbol = "[✖](bold red) "
+# error_symbol = "[✖](bold red) "
 vicmd_symbol = "❮N❯"
 
 [cmd_duration]
@@ -10,7 +11,7 @@ format = " took [$duration]($style)"
 
 [directory]
 # truncation_length = 5
-format = "/[$path]($style)[$lock_symbol]($lock_style)"
+format = "[$path]($style)[$lock_symbol]($lock_style)"
 read_only = " "
 truncation_length = 50
 # truncate_to_repo = true # truncates directory to root folder if in github repo

@@ -85,7 +85,7 @@ precmd() { echo -en "\033]0;${PWD/#$HOME/~}\007" }
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git zsh-syntax-highlighting zsh-autosuggestions
-	history jsontools ssh-agent fzf # vi-mode
+	history jsontools ssh-agent fzf vi-mode
     copypath copyfile copybuffer dirhistory fzf-zsh-plugin
 )
 
@@ -186,6 +186,7 @@ alias cryptomator="~/Appimages/cryptomator-1.19.2-x86_64.AppImage"
 alias vi="nvim"
 # added delay since it causes atm some issue with lines
 alias vo="nvim -c 'sleep 100m | lua require(\"fzf-lua\").oldfiles()'"
+alias oil="nvim -c 'Oil'"
 alias vid="DAP_FULL_LAYOUT=1 nvim" # for debug
 
 # others
@@ -357,9 +358,12 @@ source ~/.zshrc_secrets
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Do i prefer it like this at the end?
-PATH="$PATH:$HOME/.local/bin"
-PATH="$PATH:$HOME/go/bin" 
+if [[ ":$PATH:" != *"$HOME/.local/bin:"* ]]; then 
+    PATH="$PATH:$HOME/.local/bin"
+fi
+if [[ ":$PATH:" != *"$HOME/go/bin:"* ]]; then 
+    PATH="$PATH:$HOME/go/bin"
+fi
 if [[ ":$PATH:" != *"/snap/bin:"* ]]; then 
     export PATH="$PATH:/snap/bin"
 fi
@@ -399,4 +403,3 @@ eval "$(starship init zsh)"
 # Load Angular CLI autocompletion.
 source <(ng completion script)
 
-eval $(thefuck --alias) # TODO:if i want it to decide
