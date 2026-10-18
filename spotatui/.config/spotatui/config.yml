@@ -6,8 +6,8 @@ keybindings:
   move_right: l
   next_page: ctrl-d
   previous_page: ctrl-u
-  jump_to_start: g          # ncspot: g = move up 1000
-  jump_to_end: G            # ncspot: Shift+g = move down 1000
+  jump_to_start: g
+  jump_to_end: G
   jump_to_album: a
   jump_to_artist_album: A
   jump_to_context: o
@@ -17,21 +17,21 @@ keybindings:
   toggle_playback: space
   seek_backwards: <
   seek_forwards: '>'
-  next_track: L             # ncspot: Shift+l
-  previous_track: H         # ncspot: Shift+h
+  next_track: L
+  previous_track: H
   force_previous_track: P
   help: '?'
   shuffle: ctrl-s
   repeat: ctrl-r
   search: /
   submit: enter
-  copy_song_url: y          # ncspot: y = share
-  copy_album_url: Y         # ncspot: Shift+y
+  copy_song_url: y
+  copy_album_url: Y
   audio_analysis: v
   lyrics_view: B
   miniplayer_view: T
-  cover_art_view: c         # moved off G (now jump_to_end)
-  add_item_to_queue: ctrl-t      # ncspot: Shift+w = add selected
+  cover_art_view: c
+  add_item_to_queue: ctrl-t
   show_queue: f1
   remove_from_queue: x
   open_settings: alt-,
@@ -79,7 +79,7 @@ behavior:
   streaming_audio_cache: false
   streaming_autoplay: true
   sync_token: null
-  local_music_path: /home/xouzoura/Music
+  local_music_path: /home/xouzoura/Music/
   subsonic_url: null
   subsonic_username: null
   subsonic_password: null
@@ -125,5 +125,36 @@ theme:
   header: Reset
   highlighted_lyrics: 0, 200, 200
 plugin_commands: null
-format: null
-tables: null
+format:
+  playbar_status: "{state} ({device} | Shuffle: {shuffle} | Repeat: {repeat} | Volume: {volume}%){party}"
+  playbar_status_source: "{state} ({source}{queue}{shuffle}{repeat} | Volume: {volume}%)"
+  window_title: "{title}-{artist}-{year}"
+
+# --- Table columns (config-only) ---
+# Reorder, remove, rename (header:) and resize (width_percent: or width:, not
+# both, no zeros, percents may not sum past 100). Omit a table for defaults.
+# Valid ids:
+#   songs / album_tracks / recently_played: liked, index, title, artist, album, length,
+#     year (the album's release year; in no default list)
+#   albums:   title, artist, date, liked
+#   podcasts: title, publisher
+#   episodes: played, date, title, duration
+tables:
+  songs:
+    - { id: liked }
+    - { id: title, width_percent: 40 }
+    - { id: artist, header: "Band", width_percent: 30 }
+    - { id: album }
+    - { id: length }
+    - { id: year }
+  album_tracks:
+    - { id: liked }
+    - { id: index }
+    - { id: title }
+    - { id: artist }
+    - { id: length }
+    - { id: year }
+  albums:
+    - { id: title }
+    - { id: artist }
+    - { id: date }
