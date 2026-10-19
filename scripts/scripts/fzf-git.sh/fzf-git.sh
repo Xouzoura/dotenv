@@ -186,23 +186,51 @@ _fzf_git_branches() {
 _fzf_git_ytags() {
   _fzf_git_check || return
 
+  local fmt='%-24.24s  %-10s  %-24.24s  %-40.40s  %s\n'
+  local rows
+
+  # tag, commit, date, author, subject (annotated + lightweight), newest first
+  rows=$(git for-each-ref refs/tags --format='%(refname:short)%09%(if)%(*objectname)%(then)%(*objectname)%09%(*committerdate:short)%09%(*authorname)%09%(*subject)%(else)%(objectname)%09%(committerdate:short)%09%(authorname)%09%(subject)%(end)' |
+    sort -t $'\t' -k3,3r -k1,1Vr)
+  [ -n "$rows" ] || return
+
   {
-    printf 'TAG\t\tDATE\t\tAUTHOR\t\tBRANCH\t\tMESSAGE\n'
+    printf "$fmt" TAG DATE AUTHOR BRANCH MESSAGE
+    paste -d $'\t' \
+      <(cut -f2 <<<"$rows" |
+          xargs git name-rev --name-only --refs='refs/heads/*' --refs='refs/remotes/*' |
+          sed -E 's/[~^].*$//; s#^remotes/##; s/^undefined$/-/') \
+      <(printf '%s\n' "$rows") |
+    while IFS=$'\t' read -r branch tag commit date author subject; do
+      printf "$fmt" "$tag" "$date" "$author" "$branch" "$subject"
+    done
+  } |
+    _fzf_git_fzf --ansi \
+      --border-label '📛 Tags (verbose)' \
+      --header-lines 1 \
+      --tiebreak begin \
+      --preview-window down,border-top,40% \
+      --no-hscroll \
+      --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
+      --bind "ctrl-o:execute-silent:bash $__fzf_git tag {1}" \
+      --preview 'git log --oneline --graph --decorate --date=short --color=always -n 30 "$(git rev-parse {1}^{commit})"' "$@" |
+    awk '{print $1}'
+}
 
-    git for-each-ref --sort=-version:refname \
-      --format='%(refname:short)' refs/tags |
-    while IFS= read -r tag; do
-      commit=$(git rev-parse "$tag^{commit}" 2>/dev/null) || continue
+_fzf_git_tags() {
+  _fzf_git_check || return
 
-      IFS=$'\t' read -r date author subject < <(
-        git log -1 --format='%cs%x09%an%x09%s' "$commit"
-      )
+  local hfmt='%-24s  %-10s  %-24s  %s\n'
+  local fmt='\033[33m%-24.24s\033[0m  \033[32m%-10s\033[0m  \033[34m%-24.24s\033[0m  \033[37m%s\033[0m\n'
 
-      branch=$(git branch -a --contains "$commit" --format='%(refname:short)' |
-        head -n 1)
+  {
+    printf "$hfmt" TAG DATE AUTHOR MESSAGE
 
-      printf '%s\t%s\t%s\t\t%s\t\t%s\n' \
-        "$tag" "$date" "$author" "${branch:--}" "$subject"
+    # works for both annotated (*fields) and lightweight tags
+    git for-each-ref refs/tags --format='%(refname:short)%09%(if)%(*objectname)%(then)%(*committerdate:short)%09%(*authorname)%09%(*subject)%(else)%(committerdate:short)%09%(authorname)%09%(subject)%(end)' |
+    sort -t $'\t' -k2,2r -k1,1Vr |
+    while IFS=$'\t' read -r tag date author subject; do
+      printf "$fmt" "$tag" "$date" "$author" "$subject"
     done
   } |
     _fzf_git_fzf --ansi \
@@ -214,32 +242,10 @@ _fzf_git_ytags() {
       --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
       --bind "ctrl-o:execute-silent:bash $__fzf_git tag {1}" \
       --preview 'git log --oneline --graph --decorate --date=short --color=always -n 30 "$(git rev-parse {1}^{commit})"' "$@" |
-    cut -f1
-}
-
-_fzf_git_tags() {
-  _fzf_git_check || return
-
-  {
-    printf 'TAG\tDATE\tAUTHOR\tMESSAGE\n'
-    git for-each-ref \
-      --sort=-version:refname \
-      --color=always \
-      --format='%(color:yellow)%(refname:short)%(color:reset)%09%(color:green)%(*authordate:short)%(color:reset)%09%(color:blue)%(*authorname)%(color:reset)%09%(color:white)%(*subject)%(color:reset)' \
-      refs/tags
-  } |
-    _fzf_git_fzf --ansi \
-      --border-label '📛 Tags' \
-      --header-lines 1 \
-      --tiebreak begin \
-      --preview-window down,border-top,40% \
-      --no-hscroll \
-      --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
-      --bind "ctrl-o:execute-silent:bash $__fzf_git tag {1}" \
-      --preview 'git log --oneline --graph --decorate --date=short --color=always -n 30 "$(git rev-parse {1}^{commit})"' "$@" |
     sed -E 's/\x1B\[[0-9;]*m//g' |
-    cut -f1
+    awk '{print $1}'
 }
+
 _fzf_git_hashes() {
   _fzf_git_check || return
   bash "$__fzf_git" hashes |
