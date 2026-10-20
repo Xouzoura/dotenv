@@ -130,6 +130,8 @@ alias vpnc='sudo tailscale set --exit-node=remote-laptop.tailfa8e1.ts.net.'
 alias vpnd='sudo tailscale up --exit-node='
 # this is installed via cargo.
 alias xlsx='xleak -i'
+unalias md
+alias md='leaf'
 
 # Git
 alias glog="git log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(bold red){{%an}}%C(reset) | %C(red)%s%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
