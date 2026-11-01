@@ -22,6 +22,12 @@ ls.add_snippets("all", {
     end)
   ),
   s(
+    "lt",
+    f(function()
+      return "due:" .. os.date("%Y-%m-%d", os.time() + 86400) .. " ||"
+    end)
+  ),
+  s(
     "today",
     f(function()
       return os.date "%Y-%m-%d"

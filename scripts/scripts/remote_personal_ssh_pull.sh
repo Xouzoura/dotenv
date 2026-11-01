@@ -4,8 +4,8 @@
 #   ~/code/primeo/ene-fleet/balena-gateway  <-  personal:~/code/primeo/ene-fleet/balena-gateway
 #
 #
-#   ./scripts/remote_personal_ssh_pull.sh             # fetch all branches, fast-forward the current one
-#   ./scripts/remote_personal_ssh_pull.sh  # fetch all, then check out / fast-forward that branch
+#   ./scripts/remote_personal_ssh_pull.sh             # fetches current
+#   ./scripts/remote_personal_ssh_pull.sh  my-feature # fetch `my-feature`
 #
 set -euo pipefail
 
@@ -49,32 +49,26 @@ else
 fi
 
 echo "Fetching ${REMOTE_URL} -> ${LOCAL_REPO}"
-git fetch --prune "$REMOTE_NAME"
 
-target="${1:-}"
-if [[ -n "$target" ]]; then
-  if git show-ref --verify --quiet "refs/heads/$target"; then
-    git checkout "$target"
-  elif git show-ref --verify --quiet "refs/remotes/${REMOTE_NAME}/$target"; then
-    git checkout -b "$target" "${REMOTE_NAME}/$target"
-  else
-    echo "ERROR: branch '$target' exists neither locally nor on ${REMOTE_NAME}" >&2
-    exit 1
-  fi
-fi
+branch="${1:-$(git branch --show-current)}"
 
-cur="$(git symbolic-ref --quiet --short HEAD || true)"
-[[ -n "$cur" ]] || { echo "detached HEAD; branches fetched, nothing to fast-forward"; exit 0; }
+[[ -n "$branch" ]] || {
+  echo "ERROR: detached HEAD; pass a branch name" >&2
+  exit 1
+}
 
-if git rev-parse --verify --quiet "${REMOTE_NAME}/${cur}" >/dev/null; then
-  if git merge --ff-only "${REMOTE_NAME}/${cur}"; then
-    echo "Fast-forwarded ${cur} -> ${REMOTE_NAME}/${cur}"
-  else
-    echo "WARN: ${cur} has diverged from ${REMOTE_NAME}/${cur}; merge or rebase manually" >&2
-  fi
+echo "Fetching ${branch} from ${REMOTE_URL}"
+
+git fetch "$REMOTE_NAME" \
+  "refs/heads/${branch}:refs/remotes/${REMOTE_NAME}/${branch}"
+
+if git show-ref --verify --quiet "refs/heads/${branch}"; then
+  git checkout "$branch"
 else
-  echo "No ${REMOTE_NAME}/${cur} on personal; other branches fetched only."
+  git checkout -b "$branch" "${REMOTE_NAME}/${branch}"
 fi
+
+git merge --ff-only "${REMOTE_NAME}/${branch}"
 echo "Done."
 
 

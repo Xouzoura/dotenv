@@ -3,10 +3,9 @@
 #   Syncs
 #   ~/code/primeo/ene-fleet/balena-gateway  ->  personal:~/code/primeo/ene-fleet/balena-gateway
 #
-#   scripts/remote_personal_ssh_push.sh                 # push the current branch (+ tags)
-#   scripts/remote_personal_ssh_push.sh --all           # push every local branch (+ tags)
+#   scripts/remote_personal_ssh_push.sh                 # push the current branch
+#   scripts/remote_personal_ssh_push.sh --all           # push every local branch
 #   scripts/remote_personal_ssh_push.sh my-feature      # push a specific branch
-#   scripts/remote_personal_ssh_push.sh --with-origin   # also mirror origin/* as origin/<name> on personal
 #
 # Override target without editing the file:
 #   REMOTE_HOST=192.168.1.100 push_to_personal.sh
@@ -71,20 +70,17 @@ fi
 echo "Pushing ${LOCAL_REPO} -> ${REMOTE_URL}"
 case "$mode" in
   all)
+    echo 'Pushing ALL as git push "$REMOTE_NAME" --all'
     git push "$REMOTE_NAME" --all ;;
   branch)
+    echo 'Pushing only branch $branch'
     git push "$REMOTE_NAME" "$branch" ;;
   current)
     cur="$(git symbolic-ref --quiet --short HEAD || true)"
+    echo 'Pushing current branch $branch'
     [[ -n "$cur" ]] || { echo "ERROR: detached HEAD; pass a branch name" >&2; exit 1; }
     git push "$REMOTE_NAME" "$cur" ;;
 esac
 
-if [[ "$with_origin" -eq 1 ]]; then
-  echo "Mirroring origin/* -> ${REMOTE_NAME} origin/*"
-  git push "$REMOTE_NAME" 'refs/remotes/origin/*:refs/heads/origin/*' || true
-fi
-
-git push "$REMOTE_NAME" --tags || true
 echo "Done."
 
