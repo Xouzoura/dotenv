@@ -3,7 +3,7 @@ format = "$directory$git_branch$git_status$line_break$character"
 
 [character]
 # error_symbol = "[✖](bold red) "
-vicmd_symbol = "❮N❯"
+vicmd_symbol = "vi_N"
 
 [cmd_duration]
 min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
