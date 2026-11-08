@@ -1,6 +1,6 @@
 return {
   "OXY2DEV/markview.nvim",
-  lazy = false,
+  -- lazy = false,
   config = function()
     require("markview").setup {
       preview = { enable = false },
